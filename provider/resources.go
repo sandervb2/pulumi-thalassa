@@ -20,11 +20,12 @@ import (
 	// Allow embedding bridge-metadata.json in the provider.
 	_ "embed"
 
+	thalassa "github.com/thalassa-cloud/terraform-provider-thalassa/thalassa" // Import the upstream provider
+
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
-	thalassa "github.com/thalassa-cloud/terraform-provider-thalassa/thalassa/provider" // Import the upstream provider
 
 	"github.com/sandervb2/pulumi-thalassa/provider/pkg/version"
 )
@@ -105,7 +106,7 @@ func Provider() tfbridge.ProviderInfo {
 		// - "github.com/hashicorp/terraform-plugin-framework/provider".Provider (for plugin-framework)
 		//
 		//nolint:lll
-		P: shimv2.NewProvider(thalassa.New(version.Version)()),
+		P: shimv2.NewProvider(thalassa.Provider()),
 
 		Name:    "thalassa",
 		Version: version.Version,
@@ -135,27 +136,11 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/sandervb2/pulumi-thalassa",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this should
 		// match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:   "thalassa-cloud",
+		GitHubOrg:    "thalassa-cloud",
 		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
-		Config: map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			"region": {
-				Type: "thalassa:region/region:Region",
-			},
-		},
+		Config:       map[string]*tfbridge.SchemaInfo{},
 		// If extra types are needed for configuration, they can be added here.
-		ExtraTypes: map[string]schema.ComplexTypeSpec{
-			"thalassa:region/region:Region": {
-				ObjectTypeSpec: schema.ObjectTypeSpec{
-					Type: "string",
-				},
-				Enum: []schema.EnumValueSpec{
-					{Name: "here", Value: "HERE"},
-					{Name: "overThere", Value: "OVER_THERE"},
-				},
-			},
-		},
+		ExtraTypes: map[string]schema.ComplexTypeSpec{},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,

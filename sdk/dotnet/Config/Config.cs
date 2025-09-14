@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.Xyz
+namespace Pulumi.Thalassa
 {
     public static class Config
     {
@@ -30,16 +30,56 @@ namespace Pulumi.Xyz
             }
         }
 
-        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("xyz");
+        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("thalassa");
 
-        private static readonly __Value<Pulumi.Xyz.Region.Region?> _region = new __Value<Pulumi.Xyz.Region.Region?>(() => __config.GetObject<Pulumi.Xyz.Region.Region>("region"));
+        private static readonly __Value<string?> _api = new __Value<string?>(() => __config.Get("api"));
         /// <summary>
-        /// A region which should be used.
+        /// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         /// </summary>
-        public static Pulumi.Xyz.Region.Region? Region
+        public static string? Api
         {
-            get => _region.Get();
-            set => _region.Set(value);
+            get => _api.Get();
+            set => _api.Set(value);
+        }
+
+        private static readonly __Value<string?> _clientId = new __Value<string?>(() => __config.Get("clientId"));
+        /// <summary>
+        /// The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
+        /// </summary>
+        public static string? ClientId
+        {
+            get => _clientId.Get();
+            set => _clientId.Set(value);
+        }
+
+        private static readonly __Value<string?> _clientSecret = new __Value<string?>(() => __config.Get("clientSecret"));
+        /// <summary>
+        /// The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
+        /// </summary>
+        public static string? ClientSecret
+        {
+            get => _clientSecret.Get();
+            set => _clientSecret.Set(value);
+        }
+
+        private static readonly __Value<string?> _organisationId = new __Value<string?>(() => __config.Get("organisationId"));
+        /// <summary>
+        /// The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
+        /// </summary>
+        public static string? OrganisationId
+        {
+            get => _organisationId.Get();
+            set => _organisationId.Set(value);
+        }
+
+        private static readonly __Value<string?> _token = new __Value<string?>(() => __config.Get("token"));
+        /// <summary>
+        /// The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
+        /// </summary>
+        public static string? Token
+        {
+            get => _token.Get();
+            set => _token.Set(value);
         }
 
     }

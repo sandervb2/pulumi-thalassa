@@ -4,5 +4,122 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 
+export interface KubernetesClusterApiServerAcl {
+    /**
+     * List of allowed CIDRs for API server access
+     */
+    allowedCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface KubernetesNodePoolNodeTaint {
+    /**
+     * Effect of the taint
+     */
+    effect?: pulumi.Input<string>;
+    /**
+     * Key of the taint
+     */
+    key?: pulumi.Input<string>;
+    /**
+     * Operator of the taint
+     */
+    operator?: pulumi.Input<string>;
+    /**
+     * Value of the taint. Optional.
+     */
+    value?: pulumi.Input<string>;
+}
+
+export interface SecurityGroupEgressRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: pulumi.Input<string>;
+    /**
+     * Name of the rule
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: pulumi.Input<string>;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: pulumi.Input<number>;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: pulumi.Input<number>;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: pulumi.Input<number>;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: pulumi.Input<string>;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: pulumi.Input<string>;
+    /**
+     * Identity of the security group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: pulumi.Input<string>;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: pulumi.Input<string>;
+}
+
+export interface SecurityGroupIngressRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: pulumi.Input<string>;
+    /**
+     * Name of the rule
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: pulumi.Input<string>;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: pulumi.Input<number>;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: pulumi.Input<number>;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: pulumi.Input<number>;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: pulumi.Input<string>;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: pulumi.Input<string>;
+    /**
+     * Identity of the security group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: pulumi.Input<string>;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: pulumi.Input<string>;
+}
+
+export interface TargetGroupAttachment {
+    /**
+     * The ID of the target (e.g. instance ID)
+     */
+    id: pulumi.Input<string>;
+}

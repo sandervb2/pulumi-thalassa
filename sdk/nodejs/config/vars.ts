@@ -2,21 +2,62 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "../types/input";
-import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 declare var exports: any;
-const __config = new pulumi.Config("xyz");
+const __config = new pulumi.Config("thalassa");
 
 /**
- * A region which should be used.
+ * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
  */
-export declare const region: enums.region.Region | undefined;
-Object.defineProperty(exports, "region", {
+export declare const api: string | undefined;
+Object.defineProperty(exports, "api", {
     get() {
-        return __config.getObject<enums.region.Region>("region");
+        return __config.get("api");
+    },
+    enumerable: true,
+});
+
+/**
+ * The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
+ */
+export declare const clientId: string | undefined;
+Object.defineProperty(exports, "clientId", {
+    get() {
+        return __config.get("clientId");
+    },
+    enumerable: true,
+});
+
+/**
+ * The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
+ */
+export declare const clientSecret: string | undefined;
+Object.defineProperty(exports, "clientSecret", {
+    get() {
+        return __config.get("clientSecret");
+    },
+    enumerable: true,
+});
+
+/**
+ * The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
+ */
+export declare const organisationId: string | undefined;
+Object.defineProperty(exports, "organisationId", {
+    get() {
+        return __config.get("organisationId");
+    },
+    enumerable: true,
+});
+
+/**
+ * The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
+ */
+export declare const token: string | undefined;
+Object.defineProperty(exports, "token", {
+    get() {
+        return __config.get("token");
     },
     enumerable: true,
 });

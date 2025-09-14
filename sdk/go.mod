@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/sdk
+module github.com/sandervb2/pulumi-thalassa/sdk
 
 go 1.23.11
 
