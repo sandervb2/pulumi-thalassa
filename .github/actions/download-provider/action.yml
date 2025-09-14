@@ -5,19 +5,19 @@ runs:
   using: "composite"
   steps:
 
-    - name: Download pulumi-resource-xyz
+    - name: Download pulumi-resource-thalassa
       uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
       with:
-        pattern: pulumi-resource-xyz-*-linux-amd64.tar.gz
+        pattern: pulumi-resource-thalassa-*-linux-amd64.tar.gz
         path: ${{ github.workspace }}/bin
         merge-multiple: true
 
-    - name: Untar pulumi-resource-xyz
+    - name: Untar pulumi-resource-thalassa
       shell: bash
       run: |
         tar -zxf ${{ github.workspace }}/bin/*amd64.tar.gz -C ${{ github.workspace}}/bin
 
-    - name: Mark pulumi-resource-xyz as executable
+    - name: Mark pulumi-resource-thalassa as executable
       shell: bash
       run: |
-        find ${{ github.workspace }} -name "pulumi-*-xyz" -print -exec chmod +x {} \;
+        find ${{ github.workspace }} -name "pulumi-*-thalassa" -print -exec chmod +x {} \;

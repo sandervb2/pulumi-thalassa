@@ -25,4 +25,4 @@ runs:
         pattern: schema-embed.*
         # Avoid creating directories for each artifact
         merge-multiple: true
-        path: provider/cmd/pulumi-resource-xyz
+        path: provider/cmd/pulumi-resource-thalassa

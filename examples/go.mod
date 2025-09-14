@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/examples
+module github.com/sandervb2/pulumi-thalassa/examples
 
 go 1.23.11
 
