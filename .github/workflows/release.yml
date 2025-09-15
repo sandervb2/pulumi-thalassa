@@ -11,7 +11,7 @@ permissions:
 env:
   PROVIDER: thalassa
   GO111MODULE: "on"
-  PROVIDER_VERSION: ${{ github.ref_name != '' && github.ref_name startsWith('v') && github.ref_name || '' }}
+  PROVIDER_VERSION: ${{ github.ref_name }}
 
 jobs:
   publish_provider:
