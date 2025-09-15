@@ -125,7 +125,7 @@ func Provider() tfbridge.ProviderInfo {
 		// PluginDownloadURL is an optional URL used to download the Provider
 		// for use in Pulumi programs
 		// e.g. https://github.com/org/pulumi-provider-name/releases/download/v${VERSION}/
-		PluginDownloadURL: "",
+		PluginDownloadURL: "github://api.github.com/sandervb2/pulumi-thalassa",
 		Description:       "A Pulumi package for creating and managing Thalassa Cloud resources.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
@@ -142,10 +142,22 @@ func Provider() tfbridge.ProviderInfo {
 		// If extra types are needed for configuration, they can be added here.
 		ExtraTypes: map[string]schema.ComplexTypeSpec{},
 		JavaScript: &tfbridge.JavaScriptInfo{
+			PackageName: "@sandervb2/pulumi-thalassa",
+			Dependencies: map[string]string{
+				"@pulumi/pulumi": "^3.0.0",
+			},
+			DevDependencies: map[string]string{
+				"@types/node": "^10.0.0", // so we can access strongly typed node definitions.
+				"@types/mime": "^2.0.0",
+			},
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 		},
 		Python: &tfbridge.PythonInfo{
+			PackageName: "pulumi_thalassa",
+			Requires: map[string]string{
+				"pulumi": ">=3.0.0,<4.0.0",
+			},
 			// RespectSchemaVersion ensures the SDK is generated linking to the correct version of the provider.
 			RespectSchemaVersion: true,
 			// Enable modern PyProject support in the generated Python SDK.
@@ -171,6 +183,9 @@ func Provider() tfbridge.ProviderInfo {
 			// Use a wildcard import so NuGet will prefer the latest possible version.
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
+			},
+			Namespaces: map[string]string{
+				mainPkg: "Thalassa",
 			},
 		},
 	}

@@ -143,6 +143,7 @@ namespace Pulumi.Thalassa
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/sandervb2/pulumi-thalassa",
                 AdditionalSecretOutputs =
                 {
                     "password",

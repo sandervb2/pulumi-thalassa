@@ -10,6 +10,7 @@
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`thalassa` Terraform Provider](https://github.com/thalassa-cloud/terraform-provider-thalassa).",
     "repository": "https://github.com/sandervb2/pulumi-thalassa",
+    "pluginDownloadURL": "github://api.github.com/sandervb2/pulumi-thalassa",
     "publisher": "Sander van Bruggen",
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"
@@ -18,6 +19,9 @@
         "csharp": {
             "packageReferences": {
                 "Pulumi": "3.*"
+            },
+            "namespaces": {
+                "thalassa": "Thalassa"
             },
             "compatibility": "tfbridge20",
             "respectSchemaVersion": true
@@ -29,13 +33,25 @@
             "respectSchemaVersion": true
         },
         "nodejs": {
+            "packageName": "@sandervb2/pulumi-thalassa",
             "packageDescription": "A Pulumi package for creating and managing Thalassa Cloud resources.",
             "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/thalassa-cloud/terraform-provider-thalassa)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-thalassa` repo](https://github.com/sandervb2/pulumi-thalassa/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-thalassa` repo](https://github.com/thalassa-cloud/terraform-provider-thalassa/issues).",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
             "compatibility": "tfbridge20",
             "disableUnionOutputTypes": true,
             "respectSchemaVersion": true
         },
         "python": {
+            "packageName": "pulumi_thalassa",
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            },
             "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/thalassa-cloud/terraform-provider-thalassa)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-thalassa` repo](https://github.com/sandervb2/pulumi-thalassa/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-thalassa` repo](https://github.com/thalassa-cloud/terraform-provider-thalassa/issues).",
             "compatibility": "tfbridge20",
             "respectSchemaVersion": true,
