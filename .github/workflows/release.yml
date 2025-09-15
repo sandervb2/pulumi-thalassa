@@ -24,9 +24,9 @@ jobs:
         with:
           go-version: "1.25.x"
           cache-dependency-path: "**/*.sum"
-      
-      - name: Show version
-        run: echo "Using PROVIDER_VERSION=${PROVIDER_VERSION}"
+          
+      - name: Set PROVIDER_VERSION from tag
+        run: echo "PROVIDER_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
 
       - name: Build provider distributions
         run: |
