@@ -42,3 +42,4 @@ jobs:
             bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
             bin/SHA256SUMS.txt
           overwrite: true
+
