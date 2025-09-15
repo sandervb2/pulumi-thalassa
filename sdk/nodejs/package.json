@@ -1,6 +1,6 @@
 {
-    "name": "@pulumi/thalassa",
-    "version": "1.0.0-alpha.0+dev",
+    "name": "@sandervb2/pulumi-thalassa",
+    "version": "0.1.0",
     "description": "A Pulumi package for creating and managing Thalassa Cloud resources.",
     "keywords": [
         "thalassa",
@@ -13,15 +13,17 @@
         "build": "tsc"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.142.0"
+        "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
-        "@types/node": "^18",
+        "@types/mime": "^2.0.0",
+        "@types/node": "^10.0.0",
         "typescript": "^4.3.5"
     },
     "pulumi": {
         "resource": true,
         "name": "thalassa",
-        "version": "1.0.0-alpha.0+dev"
+        "version": "0.1.0",
+        "server": "github://api.github.com/sandervb2/pulumi-thalassa"
     }
 }

@@ -164,8 +164,8 @@ func callPlainInner(
 // PkgResourceDefaultOpts provides package level defaults to pulumi.OptionResource.
 func PkgResourceDefaultOpts(opts []pulumi.ResourceOption) []pulumi.ResourceOption {
 	defaults := []pulumi.ResourceOption{}
-
-	version := semver.MustParse("1.0.0-alpha.0+dev")
+	defaults = append(defaults, pulumi.PluginDownloadURL("github://api.github.com/sandervb2/pulumi-thalassa"))
+	version := semver.MustParse("0.1.0")
 	if !version.Equals(semver.Version{}) {
 		defaults = append(defaults, pulumi.Version(version.String()))
 	}
@@ -175,8 +175,8 @@ func PkgResourceDefaultOpts(opts []pulumi.ResourceOption) []pulumi.ResourceOptio
 // PkgInvokeDefaultOpts provides package level defaults to pulumi.OptionInvoke.
 func PkgInvokeDefaultOpts(opts []pulumi.InvokeOption) []pulumi.InvokeOption {
 	defaults := []pulumi.InvokeOption{}
-
-	version := semver.MustParse("1.0.0-alpha.0+dev")
+	defaults = append(defaults, pulumi.PluginDownloadURL("github://api.github.com/sandervb2/pulumi-thalassa"))
+	version := semver.MustParse("0.1.0")
 	if !version.Equals(semver.Version{}) {
 		defaults = append(defaults, pulumi.Version(version.String()))
 	}
