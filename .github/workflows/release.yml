@@ -11,6 +11,7 @@ permissions:
 env:
   PROVIDER: thalassa
   GO111MODULE: "on"
+  PROVIDER_VERSION: ${{ github.ref_name != '' && github.ref_name startsWith('v') && github.ref_name || '' }}
 
 jobs:
   publish_provider:
@@ -23,17 +24,22 @@ jobs:
         with:
           go-version: "1.25.x"
           cache-dependency-path: "**/*.sum"
+      
+      - name: Show version
+        run: echo "Using PROVIDER_VERSION=${PROVIDER_VERSION}"
 
       - name: Build provider distributions
         run: |
           make clean
           make tfgen
-          make provider_dist
+          make provider_dist PROVIDER_VERSION="$PROVIDER_VERSION"
 
       - name: Upload provider assets to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}   # e.g. v0.2.0
+          tag_name: ${{ github.ref_name }}
           files: |
-            dist/pulumi-resource-thalassa-*.tar.gz
-            dist/*_checksums.txt
+            bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
+            bin/SHA256SUMS.txt
+          overwrite: true
+
