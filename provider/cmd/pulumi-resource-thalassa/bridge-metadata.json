@@ -1,0 +1,283 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "thalassa_block_volume": {
+                "current": "thalassa:index/blockVolume:BlockVolume",
+                "majorVersion": 1
+            },
+            "thalassa_block_volume_attachment": {
+                "current": "thalassa:index/blockVolumeAttachment:BlockVolumeAttachment",
+                "majorVersion": 1
+            },
+            "thalassa_cloud_init_template": {
+                "current": "thalassa:index/cloudInitTemplate:CloudInitTemplate",
+                "majorVersion": 1
+            },
+            "thalassa_dbaas_db_backupschedule": {
+                "current": "thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule",
+                "majorVersion": 1
+            },
+            "thalassa_dbaas_db_cluster": {
+                "current": "thalassa:index/dbaasDbCluster:DbaasDbCluster",
+                "majorVersion": 1,
+                "fields": {
+                    "security_groups": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_dbaas_pg_database": {
+                "current": "thalassa:index/dbaasPgDatabase:DbaasPgDatabase",
+                "majorVersion": 1
+            },
+            "thalassa_dbaas_pg_roles": {
+                "current": "thalassa:index/dbaasPgRoles:DbaasPgRoles",
+                "majorVersion": 1
+            },
+            "thalassa_iam_role": {
+                "current": "thalassa:index/iamRole:IamRole",
+                "majorVersion": 1
+            },
+            "thalassa_iam_team": {
+                "current": "thalassa:index/iamTeam:IamTeam",
+                "majorVersion": 1
+            },
+            "thalassa_kubernetes_cluster": {
+                "current": "thalassa:index/kubernetesCluster:KubernetesCluster",
+                "majorVersion": 1,
+                "fields": {
+                    "api_server_acls": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "allowed_cidrs": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_kubernetes_node_pool": {
+                "current": "thalassa:index/kubernetesNodePool:KubernetesNodePool",
+                "majorVersion": 1,
+                "fields": {
+                    "node_taints": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_loadbalancer": {
+                "current": "thalassa:index/loadbalancer:Loadbalancer",
+                "majorVersion": 1,
+                "fields": {
+                    "external_ip_addresses": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_loadbalancer_listener": {
+                "current": "thalassa:index/loadbalancerListener:LoadbalancerListener",
+                "majorVersion": 1,
+                "fields": {
+                    "allowed_sources": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_natgateway": {
+                "current": "thalassa:index/natgateway:Natgateway",
+                "majorVersion": 1,
+                "fields": {
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_objectstorage_bucket": {
+                "current": "thalassa:index/objectstorageBucket:ObjectstorageBucket",
+                "majorVersion": 1
+            },
+            "thalassa_route_table": {
+                "current": "thalassa:index/routeTable:RouteTable",
+                "majorVersion": 1
+            },
+            "thalassa_route_table_route": {
+                "current": "thalassa:index/routeTableRoute:RouteTableRoute",
+                "majorVersion": 1
+            },
+            "thalassa_security_group": {
+                "current": "thalassa:index/securityGroup:SecurityGroup",
+                "majorVersion": 1,
+                "fields": {
+                    "egress_rule": {
+                        "maxItemsOne": false
+                    },
+                    "ingress_rule": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_subnet": {
+                "current": "thalassa:index/subnet:Subnet",
+                "majorVersion": 1
+            },
+            "thalassa_target_group": {
+                "current": "thalassa:index/targetGroup:TargetGroup",
+                "majorVersion": 1,
+                "fields": {
+                    "attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_target_group_attachment": {
+                "current": "thalassa:index/targetGroupAttachment:TargetGroupAttachment",
+                "majorVersion": 1
+            },
+            "thalassa_virtual_machine_instance": {
+                "current": "thalassa:index/virtualMachineInstance:VirtualMachineInstance",
+                "majorVersion": 1,
+                "fields": {
+                    "attached_volume_ids": {
+                        "maxItemsOne": false
+                    },
+                    "ip_addresses": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc": {
+                "current": "thalassa:index/vpc:Vpc",
+                "majorVersion": 1,
+                "fields": {
+                    "cidrs": {
+                        "maxItemsOne": false
+                    }
+                }
+            }
+        },
+        "datasources": {
+            "thalassa_dbaas_db_backupschedule": {
+                "current": "thalassa:index/getDbaasDbBackupschedule:getDbaasDbBackupschedule",
+                "majorVersion": 1
+            },
+            "thalassa_dbaas_db_cluster": {
+                "current": "thalassa:index/getDbaasDbCluster:getDbaasDbCluster",
+                "majorVersion": 1,
+                "fields": {
+                    "security_groups": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_dbaas_pg_database": {
+                "current": "thalassa:index/getDbaasPgDatabase:getDbaasPgDatabase",
+                "majorVersion": 1
+            },
+            "thalassa_dbaas_pg_roles": {
+                "current": "thalassa:index/getDbaasPgRoles:getDbaasPgRoles",
+                "majorVersion": 1
+            },
+            "thalassa_iam_role": {
+                "current": "thalassa:index/getIamRole:getIamRole",
+                "majorVersion": 1
+            },
+            "thalassa_iam_team": {
+                "current": "thalassa:index/getIamTeam:getIamTeam",
+                "majorVersion": 1
+            },
+            "thalassa_kubernetes_cluster": {
+                "current": "thalassa:index/getKubernetesCluster:getKubernetesCluster",
+                "majorVersion": 1,
+                "fields": {
+                    "api_server_acls": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "allowed_cidrs": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_kubernetes_version": {
+                "current": "thalassa:index/getKubernetesVersion:getKubernetesVersion",
+                "majorVersion": 1
+            },
+            "thalassa_machine_image": {
+                "current": "thalassa:index/getMachineImage:getMachineImage",
+                "majorVersion": 1
+            },
+            "thalassa_machine_type": {
+                "current": "thalassa:index/getMachineType:getMachineType",
+                "majorVersion": 1
+            },
+            "thalassa_objectstorage_bucket": {
+                "current": "thalassa:index/getObjectstorageBucket:getObjectstorageBucket",
+                "majorVersion": 1
+            },
+            "thalassa_organisation": {
+                "current": "thalassa:index/getOrganisation:getOrganisation",
+                "majorVersion": 1
+            },
+            "thalassa_region": {
+                "current": "thalassa:index/getRegion:getRegion",
+                "majorVersion": 1
+            },
+            "thalassa_regions": {
+                "current": "thalassa:index/getRegions:getRegions",
+                "majorVersion": 1,
+                "fields": {
+                    "regions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_security_group": {
+                "current": "thalassa:index/getSecurityGroup:getSecurityGroup",
+                "majorVersion": 1,
+                "fields": {
+                    "egress_rules": {
+                        "maxItemsOne": false
+                    },
+                    "ingress_rules": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_subnet": {
+                "current": "thalassa:index/getSubnet:getSubnet",
+                "majorVersion": 1
+            },
+            "thalassa_volume_type": {
+                "current": "thalassa:index/getVolumeType:getVolumeType",
+                "majorVersion": 1
+            },
+            "thalassa_vpc": {
+                "current": "thalassa:index/getVpc:getVpc",
+                "majorVersion": 1,
+                "fields": {
+                    "cidrs": {
+                        "maxItemsOne": false
+                    }
+                }
+            }
+        }
+    },
+    "auto-settings": {}
+}

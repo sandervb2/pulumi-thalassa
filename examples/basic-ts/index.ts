@@ -1,6 +1,9 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as xyz from "@pulumi/xyz";
+import * as thalassa from "@pulumi/thalassa";
 
-const resource = new xyz.Resource("Resource", { sampleAttribute: "attr" });
+const vpc = new thalassa.Vpc("vpc", {
+    region: "nl-01",
+    description: "Pulumi VPC",
+    cidrs: ["10.5.0.0/16"],
+});
 
-export const sampleAttribute = resource.sampleAttribute;
+export const sampleAttribute = (vpc as any).id;

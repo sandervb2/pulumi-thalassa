@@ -1,4 +1,4 @@
-> This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-xyz)
+> This provider is a derived work of the [Terraform Provider](https://github.com/thalassa-cloud/terraform-provider-thalassa)
 > distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,
-> first check the [`pulumi-xyz` repo](https://github.com/pulumi/pulumi-xyz/issues); however, if that doesn't turn up anything,
-> please consult the source [`terraform-provider-xyz` repo](https://github.com/terraform-providers/terraform-provider-xyz/issues).
+> first check the [`pulumi-thalassa` repo](https://github.com/sandervb2/pulumi-thalassa/issues); however, if that doesn't turn up anything,
+> please consult the source [`terraform-provider-thalassa` repo](https://github.com/thalassa-cloud/terraform-provider-thalassa/issues).
