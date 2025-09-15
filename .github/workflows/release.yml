@@ -104,8 +104,8 @@ jobs:
           node -e "let f='${PKG}', p=require(f); p.version='${VERSION}'; require('fs').writeFileSync(f, JSON.stringify(p, null, 2));"
 
       # Publish the SDK to npm
-      - name: Publish to npm
-        working-directory: sdk/nodejs/bin
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Publish to npm
+      #   working-directory: sdk/nodejs/bin
+      #   run: npm publish --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
