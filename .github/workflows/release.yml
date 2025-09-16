@@ -42,4 +42,27 @@ jobs:
             bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
             bin/SHA256SUMS.txt
           overwrite: true
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Align SDK package.json version
+        working-directory: sdk/nodejs
+        run: npm version "$PROVIDER_VERSION" --no-git-tag-version
+
+      - name: Build NodeJS SDK
+        run: |
+          make generate_nodejs
+          make build_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
+
+      - name: Publish SDK to npm
+        working-directory: sdk/nodejs/bin
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm pack --dry-run
+          npm publish --access public
 
