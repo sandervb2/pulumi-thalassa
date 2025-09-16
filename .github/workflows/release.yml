@@ -25,7 +25,7 @@ jobs:
         with:
           go-version: "1.25.x"
           cache-dependency-path: "**/*.sum"
-          
+
       - name: Set PROVIDER_VERSION from tag
         run: echo "PROVIDER_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
 
@@ -34,7 +34,7 @@ jobs:
           make clean
           make tfgen
           make provider_dist PROVIDER_VERSION="$PROVIDER_VERSION"
-          
+
       - name: Generate checksums
         run: |
           cd bin
@@ -49,7 +49,7 @@ jobs:
             bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
             bin/SHA256SUMS.txt
           overwrite_files: true
-  
+
   publish_sdk:
     name: Publish SDK to npm
     needs: publish_provider
@@ -63,13 +63,13 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-    
+
       # Upgrade npm to the required version for Trusted Publishing
       - name: Upgrade npm to >=11.5.1
         run: |
           npm i -g npm@^11.5.1
           echo "npm version: $(npm -v)"
-          
+
       - name: Set PROVIDER_VERSION from tag (strip leading v)
         run: echo "PROVIDER_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
 
@@ -81,16 +81,16 @@ jobs:
         run: |
           make generate_nodejs
           make build_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
-    
+
       - name: Publish to npm
         working-directory: sdk/nodejs/bin
         env:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
           npm publish --access public
-        
+
   publish_pypi:
-    name: Publish SDK to PyPI (Trusted Publishing)
+    name: Publish SDK to PyPI
     needs: publish_provider
     runs-on: ubuntu-latest
     permissions:
@@ -99,7 +99,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-        
+
+      - name: Set SCM pretend version
+        run: echo "SETUPTOOLS_SCM_PRETEND_VERSION_FOR_PULUMI_THALASSA=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
       - name: Generate Python SDK
         run: make generate_python
 
@@ -107,14 +110,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Build Python SDK (sdist + wheel)
+      - name: Build Python
         working-directory: sdk/python
         run: |
           python -m pip install --upgrade pip build
           python -m build --outdir dist
           ls -l dist
 
-      - name: Publish to PyPI (OIDC)
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: sdk/python/dist
