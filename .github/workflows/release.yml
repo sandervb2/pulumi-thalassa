@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 env:
   PROVIDER: thalassa
@@ -42,14 +43,24 @@ jobs:
             bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
             bin/SHA256SUMS.txt
           overwrite: true
-          
+  
+  publish_sdk:
+    name: Publish SDK to npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
+    
+      - name: Set PROVIDER_VERSION from tag (strip leading v)
+        run: echo "PROVIDER_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
 
-      - name: Align SDK package.json version
+      - name: Align SDK package.json version (no git tag/commit)
         working-directory: sdk/nodejs
         run: npm version "$PROVIDER_VERSION" --no-git-tag-version
 
@@ -57,12 +68,16 @@ jobs:
         run: |
           make generate_nodejs
           make build_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
+          
+      - name: Preview npm contents
+        working-directory: sdk/nodejs/bin
+        run: npm pack --dry-run
 
-      - name: Publish SDK to npm
+      - name: Publish to npm (OIDC provenance, no token)
         working-directory: sdk/nodejs/bin
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
         run: |
-          npm pack --dry-run
-          npm publish --access public
+          # First publish of a scoped package must be public
+          npm publish --access public --provenance
 
