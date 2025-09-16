@@ -1,4 +1,4 @@
-import * as thalassa from "@pulumi/thalassa";
+import * as thalassa from "@sandervb2/pulumi-thalassa";
 
 const vpc = new thalassa.Vpc("vpc", {
     region: "nl-01",
@@ -6,4 +6,4 @@ const vpc = new thalassa.Vpc("vpc", {
     cidrs: ["10.5.0.0/16"],
 });
 
-export const sampleAttribute = (vpc as any).id;
+export const sampleAttribute = vpc.id;
