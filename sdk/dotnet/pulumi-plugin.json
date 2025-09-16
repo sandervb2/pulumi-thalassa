@@ -1,0 +1,6 @@
+{
+  "resource": true,
+  "name": "thalassa",
+  "version": "0.1.0",
+  "server": "github://api.github.com/sandervb2/pulumi-thalassa"
+}
