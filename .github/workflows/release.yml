@@ -113,7 +113,7 @@ jobs:
         working-directory: sdk/python
         run: |
           python -m pip install --upgrade pip build setuptools-scm
-          python -m build --outdir dist
+          SETUPTOOLS_SCM_PRETEND_VERSION_FOR_PULUMI_THALASSA=${GITHUB_REF_NAME#v}" python -m build --outdir dist
           ls -l dist
 
       - name: Publish to PyPI
