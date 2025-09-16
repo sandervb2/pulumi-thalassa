@@ -88,3 +88,33 @@ jobs:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
           npm publish --access public
+        
+  publish_pypi:
+    name: Publish SDK to PyPI (Trusted Publishing)
+    needs: publish_provider
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+        
+      - name: Generate Python SDK
+        run: make generate_python
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Python SDK (sdist + wheel)
+        working-directory: sdk/python
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --outdir dist
+          ls -l dist
+
+      - name: Publish to PyPI (OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: sdk/python/dist
