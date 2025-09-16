@@ -7,7 +7,9 @@
         "category/cloud"
     ],
     "homepage": "https://github.com/sandervb2/pulumi-thalassa",
-    "repository": "https://github.com/sandervb2/pulumi-thalassa",
+    "repository": { "type": "git", "url": "git+https://github.com/sandervb2/pulumi-thalassa.git" },
+    "bugs": { "url": "https://github.com/sandervb2/pulumi-thalassa/issues" },
+    "publishConfig": { "access": "public", "provenance": true },
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
