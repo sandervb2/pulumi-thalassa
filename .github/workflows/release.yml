@@ -12,7 +12,6 @@ permissions:
 env:
   PROVIDER: thalassa
   GO111MODULE: "on"
-  PROVIDER_VERSION: ${{ github.ref_name }}
 
 jobs:
   publish_provider:
@@ -34,6 +33,12 @@ jobs:
           make clean
           make tfgen
           make provider_dist PROVIDER_VERSION="$PROVIDER_VERSION"
+          
+      - name: Generate checksums
+        run: |
+          cd bin
+          sha256sum pulumi-resource-thalassa-v${PROVIDER_VERSION}-*.tar.gz > SHA256SUMS.txt
+          cat SHA256SUMS.txt
 
       - name: Upload provider assets to release
         uses: softprops/action-gh-release@v2
@@ -42,10 +47,11 @@ jobs:
           files: |
             bin/pulumi-resource-thalassa-v${{ env.PROVIDER_VERSION }}-*.tar.gz
             bin/SHA256SUMS.txt
-          overwrite: true
+          overwrite_files: true
   
   publish_sdk:
     name: Publish SDK to npm
+    needs: publish_provider
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -74,21 +80,10 @@ jobs:
         run: |
           make generate_nodejs
           make build_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
-          
-      - name: Show package name/version we will publish
-        run: |
-          node -p "require('./sdk/nodejs/bin/package.json').name"
-          node -p "require('./sdk/nodejs/bin/package.json').version"
-          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME  PROVIDER_VERSION=$PROVIDER_VERSION"
     
-      - name: Preview npm contents
-        working-directory: sdk/nodejs/bin
-        run: npm pack --dry-run
-
       - name: Publish to npm
         working-directory: sdk/nodejs/bin
         env:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
-          # First publish of a scoped package must be public
           npm publish --access public
