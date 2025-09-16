@@ -4,20 +4,10 @@ The Thalassa Cloud Resource Provider for [Pulumi](https://www.pulumi.com) lets y
 
 The provider is built on [the upstream Terraform provider](https://github.com/thalassa-cloud/terraform-provider-thalassa).
 
-## Installing
+## Installing using the SDK (recommended)
 
-This package is available in many languages in the standard packaging formats.
-
-### Installing the Plugin
-
-1. Download the appropriate archive file from the Releases page:
-   ```bash
-   wget https://github.com/sandervb2/pulumi-thalassa/releases/download/vX.Y.Z/pulumi-resource-thalassa-vX.Y.Z-OPERATING_SYSTEM-ARCH.tar.gz
-2. Add the plugin to Pulumi:
-
-   ```bash
-   pulumi plugin install resource thalassa X.Y.Z -f ./pulumi-resource-thalassa-vX.Y.Z-OPERATING_SYSTEM-ARCH.tar.gz
-   ```
+This provider can be used either via the language SDKs (**recommended**). When you run `pulumi up`, the Pulumi CLI will automatically download the matching provider plugin
+from the [GitHub Releases](https://github.com/sandervb2/pulumi-thalassa/releases) page. or by manually installing the plugin.
 
 ### Node.js (JavaScript/TypeScript)
 
@@ -27,23 +17,40 @@ npm install @sandervb2/pulumi-thalassa
 yarn add @sandervb2/pulumi-thalassa
 ```
 
-### Python
+### Python (not yet available)
 
 ```bash
 pip install pulumi-thalassa
 ```
 
-### Go
+### Go (not yet available)
 
 ```bash
 go get github.com/sandervb2/pulumi-thalassa/sdk/go/...
 ```
 
-### .NET
+### .NET (not yet available)
 
 ```bash
 dotnet add package Pulumi.Thalassa
 ```
+
+## Manual Plugin Installation (optional)
+
+If you want to install the plugin manually:
+
+1. Download the appropriate archive version for your OS/arch:
+
+   ```bash
+   wget https://github.com/sandervb2/pulumi-thalassa/releases/download/vX.Y.Z/pulumi-resource-thalassa-vX.Y.Z-OPERATING_SYSTEM-ARCH.tar.gz
+   ```
+
+2. Install it into Pulumi:
+
+   ```bash
+   pulumi plugin install resource thalassa X.Y.Z \
+     -f ./pulumi-resource-thalassa-vX.Y.Z-OPERATING_SYSTEM-ARCH.tar.gz
+   ```
 
 ## Configuration
 
@@ -65,7 +72,6 @@ const vpc = new thalassa.Vpc("example", {
   name: "my-vpc",
 });
 ```
-// TODO: does this work?
 ### Using Environment Variables
 
 ```typescript
