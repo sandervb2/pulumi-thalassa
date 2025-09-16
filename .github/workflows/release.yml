@@ -90,7 +90,7 @@ jobs:
           npm publish --access public
         
   publish_pypi:
-    name: Publish SDK to PyPI (Trusted Publishing)
+    name: Publish SDK to PyPI
     needs: publish_provider
     runs-on: ubuntu-latest
     permissions:
@@ -100,21 +100,18 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
         
-      - name: Generate Python SDK
-        run: make generate_python
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Build Python SDK (sdist + wheel)
+      - name: Build Python
         working-directory: sdk/python
         run: |
           python -m pip install --upgrade pip build
           python -m build --outdir dist
           ls -l dist
 
-      - name: Publish to PyPI (OIDC)
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: sdk/python/dist
