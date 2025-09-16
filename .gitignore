@@ -7,6 +7,9 @@
 Pulumi.*.yaml
 **/node_modules/
 .DS_Store
+.ropeproject
+scripts
+.ci-mgmt.yaml
 
 **/command-output/
 
@@ -17,6 +20,8 @@ Pulumi.*.yaml
 
 yarn.lock
 **/pulumiManifest.go
+/package.json
+/package-lock.json
 
 ci-scripts
 provider/**/schema-embed.json

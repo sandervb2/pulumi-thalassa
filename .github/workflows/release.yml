@@ -74,21 +74,10 @@ jobs:
         run: |
           make generate_nodejs
           make build_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
-          
-      - name: Show package name/version we will publish
-        run: |
-          node -p "require('./sdk/nodejs/bin/package.json').name"
-          node -p "require('./sdk/nodejs/bin/package.json').version"
-          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME  PROVIDER_VERSION=$PROVIDER_VERSION"
     
-      - name: Preview npm contents
-        working-directory: sdk/nodejs/bin
-        run: npm pack --dry-run
-
       - name: Publish to npm
         working-directory: sdk/nodejs/bin
         env:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
-          # First publish of a scoped package must be public
           npm publish --access public
