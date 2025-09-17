@@ -1,18 +1,25 @@
-# Copyright 2024, Pulumi Corporation.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import pulumi
-import pulumi_xyz
+import pulumi_thalassa as thalassa
 
-resource = pulumi_xyz.Resource("Resource", sample_attribute = "attr")
+vpc = thalassa.Vpc("vpc",
+    name="vpc-vpc",
+    region="nl-01",
+    cidrs=[
+        "10.0.0.0/16",
+        "10.2.0.0/16",
+        "10.3.0.0/16",
+    ],
+    labels={
+        "environment": "production",
+        "project": "vpc-project",
+        "owner": "team-a",
+    })
+# Create a subnet within the VPC
+vpc_subnet = thalassa.Subnet("subnet",
+    name="vpc-subnet",
+    description="vpc subnet for documentation",
+    vpc_id=vpc.id,
+    cidr="10.0.1.0/24")
+pulumi.export("vpcId", vpc.id)
+pulumi.export("subnetId", vpc_subnet.id)
+
