@@ -21,6 +21,7 @@
   "packageRules": [
     {
       "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"],
       "matchPackageNames": ["github.com/thalassa-cloud/terraform-provider-thalassa"],
       "groupName": "upstream terraform provider",
       "semanticCommitType": "fix",
@@ -29,6 +30,7 @@
     },
     {
       "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"],
       "matchPackageNames": [
         "github.com/pulumi/pulumi-terraform-bridge/v3",
         "github.com/pulumi/pulumi/pkg/v3"
