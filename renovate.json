@@ -1,6 +1,47 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":automergeMinor",
+    ":automergePatch",
+    ":semanticCommits",
+    ":labels(dependencies)"
+  ],
+  "enabledManagers": ["github-actions", "gomod"],
+
+  "ignorePaths": [
+      "**/node_modules/**",
+      "sdk/nodejs/**",
+      "sdk/go/**",
+      "sdk/dotnet/**",
+      "sdk/python/**",
+      "sdk/java/**"
+  ],
+
+  "packageRules": [
+    {
+      "matchManagers": ["gomod"],
+      "matchPackageNames": ["github.com/thalassa-cloud/terraform-provider-thalassa"],
+      "groupName": "upstream terraform provider",
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "deps",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchPackageNames": [
+        "github.com/pulumi/pulumi-terraform-bridge/v3",
+        "github.com/pulumi/pulumi/pkg/v3"
+      ],
+      "groupName": "pulumi core libs",
+      "automerge": false,
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["replace"],
+      "enabled": false
+    }
   ]
 }
