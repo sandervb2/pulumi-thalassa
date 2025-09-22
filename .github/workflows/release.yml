@@ -18,7 +18,7 @@ jobs:
     name: Publish Provider to GitHub Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { fetch-depth: 0 }
 
       - uses: actions/setup-go@v5
@@ -55,7 +55,7 @@ jobs:
     needs: publish_provider
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { fetch-depth: 0 }
 
       - name: Setup Node.js
@@ -97,7 +97,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { fetch-depth: 0 }
         
       - uses: actions/setup-python@v5
