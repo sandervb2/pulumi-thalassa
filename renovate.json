@@ -10,13 +10,17 @@
   "enabledManagers": ["github-actions", "gomod"],
 
   "ignorePaths": [
-      "**/node_modules/**",
-      "sdk/nodejs/**",
-      "sdk/go/**",
-      "sdk/dotnet/**",
-      "sdk/python/**",
-      "sdk/java/**"
+    "**/node_modules/**",
+    "sdk/nodejs/**",
+    "sdk/go/**",
+    "sdk/dotnet/**",
+    "sdk/python/**",
+    "sdk/java/**"
   ],
+
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
 
   "packageRules": [
     {
