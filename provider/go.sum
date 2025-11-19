@@ -2269,8 +2269,8 @@ github.com/texttheater/golang-levenshtein v1.0.1 h1:+cRNoVrfiwufQPhoMzB6N0Yf/Mqa
 github.com/texttheater/golang-levenshtein v1.0.1/go.mod h1:PYAKrbF5sAiq9wd+H82hs7gNaen0CplQ9uvm6+enD/8=
 github.com/thalassa-cloud/client-go v0.26.0 h1:hzsj7dpW+onORvOqMp81VdEbhdvAdZWmqW+movlFAsE=
 github.com/thalassa-cloud/client-go v0.26.0/go.mod h1:tid0xveS70ydS0GYsy8bHSC1NGyXA5FWuKKAl/1XeGU=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.17.1 h1:urRTNYJJ57Lnn/IvzE+ilpukrqxYBd7Bq3ap/0BVfVI=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.17.1/go.mod h1:bE5skxk5EJSDYw76+6ZccT0vnO9g0Og2/noVfJmlLl0=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.17.2 h1:EAd7K5FMGoA0aTZnarLsFlUCBOQpWBL21XCYu4JUXn4=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.17.2/go.mod h1:bE5skxk5EJSDYw76+6ZccT0vnO9g0Og2/noVfJmlLl0=
 github.com/uber/jaeger-client-go v2.30.0+incompatible h1:D6wyKGCecFaSRUpo8lCVbaOOb6ThwMmTEbhRwtKR97o=
 github.com/uber/jaeger-client-go v2.30.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
 github.com/uber/jaeger-lib v2.4.1+incompatible h1:td4jdvLcExb4cBISKIpHuGoVXh+dVKhn2Um6rjCsSsg=
