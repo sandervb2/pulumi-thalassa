@@ -2,7 +2,7 @@ module github.com/sandervb2/pulumi-thalassa/sdk
 
 go 1.25.6
 
-toolchain go1.25.8
+toolchain go1.26.1
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
