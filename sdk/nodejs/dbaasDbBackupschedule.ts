@@ -11,25 +11,22 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for database cluster",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the database cluster
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for database cluster",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a database cluster for the backup schedule
- * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("example", {
- *     name: "example-db-cluster",
+ * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("exampleDbaasDbCluster", {
  *     description: "Example database cluster for backup schedule",
  *     subnetId: exampleSubnet.id,
  *     databaseInstanceType: "db-pgp-small",
@@ -39,12 +36,12 @@ import * as utilities from "./utilities";
  *     volumeTypeClass: "block",
  * });
  * // Create a database backup schedule with Thalassa default values
- * const exampleDbaasDbBackupschedule = new thalassa.DbaasDbBackupschedule("example", {
+ * const exampleDbaasDbBackupschedule = new thalassa.DbaasDbBackupschedule("exampleDbaasDbBackupschedule", {
  *     dbClusterId: exampleDbaasDbCluster.id,
- *     name: "example-backup-schedule",
  *     schedule: "0 2 * * *",
  *     retentionPolicy: "7d",
  * });
+ * // Available: 7d, 14d, 30d, 90d, 180d, 365d, 730d
  * export const backupScheduleId = exampleDbaasDbBackupschedule.id;
  * export const backupScheduleName = exampleDbaasDbBackupschedule.name;
  * ```
@@ -78,13 +75,25 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
     }
 
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    declare public readonly backupTarget: pulumi.Output<string | undefined>;
+    declare public readonly annotations: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The ID of the database cluster
      */
     declare public readonly dbClusterId: pulumi.Output<string>;
+    /**
+     * The description of the database backup schedule
+     */
+    declare public readonly description: pulumi.Output<string | undefined>;
+    /**
+     * The labels of the database backup schedule
+     */
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    declare public readonly method: pulumi.Output<string | undefined>;
     /**
      * The name of the database backup schedule
      */
@@ -116,8 +125,11 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DbaasDbBackupscheduleState | undefined;
-            resourceInputs["backupTarget"] = state?.backupTarget;
+            resourceInputs["annotations"] = state?.annotations;
             resourceInputs["dbClusterId"] = state?.dbClusterId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["method"] = state?.method;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["retentionPolicy"] = state?.retentionPolicy;
@@ -128,8 +140,11 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
             if (args?.dbClusterId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'dbClusterId'");
             }
-            resourceInputs["backupTarget"] = args?.backupTarget;
+            resourceInputs["annotations"] = args?.annotations;
             resourceInputs["dbClusterId"] = args?.dbClusterId;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["method"] = args?.method;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["retentionPolicy"] = args?.retentionPolicy;
@@ -146,13 +161,25 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
  */
 export interface DbaasDbBackupscheduleState {
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    backupTarget?: pulumi.Input<string>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The ID of the database cluster
      */
     dbClusterId?: pulumi.Input<string>;
+    /**
+     * The description of the database backup schedule
+     */
+    description?: pulumi.Input<string>;
+    /**
+     * The labels of the database backup schedule
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    method?: pulumi.Input<string>;
     /**
      * The name of the database backup schedule
      */
@@ -177,13 +204,25 @@ export interface DbaasDbBackupscheduleState {
  */
 export interface DbaasDbBackupscheduleArgs {
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    backupTarget?: pulumi.Input<string>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The ID of the database cluster
      */
     dbClusterId: pulumi.Input<string>;
+    /**
+     * The description of the database backup schedule
+     */
+    description?: pulumi.Input<string>;
+    /**
+     * The labels of the database backup schedule
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    method?: pulumi.Input<string>;
     /**
      * The name of the database backup schedule
      */

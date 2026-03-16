@@ -11,41 +11,36 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the load balancer
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for load balancer listener",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the loadbalancer
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for loadbalancer",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a load balancer
- * const exampleLoadbalancer = new thalassa.Loadbalancer("example", {
- *     name: "example-loadbalancer",
+ * const exampleLoadbalancer = new thalassa.Loadbalancer("exampleLoadbalancer", {
  *     description: "Example load balancer for listener",
  *     subnetId: exampleSubnet.id,
  *     region: "nl-01",
  * });
  * // Create a target group for the listener
- * const exampleTargetGroup = new thalassa.TargetGroup("example", {
- *     name: "example-target-group",
+ * const exampleTargetGroup = new thalassa.TargetGroup("exampleTargetGroup", {
  *     description: "Example target group for listener",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     protocol: "tcp",
  *     port: 80,
  * });
  * // Create a load balancer listener with all required attributes
- * const exampleLoadbalancerListener = new thalassa.LoadbalancerListener("example", {
+ * const exampleLoadbalancerListener = new thalassa.LoadbalancerListener("exampleLoadbalancerListener", {
  *     loadbalancerId: exampleLoadbalancer.id,
- *     name: "example-listener",
  *     protocol: "tcp",
  *     port: 80,
  *     targetGroupId: exampleTargetGroup.id,
