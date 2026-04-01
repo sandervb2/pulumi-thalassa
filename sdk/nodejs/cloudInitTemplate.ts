@@ -9,18 +9,15 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a cloud init template with Thalassa default values
- * const example = new thalassa.CloudInitTemplate("example", {
- *     name: "example-cloud-init-template",
- *     content: `#cloud-config
+ * const example = new thalassa.CloudInitTemplate("example", {content: `#cloud-config
  * package_update: true
  * package_upgrade: true
  * packages:
  *   - nginx
- *   - curl`,
- * });
+ *   - curl`});
  * export const cloudInitTemplateId = example.id;
  * export const cloudInitTemplateName = example.name;
  * ```

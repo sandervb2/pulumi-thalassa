@@ -11,27 +11,24 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the loadbalancer
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for loadbalancer",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the loadbalancer
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for loadbalancer",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a loadbalancer with all optional attributes
- * const exampleLoadbalancer = new thalassa.Loadbalancer("example", {
- *     name: "example-loadbalancer",
+ * const exampleLoadbalancer = new thalassa.Loadbalancer("exampleLoadbalancer", {
  *     subnetId: exampleSubnet.id,
- *     region: example.region,
+ *     region: exampleVpc.region,
  *     description: "Example loadbalancer for documentation with optional attributes",
  *     labels: {
  *         environment: "production",

@@ -2,10 +2,51 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
  * Create an DB Cluster
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
+ *
+ * // Create a VPC for the database cluster
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
+ *     description: "Example VPC for database cluster",
+ *     region: "nl-01",
+ *     cidrs: ["10.0.0.0/16"],
+ * });
+ * // Create a subnet for the database cluster
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
+ *     description: "Example subnet for database cluster",
+ *     vpcId: exampleVpc.id,
+ *     cidr: "10.0.1.0/24",
+ * });
+ * // Create a security group for the DB cluster
+ * const exampleSecurityGroup = new thalassa.SecurityGroup("exampleSecurityGroup", {
+ *     description: "Example security group for DB cluster",
+ *     vpcIdentity: exampleVpc.id,
+ * });
+ * // Create a database cluster with Thalassa default values
+ * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("exampleDbaasDbCluster", {
+ *     description: "Example database cluster for documentation",
+ *     subnetId: exampleSubnet.id,
+ *     databaseInstanceType: "db-pgp-small",
+ *     engine: "postgres",
+ *     engineVersion: "15.13",
+ *     allocatedStorage: 100,
+ *     volumeTypeClass: "block",
+ * });
+ * export const dbClusterId = exampleDbaasDbCluster.id;
+ * export const dbClusterName = exampleDbaasDbCluster.name;
+ * export const dbClusterEndpoint = exampleDbaasDbCluster.endpointIpv4;
+ * export const dbClusterPort = exampleDbaasDbCluster.port;
+ * ```
  */
 export class DbaasDbCluster extends pulumi.CustomResource {
     /**
@@ -48,6 +89,10 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public readonly autoMinorVersionUpgrade: pulumi.Output<boolean | undefined>;
     /**
+     * Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+     */
+    declare public readonly autoUpgradePolicy: pulumi.Output<string | undefined>;
+    /**
      * Database instance type of the DB Cluster
      */
     declare public readonly databaseInstanceType: pulumi.Output<string>;
@@ -84,6 +129,14 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
+     * Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+     */
+    declare public readonly maintenanceDay: pulumi.Output<number | undefined>;
+    /**
+     * Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+     */
+    declare public readonly maintenanceStartAt: pulumi.Output<number | undefined>;
+    /**
      * Name of the DB Cluster
      */
     declare public readonly name: pulumi.Output<string>;
@@ -97,13 +150,21 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly port: pulumi.Output<number>;
     /**
+     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     */
+    declare public readonly provisionDbObjectStore: pulumi.Output<boolean | undefined>;
+    /**
      * Number of instances in the cluster
      */
     declare public readonly replicas: pulumi.Output<number | undefined>;
     /**
-     * Identity of the backup to restore from
+     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
      */
-    declare public readonly restoreFromBackupIdentity: pulumi.Output<string | undefined>;
+    declare public readonly restoreFromBackupId: pulumi.Output<string | undefined>;
+    /**
+     * Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+     */
+    declare public readonly restoreRecoveryTarget: pulumi.Output<outputs.DbaasDbClusterRestoreRecoveryTarget | undefined>;
     /**
      * List of security groups associated with the cluster
      */
@@ -137,6 +198,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["allocatedStorage"] = state?.allocatedStorage;
             resourceInputs["annotations"] = state?.annotations;
             resourceInputs["autoMinorVersionUpgrade"] = state?.autoMinorVersionUpgrade;
+            resourceInputs["autoUpgradePolicy"] = state?.autoUpgradePolicy;
             resourceInputs["databaseInstanceType"] = state?.databaseInstanceType;
             resourceInputs["deleteProtection"] = state?.deleteProtection;
             resourceInputs["description"] = state?.description;
@@ -146,12 +208,16 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["engineVersion"] = state?.engineVersion;
             resourceInputs["initDb"] = state?.initDb;
             resourceInputs["labels"] = state?.labels;
+            resourceInputs["maintenanceDay"] = state?.maintenanceDay;
+            resourceInputs["maintenanceStartAt"] = state?.maintenanceStartAt;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["parameters"] = state?.parameters;
             resourceInputs["port"] = state?.port;
+            resourceInputs["provisionDbObjectStore"] = state?.provisionDbObjectStore;
             resourceInputs["replicas"] = state?.replicas;
-            resourceInputs["restoreFromBackupIdentity"] = state?.restoreFromBackupIdentity;
+            resourceInputs["restoreFromBackupId"] = state?.restoreFromBackupId;
+            resourceInputs["restoreRecoveryTarget"] = state?.restoreRecoveryTarget;
             resourceInputs["securityGroups"] = state?.securityGroups;
             resourceInputs["status"] = state?.status;
             resourceInputs["subnetId"] = state?.subnetId;
@@ -179,6 +245,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["allocatedStorage"] = args?.allocatedStorage;
             resourceInputs["annotations"] = args?.annotations;
             resourceInputs["autoMinorVersionUpgrade"] = args?.autoMinorVersionUpgrade;
+            resourceInputs["autoUpgradePolicy"] = args?.autoUpgradePolicy;
             resourceInputs["databaseInstanceType"] = args?.databaseInstanceType;
             resourceInputs["deleteProtection"] = args?.deleteProtection;
             resourceInputs["description"] = args?.description;
@@ -186,11 +253,15 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["engineVersion"] = args?.engineVersion;
             resourceInputs["initDb"] = args?.initDb;
             resourceInputs["labels"] = args?.labels;
+            resourceInputs["maintenanceDay"] = args?.maintenanceDay;
+            resourceInputs["maintenanceStartAt"] = args?.maintenanceStartAt;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["parameters"] = args?.parameters;
+            resourceInputs["provisionDbObjectStore"] = args?.provisionDbObjectStore;
             resourceInputs["replicas"] = args?.replicas;
-            resourceInputs["restoreFromBackupIdentity"] = args?.restoreFromBackupIdentity;
+            resourceInputs["restoreFromBackupId"] = args?.restoreFromBackupId;
+            resourceInputs["restoreRecoveryTarget"] = args?.restoreRecoveryTarget;
             resourceInputs["securityGroups"] = args?.securityGroups;
             resourceInputs["subnetId"] = args?.subnetId;
             resourceInputs["volumeTypeClass"] = args?.volumeTypeClass;
@@ -220,6 +291,10 @@ export interface DbaasDbClusterState {
      * Flag indicating if the cluster should automatically upgrade to the latest minor version
      */
     autoMinorVersionUpgrade?: pulumi.Input<boolean>;
+    /**
+     * Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+     */
+    autoUpgradePolicy?: pulumi.Input<string>;
     /**
      * Database instance type of the DB Cluster
      */
@@ -257,6 +332,14 @@ export interface DbaasDbClusterState {
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
+     * Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+     */
+    maintenanceDay?: pulumi.Input<number>;
+    /**
+     * Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+     */
+    maintenanceStartAt?: pulumi.Input<number>;
+    /**
      * Name of the DB Cluster
      */
     name?: pulumi.Input<string>;
@@ -270,13 +353,21 @@ export interface DbaasDbClusterState {
      */
     port?: pulumi.Input<number>;
     /**
+     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     */
+    provisionDbObjectStore?: pulumi.Input<boolean>;
+    /**
      * Number of instances in the cluster
      */
     replicas?: pulumi.Input<number>;
     /**
-     * Identity of the backup to restore from
+     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
      */
-    restoreFromBackupIdentity?: pulumi.Input<string>;
+    restoreFromBackupId?: pulumi.Input<string>;
+    /**
+     * Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+     */
+    restoreRecoveryTarget?: pulumi.Input<inputs.DbaasDbClusterRestoreRecoveryTarget>;
     /**
      * List of security groups associated with the cluster
      */
@@ -312,6 +403,10 @@ export interface DbaasDbClusterArgs {
      */
     autoMinorVersionUpgrade?: pulumi.Input<boolean>;
     /**
+     * Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+     */
+    autoUpgradePolicy?: pulumi.Input<string>;
+    /**
      * Database instance type of the DB Cluster
      */
     databaseInstanceType: pulumi.Input<string>;
@@ -340,6 +435,14 @@ export interface DbaasDbClusterArgs {
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
+     * Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+     */
+    maintenanceDay?: pulumi.Input<number>;
+    /**
+     * Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+     */
+    maintenanceStartAt?: pulumi.Input<number>;
+    /**
      * Name of the DB Cluster
      */
     name?: pulumi.Input<string>;
@@ -349,13 +452,21 @@ export interface DbaasDbClusterArgs {
      */
     parameters?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
+     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     */
+    provisionDbObjectStore?: pulumi.Input<boolean>;
+    /**
      * Number of instances in the cluster
      */
     replicas?: pulumi.Input<number>;
     /**
-     * Identity of the backup to restore from
+     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
      */
-    restoreFromBackupIdentity?: pulumi.Input<string>;
+    restoreFromBackupId?: pulumi.Input<string>;
+    /**
+     * Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+     */
+    restoreRecoveryTarget?: pulumi.Input<inputs.DbaasDbClusterRestoreRecoveryTarget>;
     /**
      * List of security groups associated with the cluster
      */

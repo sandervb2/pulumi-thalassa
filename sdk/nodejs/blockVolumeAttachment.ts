@@ -11,33 +11,29 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the resources
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for block volume attachment",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the resources
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for block volume attachment",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a block volume
- * const exampleBlockVolume = new thalassa.BlockVolume("example", {
- *     name: "example-block-volume",
+ * const exampleBlockVolume = new thalassa.BlockVolume("exampleBlockVolume", {
  *     description: "Example block volume for attachment",
  *     region: "nl-01",
  *     volumeType: "Block",
  *     sizeGb: 50,
  * });
  * // Create a virtual machine instance
- * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("example", {
- *     name: "example-instance",
+ * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("exampleVirtualMachineInstance", {
  *     subnetId: exampleSubnet.id,
  *     machineType: "pgp-small",
  *     machineImage: "ubuntu-22.04",
@@ -45,8 +41,9 @@ import * as utilities from "./utilities";
  *     rootVolumeSizeGb: 20,
  *     rootVolumeType: "Block",
  * });
+ * // Available: Block, Premium Block
  * // Create a block volume attachment with Thalassa default values
- * const exampleBlockVolumeAttachment = new thalassa.BlockVolumeAttachment("example", {
+ * const exampleBlockVolumeAttachment = new thalassa.BlockVolumeAttachment("exampleBlockVolumeAttachment", {
  *     volumeId: exampleBlockVolume.id,
  *     vmiId: exampleVirtualMachineInstance.id,
  * });
