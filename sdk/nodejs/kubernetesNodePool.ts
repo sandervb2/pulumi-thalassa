@@ -8,6 +8,70 @@ import * as utilities from "./utilities";
 
 /**
  * Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+ *
+ * ## Autoscaling Configuration
+ *
+ * ### When Autoscaling is Enabled (`enableAutoscaling = true`)
+ * - **`replicas` must be unset** - The autoscaler manages the number of nodes
+ * - **`minReplicas` is required** - Minimum number of nodes (must be ≥ 0)
+ * - **`maxReplicas` is required** - Maximum number of nodes
+ * - **Current replicas are computed** - Shows the current number of nodes managed by the autoscaler
+ *
+ * ### When Autoscaling is Disabled (`enableAutoscaling = false`)
+ * - **`replicas` is required** - Fixed number of nodes for the pool
+ * - **`minReplicas` and `maxReplicas` are ignored** - Not used in manual scaling mode
+ *
+ * ## Important Notes
+ *
+ * - **Only available for managed clusters** - Not supported for hosted-control-plane clusters
+ * - **`kubernetesVersion` is optional** - If not specified, the cluster's version is used during initial creation of the node pool
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
+ *
+ * // Create a VPC for the Kubernetes cluster
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
+ *     description: "Example VPC for Kubernetes cluster",
+ *     region: "nl-01",
+ *     cidrs: ["10.0.0.0/16"],
+ * });
+ * // Create a subnet for the Kubernetes cluster
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
+ *     description: "Example subnet for Kubernetes cluster",
+ *     vpcId: exampleVpc.id,
+ *     cidr: "10.0.1.0/24",
+ * });
+ * // Create a Kubernetes cluster
+ * const exampleKubernetesCluster = new thalassa.KubernetesCluster("exampleKubernetesCluster", {
+ *     description: "Example Kubernetes cluster",
+ *     region: "nl-01",
+ *     subnetId: exampleSubnet.id,
+ *     apiServerAcls: [{
+ *         allowedCidrs: [
+ *             "10.0.0.0/16",
+ *             "10.0.1.0/24",
+ *         ],
+ *     }],
+ * });
+ * // Create a Kubernetes node pool with Thalassa default values
+ * const exampleKubernetesNodePool = new thalassa.KubernetesNodePool("exampleKubernetesNodePool", {
+ *     clusterId: exampleKubernetesCluster.id,
+ *     subnetId: exampleSubnet.id,
+ *     availabilityZone: "nl-01a",
+ *     machineType: "pgp-small",
+ *     enableAutoscaling: true,
+ *     minReplicas: 1,
+ *     maxReplicas: 2,
+ * });
+ * // kubernetes_version    = "1-34-1"
+ * export const kubernetesClusterId = exampleKubernetesCluster.id;
+ * export const kubernetesClusterName = exampleKubernetesCluster.name;
+ * export const nodePoolId = exampleKubernetesNodePool.id;
+ * export const nodePoolName = exampleKubernetesNodePool.name;
+ * ```
  */
 export class KubernetesNodePool extends pulumi.CustomResource {
     /**
@@ -58,7 +122,11 @@ export class KubernetesNodePool extends pulumi.CustomResource {
      */
     declare public readonly enableAutohealing: pulumi.Output<boolean | undefined>;
     /**
-     * Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+     * Enable autoscaling for the Kubernetes Node Pool
+     */
+    declare public readonly enableAutoscaling: pulumi.Output<boolean | undefined>;
+    /**
+     * Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
      */
     declare public readonly kubernetesVersion: pulumi.Output<string | undefined>;
     /**
@@ -111,9 +179,9 @@ export class KubernetesNodePool extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
-     * Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+     * Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
      */
-    declare public readonly subnetId: pulumi.Output<string | undefined>;
+    declare public readonly subnetId: pulumi.Output<string>;
     /**
      * Upgrade strategy for the Kubernetes Node Pool
      */
@@ -137,6 +205,7 @@ export class KubernetesNodePool extends pulumi.CustomResource {
             resourceInputs["clusterId"] = state?.clusterId;
             resourceInputs["description"] = state?.description;
             resourceInputs["enableAutohealing"] = state?.enableAutohealing;
+            resourceInputs["enableAutoscaling"] = state?.enableAutoscaling;
             resourceInputs["kubernetesVersion"] = state?.kubernetesVersion;
             resourceInputs["labels"] = state?.labels;
             resourceInputs["machineType"] = state?.machineType;
@@ -164,11 +233,15 @@ export class KubernetesNodePool extends pulumi.CustomResource {
             if (args?.machineType === undefined && !opts.urn) {
                 throw new Error("Missing required property 'machineType'");
             }
+            if (args?.subnetId === undefined && !opts.urn) {
+                throw new Error("Missing required property 'subnetId'");
+            }
             resourceInputs["annotations"] = args?.annotations;
             resourceInputs["availabilityZone"] = args?.availabilityZone;
             resourceInputs["clusterId"] = args?.clusterId;
             resourceInputs["description"] = args?.description;
             resourceInputs["enableAutohealing"] = args?.enableAutohealing;
+            resourceInputs["enableAutoscaling"] = args?.enableAutoscaling;
             resourceInputs["kubernetesVersion"] = args?.kubernetesVersion;
             resourceInputs["labels"] = args?.labels;
             resourceInputs["machineType"] = args?.machineType;
@@ -216,7 +289,11 @@ export interface KubernetesNodePoolState {
      */
     enableAutohealing?: pulumi.Input<boolean>;
     /**
-     * Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+     * Enable autoscaling for the Kubernetes Node Pool
+     */
+    enableAutoscaling?: pulumi.Input<boolean>;
+    /**
+     * Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
      */
     kubernetesVersion?: pulumi.Input<string>;
     /**
@@ -269,7 +346,7 @@ export interface KubernetesNodePoolState {
      */
     status?: pulumi.Input<string>;
     /**
-     * Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+     * Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
      */
     subnetId?: pulumi.Input<string>;
     /**
@@ -303,7 +380,11 @@ export interface KubernetesNodePoolArgs {
      */
     enableAutohealing?: pulumi.Input<boolean>;
     /**
-     * Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+     * Enable autoscaling for the Kubernetes Node Pool
+     */
+    enableAutoscaling?: pulumi.Input<boolean>;
+    /**
+     * Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
      */
     kubernetesVersion?: pulumi.Input<string>;
     /**
@@ -348,9 +429,9 @@ export interface KubernetesNodePoolArgs {
      */
     securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+     * Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
      */
-    subnetId?: pulumi.Input<string>;
+    subnetId: pulumi.Input<string>;
     /**
      * Upgrade strategy for the Kubernetes Node Pool
      */

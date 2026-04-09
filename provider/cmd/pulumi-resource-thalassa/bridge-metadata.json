@@ -16,6 +16,9 @@
             "thalassa_dbaas_db_cluster": {
                 "current": "thalassa:index/dbaasDbCluster:DbaasDbCluster",
                 "fields": {
+                    "restore_recovery_target": {
+                        "maxItemsOne": true
+                    },
                     "security_groups": {
                         "maxItemsOne": false
                     }
@@ -24,14 +27,73 @@
             "thalassa_dbaas_pg_database": {
                 "current": "thalassa:index/dbaasPgDatabase:DbaasPgDatabase"
             },
+            "thalassa_dbaas_pg_grant": {
+                "current": "thalassa:index/dbaasPgGrant:DbaasPgGrant"
+            },
             "thalassa_dbaas_pg_roles": {
                 "current": "thalassa:index/dbaasPgRoles:DbaasPgRoles"
             },
             "thalassa_iam_role": {
-                "current": "thalassa:index/iamRole:IamRole"
+                "current": "thalassa:index/iamRole:IamRole",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "permissions": {
+                                    "maxItemsOne": false
+                                },
+                                "resource_identities": {
+                                    "maxItemsOne": false
+                                },
+                                "resources": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_iam_role_binding": {
+                "current": "thalassa:index/iamRoleBinding:IamRoleBinding"
+            },
+            "thalassa_iam_role_rule": {
+                "current": "thalassa:index/iamRoleRule:IamRoleRule",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    },
+                    "resource_identities": {
+                        "maxItemsOne": false
+                    },
+                    "resources": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_iam_service_account": {
+                "current": "thalassa:index/iamServiceAccount:IamServiceAccount",
+                "fields": {
+                    "role_bindings": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_iam_service_account_access_credential": {
+                "current": "thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential",
+                "fields": {
+                    "scopes": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_iam_team": {
-                "current": "thalassa:index/iamTeam:IamTeam"
+                "current": "thalassa:index/iamTeam:IamTeam",
+                "fields": {
+                    "members": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_kubernetes_cluster": {
                 "current": "thalassa:index/kubernetesCluster:KubernetesCluster",
@@ -46,10 +108,43 @@
                             }
                         }
                     },
+                    "autoscaler_config": {
+                        "maxItemsOne": true
+                    },
                     "security_group_attachments": {
                         "maxItemsOne": false
                     }
                 }
+            },
+            "thalassa_kubernetes_cluster_role": {
+                "current": "thalassa:index/kubernetesClusterRole:KubernetesClusterRole",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "api_groups": {
+                                    "maxItemsOne": false
+                                },
+                                "non_resource_urls": {
+                                    "maxItemsOne": false
+                                },
+                                "resource_names": {
+                                    "maxItemsOne": false
+                                },
+                                "resources": {
+                                    "maxItemsOne": false
+                                },
+                                "verbs": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_kubernetes_cluster_role_binding": {
+                "current": "thalassa:index/kubernetesClusterRoleBinding:KubernetesClusterRoleBinding"
             },
             "thalassa_kubernetes_node_pool": {
                 "current": "thalassa:index/kubernetesNodePool:KubernetesNodePool",
@@ -109,6 +204,40 @@
                     }
                 }
             },
+            "thalassa_security_group_egress_rule": {
+                "current": "thalassa:index/securityGroupEgressRule:SecurityGroupEgressRule",
+                "fields": {
+                    "rule": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_security_group_ingress_rule": {
+                "current": "thalassa:index/securityGroupIngressRule:SecurityGroupIngressRule",
+                "fields": {
+                    "rule": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_snapshot": {
+                "current": "thalassa:index/snapshot:Snapshot"
+            },
+            "thalassa_snapshot_policy": {
+                "current": "thalassa:index/snapshotPolicy:SnapshotPolicy",
+                "fields": {
+                    "target": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "volume_identities": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "thalassa_subnet": {
                 "current": "thalassa:index/subnet:Subnet"
             },
@@ -122,6 +251,17 @@
             },
             "thalassa_target_group_attachment": {
                 "current": "thalassa:index/targetGroupAttachment:TargetGroupAttachment"
+            },
+            "thalassa_tfs_instance": {
+                "current": "thalassa:index/tfsInstance:TfsInstance",
+                "fields": {
+                    "endpoints": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_ids": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_virtual_machine_instance": {
                 "current": "thalassa:index/virtualMachineInstance:VirtualMachineInstance",
@@ -144,9 +284,46 @@
                         "maxItemsOne": false
                     }
                 }
+            },
+            "thalassa_vpc_firewall_rule": {
+                "current": "thalassa:index/vpcFirewallRule:VpcFirewallRule",
+                "fields": {
+                    "destination_ports": {
+                        "maxItemsOne": false
+                    },
+                    "protocols": {
+                        "maxItemsOne": true
+                    },
+                    "source_ports": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc_peering_connection": {
+                "current": "thalassa:index/vpcPeeringConnection:VpcPeeringConnection",
+                "fields": {
+                    "accepter_organisation": {
+                        "maxItemsOne": false
+                    },
+                    "accepter_vpc": {
+                        "maxItemsOne": false
+                    },
+                    "requester_organisation": {
+                        "maxItemsOne": false
+                    },
+                    "requester_vpc": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc_peering_connection_acceptance": {
+                "current": "thalassa:index/vpcPeeringConnectionAcceptance:VpcPeeringConnectionAcceptance"
             }
         },
         "datasources": {
+            "thalassa_dbaas_db_backup": {
+                "current": "thalassa:index/getDbaasDbBackup:getDbaasDbBackup"
+            },
             "thalassa_dbaas_db_backupschedule": {
                 "current": "thalassa:index/getDbaasDbBackupschedule:getDbaasDbBackupschedule"
             },
@@ -164,11 +341,57 @@
             "thalassa_dbaas_pg_roles": {
                 "current": "thalassa:index/getDbaasPgRoles:getDbaasPgRoles"
             },
+            "thalassa_iam_organisation_members": {
+                "current": "thalassa:index/getIamOrganisationMembers:getIamOrganisationMembers",
+                "fields": {
+                    "members": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "user": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "thalassa_iam_role": {
-                "current": "thalassa:index/getIamRole:getIamRole"
+                "current": "thalassa:index/getIamRole:getIamRole",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "permissions": {
+                                    "maxItemsOne": false
+                                },
+                                "resource_identities": {
+                                    "maxItemsOne": false
+                                },
+                                "resources": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_iam_service_account": {
+                "current": "thalassa:index/getIamServiceAccount:getIamServiceAccount",
+                "fields": {
+                    "role_bindings": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_iam_team": {
-                "current": "thalassa:index/getIamTeam:getIamTeam"
+                "current": "thalassa:index/getIamTeam:getIamTeam",
+                "fields": {
+                    "members": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_kubernetes_cluster": {
                 "current": "thalassa:index/getKubernetesCluster:getKubernetesCluster",
@@ -182,17 +405,72 @@
                                 }
                             }
                         }
+                    },
+                    "autoscaler_config": {
+                        "maxItemsOne": false
                     }
                 }
             },
+            "thalassa_kubernetes_cluster_role": {
+                "current": "thalassa:index/getKubernetesClusterRole:getKubernetesClusterRole",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "api_groups": {
+                                    "maxItemsOne": false
+                                },
+                                "non_resource_urls": {
+                                    "maxItemsOne": false
+                                },
+                                "resource_names": {
+                                    "maxItemsOne": false
+                                },
+                                "resources": {
+                                    "maxItemsOne": false
+                                },
+                                "verbs": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_kubernetes_cluster_session_token": {
+                "current": "thalassa:index/getKubernetesClusterSessionToken:getKubernetesClusterSessionToken"
+            },
             "thalassa_kubernetes_version": {
                 "current": "thalassa:index/getKubernetesVersion:getKubernetesVersion"
+            },
+            "thalassa_loadbalancer": {
+                "current": "thalassa:index/getLoadbalancer:getLoadbalancer",
+                "fields": {
+                    "external_ip_addresses": {
+                        "maxItemsOne": false
+                    },
+                    "listeners": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_machine_image": {
                 "current": "thalassa:index/getMachineImage:getMachineImage"
             },
             "thalassa_machine_type": {
                 "current": "thalassa:index/getMachineType:getMachineType"
+            },
+            "thalassa_natgateway": {
+                "current": "thalassa:index/getNatgateway:getNatgateway",
+                "fields": {
+                    "security_group_attachments": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_objectstorage_bucket": {
                 "current": "thalassa:index/getObjectstorageBucket:getObjectstorageBucket"
@@ -211,6 +489,9 @@
                     }
                 }
             },
+            "thalassa_route_table": {
+                "current": "thalassa:index/getRouteTable:getRouteTable"
+            },
             "thalassa_security_group": {
                 "current": "thalassa:index/getSecurityGroup:getSecurityGroup",
                 "fields": {
@@ -222,8 +503,37 @@
                     }
                 }
             },
+            "thalassa_snapshot": {
+                "current": "thalassa:index/getSnapshot:getSnapshot"
+            },
+            "thalassa_snapshot_policy": {
+                "current": "thalassa:index/getSnapshotPolicy:getSnapshotPolicy",
+                "fields": {
+                    "target": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "volume_identities": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "thalassa_subnet": {
                 "current": "thalassa:index/getSubnet:getSubnet"
+            },
+            "thalassa_tfs_instance": {
+                "current": "thalassa:index/getTfsInstance:getTfsInstance",
+                "fields": {
+                    "endpoints": {
+                        "maxItemsOne": false
+                    },
+                    "security_group_ids": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "thalassa_volume_type": {
                 "current": "thalassa:index/getVolumeType:getVolumeType"
@@ -233,6 +543,85 @@
                 "fields": {
                     "cidrs": {
                         "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc_default_route_table": {
+                "current": "thalassa:index/getVpcDefaultRouteTable:getVpcDefaultRouteTable"
+            },
+            "thalassa_vpc_firewall_rule": {
+                "current": "thalassa:index/getVpcFirewallRule:getVpcFirewallRule",
+                "fields": {
+                    "destination_ports": {
+                        "maxItemsOne": false
+                    },
+                    "protocols": {
+                        "maxItemsOne": false
+                    },
+                    "source_ports": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc_firewall_rules": {
+                "current": "thalassa:index/getVpcFirewallRules:getVpcFirewallRules",
+                "fields": {
+                    "firewall_rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "destination_ports": {
+                                    "maxItemsOne": false
+                                },
+                                "protocols": {
+                                    "maxItemsOne": false
+                                },
+                                "source_ports": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "thalassa_vpc_peering_connection": {
+                "current": "thalassa:index/getVpcPeeringConnection:getVpcPeeringConnection",
+                "fields": {
+                    "accepter_organisation": {
+                        "maxItemsOne": false
+                    },
+                    "accepter_vpc": {
+                        "maxItemsOne": false
+                    },
+                    "requester_organisation": {
+                        "maxItemsOne": false
+                    },
+                    "requester_vpc": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_vpc_peering_connections": {
+                "current": "thalassa:index/getVpcPeeringConnections:getVpcPeeringConnections",
+                "fields": {
+                    "peering_connections": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "accepter_organisation": {
+                                    "maxItemsOne": false
+                                },
+                                "accepter_vpc": {
+                                    "maxItemsOne": false
+                                },
+                                "requester_organisation": {
+                                    "maxItemsOne": false
+                                },
+                                "requester_vpc": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
                     }
                 }
             }

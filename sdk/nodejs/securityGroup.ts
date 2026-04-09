@@ -13,19 +13,17 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for security group",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a security group
- * const exampleSecurityGroup = new thalassa.SecurityGroup("example", {
- *     name: "example-security-group",
- *     description: "Example security group for documentation",
- *     vpcId: example.id,
+ * const exampleSecurityGroup = new thalassa.SecurityGroup("exampleSecurityGroup", {
+ *     description: "Example security group",
+ *     vpcId: exampleVpc.id,
  *     allowSameGroupTraffic: false,
  *     ingressRules: [
  *         {
@@ -63,6 +61,70 @@ import * as utilities from "./utilities";
  * });
  * export const securityGroupId = exampleSecurityGroup.id;
  * export const securityGroupName = exampleSecurityGroup.name;
+ * // Create a security group with rules managed separately
+ * const controlplaneSecurityGroup = new thalassa.SecurityGroup("controlplaneSecurityGroup", {
+ *     description: "Control plane security group",
+ *     vpcId: exampleVpc.id,
+ *     allowSameGroupTraffic: false,
+ * });
+ * // Create a security group
+ * const clusterSecurityGroup = new thalassa.SecurityGroup("clusterSecurityGroup", {
+ *     description: "Cluster security group",
+ *     vpcId: exampleVpc.id,
+ *     allowSameGroupTraffic: false,
+ * });
+ * // ingress rules
+ * const controlplaneSecurityGroupIngressRule = new thalassa.SecurityGroupIngressRule("controlplaneSecurityGroupIngressRule", {
+ *     securityGroupId: controlplaneSecurityGroup.id,
+ *     rules: [
+ *         {
+ *             name: "allow-http",
+ *             ipVersion: "ipv4",
+ *             protocol: "tcp",
+ *             priority: 100,
+ *             policy: "allow",
+ *             remoteType: "securityGroup",
+ *             remoteSecurityGroupIdentity: clusterSecurityGroup.id,
+ *             portRangeMin: 80,
+ *             portRangeMax: 80,
+ *         },
+ *         {
+ *             name: "allow-ssh",
+ *             ipVersion: "ipv4",
+ *             protocol: "tcp",
+ *             priority: 100,
+ *             policy: "allow",
+ *             remoteType: "address",
+ *             remoteAddress: "0.0.0.0/0",
+ *             portRangeMin: 22,
+ *             portRangeMax: 22,
+ *         },
+ *     ],
+ * });
+ * const controlplaneSecurityGroupEgressRule = new thalassa.SecurityGroupEgressRule("controlplaneSecurityGroupEgressRule", {
+ *     securityGroupId: controlplaneSecurityGroup.id,
+ *     rules: [{
+ *         name: "allow-all",
+ *         ipVersion: "ipv4",
+ *         protocol: "all",
+ *         priority: 100,
+ *         policy: "allow",
+ *         remoteType: "address",
+ *         remoteAddress: "0.0.0.0/0",
+ *     }],
+ * });
+ * const clusterSecurityGroupEgressRule = new thalassa.SecurityGroupEgressRule("clusterSecurityGroupEgressRule", {
+ *     securityGroupId: clusterSecurityGroup.id,
+ *     rules: [{
+ *         name: "allow-controlplane",
+ *         ipVersion: "ipv4",
+ *         protocol: "tcp",
+ *         priority: 100,
+ *         policy: "allow",
+ *         remoteType: "securityGroup",
+ *         remoteSecurityGroupIdentity: controlplaneSecurityGroup.id,
+ *     }],
+ * });
  * ```
  */
 export class SecurityGroup extends pulumi.CustomResource {
@@ -98,6 +160,10 @@ export class SecurityGroup extends pulumi.CustomResource {
      */
     declare public readonly allowSameGroupTraffic: pulumi.Output<boolean | undefined>;
     /**
+     * Annotations of the security group
+     */
+    declare public readonly annotations: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
      * Creation timestamp of the security group
      */
     declare public /*out*/ readonly createdAt: pulumi.Output<string>;
@@ -106,7 +172,7 @@ export class SecurityGroup extends pulumi.CustomResource {
      */
     declare public readonly description: pulumi.Output<string | undefined>;
     /**
-     * List of egress rules for the security group
+     * List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
      */
     declare public readonly egressRules: pulumi.Output<outputs.SecurityGroupEgressRule[] | undefined>;
     /**
@@ -117,6 +183,10 @@ export class SecurityGroup extends pulumi.CustomResource {
      * List of ingress rules for the security group
      */
     declare public readonly ingressRules: pulumi.Output<outputs.SecurityGroupIngressRule[] | undefined>;
+    /**
+     * Labels of the security group
+     */
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
      */
@@ -149,11 +219,13 @@ export class SecurityGroup extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as SecurityGroupState | undefined;
             resourceInputs["allowSameGroupTraffic"] = state?.allowSameGroupTraffic;
+            resourceInputs["annotations"] = state?.annotations;
             resourceInputs["createdAt"] = state?.createdAt;
             resourceInputs["description"] = state?.description;
             resourceInputs["egressRules"] = state?.egressRules;
             resourceInputs["identity"] = state?.identity;
             resourceInputs["ingressRules"] = state?.ingressRules;
+            resourceInputs["labels"] = state?.labels;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["status"] = state?.status;
@@ -165,9 +237,11 @@ export class SecurityGroup extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vpcId'");
             }
             resourceInputs["allowSameGroupTraffic"] = args?.allowSameGroupTraffic;
+            resourceInputs["annotations"] = args?.annotations;
             resourceInputs["description"] = args?.description;
             resourceInputs["egressRules"] = args?.egressRules;
             resourceInputs["ingressRules"] = args?.ingressRules;
+            resourceInputs["labels"] = args?.labels;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["vpcId"] = args?.vpcId;
@@ -190,6 +264,10 @@ export interface SecurityGroupState {
      */
     allowSameGroupTraffic?: pulumi.Input<boolean>;
     /**
+     * Annotations of the security group
+     */
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
      * Creation timestamp of the security group
      */
     createdAt?: pulumi.Input<string>;
@@ -198,7 +276,7 @@ export interface SecurityGroupState {
      */
     description?: pulumi.Input<string>;
     /**
-     * List of egress rules for the security group
+     * List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
      */
     egressRules?: pulumi.Input<pulumi.Input<inputs.SecurityGroupEgressRule>[]>;
     /**
@@ -209,6 +287,10 @@ export interface SecurityGroupState {
      * List of ingress rules for the security group
      */
     ingressRules?: pulumi.Input<pulumi.Input<inputs.SecurityGroupIngressRule>[]>;
+    /**
+     * Labels of the security group
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
      */
@@ -237,17 +319,25 @@ export interface SecurityGroupArgs {
      */
     allowSameGroupTraffic?: pulumi.Input<boolean>;
     /**
+     * Annotations of the security group
+     */
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
      * Description of the security group
      */
     description?: pulumi.Input<string>;
     /**
-     * List of egress rules for the security group
+     * List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
      */
     egressRules?: pulumi.Input<pulumi.Input<inputs.SecurityGroupEgressRule>[]>;
     /**
      * List of ingress rules for the security group
      */
     ingressRules?: pulumi.Input<pulumi.Input<inputs.SecurityGroupIngressRule>[]>;
+    /**
+     * Labels of the security group
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
      */
