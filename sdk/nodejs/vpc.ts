@@ -11,11 +11,10 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC with all optional attributes
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     region: "nl-01",
  *     cidrs: [
  *         "10.0.0.0/16",
@@ -30,13 +29,12 @@ import * as utilities from "./utilities";
  *     },
  * });
  * // Create a subnet within the VPC
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for documentation",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
- * export const vpcId = example.id;
+ * export const vpcId = exampleVpc.id;
  * export const subnetId = exampleSubnet.id;
  * ```
  */

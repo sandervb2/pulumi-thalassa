@@ -8,6 +8,28 @@ declare var exports: any;
 const __config = new pulumi.Config("thalassa");
 
 /**
+ * The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+ */
+export declare const accessToken: string | undefined;
+Object.defineProperty(exports, "accessToken", {
+    get() {
+        return __config.get("accessToken");
+    },
+    enumerable: true,
+});
+
+/**
+ * Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+ */
+export declare const allowInsecureOidc: boolean | undefined;
+Object.defineProperty(exports, "allowInsecureOidc", {
+    get() {
+        return __config.getObject<boolean>("allowInsecureOidc");
+    },
+    enumerable: true,
+});
+
+/**
  * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
  */
 export declare const api: string | undefined;

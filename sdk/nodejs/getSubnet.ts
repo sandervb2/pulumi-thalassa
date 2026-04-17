@@ -21,9 +21,18 @@ export function getSubnet(args: GetSubnetArgs, opts?: pulumi.InvokeOptions): Pro
  * A collection of arguments for invoking getSubnet.
  */
 export interface GetSubnetArgs {
+    /**
+     * The name of the subnet to look up
+     */
     name: string;
     organisationId?: string;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
     slug?: string;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     vpcId: string;
 }
 
@@ -31,14 +40,26 @@ export interface GetSubnetArgs {
  * A collection of values returned by getSubnet.
  */
 export interface GetSubnetResult {
+    /**
+     * The CIDR block of the subnet
+     */
     readonly cidr: string;
     /**
-     * The ID of this resource.
+     * The unique identifier of the subnet
      */
     readonly id: string;
+    /**
+     * The name of the subnet to look up
+     */
     readonly name: string;
     readonly organisationId?: string;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
     readonly slug: string;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     readonly vpcId: string;
 }
 /**
@@ -58,8 +79,17 @@ export function getSubnetOutput(args: GetSubnetOutputArgs, opts?: pulumi.InvokeO
  * A collection of arguments for invoking getSubnet.
  */
 export interface GetSubnetOutputArgs {
+    /**
+     * The name of the subnet to look up
+     */
     name: pulumi.Input<string>;
     organisationId?: pulumi.Input<string>;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
     slug?: pulumi.Input<string>;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     vpcId: pulumi.Input<string>;
 }
