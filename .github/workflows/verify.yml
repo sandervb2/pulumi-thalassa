@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - uses: siderolabs/conform@6380738b7fdfc68b208ce0674c4ac1ba314ba600 # v0.1.0-alpha.27
+      - uses: siderolabs/conform@cfdb3cce90daece912e6a5cb3f20b2316a78a5bf # v0.1.0-alpha.31
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
