@@ -26,6 +26,10 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
+     * The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+     */
+    declare public readonly accessToken: pulumi.Output<string | undefined>;
+    /**
      * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
      */
     declare public readonly api: pulumi.Output<string | undefined>;
@@ -57,6 +61,8 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
+            resourceInputs["accessToken"] = args?.accessToken ? pulumi.secret(args.accessToken) : undefined;
+            resourceInputs["allowInsecureOidc"] = pulumi.output(args?.allowInsecureOidc).apply(JSON.stringify);
             resourceInputs["api"] = args?.api;
             resourceInputs["clientId"] = args?.clientId ? pulumi.secret(args.clientId) : undefined;
             resourceInputs["clientSecret"] = args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined;
@@ -64,7 +70,7 @@ export class Provider extends pulumi.ProviderResource {
             resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["clientId", "clientSecret", "token"] };
+        const secretOpts = { additionalSecretOutputs: ["accessToken", "clientId", "clientSecret", "token"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
@@ -83,6 +89,14 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
+    /**
+     * The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+     */
+    accessToken?: pulumi.Input<string>;
+    /**
+     * Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+     */
+    allowInsecureOidc?: pulumi.Input<boolean>;
     /**
      * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
      */

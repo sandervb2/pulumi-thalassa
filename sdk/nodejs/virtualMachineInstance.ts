@@ -11,32 +11,27 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the virtual machine instance
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for virtual machine instance",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the virtual machine instance
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for virtual machine instance",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a security group for the virtual machine instance
- * const exampleSecurityGroup = new thalassa.SecurityGroup("example", {
- *     name: "example-security-group",
+ * const exampleSecurityGroup = new thalassa.SecurityGroup("exampleSecurityGroup", {
  *     description: "Example security group for virtual machine instance",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  * });
  * // Create a cloud init template (optional)
- * const exampleCloudInitTemplate = new thalassa.CloudInitTemplate("example", {
- *     name: "example-cloud-init-template",
- *     content: `#cloud-config
+ * const exampleCloudInitTemplate = new thalassa.CloudInitTemplate("exampleCloudInitTemplate", {content: `#cloud-config
  * package_update: true
  * package_upgrade: true
  * packages:
@@ -45,8 +40,7 @@ import * as utilities from "./utilities";
  * runcmd:
  *   - systemctl enable nginx
  *   - systemctl start nginx
- * `,
- * });
+ * `});
  * const block = thalassa.getVolumeType({
  *     name: "Block",
  * });
@@ -54,8 +48,7 @@ import * as utilities from "./utilities";
  *     name: "ubuntu-22-04-01",
  * });
  * // Create a virtual machine instance with Thalassa default values
- * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("example", {
- *     name: "example-instance",
+ * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("exampleVirtualMachineInstance", {
  *     subnetId: exampleSubnet.id,
  *     machineType: "pgp-small",
  *     machineImage: ubuntu.then(ubuntu => ubuntu.name),
@@ -67,30 +60,27 @@ import * as utilities from "./utilities";
  * export const instanceId = exampleVirtualMachineInstance.id;
  * export const instanceName = exampleVirtualMachineInstance.name;
  * // Create a load balancer for the virtual machine instance
- * const exampleLoadbalancer = new thalassa.Loadbalancer("example", {
- *     name: "example-lb",
+ * const exampleLoadbalancer = new thalassa.Loadbalancer("exampleLoadbalancer", {
  *     region: "nl-01",
  *     description: "Example load balancer for virtual machine instance",
  *     subnetId: exampleSubnet.id,
  * });
  * // Create a load balancer target group
- * const exampleTargetGroup = new thalassa.TargetGroup("example", {
- *     name: "example-lb-target-group",
+ * const exampleTargetGroup = new thalassa.TargetGroup("exampleTargetGroup", {
  *     description: "Example load balancer target group for virtual machine instance",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     protocol: "tcp",
  *     port: 22,
  * });
  * // Create a load balancer listener
- * const exampleLoadbalancerListener = new thalassa.LoadbalancerListener("example", {
- *     name: "example-lb-listener",
+ * const exampleLoadbalancerListener = new thalassa.LoadbalancerListener("exampleLoadbalancerListener", {
  *     description: "Example load balancer listener for virtual machine instance",
  *     loadbalancerId: exampleLoadbalancer.id,
  *     protocol: "tcp",
  *     port: 22,
  *     targetGroupId: exampleTargetGroup.id,
  * });
- * const exampleTargetGroupAttachment = new thalassa.TargetGroupAttachment("example", {
+ * const exampleTargetGroupAttachment = new thalassa.TargetGroupAttachment("exampleTargetGroupAttachment", {
  *     targetGroupId: exampleTargetGroup.id,
  *     vmiId: exampleVirtualMachineInstance.id,
  * });

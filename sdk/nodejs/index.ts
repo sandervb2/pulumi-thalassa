@@ -35,10 +35,20 @@ export type DbaasPgDatabase = import("./dbaasPgDatabase").DbaasPgDatabase;
 export const DbaasPgDatabase: typeof import("./dbaasPgDatabase").DbaasPgDatabase = null as any;
 utilities.lazyLoad(exports, ["DbaasPgDatabase"], () => require("./dbaasPgDatabase"));
 
+export { DbaasPgGrantArgs, DbaasPgGrantState } from "./dbaasPgGrant";
+export type DbaasPgGrant = import("./dbaasPgGrant").DbaasPgGrant;
+export const DbaasPgGrant: typeof import("./dbaasPgGrant").DbaasPgGrant = null as any;
+utilities.lazyLoad(exports, ["DbaasPgGrant"], () => require("./dbaasPgGrant"));
+
 export { DbaasPgRolesArgs, DbaasPgRolesState } from "./dbaasPgRoles";
 export type DbaasPgRoles = import("./dbaasPgRoles").DbaasPgRoles;
 export const DbaasPgRoles: typeof import("./dbaasPgRoles").DbaasPgRoles = null as any;
 utilities.lazyLoad(exports, ["DbaasPgRoles"], () => require("./dbaasPgRoles"));
+
+export { GetDbaasDbBackupArgs, GetDbaasDbBackupResult, GetDbaasDbBackupOutputArgs } from "./getDbaasDbBackup";
+export const getDbaasDbBackup: typeof import("./getDbaasDbBackup").getDbaasDbBackup = null as any;
+export const getDbaasDbBackupOutput: typeof import("./getDbaasDbBackup").getDbaasDbBackupOutput = null as any;
+utilities.lazyLoad(exports, ["getDbaasDbBackup","getDbaasDbBackupOutput"], () => require("./getDbaasDbBackup"));
 
 export { GetDbaasDbBackupscheduleArgs, GetDbaasDbBackupscheduleResult, GetDbaasDbBackupscheduleOutputArgs } from "./getDbaasDbBackupschedule";
 export const getDbaasDbBackupschedule: typeof import("./getDbaasDbBackupschedule").getDbaasDbBackupschedule = null as any;
@@ -60,10 +70,20 @@ export const getDbaasPgRoles: typeof import("./getDbaasPgRoles").getDbaasPgRoles
 export const getDbaasPgRolesOutput: typeof import("./getDbaasPgRoles").getDbaasPgRolesOutput = null as any;
 utilities.lazyLoad(exports, ["getDbaasPgRoles","getDbaasPgRolesOutput"], () => require("./getDbaasPgRoles"));
 
+export { GetIamOrganisationMembersArgs, GetIamOrganisationMembersResult, GetIamOrganisationMembersOutputArgs } from "./getIamOrganisationMembers";
+export const getIamOrganisationMembers: typeof import("./getIamOrganisationMembers").getIamOrganisationMembers = null as any;
+export const getIamOrganisationMembersOutput: typeof import("./getIamOrganisationMembers").getIamOrganisationMembersOutput = null as any;
+utilities.lazyLoad(exports, ["getIamOrganisationMembers","getIamOrganisationMembersOutput"], () => require("./getIamOrganisationMembers"));
+
 export { GetIamRoleArgs, GetIamRoleResult, GetIamRoleOutputArgs } from "./getIamRole";
 export const getIamRole: typeof import("./getIamRole").getIamRole = null as any;
 export const getIamRoleOutput: typeof import("./getIamRole").getIamRoleOutput = null as any;
 utilities.lazyLoad(exports, ["getIamRole","getIamRoleOutput"], () => require("./getIamRole"));
+
+export { GetIamServiceAccountArgs, GetIamServiceAccountResult, GetIamServiceAccountOutputArgs } from "./getIamServiceAccount";
+export const getIamServiceAccount: typeof import("./getIamServiceAccount").getIamServiceAccount = null as any;
+export const getIamServiceAccountOutput: typeof import("./getIamServiceAccount").getIamServiceAccountOutput = null as any;
+utilities.lazyLoad(exports, ["getIamServiceAccount","getIamServiceAccountOutput"], () => require("./getIamServiceAccount"));
 
 export { GetIamTeamArgs, GetIamTeamResult, GetIamTeamOutputArgs } from "./getIamTeam";
 export const getIamTeam: typeof import("./getIamTeam").getIamTeam = null as any;
@@ -75,10 +95,25 @@ export const getKubernetesCluster: typeof import("./getKubernetesCluster").getKu
 export const getKubernetesClusterOutput: typeof import("./getKubernetesCluster").getKubernetesClusterOutput = null as any;
 utilities.lazyLoad(exports, ["getKubernetesCluster","getKubernetesClusterOutput"], () => require("./getKubernetesCluster"));
 
+export { GetKubernetesClusterRoleArgs, GetKubernetesClusterRoleResult, GetKubernetesClusterRoleOutputArgs } from "./getKubernetesClusterRole";
+export const getKubernetesClusterRole: typeof import("./getKubernetesClusterRole").getKubernetesClusterRole = null as any;
+export const getKubernetesClusterRoleOutput: typeof import("./getKubernetesClusterRole").getKubernetesClusterRoleOutput = null as any;
+utilities.lazyLoad(exports, ["getKubernetesClusterRole","getKubernetesClusterRoleOutput"], () => require("./getKubernetesClusterRole"));
+
+export { GetKubernetesClusterSessionTokenArgs, GetKubernetesClusterSessionTokenResult, GetKubernetesClusterSessionTokenOutputArgs } from "./getKubernetesClusterSessionToken";
+export const getKubernetesClusterSessionToken: typeof import("./getKubernetesClusterSessionToken").getKubernetesClusterSessionToken = null as any;
+export const getKubernetesClusterSessionTokenOutput: typeof import("./getKubernetesClusterSessionToken").getKubernetesClusterSessionTokenOutput = null as any;
+utilities.lazyLoad(exports, ["getKubernetesClusterSessionToken","getKubernetesClusterSessionTokenOutput"], () => require("./getKubernetesClusterSessionToken"));
+
 export { GetKubernetesVersionArgs, GetKubernetesVersionResult, GetKubernetesVersionOutputArgs } from "./getKubernetesVersion";
 export const getKubernetesVersion: typeof import("./getKubernetesVersion").getKubernetesVersion = null as any;
 export const getKubernetesVersionOutput: typeof import("./getKubernetesVersion").getKubernetesVersionOutput = null as any;
 utilities.lazyLoad(exports, ["getKubernetesVersion","getKubernetesVersionOutput"], () => require("./getKubernetesVersion"));
+
+export { GetLoadbalancerArgs, GetLoadbalancerResult, GetLoadbalancerOutputArgs } from "./getLoadbalancer";
+export const getLoadbalancer: typeof import("./getLoadbalancer").getLoadbalancer = null as any;
+export const getLoadbalancerOutput: typeof import("./getLoadbalancer").getLoadbalancerOutput = null as any;
+utilities.lazyLoad(exports, ["getLoadbalancer","getLoadbalancerOutput"], () => require("./getLoadbalancer"));
 
 export { GetMachineImageArgs, GetMachineImageResult, GetMachineImageOutputArgs } from "./getMachineImage";
 export const getMachineImage: typeof import("./getMachineImage").getMachineImage = null as any;
@@ -89,6 +124,11 @@ export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } fr
 export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
 export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
 utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
+
+export { GetNatgatewayArgs, GetNatgatewayResult, GetNatgatewayOutputArgs } from "./getNatgateway";
+export const getNatgateway: typeof import("./getNatgateway").getNatgateway = null as any;
+export const getNatgatewayOutput: typeof import("./getNatgateway").getNatgatewayOutput = null as any;
+utilities.lazyLoad(exports, ["getNatgateway","getNatgatewayOutput"], () => require("./getNatgateway"));
 
 export { GetObjectstorageBucketArgs, GetObjectstorageBucketResult, GetObjectstorageBucketOutputArgs } from "./getObjectstorageBucket";
 export const getObjectstorageBucket: typeof import("./getObjectstorageBucket").getObjectstorageBucket = null as any;
@@ -110,15 +150,35 @@ export const getRegions: typeof import("./getRegions").getRegions = null as any;
 export const getRegionsOutput: typeof import("./getRegions").getRegionsOutput = null as any;
 utilities.lazyLoad(exports, ["getRegions","getRegionsOutput"], () => require("./getRegions"));
 
+export { GetRouteTableArgs, GetRouteTableResult, GetRouteTableOutputArgs } from "./getRouteTable";
+export const getRouteTable: typeof import("./getRouteTable").getRouteTable = null as any;
+export const getRouteTableOutput: typeof import("./getRouteTable").getRouteTableOutput = null as any;
+utilities.lazyLoad(exports, ["getRouteTable","getRouteTableOutput"], () => require("./getRouteTable"));
+
 export { GetSecurityGroupArgs, GetSecurityGroupResult, GetSecurityGroupOutputArgs } from "./getSecurityGroup";
 export const getSecurityGroup: typeof import("./getSecurityGroup").getSecurityGroup = null as any;
 export const getSecurityGroupOutput: typeof import("./getSecurityGroup").getSecurityGroupOutput = null as any;
 utilities.lazyLoad(exports, ["getSecurityGroup","getSecurityGroupOutput"], () => require("./getSecurityGroup"));
 
+export { GetSnapshotArgs, GetSnapshotResult, GetSnapshotOutputArgs } from "./getSnapshot";
+export const getSnapshot: typeof import("./getSnapshot").getSnapshot = null as any;
+export const getSnapshotOutput: typeof import("./getSnapshot").getSnapshotOutput = null as any;
+utilities.lazyLoad(exports, ["getSnapshot","getSnapshotOutput"], () => require("./getSnapshot"));
+
+export { GetSnapshotPolicyArgs, GetSnapshotPolicyResult, GetSnapshotPolicyOutputArgs } from "./getSnapshotPolicy";
+export const getSnapshotPolicy: typeof import("./getSnapshotPolicy").getSnapshotPolicy = null as any;
+export const getSnapshotPolicyOutput: typeof import("./getSnapshotPolicy").getSnapshotPolicyOutput = null as any;
+utilities.lazyLoad(exports, ["getSnapshotPolicy","getSnapshotPolicyOutput"], () => require("./getSnapshotPolicy"));
+
 export { GetSubnetArgs, GetSubnetResult, GetSubnetOutputArgs } from "./getSubnet";
 export const getSubnet: typeof import("./getSubnet").getSubnet = null as any;
 export const getSubnetOutput: typeof import("./getSubnet").getSubnetOutput = null as any;
 utilities.lazyLoad(exports, ["getSubnet","getSubnetOutput"], () => require("./getSubnet"));
+
+export { GetTfsInstanceArgs, GetTfsInstanceResult, GetTfsInstanceOutputArgs } from "./getTfsInstance";
+export const getTfsInstance: typeof import("./getTfsInstance").getTfsInstance = null as any;
+export const getTfsInstanceOutput: typeof import("./getTfsInstance").getTfsInstanceOutput = null as any;
+utilities.lazyLoad(exports, ["getTfsInstance","getTfsInstanceOutput"], () => require("./getTfsInstance"));
 
 export { GetVolumeTypeArgs, GetVolumeTypeResult, GetVolumeTypeOutputArgs } from "./getVolumeType";
 export const getVolumeType: typeof import("./getVolumeType").getVolumeType = null as any;
@@ -130,10 +190,55 @@ export const getVpc: typeof import("./getVpc").getVpc = null as any;
 export const getVpcOutput: typeof import("./getVpc").getVpcOutput = null as any;
 utilities.lazyLoad(exports, ["getVpc","getVpcOutput"], () => require("./getVpc"));
 
+export { GetVpcDefaultRouteTableArgs, GetVpcDefaultRouteTableResult, GetVpcDefaultRouteTableOutputArgs } from "./getVpcDefaultRouteTable";
+export const getVpcDefaultRouteTable: typeof import("./getVpcDefaultRouteTable").getVpcDefaultRouteTable = null as any;
+export const getVpcDefaultRouteTableOutput: typeof import("./getVpcDefaultRouteTable").getVpcDefaultRouteTableOutput = null as any;
+utilities.lazyLoad(exports, ["getVpcDefaultRouteTable","getVpcDefaultRouteTableOutput"], () => require("./getVpcDefaultRouteTable"));
+
+export { GetVpcFirewallRuleArgs, GetVpcFirewallRuleResult, GetVpcFirewallRuleOutputArgs } from "./getVpcFirewallRule";
+export const getVpcFirewallRule: typeof import("./getVpcFirewallRule").getVpcFirewallRule = null as any;
+export const getVpcFirewallRuleOutput: typeof import("./getVpcFirewallRule").getVpcFirewallRuleOutput = null as any;
+utilities.lazyLoad(exports, ["getVpcFirewallRule","getVpcFirewallRuleOutput"], () => require("./getVpcFirewallRule"));
+
+export { GetVpcFirewallRulesArgs, GetVpcFirewallRulesResult, GetVpcFirewallRulesOutputArgs } from "./getVpcFirewallRules";
+export const getVpcFirewallRules: typeof import("./getVpcFirewallRules").getVpcFirewallRules = null as any;
+export const getVpcFirewallRulesOutput: typeof import("./getVpcFirewallRules").getVpcFirewallRulesOutput = null as any;
+utilities.lazyLoad(exports, ["getVpcFirewallRules","getVpcFirewallRulesOutput"], () => require("./getVpcFirewallRules"));
+
+export { GetVpcPeeringConnectionArgs, GetVpcPeeringConnectionResult, GetVpcPeeringConnectionOutputArgs } from "./getVpcPeeringConnection";
+export const getVpcPeeringConnection: typeof import("./getVpcPeeringConnection").getVpcPeeringConnection = null as any;
+export const getVpcPeeringConnectionOutput: typeof import("./getVpcPeeringConnection").getVpcPeeringConnectionOutput = null as any;
+utilities.lazyLoad(exports, ["getVpcPeeringConnection","getVpcPeeringConnectionOutput"], () => require("./getVpcPeeringConnection"));
+
+export { GetVpcPeeringConnectionsResult } from "./getVpcPeeringConnections";
+export const getVpcPeeringConnections: typeof import("./getVpcPeeringConnections").getVpcPeeringConnections = null as any;
+export const getVpcPeeringConnectionsOutput: typeof import("./getVpcPeeringConnections").getVpcPeeringConnectionsOutput = null as any;
+utilities.lazyLoad(exports, ["getVpcPeeringConnections","getVpcPeeringConnectionsOutput"], () => require("./getVpcPeeringConnections"));
+
 export { IamRoleArgs, IamRoleState } from "./iamRole";
 export type IamRole = import("./iamRole").IamRole;
 export const IamRole: typeof import("./iamRole").IamRole = null as any;
 utilities.lazyLoad(exports, ["IamRole"], () => require("./iamRole"));
+
+export { IamRoleBindingArgs, IamRoleBindingState } from "./iamRoleBinding";
+export type IamRoleBinding = import("./iamRoleBinding").IamRoleBinding;
+export const IamRoleBinding: typeof import("./iamRoleBinding").IamRoleBinding = null as any;
+utilities.lazyLoad(exports, ["IamRoleBinding"], () => require("./iamRoleBinding"));
+
+export { IamRoleRuleArgs, IamRoleRuleState } from "./iamRoleRule";
+export type IamRoleRule = import("./iamRoleRule").IamRoleRule;
+export const IamRoleRule: typeof import("./iamRoleRule").IamRoleRule = null as any;
+utilities.lazyLoad(exports, ["IamRoleRule"], () => require("./iamRoleRule"));
+
+export { IamServiceAccountArgs, IamServiceAccountState } from "./iamServiceAccount";
+export type IamServiceAccount = import("./iamServiceAccount").IamServiceAccount;
+export const IamServiceAccount: typeof import("./iamServiceAccount").IamServiceAccount = null as any;
+utilities.lazyLoad(exports, ["IamServiceAccount"], () => require("./iamServiceAccount"));
+
+export { IamServiceAccountAccessCredentialArgs, IamServiceAccountAccessCredentialState } from "./iamServiceAccountAccessCredential";
+export type IamServiceAccountAccessCredential = import("./iamServiceAccountAccessCredential").IamServiceAccountAccessCredential;
+export const IamServiceAccountAccessCredential: typeof import("./iamServiceAccountAccessCredential").IamServiceAccountAccessCredential = null as any;
+utilities.lazyLoad(exports, ["IamServiceAccountAccessCredential"], () => require("./iamServiceAccountAccessCredential"));
 
 export { IamTeamArgs, IamTeamState } from "./iamTeam";
 export type IamTeam = import("./iamTeam").IamTeam;
@@ -144,6 +249,16 @@ export { KubernetesClusterArgs, KubernetesClusterState } from "./kubernetesClust
 export type KubernetesCluster = import("./kubernetesCluster").KubernetesCluster;
 export const KubernetesCluster: typeof import("./kubernetesCluster").KubernetesCluster = null as any;
 utilities.lazyLoad(exports, ["KubernetesCluster"], () => require("./kubernetesCluster"));
+
+export { KubernetesClusterRoleArgs, KubernetesClusterRoleState } from "./kubernetesClusterRole";
+export type KubernetesClusterRole = import("./kubernetesClusterRole").KubernetesClusterRole;
+export const KubernetesClusterRole: typeof import("./kubernetesClusterRole").KubernetesClusterRole = null as any;
+utilities.lazyLoad(exports, ["KubernetesClusterRole"], () => require("./kubernetesClusterRole"));
+
+export { KubernetesClusterRoleBindingArgs, KubernetesClusterRoleBindingState } from "./kubernetesClusterRoleBinding";
+export type KubernetesClusterRoleBinding = import("./kubernetesClusterRoleBinding").KubernetesClusterRoleBinding;
+export const KubernetesClusterRoleBinding: typeof import("./kubernetesClusterRoleBinding").KubernetesClusterRoleBinding = null as any;
+utilities.lazyLoad(exports, ["KubernetesClusterRoleBinding"], () => require("./kubernetesClusterRoleBinding"));
 
 export { KubernetesNodePoolArgs, KubernetesNodePoolState } from "./kubernetesNodePool";
 export type KubernetesNodePool = import("./kubernetesNodePool").KubernetesNodePool;
@@ -188,6 +303,26 @@ export type SecurityGroup = import("./securityGroup").SecurityGroup;
 export const SecurityGroup: typeof import("./securityGroup").SecurityGroup = null as any;
 utilities.lazyLoad(exports, ["SecurityGroup"], () => require("./securityGroup"));
 
+export { SecurityGroupEgressRuleArgs, SecurityGroupEgressRuleState } from "./securityGroupEgressRule";
+export type SecurityGroupEgressRule = import("./securityGroupEgressRule").SecurityGroupEgressRule;
+export const SecurityGroupEgressRule: typeof import("./securityGroupEgressRule").SecurityGroupEgressRule = null as any;
+utilities.lazyLoad(exports, ["SecurityGroupEgressRule"], () => require("./securityGroupEgressRule"));
+
+export { SecurityGroupIngressRuleArgs, SecurityGroupIngressRuleState } from "./securityGroupIngressRule";
+export type SecurityGroupIngressRule = import("./securityGroupIngressRule").SecurityGroupIngressRule;
+export const SecurityGroupIngressRule: typeof import("./securityGroupIngressRule").SecurityGroupIngressRule = null as any;
+utilities.lazyLoad(exports, ["SecurityGroupIngressRule"], () => require("./securityGroupIngressRule"));
+
+export { SnapshotArgs, SnapshotState } from "./snapshot";
+export type Snapshot = import("./snapshot").Snapshot;
+export const Snapshot: typeof import("./snapshot").Snapshot = null as any;
+utilities.lazyLoad(exports, ["Snapshot"], () => require("./snapshot"));
+
+export { SnapshotPolicyArgs, SnapshotPolicyState } from "./snapshotPolicy";
+export type SnapshotPolicy = import("./snapshotPolicy").SnapshotPolicy;
+export const SnapshotPolicy: typeof import("./snapshotPolicy").SnapshotPolicy = null as any;
+utilities.lazyLoad(exports, ["SnapshotPolicy"], () => require("./snapshotPolicy"));
+
 export { SubnetArgs, SubnetState } from "./subnet";
 export type Subnet = import("./subnet").Subnet;
 export const Subnet: typeof import("./subnet").Subnet = null as any;
@@ -203,6 +338,11 @@ export type TargetGroupAttachment = import("./targetGroupAttachment").TargetGrou
 export const TargetGroupAttachment: typeof import("./targetGroupAttachment").TargetGroupAttachment = null as any;
 utilities.lazyLoad(exports, ["TargetGroupAttachment"], () => require("./targetGroupAttachment"));
 
+export { TfsInstanceArgs, TfsInstanceState } from "./tfsInstance";
+export type TfsInstance = import("./tfsInstance").TfsInstance;
+export const TfsInstance: typeof import("./tfsInstance").TfsInstance = null as any;
+utilities.lazyLoad(exports, ["TfsInstance"], () => require("./tfsInstance"));
+
 export { VirtualMachineInstanceArgs, VirtualMachineInstanceState } from "./virtualMachineInstance";
 export type VirtualMachineInstance = import("./virtualMachineInstance").VirtualMachineInstance;
 export const VirtualMachineInstance: typeof import("./virtualMachineInstance").VirtualMachineInstance = null as any;
@@ -212,6 +352,21 @@ export { VpcArgs, VpcState } from "./vpc";
 export type Vpc = import("./vpc").Vpc;
 export const Vpc: typeof import("./vpc").Vpc = null as any;
 utilities.lazyLoad(exports, ["Vpc"], () => require("./vpc"));
+
+export { VpcFirewallRuleArgs, VpcFirewallRuleState } from "./vpcFirewallRule";
+export type VpcFirewallRule = import("./vpcFirewallRule").VpcFirewallRule;
+export const VpcFirewallRule: typeof import("./vpcFirewallRule").VpcFirewallRule = null as any;
+utilities.lazyLoad(exports, ["VpcFirewallRule"], () => require("./vpcFirewallRule"));
+
+export { VpcPeeringConnectionArgs, VpcPeeringConnectionState } from "./vpcPeeringConnection";
+export type VpcPeeringConnection = import("./vpcPeeringConnection").VpcPeeringConnection;
+export const VpcPeeringConnection: typeof import("./vpcPeeringConnection").VpcPeeringConnection = null as any;
+utilities.lazyLoad(exports, ["VpcPeeringConnection"], () => require("./vpcPeeringConnection"));
+
+export { VpcPeeringConnectionAcceptanceArgs, VpcPeeringConnectionAcceptanceState } from "./vpcPeeringConnectionAcceptance";
+export type VpcPeeringConnectionAcceptance = import("./vpcPeeringConnectionAcceptance").VpcPeeringConnectionAcceptance;
+export const VpcPeeringConnectionAcceptance: typeof import("./vpcPeeringConnectionAcceptance").VpcPeeringConnectionAcceptance = null as any;
+utilities.lazyLoad(exports, ["VpcPeeringConnectionAcceptance"], () => require("./vpcPeeringConnectionAcceptance"));
 
 
 // Export sub-modules:
@@ -239,14 +394,28 @@ const _module = {
                 return new DbaasDbCluster(name, <any>undefined, { urn })
             case "thalassa:index/dbaasPgDatabase:DbaasPgDatabase":
                 return new DbaasPgDatabase(name, <any>undefined, { urn })
+            case "thalassa:index/dbaasPgGrant:DbaasPgGrant":
+                return new DbaasPgGrant(name, <any>undefined, { urn })
             case "thalassa:index/dbaasPgRoles:DbaasPgRoles":
                 return new DbaasPgRoles(name, <any>undefined, { urn })
             case "thalassa:index/iamRole:IamRole":
                 return new IamRole(name, <any>undefined, { urn })
+            case "thalassa:index/iamRoleBinding:IamRoleBinding":
+                return new IamRoleBinding(name, <any>undefined, { urn })
+            case "thalassa:index/iamRoleRule:IamRoleRule":
+                return new IamRoleRule(name, <any>undefined, { urn })
+            case "thalassa:index/iamServiceAccount:IamServiceAccount":
+                return new IamServiceAccount(name, <any>undefined, { urn })
+            case "thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential":
+                return new IamServiceAccountAccessCredential(name, <any>undefined, { urn })
             case "thalassa:index/iamTeam:IamTeam":
                 return new IamTeam(name, <any>undefined, { urn })
             case "thalassa:index/kubernetesCluster:KubernetesCluster":
                 return new KubernetesCluster(name, <any>undefined, { urn })
+            case "thalassa:index/kubernetesClusterRole:KubernetesClusterRole":
+                return new KubernetesClusterRole(name, <any>undefined, { urn })
+            case "thalassa:index/kubernetesClusterRoleBinding:KubernetesClusterRoleBinding":
+                return new KubernetesClusterRoleBinding(name, <any>undefined, { urn })
             case "thalassa:index/kubernetesNodePool:KubernetesNodePool":
                 return new KubernetesNodePool(name, <any>undefined, { urn })
             case "thalassa:index/loadbalancer:Loadbalancer":
@@ -263,16 +432,32 @@ const _module = {
                 return new RouteTableRoute(name, <any>undefined, { urn })
             case "thalassa:index/securityGroup:SecurityGroup":
                 return new SecurityGroup(name, <any>undefined, { urn })
+            case "thalassa:index/securityGroupEgressRule:SecurityGroupEgressRule":
+                return new SecurityGroupEgressRule(name, <any>undefined, { urn })
+            case "thalassa:index/securityGroupIngressRule:SecurityGroupIngressRule":
+                return new SecurityGroupIngressRule(name, <any>undefined, { urn })
+            case "thalassa:index/snapshot:Snapshot":
+                return new Snapshot(name, <any>undefined, { urn })
+            case "thalassa:index/snapshotPolicy:SnapshotPolicy":
+                return new SnapshotPolicy(name, <any>undefined, { urn })
             case "thalassa:index/subnet:Subnet":
                 return new Subnet(name, <any>undefined, { urn })
             case "thalassa:index/targetGroup:TargetGroup":
                 return new TargetGroup(name, <any>undefined, { urn })
             case "thalassa:index/targetGroupAttachment:TargetGroupAttachment":
                 return new TargetGroupAttachment(name, <any>undefined, { urn })
+            case "thalassa:index/tfsInstance:TfsInstance":
+                return new TfsInstance(name, <any>undefined, { urn })
             case "thalassa:index/virtualMachineInstance:VirtualMachineInstance":
                 return new VirtualMachineInstance(name, <any>undefined, { urn })
             case "thalassa:index/vpc:Vpc":
                 return new Vpc(name, <any>undefined, { urn })
+            case "thalassa:index/vpcFirewallRule:VpcFirewallRule":
+                return new VpcFirewallRule(name, <any>undefined, { urn })
+            case "thalassa:index/vpcPeeringConnection:VpcPeeringConnection":
+                return new VpcPeeringConnection(name, <any>undefined, { urn })
+            case "thalassa:index/vpcPeeringConnectionAcceptance:VpcPeeringConnectionAcceptance":
+                return new VpcPeeringConnectionAcceptance(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
@@ -284,10 +469,17 @@ pulumi.runtime.registerResourceModule("thalassa", "index/cloudInitTemplate", _mo
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasDbBackupschedule", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasDbCluster", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasPgDatabase", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/dbaasPgGrant", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasPgRoles", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/iamRole", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamRoleBinding", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamRoleRule", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamServiceAccount", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamServiceAccountAccessCredential", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/iamTeam", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/kubernetesCluster", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/kubernetesClusterRole", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/kubernetesClusterRoleBinding", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/kubernetesNodePool", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/loadbalancer", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/loadbalancerListener", _module)
@@ -296,11 +488,19 @@ pulumi.runtime.registerResourceModule("thalassa", "index/objectstorageBucket", _
 pulumi.runtime.registerResourceModule("thalassa", "index/routeTable", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/routeTableRoute", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/securityGroup", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/securityGroupEgressRule", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/securityGroupIngressRule", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/snapshot", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/snapshotPolicy", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/subnet", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/targetGroup", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/targetGroupAttachment", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/tfsInstance", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/virtualMachineInstance", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/vpc", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/vpcFirewallRule", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/vpcPeeringConnection", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/vpcPeeringConnectionAcceptance", _module)
 pulumi.runtime.registerResourcePackage("thalassa", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

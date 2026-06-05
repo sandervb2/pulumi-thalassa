@@ -11,11 +11,10 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a block volume with Thalassa default values
  * const example = new thalassa.BlockVolume("example", {
- *     name: "example-block-volume",
  *     description: "Example block volume for documentation",
  *     region: "nl-01",
  *     volumeType: "Block",

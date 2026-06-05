@@ -21,6 +21,9 @@ export function getMachineType(args?: GetMachineTypeArgs, opts?: pulumi.InvokeOp
  */
 export interface GetMachineTypeArgs {
     organisationId?: string;
+    /**
+     * The slug of the machine type to look up
+     */
     slug?: string;
 }
 
@@ -28,15 +31,30 @@ export interface GetMachineTypeArgs {
  * A collection of values returned by getMachineType.
  */
 export interface GetMachineTypeResult {
+    /**
+     * The number of CPU cores available in this machine type
+     */
     readonly cpuCores: number;
+    /**
+     * A description of the machine type and its specifications
+     */
     readonly description: string;
     /**
-     * The ID of this resource.
+     * The unique identifier of the machine type
      */
     readonly id: string;
+    /**
+     * The name of the machine type
+     */
     readonly name: string;
     readonly organisationId?: string;
+    /**
+     * The amount of RAM in megabytes available in this machine type
+     */
     readonly ramMb: number;
+    /**
+     * The slug of the machine type to look up
+     */
     readonly slug?: string;
 }
 /**
@@ -56,5 +74,8 @@ export function getMachineTypeOutput(args?: GetMachineTypeOutputArgs, opts?: pul
  */
 export interface GetMachineTypeOutputArgs {
     organisationId?: pulumi.Input<string>;
+    /**
+     * The slug of the machine type to look up
+     */
     slug?: pulumi.Input<string>;
 }

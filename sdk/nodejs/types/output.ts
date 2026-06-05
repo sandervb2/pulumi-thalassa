@@ -5,11 +5,238 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface DbaasDbClusterRestoreRecoveryTarget {
+    /**
+     * Log Sequence Number to restore to. Example: '0/1234567'
+     */
+    targetLsn?: string;
+    /**
+     * Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+     */
+    targetTime?: string;
+}
+
+export interface GetIamOrganisationMembersMember {
+    /**
+     * Creation timestamp of the organisation member
+     */
+    createdAt: string;
+    /**
+     * Identity of the organisation member
+     */
+    identity: string;
+    /**
+     * Type of the organisation member (OWNER or MEMBER)
+     */
+    memberType: string;
+    /**
+     * User information for the organisation member
+     */
+    users: outputs.GetIamOrganisationMembersMemberUser[];
+}
+
+export interface GetIamOrganisationMembersMemberUser {
+    /**
+     * Creation timestamp of the user
+     */
+    createdAt: string;
+    /**
+     * Email address of the user
+     */
+    email: string;
+    /**
+     * Name of the user
+     */
+    name: string;
+    /**
+     * Subject identifier of the user
+     */
+    subject: string;
+}
+
+export interface GetIamRoleRule {
+    /**
+     * Identity of the permission rule
+     */
+    identity: string;
+    /**
+     * Human-readable note for the permission rule
+     */
+    note: string;
+    /**
+     * List of permissions (create, read, update, delete, list, *)
+     */
+    permissions: string[];
+    /**
+     * List of specific resource identities this rule applies to
+     */
+    resourceIdentities: string[];
+    /**
+     * List of resources this rule applies to
+     */
+    resources: string[];
+}
+
+export interface GetIamServiceAccountRoleBinding {
+    /**
+     * Creation timestamp of the role binding
+     */
+    createdAt: string;
+    /**
+     * Description of the role binding
+     */
+    description: string;
+    /**
+     * Identity of the role binding
+     */
+    identity: string;
+    /**
+     * Name of the role binding
+     */
+    name: string;
+    /**
+     * Last update timestamp of the role binding
+     */
+    updatedAt: string;
+}
+
+export interface GetIamTeamMember {
+    /**
+     * Creation timestamp of the team member
+     */
+    createdAt: string;
+    /**
+     * Email address of the user
+     */
+    email: string;
+    /**
+     * team membershhip identity
+     */
+    identity: string;
+    /**
+     * Name of the user
+     */
+    name: string;
+    /**
+     * Role of the team member
+     */
+    role: string;
+    /**
+     * Last update timestamp of the team member
+     */
+    updatedAt: string;
+    /**
+     * Subject identifier of the user
+     */
+    userId: string;
+}
+
 export interface GetKubernetesClusterApiServerAcl {
     /**
      * List of allowed CIDRs for API server access
      */
     allowedCidrs: string[];
+}
+
+export interface GetKubernetesClusterAutoscalerConfig {
+    /**
+     * Flag to balance the utilization of similar node groups by the cluster autoscaler
+     */
+    balanceSimilarNodeGroups: boolean;
+    /**
+     * Flag to enable the proactive scale up of the cluster autoscaler
+     */
+    enableProactiveScaleUp: boolean;
+    /**
+     * Estimator to use for the cluster autoscaler
+     */
+    estimator: string;
+    /**
+     * Expander to use for the cluster autoscaler
+     */
+    expander: string;
+    /**
+     * Priority cutoff for the expendable pods by the cluster autoscaler
+     */
+    expendablePodsPriorityCutoff: number;
+    /**
+     * Flag to ignore the utilization of daemonsets by the cluster autoscaler
+     */
+    ignoreDaemonsetsUtilization: boolean;
+    /**
+     * Maximum graceful termination time for the cluster autoscaler
+     */
+    maxGracefulTerminationSec: number;
+    /**
+     * Delay after adding a node to the node pool by the cluster autoscaler
+     */
+    scaleDownDelayAfterAdd: string;
+    /**
+     * Flag to disable the scale down of node pools by the cluster autoscaler
+     */
+    scaleDownDisabled: boolean;
+    /**
+     * Time after which a node can be scaled down by the cluster autoscaler
+     */
+    scaleDownUnneededTime: string;
+    /**
+     * Utilization threshold for the cluster autoscaler
+     */
+    scaleDownUtilizationThreshold: number;
+}
+
+export interface GetKubernetesClusterRoleRule {
+    /**
+     * List of API groups that the rule applies to
+     */
+    apiGroups: string[];
+    /**
+     * The unique identifier of the permission rule
+     */
+    id: string;
+    /**
+     * List of non-resource URLs that the rule applies to
+     */
+    nonResourceUrls: string[];
+    /**
+     * A human-readable note for the permission rule
+     */
+    note: string;
+    /**
+     * List of resource names that the rule applies to
+     */
+    resourceNames: string[];
+    /**
+     * List of resources that the rule applies to
+     */
+    resources: string[];
+    /**
+     * List of verbs that the rule applies to
+     */
+    verbs: string[];
+}
+
+export interface GetLoadbalancerListener {
+    /**
+     * The unique identifier of the listener
+     */
+    id: string;
+    /**
+     * The name of the listener
+     */
+    name: string;
+    /**
+     * The port of the listener
+     */
+    port: number;
+    /**
+     * The protocol of the listener
+     */
+    protocol: string;
+    /**
+     * The target group ID associated with the listener
+     */
+    targetGroupId: string;
 }
 
 export interface GetRegionsRegion {
@@ -125,11 +352,444 @@ export interface GetSecurityGroupIngressRule {
     remoteType: string;
 }
 
+export interface GetSnapshotPolicyTarget {
+    /**
+     * Label selector for volumes (when type is selector)
+     */
+    selector: {[key: string]: string};
+    /**
+     * Type of target (selector or explicit)
+     */
+    type: string;
+    /**
+     * List of volume identities (when type is explicit)
+     */
+    volumeIdentities: string[];
+}
+
+export interface GetTfsInstanceEndpoint {
+    /**
+     * IP address of the endpoint
+     */
+    address: string;
+    /**
+     * Hostname of the endpoint
+     */
+    hostname: string;
+    /**
+     * Identity of the endpoint
+     */
+    identity: string;
+    /**
+     * Port of the endpoint (defaults to 2049 for NFS)
+     */
+    port: number;
+}
+
+export interface GetVpcFirewallRuleProtocol {
+    /**
+     * Whether the rule applies to any protocol
+     */
+    any: boolean;
+    /**
+     * Whether the rule applies to ICMP protocol
+     */
+    icmp: boolean;
+    /**
+     * Whether the rule applies to TCP protocol
+     */
+    tcp: boolean;
+    /**
+     * Whether the rule applies to UDP protocol
+     */
+    udp: boolean;
+}
+
+export interface GetVpcFirewallRulesFirewallRule {
+    /**
+     * Action of the firewall rule (allow or drop)
+     */
+    action: string;
+    /**
+     * Time when the firewall rule was created
+     */
+    createdAt: string;
+    /**
+     * Destination CIDR of the firewall rule
+     */
+    destination: string;
+    /**
+     * Destination ports of the firewall rule
+     */
+    destinationPorts: number[];
+    /**
+     * Identity of the destination subnet
+     */
+    destinationSubnetId: string;
+    /**
+     * Direction of the firewall rule (inbound or outbound)
+     */
+    direction: string;
+    /**
+     * Identity of the VPC firewall rule
+     */
+    id: string;
+    /**
+     * Identity of the interface
+     */
+    interfaceId: string;
+    /**
+     * Name of the VPC firewall rule
+     */
+    name: string;
+    /**
+     * Priority of the firewall rule
+     */
+    priority: number;
+    /**
+     * Protocols that the firewall rule applies to
+     */
+    protocols: outputs.GetVpcFirewallRulesFirewallRuleProtocol[];
+    /**
+     * Source CIDR of the firewall rule
+     */
+    source: string;
+    /**
+     * Source ports of the firewall rule
+     */
+    sourcePorts: number[];
+    /**
+     * Identity of the source subnet
+     */
+    sourceSubnetId: string;
+    /**
+     * State of the firewall rule
+     */
+    state: string;
+}
+
+export interface GetVpcFirewallRulesFirewallRuleProtocol {
+    /**
+     * Whether the rule applies to any protocol
+     */
+    any: boolean;
+    /**
+     * Whether the rule applies to ICMP protocol
+     */
+    icmp: boolean;
+    /**
+     * Whether the rule applies to TCP protocol
+     */
+    tcp: boolean;
+    /**
+     * Whether the rule applies to UDP protocol
+     */
+    udp: boolean;
+}
+
+export interface GetVpcPeeringConnectionAccepterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionAccepterVpc {
+    /**
+     * Identity of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionRequesterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionRequesterVpc {
+    /**
+     * Identity of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionsPeeringConnection {
+    /**
+     * Next hop IP address for the accepter VPC
+     */
+    accepterNextHopIp: string;
+    /**
+     * Information about the accepter organisation
+     */
+    accepterOrganisations: outputs.GetVpcPeeringConnectionsPeeringConnectionAccepterOrganisation[];
+    /**
+     * Information about the accepter VPC
+     */
+    accepterVpcs: outputs.GetVpcPeeringConnectionsPeeringConnectionAccepterVpc[];
+    /**
+     * Annotations for the VPC peering connection
+     */
+    annotations: {[key: string]: string};
+    /**
+     * Time when the VPC peering connection was created
+     */
+    createdAt: string;
+    /**
+     * Description of the VPC peering connection
+     */
+    description: string;
+    /**
+     * Time when the peering request expires if not accepted
+     */
+    expiresAt: string;
+    /**
+     * Identity of the VPC peering connection
+     */
+    id: string;
+    /**
+     * Labels for the VPC peering connection
+     */
+    labels: {[key: string]: string};
+    /**
+     * Name of the VPC peering connection
+     */
+    name: string;
+    /**
+     * Next hop IP address for the requester VPC
+     */
+    requesterNextHopIp: string;
+    /**
+     * Information about the requester organisation
+     */
+    requesterOrganisations: outputs.GetVpcPeeringConnectionsPeeringConnectionRequesterOrganisation[];
+    /**
+     * Information about the requester VPC
+     */
+    requesterVpcs: outputs.GetVpcPeeringConnectionsPeeringConnectionRequesterVpc[];
+    /**
+     * Current status of the VPC peering connection
+     */
+    status: string;
+    /**
+     * Additional information about the current status
+     */
+    statusMessage: string;
+    /**
+     * Time when the VPC peering connection was last updated
+     */
+    updatedAt: string;
+}
+
+export interface GetVpcPeeringConnectionsPeeringConnectionAccepterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionsPeeringConnectionAccepterVpc {
+    /**
+     * Identity of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionsPeeringConnectionRequesterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface GetVpcPeeringConnectionsPeeringConnectionRequesterVpc {
+    /**
+     * Identity of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
+}
+
+export interface IamRoleRule {
+    /**
+     * Identity of the permission rule
+     */
+    identity: string;
+    /**
+     * Human-readable note for the permission rule
+     */
+    note?: string;
+    /**
+     * List of permissions (create, read, update, delete, list, *)
+     */
+    permissions: string[];
+    /**
+     * List of specific resource identities this rule applies to
+     */
+    resourceIdentities?: string[];
+    /**
+     * List of resources this rule applies to
+     */
+    resources: string[];
+}
+
+export interface IamServiceAccountRoleBinding {
+    /**
+     * Creation timestamp of the role binding
+     */
+    createdAt: string;
+    /**
+     * Description of the role binding
+     */
+    description: string;
+    /**
+     * Identity of the role binding
+     */
+    identity: string;
+    /**
+     * Name of the role binding
+     */
+    name: string;
+    /**
+     * Identity of the role binding
+     */
+    roleId: string;
+    /**
+     * Last update timestamp of the role binding
+     */
+    updatedAt: string;
+}
+
+export interface IamTeamMember {
+    /**
+     * Email address of the user to add to the team. If provided, userIdentity will be resolved automatically.
+     */
+    email?: string;
+    /**
+     * Role of the team member. Optional. Default: MEMBER.
+     */
+    role?: string;
+    /**
+     * Identity of the user to add to the team
+     */
+    userIdentity?: string;
+}
+
 export interface KubernetesClusterApiServerAcl {
     /**
      * List of allowed CIDRs for API server access
      */
     allowedCidrs?: string[];
+}
+
+export interface KubernetesClusterAutoscalerConfig {
+    /**
+     * Flag to balance the utilization of similar node groups by the cluster autoscaler
+     */
+    balanceSimilarNodeGroups?: boolean;
+    /**
+     * Flag to enable the proactive scale up of the cluster autoscaler. Whether to enable/disable proactive scale-ups, defaults to false
+     */
+    enableProactiveScaleUp?: boolean;
+    /**
+     * Estimator to use for the cluster autoscaler. Available values: binpacking
+     */
+    estimator?: string;
+    /**
+     * Expander to use for the cluster autoscaler
+     */
+    expander?: string;
+    /**
+     * Priority cutoff for the expendable pods by the cluster autoscaler
+     */
+    expendablePodsPriorityCutoff?: number;
+    /**
+     * Flag to ignore the utilization of daemonsets by the cluster autoscaler
+     */
+    ignoreDaemonsetsUtilization?: boolean;
+    /**
+     * Maximum graceful termination time for the cluster autoscaler. If the pod is not stopped within this time then the node is terminated anyway.
+     */
+    maxGracefulTerminationSec?: number;
+    /**
+     * Delay after adding a node to the node pool by the cluster autoscaler
+     */
+    scaleDownDelayAfterAdd?: string;
+    /**
+     * Flag to disable the scale down of node pools by the cluster autoscaler
+     */
+    scaleDownDisabled?: boolean;
+    /**
+     * Time after which a node can be scaled down by the cluster autoscaler
+     */
+    scaleDownUnneededTime?: string;
+    /**
+     * Utilization threshold for the cluster autoscaler. The autoscaler might scale down non-empty nodes with utilization below a threshold. To prevent this behavior, set the utilization threshold to 0
+     */
+    scaleDownUtilizationThreshold?: number;
+}
+
+export interface KubernetesClusterRoleRule {
+    /**
+     * List of API groups that the rule applies to
+     */
+    apiGroups?: string[];
+    /**
+     * The unique identifier of the permission rule
+     */
+    id: string;
+    /**
+     * List of non-resource URLs that the rule applies to
+     */
+    nonResourceUrls?: string[];
+    /**
+     * A human-readable note for the permission rule
+     */
+    note?: string;
+    /**
+     * List of resource names that the rule applies to
+     */
+    resourceNames?: string[];
+    /**
+     * List of resources that the rule applies to
+     */
+    resources: string[];
+    /**
+     * List of verbs that the rule applies to
+     */
+    verbs: string[];
 }
 
 export interface KubernetesNodePoolNodeTaint {
@@ -185,7 +845,50 @@ export interface SecurityGroupEgressRule {
      */
     remoteAddress?: string;
     /**
-     * Identity of the security group that the rule applies to
+     * ID of the Security Group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: string;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: string;
+}
+
+export interface SecurityGroupEgressRuleRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: string;
+    /**
+     * Name of the rule
+     */
+    name: string;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: string;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: number;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: number;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: number;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: string;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: string;
+    /**
+     * ID of the Security Group that the rule applies to
      */
     remoteSecurityGroupIdentity?: string;
     /**
@@ -237,10 +940,150 @@ export interface SecurityGroupIngressRule {
     remoteType: string;
 }
 
+export interface SecurityGroupIngressRuleRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: string;
+    /**
+     * Name of the rule
+     */
+    name: string;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: string;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: number;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: number;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: number;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: string;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: string;
+    /**
+     * ID of the Security Group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: string;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: string;
+}
+
+export interface SnapshotPolicyTarget {
+    /**
+     * Label selector for volumes (required when type is 'selector')
+     */
+    selector?: {[key: string]: string};
+    /**
+     * Type of target: 'selector' to target volumes based on labels, or 'explicit' to target specific volumes
+     */
+    type: string;
+    /**
+     * List of volume identities (required when type is 'explicit')
+     */
+    volumeIdentities?: string[];
+}
+
 export interface TargetGroupAttachment {
     /**
      * The ID of the target (e.g. instance ID)
      */
     id: string;
+}
+
+export interface TfsInstanceEndpoint {
+    /**
+     * IP address of the endpoint
+     */
+    address: string;
+    /**
+     * Hostname of the endpoint
+     */
+    hostname: string;
+    /**
+     * Identity of the endpoint
+     */
+    identity: string;
+    /**
+     * Port of the endpoint (defaults to 2049 for NFS)
+     */
+    port: number;
+}
+
+export interface VpcFirewallRuleProtocols {
+    /**
+     * Whether the rule applies to any protocol
+     */
+    any?: boolean;
+    /**
+     * Whether the rule applies to ICMP protocol
+     */
+    icmp?: boolean;
+    /**
+     * Whether the rule applies to TCP protocol
+     */
+    tcp?: boolean;
+    /**
+     * Whether the rule applies to UDP protocol
+     */
+    udp?: boolean;
+}
+
+export interface VpcPeeringConnectionAccepterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface VpcPeeringConnectionAccepterVpc {
+    /**
+     * ID of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
+}
+
+export interface VpcPeeringConnectionRequesterOrganisation {
+    /**
+     * ID of the organisation
+     */
+    identity: string;
+    /**
+     * Name of the organisation
+     */
+    name: string;
+}
+
+export interface VpcPeeringConnectionRequesterVpc {
+    /**
+     * ID of the VPC
+     */
+    identity: string;
+    /**
+     * Name of the VPC
+     */
+    name: string;
 }
 

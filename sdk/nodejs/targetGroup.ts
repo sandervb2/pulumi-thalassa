@@ -13,19 +13,17 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the target group
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for target group",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a target group with all optional attributes
- * const exampleTargetGroup = new thalassa.TargetGroup("example", {
- *     name: "example-target-group",
- *     vpcId: example.id,
+ * const exampleTargetGroup = new thalassa.TargetGroup("exampleTargetGroup", {
+ *     vpcId: exampleVpc.id,
  *     protocol: "tcp",
  *     port: 80,
  *     description: "Example target group for documentation with all optional attributes",
@@ -42,6 +40,7 @@ import * as utilities from "./utilities";
  *     healthyThreshold: 3,
  *     unhealthyThreshold: 3,
  * });
+ * // 3 failed checks to mark unhealthy
  * export const targetGroupId = exampleTargetGroup.id;
  * ```
  */

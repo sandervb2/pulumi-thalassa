@@ -47,6 +47,10 @@ export interface GetObjectstorageBucketResult {
      * Name of the bucket
      */
     readonly name: string;
+    /**
+     * Whether the bucket has object lock enabled
+     */
+    readonly objectLockEnabled: boolean;
     readonly organisationId?: string;
     /**
      * The bucket policy as a JSON string
@@ -64,6 +68,10 @@ export interface GetObjectstorageBucketResult {
      * Status of the bucket
      */
     readonly status: string;
+    /**
+     * Whether the bucket is versioned
+     */
+    readonly versioning: boolean;
 }
 /**
  * Get an object storage bucket

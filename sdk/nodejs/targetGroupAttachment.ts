@@ -11,33 +11,29 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the resources
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for target group attachment",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the resources
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for target group attachment",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a target group
- * const exampleTargetGroup = new thalassa.TargetGroup("example", {
- *     name: "example-target-group",
+ * const exampleTargetGroup = new thalassa.TargetGroup("exampleTargetGroup", {
  *     description: "Example target group for attachment",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     protocol: "tcp",
  *     port: 80,
  * });
  * // Create a virtual machine instance
- * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("example", {
- *     name: "example-instance",
+ * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("exampleVirtualMachineInstance", {
  *     subnetId: exampleSubnet.id,
  *     machineType: "pgp-small",
  *     machineImage: "ubuntu-22.04",
@@ -45,8 +41,9 @@ import * as utilities from "./utilities";
  *     rootVolumeSizeGb: 20,
  *     rootVolumeType: "Block",
  * });
+ * // Available: Block, Premium Block
  * // Create a target group attachment with all required attributes
- * const exampleTargetGroupAttachment = new thalassa.TargetGroupAttachment("example", {
+ * const exampleTargetGroupAttachment = new thalassa.TargetGroupAttachment("exampleTargetGroupAttachment", {
  *     targetGroupId: exampleTargetGroup.id,
  *     vmiId: exampleVirtualMachineInstance.id,
  * });

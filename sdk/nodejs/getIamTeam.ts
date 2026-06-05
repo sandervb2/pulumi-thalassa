@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -61,6 +63,10 @@ export interface GetIamTeamResult {
      * Labels for the Team
      */
     readonly labels: {[key: string]: string};
+    /**
+     * List of team members
+     */
+    readonly members: outputs.GetIamTeamMember[];
     /**
      * Name of the Team
      */

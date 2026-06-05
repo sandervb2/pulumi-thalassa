@@ -11,19 +11,17 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the route table
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for route table",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a route table
- * const exampleRouteTable = new thalassa.RouteTable("example", {
- *     name: "example-route-table",
- *     vpcId: example.id,
+ * const exampleRouteTable = new thalassa.RouteTable("exampleRouteTable", {
+ *     vpcId: exampleVpc.id,
  *     description: "Example route table for documentation",
  *     labels: {
  *         environment: "production",

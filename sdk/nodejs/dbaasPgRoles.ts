@@ -11,25 +11,22 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for database cluster",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the database cluster
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for database cluster",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a database cluster for the PostgreSQL roles
- * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("example", {
- *     name: "example-db-cluster",
+ * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("exampleDbaasDbCluster", {
  *     description: "Example database cluster for PostgreSQL roles",
  *     subnetId: exampleSubnet.id,
  *     databaseInstanceType: "db-pgp-small",
@@ -39,11 +36,11 @@ import * as utilities from "./utilities";
  *     volumeTypeClass: "block",
  * });
  * // Create PostgreSQL roles with Thalassa default values
- * const exampleDbaasPgRoles = new thalassa.DbaasPgRoles("example", {
+ * const exampleDbaasPgRoles = new thalassa.DbaasPgRoles("exampleDbaasPgRoles", {
  *     dbClusterId: exampleDbaasDbCluster.id,
- *     name: "example_role",
  *     password: "secure_password_123",
  * });
+ * // Replace with secure password
  * export const pgRolesId = exampleDbaasPgRoles.id;
  * export const pgRolesName = exampleDbaasPgRoles.name;
  * ```

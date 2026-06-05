@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -11,11 +13,10 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create an organisation role
  * const example = new thalassa.IamRole("example", {
- *     name: "example-role",
  *     description: "An example organisation role for demonstration purposes",
  *     labels: {
  *         environment: "development",
@@ -24,11 +25,37 @@ import * as utilities from "./utilities";
  *     annotations: {
  *         "example.com/created-by": "terraform",
  *     },
+ *     rules: [
+ *         {
+ *             resources: [
+ *                 "cloud_vpc",
+ *                 "cloud_subnet",
+ *             ],
+ *             permissions: [
+ *                 "read",
+ *                 "list",
+ *             ],
+ *             note: "Allow read access to VPCs and subnets",
+ *         },
+ *         {
+ *             resources: ["cloud_vpc"],
+ *             resourceIdentities: [
+ *                 "vpc-123",
+ *                 "vpc-456",
+ *             ],
+ *             permissions: [
+ *                 "update",
+ *                 "delete",
+ *             ],
+ *             note: "Allow update/delete for specific VPCs",
+ *         },
+ *     ],
  * });
  * export const roleId = example.id;
  * export const roleName = example.name;
  * export const roleSlug = example.slug;
  * export const roleDescription = example.description;
+ * export const roleRules = example.rules;
  * ```
  */
 export class IamRole extends pulumi.CustomResource {
@@ -84,6 +111,10 @@ export class IamRole extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly roleIsReadOnly: pulumi.Output<boolean>;
     /**
+     * Permission rules for the organisation role
+     */
+    declare public readonly rules: pulumi.Output<outputs.IamRoleRule[] | undefined>;
+    /**
      * Slug of the organisation role
      */
     declare public /*out*/ readonly slug: pulumi.Output<string>;
@@ -115,6 +146,7 @@ export class IamRole extends pulumi.CustomResource {
             resourceInputs["labels"] = state?.labels;
             resourceInputs["name"] = state?.name;
             resourceInputs["roleIsReadOnly"] = state?.roleIsReadOnly;
+            resourceInputs["rules"] = state?.rules;
             resourceInputs["slug"] = state?.slug;
             resourceInputs["system"] = state?.system;
             resourceInputs["updatedAt"] = state?.updatedAt;
@@ -124,6 +156,7 @@ export class IamRole extends pulumi.CustomResource {
             resourceInputs["description"] = args?.description;
             resourceInputs["labels"] = args?.labels;
             resourceInputs["name"] = args?.name;
+            resourceInputs["rules"] = args?.rules;
             resourceInputs["createdAt"] = undefined /*out*/;
             resourceInputs["roleIsReadOnly"] = undefined /*out*/;
             resourceInputs["slug"] = undefined /*out*/;
@@ -164,6 +197,10 @@ export interface IamRoleState {
      */
     roleIsReadOnly?: pulumi.Input<boolean>;
     /**
+     * Permission rules for the organisation role
+     */
+    rules?: pulumi.Input<pulumi.Input<inputs.IamRoleRule>[]>;
+    /**
      * Slug of the organisation role
      */
     slug?: pulumi.Input<string>;
@@ -197,4 +234,8 @@ export interface IamRoleArgs {
      * Name of the organisation role
      */
     name?: pulumi.Input<string>;
+    /**
+     * Permission rules for the organisation role
+     */
+    rules?: pulumi.Input<pulumi.Input<inputs.IamRoleRule>[]>;
 }

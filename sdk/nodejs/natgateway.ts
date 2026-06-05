@@ -11,25 +11,22 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the NAT gateway
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for NAT gateway",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the NAT gateway
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for NAT gateway",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a NAT gateway with all optional attributes
- * const exampleNatgateway = new thalassa.Natgateway("example", {
- *     name: "example-nat-gateway",
+ * const exampleNatgateway = new thalassa.Natgateway("exampleNatgateway", {
  *     subnetId: exampleSubnet.id,
  *     description: "Example NAT gateway for documentation",
  *     labels: {

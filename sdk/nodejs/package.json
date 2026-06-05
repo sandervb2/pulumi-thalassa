@@ -1,15 +1,13 @@
 {
     "name": "@sandervb2/pulumi-thalassa",
-    "version": "0.1.0",
+    "version": "0.4.0",
     "description": "A Pulumi package for creating and managing Thalassa Cloud resources.",
     "keywords": [
         "thalassa",
         "category/cloud"
     ],
     "homepage": "https://github.com/sandervb2/pulumi-thalassa",
-    "repository": { "type": "git", "url": "git+https://github.com/sandervb2/pulumi-thalassa.git" },
-    "bugs": { "url": "https://github.com/sandervb2/pulumi-thalassa/issues" },
-    "publishConfig": { "access": "public", "provenance": true },
+    "repository": "https://github.com/sandervb2/pulumi-thalassa",
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
@@ -25,6 +23,7 @@
     "pulumi": {
         "resource": true,
         "name": "thalassa",
+        "version": "0.4.0",
         "server": "github://api.github.com/sandervb2/pulumi-thalassa"
     }
 }

@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -70,6 +72,10 @@ export interface GetIamRoleResult {
      * Whether the role is read-only and cannot be modified.
      */
     readonly roleIsReadOnly: boolean;
+    /**
+     * Permission rules for the organisation role
+     */
+    readonly rules: outputs.GetIamRoleRule[];
     /**
      * Slug of the Organisation Role
      */

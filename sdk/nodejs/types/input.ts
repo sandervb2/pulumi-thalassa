@@ -5,11 +5,165 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface DbaasDbClusterRestoreRecoveryTarget {
+    /**
+     * Log Sequence Number to restore to. Example: '0/1234567'
+     */
+    targetLsn?: pulumi.Input<string>;
+    /**
+     * Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+     */
+    targetTime?: pulumi.Input<string>;
+}
+
+export interface IamRoleRule {
+    /**
+     * Identity of the permission rule
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Human-readable note for the permission rule
+     */
+    note?: pulumi.Input<string>;
+    /**
+     * List of permissions (create, read, update, delete, list, *)
+     */
+    permissions: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of specific resource identities this rule applies to
+     */
+    resourceIdentities?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of resources this rule applies to
+     */
+    resources: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface IamServiceAccountRoleBinding {
+    /**
+     * Creation timestamp of the role binding
+     */
+    createdAt?: pulumi.Input<string>;
+    /**
+     * Description of the role binding
+     */
+    description?: pulumi.Input<string>;
+    /**
+     * Identity of the role binding
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Name of the role binding
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Identity of the role binding
+     */
+    roleId?: pulumi.Input<string>;
+    /**
+     * Last update timestamp of the role binding
+     */
+    updatedAt?: pulumi.Input<string>;
+}
+
+export interface IamTeamMember {
+    /**
+     * Email address of the user to add to the team. If provided, userIdentity will be resolved automatically.
+     */
+    email?: pulumi.Input<string>;
+    /**
+     * Role of the team member. Optional. Default: MEMBER.
+     */
+    role?: pulumi.Input<string>;
+    /**
+     * Identity of the user to add to the team
+     */
+    userIdentity?: pulumi.Input<string>;
+}
+
 export interface KubernetesClusterApiServerAcl {
     /**
      * List of allowed CIDRs for API server access
      */
     allowedCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface KubernetesClusterAutoscalerConfig {
+    /**
+     * Flag to balance the utilization of similar node groups by the cluster autoscaler
+     */
+    balanceSimilarNodeGroups?: pulumi.Input<boolean>;
+    /**
+     * Flag to enable the proactive scale up of the cluster autoscaler. Whether to enable/disable proactive scale-ups, defaults to false
+     */
+    enableProactiveScaleUp?: pulumi.Input<boolean>;
+    /**
+     * Estimator to use for the cluster autoscaler. Available values: binpacking
+     */
+    estimator?: pulumi.Input<string>;
+    /**
+     * Expander to use for the cluster autoscaler
+     */
+    expander?: pulumi.Input<string>;
+    /**
+     * Priority cutoff for the expendable pods by the cluster autoscaler
+     */
+    expendablePodsPriorityCutoff?: pulumi.Input<number>;
+    /**
+     * Flag to ignore the utilization of daemonsets by the cluster autoscaler
+     */
+    ignoreDaemonsetsUtilization?: pulumi.Input<boolean>;
+    /**
+     * Maximum graceful termination time for the cluster autoscaler. If the pod is not stopped within this time then the node is terminated anyway.
+     */
+    maxGracefulTerminationSec?: pulumi.Input<number>;
+    /**
+     * Delay after adding a node to the node pool by the cluster autoscaler
+     */
+    scaleDownDelayAfterAdd?: pulumi.Input<string>;
+    /**
+     * Flag to disable the scale down of node pools by the cluster autoscaler
+     */
+    scaleDownDisabled?: pulumi.Input<boolean>;
+    /**
+     * Time after which a node can be scaled down by the cluster autoscaler
+     */
+    scaleDownUnneededTime?: pulumi.Input<string>;
+    /**
+     * Utilization threshold for the cluster autoscaler. The autoscaler might scale down non-empty nodes with utilization below a threshold. To prevent this behavior, set the utilization threshold to 0
+     */
+    scaleDownUtilizationThreshold?: pulumi.Input<number>;
+}
+
+export interface KubernetesClusterRoleRule {
+    /**
+     * List of API groups that the rule applies to
+     */
+    apiGroups?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The unique identifier of the permission rule
+     */
+    id?: pulumi.Input<string>;
+    /**
+     * List of non-resource URLs that the rule applies to
+     */
+    nonResourceUrls?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * A human-readable note for the permission rule
+     */
+    note?: pulumi.Input<string>;
+    /**
+     * List of resource names that the rule applies to
+     */
+    resourceNames?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of resources that the rule applies to
+     */
+    resources: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of verbs that the rule applies to
+     */
+    verbs: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface KubernetesNodePoolNodeTaint {
@@ -65,7 +219,50 @@ export interface SecurityGroupEgressRule {
      */
     remoteAddress?: pulumi.Input<string>;
     /**
-     * Identity of the security group that the rule applies to
+     * ID of the Security Group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: pulumi.Input<string>;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: pulumi.Input<string>;
+}
+
+export interface SecurityGroupEgressRuleRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: pulumi.Input<string>;
+    /**
+     * Name of the rule
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: pulumi.Input<string>;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: pulumi.Input<number>;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: pulumi.Input<number>;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: pulumi.Input<number>;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: pulumi.Input<string>;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: pulumi.Input<string>;
+    /**
+     * ID of the Security Group that the rule applies to
      */
     remoteSecurityGroupIdentity?: pulumi.Input<string>;
     /**
@@ -117,9 +314,149 @@ export interface SecurityGroupIngressRule {
     remoteType: pulumi.Input<string>;
 }
 
+export interface SecurityGroupIngressRuleRule {
+    /**
+     * IP version of the rule (ipv4 or ipv6)
+     */
+    ipVersion: pulumi.Input<string>;
+    /**
+     * Name of the rule
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Policy of the rule (allow or drop)
+     */
+    policy: pulumi.Input<string>;
+    /**
+     * Maximum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMax?: pulumi.Input<number>;
+    /**
+     * Minimum port of the rule. Must be greater than 0 and less than 65535.
+     */
+    portRangeMin?: pulumi.Input<number>;
+    /**
+     * Priority of the rule. Must be greater than 0 and less than 200.
+     */
+    priority: pulumi.Input<number>;
+    /**
+     * Protocol of the rule (all, tcp, udp, icmp)
+     */
+    protocol: pulumi.Input<string>;
+    /**
+     * IP address or CIDR block that the rule applies to
+     */
+    remoteAddress?: pulumi.Input<string>;
+    /**
+     * ID of the Security Group that the rule applies to
+     */
+    remoteSecurityGroupIdentity?: pulumi.Input<string>;
+    /**
+     * Type of the remote address (address or securityGroup)
+     */
+    remoteType: pulumi.Input<string>;
+}
+
+export interface SnapshotPolicyTarget {
+    /**
+     * Label selector for volumes (required when type is 'selector')
+     */
+    selector?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Type of target: 'selector' to target volumes based on labels, or 'explicit' to target specific volumes
+     */
+    type: pulumi.Input<string>;
+    /**
+     * List of volume identities (required when type is 'explicit')
+     */
+    volumeIdentities?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface TargetGroupAttachment {
     /**
      * The ID of the target (e.g. instance ID)
      */
     id: pulumi.Input<string>;
+}
+
+export interface TfsInstanceEndpoint {
+    /**
+     * IP address of the endpoint
+     */
+    address?: pulumi.Input<string>;
+    /**
+     * Hostname of the endpoint
+     */
+    hostname?: pulumi.Input<string>;
+    /**
+     * Identity of the endpoint
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Port of the endpoint (defaults to 2049 for NFS)
+     */
+    port?: pulumi.Input<number>;
+}
+
+export interface VpcFirewallRuleProtocols {
+    /**
+     * Whether the rule applies to any protocol
+     */
+    any?: pulumi.Input<boolean>;
+    /**
+     * Whether the rule applies to ICMP protocol
+     */
+    icmp?: pulumi.Input<boolean>;
+    /**
+     * Whether the rule applies to TCP protocol
+     */
+    tcp?: pulumi.Input<boolean>;
+    /**
+     * Whether the rule applies to UDP protocol
+     */
+    udp?: pulumi.Input<boolean>;
+}
+
+export interface VpcPeeringConnectionAccepterOrganisation {
+    /**
+     * Identity of the organisation
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Name of the organisation
+     */
+    name?: pulumi.Input<string>;
+}
+
+export interface VpcPeeringConnectionAccepterVpc {
+    /**
+     * ID of the VPC
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Name of the VPC
+     */
+    name?: pulumi.Input<string>;
+}
+
+export interface VpcPeeringConnectionRequesterOrganisation {
+    /**
+     * ID of the organisation
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Name of the organisation
+     */
+    name?: pulumi.Input<string>;
+}
+
+export interface VpcPeeringConnectionRequesterVpc {
+    /**
+     * ID of the VPC
+     */
+    identity?: pulumi.Input<string>;
+    /**
+     * Name of the VPC
+     */
+    name?: pulumi.Input<string>;
 }

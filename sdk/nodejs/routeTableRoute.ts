@@ -11,35 +11,29 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the route table
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for route table route",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the NAT gateway
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for NAT gateway",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a route table
- * const exampleRouteTable = new thalassa.RouteTable("example", {
- *     name: "example-route-table",
+ * const exampleRouteTable = new thalassa.RouteTable("exampleRouteTable", {
  *     description: "Example route table for route",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  * });
  * // Create a NAT gateway for the route
- * const exampleNatgateway = new thalassa.Natgateway("example", {
- *     name: "example-nat-gateway",
- *     subnetId: exampleSubnet.id,
- * });
+ * const exampleNatgateway = new thalassa.Natgateway("exampleNatgateway", {subnetId: exampleSubnet.id});
  * // Create a route table route
- * const exampleRouteTableRoute = new thalassa.RouteTableRoute("example", {
+ * const exampleRouteTableRoute = new thalassa.RouteTableRoute("exampleRouteTableRoute", {
  *     routeTableId: exampleRouteTable.id,
  *     destinationCidr: "0.0.0.0/0",
  *     targetNatgateway: exampleNatgateway.id,
@@ -104,6 +98,10 @@ export class RouteTableRoute extends pulumi.CustomResource {
      * Target NAT Gateway of the Route
      */
     declare public readonly targetNatgateway: pulumi.Output<string | undefined>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    declare public readonly targetVpcPeeringConnection: pulumi.Output<string | undefined>;
 
     /**
      * Create a RouteTableRoute resource with the given unique name, arguments, and options.
@@ -125,6 +123,7 @@ export class RouteTableRoute extends pulumi.CustomResource {
             resourceInputs["routeTableId"] = state?.routeTableId;
             resourceInputs["targetGateway"] = state?.targetGateway;
             resourceInputs["targetNatgateway"] = state?.targetNatgateway;
+            resourceInputs["targetVpcPeeringConnection"] = state?.targetVpcPeeringConnection;
         } else {
             const args = argsOrState as RouteTableRouteArgs | undefined;
             if (args?.destinationCidr === undefined && !opts.urn) {
@@ -140,6 +139,7 @@ export class RouteTableRoute extends pulumi.CustomResource {
             resourceInputs["routeTableId"] = args?.routeTableId;
             resourceInputs["targetGateway"] = args?.targetGateway;
             resourceInputs["targetNatgateway"] = args?.targetNatgateway;
+            resourceInputs["targetVpcPeeringConnection"] = args?.targetVpcPeeringConnection;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(RouteTableRoute.__pulumiType, name, resourceInputs, opts);
@@ -178,6 +178,10 @@ export interface RouteTableRouteState {
      * Target NAT Gateway of the Route
      */
     targetNatgateway?: pulumi.Input<string>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    targetVpcPeeringConnection?: pulumi.Input<string>;
 }
 
 /**
@@ -212,4 +216,8 @@ export interface RouteTableRouteArgs {
      * Target NAT Gateway of the Route
      */
     targetNatgateway?: pulumi.Input<string>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    targetVpcPeeringConnection?: pulumi.Input<string>;
 }

@@ -11,25 +11,22 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for database cluster",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the database cluster
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
  *     description: "Example subnet for database cluster",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  * });
  * // Create a database cluster for the PostgreSQL database
- * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("example", {
- *     name: "example-db-cluster",
+ * const exampleDbaasDbCluster = new thalassa.DbaasDbCluster("exampleDbaasDbCluster", {
  *     description: "Example database cluster for PostgreSQL database",
  *     subnetId: exampleSubnet.id,
  *     databaseInstanceType: "db-pgp-small",
@@ -39,14 +36,13 @@ import * as utilities from "./utilities";
  *     volumeTypeClass: "block",
  * });
  * // Create PostgreSQL roles first
- * const exampleDbaasPgRoles = new thalassa.DbaasPgRoles("example", {
+ * const exampleDbaasPgRoles = new thalassa.DbaasPgRoles("exampleDbaasPgRoles", {
  *     dbClusterId: exampleDbaasDbCluster.id,
- *     name: "myrole",
  *     password: "secure_password_123",
  * });
+ * // Replace with secure password
  * // Create a PostgreSQL database with Thalassa default values
- * const exampleDbaasPgDatabase = new thalassa.DbaasPgDatabase("example", {
- *     name: "mydatabase2",
+ * const exampleDbaasPgDatabase = new thalassa.DbaasPgDatabase("exampleDbaasPgDatabase", {
  *     dbClusterId: exampleDbaasDbCluster.id,
  *     ownerRoleId: exampleDbaasPgRoles.id,
  * });
@@ -83,6 +79,10 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
     }
 
     /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    declare public readonly allowConnections: pulumi.Output<boolean | undefined>;
+    /**
      * The connection limit of the database
      */
     declare public readonly connectionLimit: pulumi.Output<number | undefined>;
@@ -113,6 +113,7 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DbaasPgDatabaseState | undefined;
+            resourceInputs["allowConnections"] = state?.allowConnections;
             resourceInputs["connectionLimit"] = state?.connectionLimit;
             resourceInputs["dbClusterId"] = state?.dbClusterId;
             resourceInputs["name"] = state?.name;
@@ -126,6 +127,7 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
             if (args?.ownerRoleId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ownerRoleId'");
             }
+            resourceInputs["allowConnections"] = args?.allowConnections;
             resourceInputs["connectionLimit"] = args?.connectionLimit;
             resourceInputs["dbClusterId"] = args?.dbClusterId;
             resourceInputs["name"] = args?.name;
@@ -141,6 +143,10 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DbaasPgDatabase resources.
  */
 export interface DbaasPgDatabaseState {
+    /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    allowConnections?: pulumi.Input<boolean>;
     /**
      * The connection limit of the database
      */
@@ -164,6 +170,10 @@ export interface DbaasPgDatabaseState {
  * The set of arguments for constructing a DbaasPgDatabase resource.
  */
 export interface DbaasPgDatabaseArgs {
+    /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    allowConnections?: pulumi.Input<boolean>;
     /**
      * The connection limit of the database
      */

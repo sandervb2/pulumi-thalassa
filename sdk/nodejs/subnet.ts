@@ -11,25 +11,22 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the subnet
- * const example = new thalassa.Vpc("example", {
- *     name: "example-vpc",
+ * const exampleVpc = new thalassa.Vpc("exampleVpc", {
  *     description: "Example VPC for subnet",
  *     region: "nl-01",
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a route table for the subnet (optional)
- * const exampleRouteTable = new thalassa.RouteTable("example", {
- *     name: "example-route-table",
+ * const exampleRouteTable = new thalassa.RouteTable("exampleRouteTable", {
  *     description: "Example route table for subnet",
- *     vpcId: example.id,
+ *     vpcId: exampleVpc.id,
  * });
  * // Create a subnet with all optional attributes
- * const exampleSubnet = new thalassa.Subnet("example", {
- *     name: "example-subnet",
- *     vpcId: example.id,
+ * const exampleSubnet = new thalassa.Subnet("exampleSubnet", {
+ *     vpcId: exampleVpc.id,
  *     cidr: "10.0.1.0/24",
  *     description: "Example subnet for documentation with all optional attributes",
  *     labels: {
