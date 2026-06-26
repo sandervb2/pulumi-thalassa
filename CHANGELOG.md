@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/sandervb2/pulumi-thalassa/compare/v0.3.0...v0.4.0) (2026-06-26)
+
+
+### Features
+
+* **deps:** sync upstream provider to v0.25.1 — adds 24 resources and 17 datasources (DNS, IAM, KMS, Secrets, Snapshots, security group rules, VPC peering and firewall rules); no resources removed ([#223](https://github.com/sandervb2/pulumi-thalassa/issues/223)) ([f7a1030](https://github.com/sandervb2/pulumi-thalassa/commit/f7a1030cf0b75fb9fe9e9cec45b87a8c6f076763))
+
 ## [0.2.0](https://github.com/sandervb2/pulumi-thalassa/compare/v0.1.0...v0.2.0) (2025-09-15)
 
 
