@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -11,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a team
  * const example = new thalassa.IamTeam("example", {
@@ -30,6 +32,8 @@ import * as utilities from "./utilities";
  * export const teamName = example.name;
  * export const teamSlug = example.slug;
  * export const teamDescription = example.description;
+ * export const teamMembers = example.members;
+ * export const teamMemberCount = example.members.length;
  * ```
  */
 export class IamTeam extends pulumi.CustomResource {
@@ -77,9 +81,16 @@ export class IamTeam extends pulumi.CustomResource {
      */
     declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
+     * List of team members
+     */
+    declare public readonly members: pulumi.Output<outputs.IamTeamMember[] | undefined>;
+    /**
      * Name of the Team
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * Slug of the Team
@@ -107,6 +118,7 @@ export class IamTeam extends pulumi.CustomResource {
             resourceInputs["createdAt"] = state?.createdAt;
             resourceInputs["description"] = state?.description;
             resourceInputs["labels"] = state?.labels;
+            resourceInputs["members"] = state?.members;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["slug"] = state?.slug;
@@ -116,6 +128,7 @@ export class IamTeam extends pulumi.CustomResource {
             resourceInputs["annotations"] = args?.annotations;
             resourceInputs["description"] = args?.description;
             resourceInputs["labels"] = args?.labels;
+            resourceInputs["members"] = args?.members;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["createdAt"] = undefined /*out*/;
@@ -134,32 +147,39 @@ export interface IamTeamState {
     /**
      * Annotations for the Team
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Creation timestamp of the Team
      */
-    createdAt?: pulumi.Input<string>;
+    createdAt?: pulumi.Input<string | undefined>;
     /**
      * A human readable description about the team
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Team
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * List of team members
+     */
+    members?: pulumi.Input<pulumi.Input<inputs.IamTeamMember>[] | undefined>;
     /**
      * Name of the Team
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the Team
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Last update timestamp of the Team
      */
-    updatedAt?: pulumi.Input<string>;
+    updatedAt?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -169,18 +189,25 @@ export interface IamTeamArgs {
     /**
      * Annotations for the Team
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * A human readable description about the team
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Team
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * List of team members
+     */
+    members?: pulumi.Input<pulumi.Input<inputs.IamTeamMember>[] | undefined>;
     /**
      * Name of the Team
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

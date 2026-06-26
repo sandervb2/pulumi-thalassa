@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -30,6 +32,9 @@ export interface GetIamRoleArgs {
      * Name of the Organisation Role
      */
     name?: string;
+    /**
+     * Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Slug of the Organisation Role
@@ -65,11 +70,18 @@ export interface GetIamRoleResult {
      * Name of the Organisation Role
      */
     readonly name?: string;
+    /**
+     * Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Whether the role is read-only and cannot be modified.
      */
     readonly roleIsReadOnly: boolean;
+    /**
+     * Permission rules for the organisation role
+     */
+    readonly rules: outputs.GetIamRoleRule[];
     /**
      * Slug of the Organisation Role
      */
@@ -104,14 +116,17 @@ export interface GetIamRoleOutputArgs {
     /**
      * A human readable description about the role
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Name of the Organisation Role
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the Organisation Role
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

@@ -32,6 +32,26 @@ namespace Pulumi.Thalassa
 
         private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("thalassa");
 
+        private static readonly __Value<string?> _accessToken = new __Value<string?>(() => __config.Get("accessToken"));
+        /// <summary>
+        /// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        /// </summary>
+        public static string? AccessToken
+        {
+            get => _accessToken.Get();
+            set => _accessToken.Set(value);
+        }
+
+        private static readonly __Value<bool?> _allowInsecureOidc = new __Value<bool?>(() => __config.GetBoolean("allowInsecureOidc"));
+        /// <summary>
+        /// Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+        /// </summary>
+        public static bool? AllowInsecureOidc
+        {
+            get => _allowInsecureOidc.Get();
+            set => _allowInsecureOidc.Set(value);
+        }
+
         private static readonly __Value<string?> _api = new __Value<string?>(() => __config.Get("api"));
         /// <summary>
         /// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
@@ -70,6 +90,16 @@ namespace Pulumi.Thalassa
         {
             get => _organisationId.Get();
             set => _organisationId.Set(value);
+        }
+
+        private static readonly __Value<string?> _projectId = new __Value<string?>(() => __config.Get("projectId"));
+        /// <summary>
+        /// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        /// </summary>
+        public static string? ProjectId
+        {
+            get => _projectId.Get();
+            set => _projectId.Set(value);
         }
 
         private static readonly __Value<string?> _token = new __Value<string?>(() => __config.Get("token"));

@@ -84,6 +84,12 @@ namespace Pulumi.Thalassa
     public partial class DbaasPgDatabase : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// If false then no one can connect to this database. Defaults to true.
+        /// </summary>
+        [Output("allowConnections")]
+        public Output<bool?> AllowConnections { get; private set; } = null!;
+
+        /// <summary>
         /// The connection limit of the database
         /// </summary>
         [Output("connectionLimit")]
@@ -101,6 +107,9 @@ namespace Pulumi.Thalassa
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -158,6 +167,12 @@ namespace Pulumi.Thalassa
     public sealed class DbaasPgDatabaseArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// If false then no one can connect to this database. Defaults to true.
+        /// </summary>
+        [Input("allowConnections")]
+        public Input<bool>? AllowConnections { get; set; }
+
+        /// <summary>
         /// The connection limit of the database
         /// </summary>
         [Input("connectionLimit")]
@@ -175,6 +190,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -193,6 +211,12 @@ namespace Pulumi.Thalassa
     public sealed class DbaasPgDatabaseState : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// If false then no one can connect to this database. Defaults to true.
+        /// </summary>
+        [Input("allowConnections")]
+        public Input<bool>? AllowConnections { get; set; }
+
+        /// <summary>
         /// The connection limit of the database
         /// </summary>
         [Input("connectionLimit")]
@@ -210,6 +234,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

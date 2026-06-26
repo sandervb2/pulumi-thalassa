@@ -80,6 +80,9 @@ class GetRegionResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> _builtins.str:
+        """
+        Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -108,6 +111,9 @@ def get_region(organisation_id: Optional[_builtins.str] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetRegionResult:
     """
     Get an region
+
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['organisationId'] = organisation_id
@@ -123,11 +129,14 @@ def get_region(organisation_id: Optional[_builtins.str] = None,
         name=pulumi.get(__ret__, 'name'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         slug=pulumi.get(__ret__, 'slug'))
-def get_region_output(organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                      slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_region_output(organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                      slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetRegionResult]:
     """
     Get an region
+
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['organisationId'] = organisation_id

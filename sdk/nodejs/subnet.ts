@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the subnet
  * const example = new thalassa.Vpc("example", {
@@ -111,6 +111,9 @@ export class Subnet extends pulumi.CustomResource {
      * Name of the Subnet
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * Route Table of the Subnet
@@ -197,60 +200,63 @@ export interface SubnetState {
     /**
      * Annotations for the Subnet
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * CIDR of the Subnet
      */
-    cidr?: pulumi.Input<string>;
+    cidr?: pulumi.Input<string | undefined>;
     /**
      * A human readable description about the subnet
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Number of IPv4 addresses available in the Subnet
      */
-    ipv4AddressesAvailable?: pulumi.Input<number>;
+    ipv4AddressesAvailable?: pulumi.Input<number | undefined>;
     /**
      * Number of IPv4 addresses used in the Subnet
      */
-    ipv4AddressesUsed?: pulumi.Input<number>;
+    ipv4AddressesUsed?: pulumi.Input<number | undefined>;
     /**
      * Number of IPv6 addresses available in the Subnet
      */
-    ipv6AddressesAvailable?: pulumi.Input<number>;
+    ipv6AddressesAvailable?: pulumi.Input<number | undefined>;
     /**
      * Number of IPv6 addresses used in the Subnet
      */
-    ipv6AddressesUsed?: pulumi.Input<number>;
+    ipv6AddressesUsed?: pulumi.Input<number | undefined>;
     /**
      * Labels for the Subnet
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Subnet
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Route Table of the Subnet
      */
-    routeTableId?: pulumi.Input<string>;
+    routeTableId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the Subnet
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Status of the Subnet
      */
-    status?: pulumi.Input<string>;
+    status?: pulumi.Input<string | undefined>;
     /**
      * Type of the Subnet
      */
-    type?: pulumi.Input<string>;
+    type?: pulumi.Input<string | undefined>;
     /**
      * VPC of the Subnet
      */
-    vpcId?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -260,7 +266,7 @@ export interface SubnetArgs {
     /**
      * Annotations for the Subnet
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * CIDR of the Subnet
      */
@@ -268,20 +274,23 @@ export interface SubnetArgs {
     /**
      * A human readable description about the subnet
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Subnet
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Subnet
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Route Table of the Subnet
      */
-    routeTableId?: pulumi.Input<string>;
+    routeTableId?: pulumi.Input<string | undefined>;
     /**
      * VPC of the Subnet
      */

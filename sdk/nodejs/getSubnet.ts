@@ -21,9 +21,21 @@ export function getSubnet(args: GetSubnetArgs, opts?: pulumi.InvokeOptions): Pro
  * A collection of arguments for invoking getSubnet.
  */
 export interface GetSubnetArgs {
+    /**
+     * The name of the subnet to look up
+     */
     name: string;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
     slug?: string;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     vpcId: string;
 }
 
@@ -31,14 +43,29 @@ export interface GetSubnetArgs {
  * A collection of values returned by getSubnet.
  */
 export interface GetSubnetResult {
+    /**
+     * The CIDR block of the subnet
+     */
     readonly cidr: string;
     /**
-     * The ID of this resource.
+     * The unique identifier of the subnet
      */
     readonly id: string;
+    /**
+     * The name of the subnet to look up
+     */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
     readonly slug: string;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     readonly vpcId: string;
 }
 /**
@@ -58,8 +85,20 @@ export function getSubnetOutput(args: GetSubnetOutputArgs, opts?: pulumi.InvokeO
  * A collection of arguments for invoking getSubnet.
  */
 export interface GetSubnetOutputArgs {
+    /**
+     * The name of the subnet to look up
+     */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
-    slug?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+     */
+    slug?: pulumi.Input<string | undefined>;
+    /**
+     * The ID of the VPC that contains the subnet
+     */
     vpcId: pulumi.Input<string>;
 }

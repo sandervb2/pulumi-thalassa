@@ -21,11 +21,13 @@ class TargetGroupAttachmentInitArgs:
     def __init__(__self__, *,
                  target_group_id: pulumi.Input[_builtins.str],
                  vmi_id: pulumi.Input[_builtins.str],
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a TargetGroupAttachment resource.
+
         :param pulumi.Input[_builtins.str] target_group_id: The ID of the target group to attach to
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the Virtual Machine Instance to attach
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         """
         pulumi.set(__self__, "target_group_id", target_group_id)
         pulumi.set(__self__, "vmi_id", vmi_id)
@@ -58,22 +60,27 @@ class TargetGroupAttachmentInitArgs:
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
 
 @pulumi.input_type
 class _TargetGroupAttachmentState:
     def __init__(__self__, *,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_group_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_group_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering TargetGroupAttachment resources.
+
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] target_group_id: The ID of the target group to attach to
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the Virtual Machine Instance to attach
         """
@@ -86,35 +93,38 @@ class _TargetGroupAttachmentState:
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="targetGroupId")
-    def target_group_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def target_group_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the target group to attach to
         """
         return pulumi.get(self, "target_group_id")
 
     @target_group_id.setter
-    def target_group_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def target_group_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "target_group_id", value)
 
     @_builtins.property
     @pulumi.getter(name="vmiId")
-    def vmi_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vmi_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the Virtual Machine Instance to attach
         """
         return pulumi.get(self, "vmi_id")
 
     @vmi_id.setter
-    def vmi_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vmi_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vmi_id", value)
 
 
@@ -124,9 +134,9 @@ class TargetGroupAttachment(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_group_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_group_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Attach a Virtual Machine Instance to a target group
@@ -172,8 +182,10 @@ class TargetGroupAttachment(pulumi.CustomResource):
         pulumi.export("attachmentId", example_target_group_attachment.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] target_group_id: The ID of the target group to attach to
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the Virtual Machine Instance to attach
         """
@@ -227,6 +239,7 @@ class TargetGroupAttachment(pulumi.CustomResource):
         pulumi.export("attachmentId", example_target_group_attachment.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param TargetGroupAttachmentInitArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -242,9 +255,9 @@ class TargetGroupAttachment(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_group_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_group_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -271,9 +284,9 @@ class TargetGroupAttachment(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            target_group_id: Optional[pulumi.Input[_builtins.str]] = None,
-            vmi_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'TargetGroupAttachment':
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            target_group_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vmi_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'TargetGroupAttachment':
         """
         Get an existing TargetGroupAttachment resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -281,6 +294,7 @@ class TargetGroupAttachment(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] target_group_id: The ID of the target group to attach to
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the Virtual Machine Instance to attach
         """
@@ -296,6 +310,9 @@ class TargetGroupAttachment(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

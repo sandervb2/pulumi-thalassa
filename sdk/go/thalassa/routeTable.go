@@ -75,7 +75,8 @@ type RouteTable struct {
 	// Labels for the RouteTable
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the RouteTable
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	Slug           pulumi.StringOutput    `pulumi:"slug"`
 	// VPC of the RouteTable
@@ -122,7 +123,8 @@ type routeTableState struct {
 	// Labels for the RouteTable
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the RouteTable
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	Slug           *string `pulumi:"slug"`
 	// VPC of the RouteTable
@@ -137,7 +139,8 @@ type RouteTableState struct {
 	// Labels for the RouteTable
 	Labels pulumi.StringMapInput
 	// Name of the RouteTable
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	Slug           pulumi.StringPtrInput
 	// VPC of the RouteTable
@@ -156,7 +159,8 @@ type routeTableArgs struct {
 	// Labels for the RouteTable
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the RouteTable
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// VPC of the RouteTable
 	VpcId string `pulumi:"vpcId"`
@@ -171,7 +175,8 @@ type RouteTableArgs struct {
 	// Labels for the RouteTable
 	Labels pulumi.StringMapInput
 	// Name of the RouteTable
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// VPC of the RouteTable
 	VpcId pulumi.StringInput
@@ -284,6 +289,7 @@ func (o RouteTableOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *RouteTable) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the RouteTable. If not provided, the organisation of the (Terraform) provider will be used.
 func (o RouteTableOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *RouteTable) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

@@ -31,6 +31,9 @@ export interface GetVpcArgs {
      * Name of the Vpc
      */
     name?: string;
+    /**
+     * Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Region of the Vpc. Provide the identity of the region. Can only be set on creation.
@@ -70,6 +73,9 @@ export interface GetVpcResult {
      * Name of the Vpc
      */
     readonly name?: string;
+    /**
+     * Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Region of the Vpc. Provide the identity of the region. Can only be set on creation.
@@ -106,18 +112,21 @@ export interface GetVpcOutputArgs {
     /**
      * A human readable description about the vpc
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Name of the Vpc
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the Vpc. Provide the identity of the region. Can only be set on creation.
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
     /**
      * Slug of the Vpc
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

@@ -11,7 +11,7 @@ import (
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
-// Get an machine image
+// Get an machine image by name or slug
 func GetMachineImage(ctx *pulumi.Context, args *GetMachineImageArgs, opts ...pulumi.InvokeOption) (*GetMachineImageResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetMachineImageResult
@@ -25,7 +25,8 @@ func GetMachineImage(ctx *pulumi.Context, args *GetMachineImageArgs, opts ...pul
 // A collection of arguments for invoking getMachineImage.
 type GetMachineImageArgs struct {
 	// Name of the machine image
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the machine image
 	Slug *string `pulumi:"slug"`
@@ -33,8 +34,8 @@ type GetMachineImageArgs struct {
 
 // A collection of values returned by getMachineImage.
 type GetMachineImageResult struct {
-	// Annotations of the machine image
-	Annotations map[string]string `pulumi:"annotations"`
+	// Architecture of the machine image
+	Architecture string `pulumi:"architecture"`
 	// Description of the machine image
 	Description string `pulumi:"description"`
 	// Identity of the machine image
@@ -42,7 +43,8 @@ type GetMachineImageResult struct {
 	// Labels of the machine image
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the machine image
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the machine image
 	Slug *string `pulumi:"slug"`
@@ -60,7 +62,8 @@ func GetMachineImageOutput(ctx *pulumi.Context, args GetMachineImageOutputArgs, 
 // A collection of arguments for invoking getMachineImage.
 type GetMachineImageOutputArgs struct {
 	// Name of the machine image
-	Name           pulumi.StringInput    `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Slug of the machine image
 	Slug pulumi.StringPtrInput `pulumi:"slug"`
@@ -85,9 +88,9 @@ func (o GetMachineImageResultOutput) ToGetMachineImageResultOutputWithContext(ct
 	return o
 }
 
-// Annotations of the machine image
-func (o GetMachineImageResultOutput) Annotations() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetMachineImageResult) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
+// Architecture of the machine image
+func (o GetMachineImageResultOutput) Architecture() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMachineImageResult) string { return v.Architecture }).(pulumi.StringOutput)
 }
 
 // Description of the machine image
@@ -110,6 +113,7 @@ func (o GetMachineImageResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMachineImageResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
 func (o GetMachineImageResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMachineImageResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

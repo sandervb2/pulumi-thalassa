@@ -45,6 +45,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public string? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -74,6 +77,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -117,11 +123,18 @@ namespace Pulumi.Thalassa
         /// Name of the Organisation Role
         /// </summary>
         public readonly string? Name;
+        /// <summary>
+        /// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// Whether the role is read-only and cannot be modified.
         /// </summary>
         public readonly bool RoleIsReadOnly;
+        /// <summary>
+        /// Permission rules for the organisation role
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetIamRoleRuleResult> Rules;
         /// <summary>
         /// Slug of the Organisation Role
         /// </summary>
@@ -153,6 +166,8 @@ namespace Pulumi.Thalassa
 
             bool roleIsReadOnly,
 
+            ImmutableArray<Outputs.GetIamRoleRuleResult> rules,
+
             string? slug,
 
             bool system,
@@ -167,6 +182,7 @@ namespace Pulumi.Thalassa
             Name = name;
             OrganisationId = organisationId;
             RoleIsReadOnly = roleIsReadOnly;
+            Rules = rules;
             Slug = slug;
             System = system;
             UpdatedAt = updatedAt;

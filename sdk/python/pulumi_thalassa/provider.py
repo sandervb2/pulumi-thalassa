@@ -19,19 +19,30 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 api: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None):
+                 access_token: pulumi.Input[Optional[_builtins.str]] = None,
+                 allow_insecure_oidc: pulumi.Input[Optional[_builtins.bool]] = None,
+                 api: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 project_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a Provider resource.
+
+        :param pulumi.Input[_builtins.str] access_token: The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        :param pulumi.Input[_builtins.bool] allow_insecure_oidc: Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
         :param pulumi.Input[_builtins.str] api: The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         :param pulumi.Input[_builtins.str] client_id: The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
         :param pulumi.Input[_builtins.str] client_secret: The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
         :param pulumi.Input[_builtins.str] organisation_id: The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
+        :param pulumi.Input[_builtins.str] project_id: The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
         :param pulumi.Input[_builtins.str] token: The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
         """
+        if access_token is not None:
+            pulumi.set(__self__, "access_token", access_token)
+        if allow_insecure_oidc is not None:
+            pulumi.set(__self__, "allow_insecure_oidc", allow_insecure_oidc)
         if api is not None:
             pulumi.set(__self__, "api", api)
         if client_id is not None:
@@ -40,67 +51,105 @@ class ProviderArgs:
             pulumi.set(__self__, "client_secret", client_secret)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
+        if project_id is not None:
+            pulumi.set(__self__, "project_id", project_id)
         if token is not None:
             pulumi.set(__self__, "token", token)
 
     @_builtins.property
+    @pulumi.getter(name="accessToken")
+    def access_token(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        """
+        return pulumi.get(self, "access_token")
+
+    @access_token.setter
+    def access_token(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "access_token", value)
+
+    @_builtins.property
+    @pulumi.getter(name="allowInsecureOidc")
+    def allow_insecure_oidc(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+        """
+        return pulumi.get(self, "allow_insecure_oidc")
+
+    @allow_insecure_oidc.setter
+    def allow_insecure_oidc(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "allow_insecure_oidc", value)
+
+    @_builtins.property
     @pulumi.getter
-    def api(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def api(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         """
         return pulumi.get(self, "api")
 
     @api.setter
-    def api(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def api(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "api", value)
 
     @_builtins.property
     @pulumi.getter(name="clientId")
-    def client_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def client_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
         """
         return pulumi.get(self, "client_id")
 
     @client_id.setter
-    def client_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def client_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "client_id", value)
 
     @_builtins.property
     @pulumi.getter(name="clientSecret")
-    def client_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def client_secret(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
         """
         return pulumi.get(self, "client_secret")
 
     @client_secret.setter
-    def client_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def client_secret(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "client_secret", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
         """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="projectId")
+    def project_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        """
+        return pulumi.get(self, "project_id")
+
+    @project_id.setter
+    def project_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "project_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def token(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def token(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
         """
         return pulumi.get(self, "token")
 
     @token.setter
-    def token(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def token(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "token", value)
 
 
@@ -110,11 +159,14 @@ class Provider(pulumi.ProviderResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 api: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None,
+                 access_token: pulumi.Input[Optional[_builtins.str]] = None,
+                 allow_insecure_oidc: pulumi.Input[Optional[_builtins.bool]] = None,
+                 api: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 project_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         The provider type for the thalassa package. By default, resources use package-wide configuration
@@ -122,12 +174,16 @@ class Provider(pulumi.ProviderResource):
         construction to achieve fine-grained programmatic control over provider settings. See the
         [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] access_token: The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        :param pulumi.Input[_builtins.bool] allow_insecure_oidc: Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
         :param pulumi.Input[_builtins.str] api: The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         :param pulumi.Input[_builtins.str] client_id: The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
         :param pulumi.Input[_builtins.str] client_secret: The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
         :param pulumi.Input[_builtins.str] organisation_id: The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
+        :param pulumi.Input[_builtins.str] project_id: The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
         :param pulumi.Input[_builtins.str] token: The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
         """
         ...
@@ -141,6 +197,7 @@ class Provider(pulumi.ProviderResource):
         settings, however an explicit `Provider` instance may be created and passed during resource
         construction to achieve fine-grained programmatic control over provider settings. See the
         [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
+
 
         :param str resource_name: The name of the resource.
         :param ProviderArgs args: The arguments to use to populate this resource's properties.
@@ -157,11 +214,14 @@ class Provider(pulumi.ProviderResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 api: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 client_secret: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None,
+                 access_token: pulumi.Input[Optional[_builtins.str]] = None,
+                 allow_insecure_oidc: pulumi.Input[Optional[_builtins.bool]] = None,
+                 api: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 client_secret: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 project_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -171,18 +231,29 @@ class Provider(pulumi.ProviderResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ProviderArgs.__new__(ProviderArgs)
 
+            __props__.__dict__["access_token"] = None if access_token is None else pulumi.Output.secret(access_token)
+            __props__.__dict__["allow_insecure_oidc"] = pulumi.Output.from_input(allow_insecure_oidc).apply(pulumi.runtime.to_json) if allow_insecure_oidc is not None else None
             __props__.__dict__["api"] = api
             __props__.__dict__["client_id"] = None if client_id is None else pulumi.Output.secret(client_id)
             __props__.__dict__["client_secret"] = None if client_secret is None else pulumi.Output.secret(client_secret)
             __props__.__dict__["organisation_id"] = organisation_id
+            __props__.__dict__["project_id"] = project_id
             __props__.__dict__["token"] = None if token is None else pulumi.Output.secret(token)
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["clientId", "clientSecret", "token"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["accessToken", "clientId", "clientSecret", "token"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Provider, __self__).__init__(
             'thalassa',
             resource_name,
             __props__,
             opts)
+
+    @_builtins.property
+    @pulumi.getter(name="accessToken")
+    def access_token(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        """
+        return pulumi.get(self, "access_token")
 
     @_builtins.property
     @pulumi.getter
@@ -215,6 +286,14 @@ class Provider(pulumi.ProviderResource):
         The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
         """
         return pulumi.get(self, "organisation_id")
+
+    @_builtins.property
+    @pulumi.getter(name="projectId")
+    def project_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        """
+        return pulumi.get(self, "project_id")
 
     @_builtins.property
     @pulumi.getter

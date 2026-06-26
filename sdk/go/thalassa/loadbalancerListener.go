@@ -107,7 +107,8 @@ type LoadbalancerListener struct {
 	// The maximum number of connections that the listener can handle
 	MaxConnections pulumi.IntPtrOutput `pulumi:"maxConnections"`
 	// Name of the Loadbalancer Listener
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The port the listener is listening on
 	Port pulumi.IntOutput `pulumi:"port"`
@@ -175,7 +176,8 @@ type loadbalancerListenerState struct {
 	// The maximum number of connections that the listener can handle
 	MaxConnections *int `pulumi:"maxConnections"`
 	// Name of the Loadbalancer Listener
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The port the listener is listening on
 	Port *int `pulumi:"port"`
@@ -202,7 +204,8 @@ type LoadbalancerListenerState struct {
 	// The maximum number of connections that the listener can handle
 	MaxConnections pulumi.IntPtrInput
 	// Name of the Loadbalancer Listener
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The port the listener is listening on
 	Port pulumi.IntPtrInput
@@ -233,7 +236,8 @@ type loadbalancerListenerArgs struct {
 	// The maximum number of connections that the listener can handle
 	MaxConnections *int `pulumi:"maxConnections"`
 	// Name of the Loadbalancer Listener
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The port the listener is listening on
 	Port int `pulumi:"port"`
@@ -260,7 +264,8 @@ type LoadbalancerListenerArgs struct {
 	// The maximum number of connections that the listener can handle
 	MaxConnections pulumi.IntPtrInput
 	// Name of the Loadbalancer Listener
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The port the listener is listening on
 	Port pulumi.IntInput
@@ -397,6 +402,7 @@ func (o LoadbalancerListenerOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *LoadbalancerListener) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LoadbalancerListenerOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *LoadbalancerListener) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

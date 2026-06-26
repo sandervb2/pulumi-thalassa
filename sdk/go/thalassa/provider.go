@@ -18,6 +18,8 @@ import (
 type Provider struct {
 	pulumi.ProviderResourceState
 
+	// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+	AccessToken pulumi.StringPtrOutput `pulumi:"accessToken"`
 	// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
 	Api pulumi.StringPtrOutput `pulumi:"api"`
 	// The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
@@ -26,6 +28,8 @@ type Provider struct {
 	ClientSecret pulumi.StringPtrOutput `pulumi:"clientSecret"`
 	// The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
+	// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+	ProjectId pulumi.StringPtrOutput `pulumi:"projectId"`
 	// The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
 	Token pulumi.StringPtrOutput `pulumi:"token"`
 }
@@ -37,6 +41,9 @@ func NewProvider(ctx *pulumi.Context,
 		args = &ProviderArgs{}
 	}
 
+	if args.AccessToken != nil {
+		args.AccessToken = pulumi.ToSecret(args.AccessToken).(pulumi.StringPtrInput)
+	}
 	if args.ClientId != nil {
 		args.ClientId = pulumi.ToSecret(args.ClientId).(pulumi.StringPtrInput)
 	}
@@ -47,6 +54,7 @@ func NewProvider(ctx *pulumi.Context,
 		args.Token = pulumi.ToSecret(args.Token).(pulumi.StringPtrInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"accessToken",
 		"clientId",
 		"clientSecret",
 		"token",
@@ -62,6 +70,10 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
+	// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+	AccessToken *string `pulumi:"accessToken"`
+	// Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+	AllowInsecureOidc *bool `pulumi:"allowInsecureOidc"`
 	// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
 	Api *string `pulumi:"api"`
 	// The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
@@ -70,12 +82,18 @@ type providerArgs struct {
 	ClientSecret *string `pulumi:"clientSecret"`
 	// The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
 	OrganisationId *string `pulumi:"organisationId"`
+	// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+	ProjectId *string `pulumi:"projectId"`
 	// The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
 	Token *string `pulumi:"token"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
+	// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+	AccessToken pulumi.StringPtrInput
+	// Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+	AllowInsecureOidc pulumi.BoolPtrInput
 	// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
 	Api pulumi.StringPtrInput
 	// The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
@@ -84,6 +102,8 @@ type ProviderArgs struct {
 	ClientSecret pulumi.StringPtrInput
 	// The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
 	OrganisationId pulumi.StringPtrInput
+	// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+	ProjectId pulumi.StringPtrInput
 	// The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
 	Token pulumi.StringPtrInput
 }
@@ -148,6 +168,11 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 	return o
 }
 
+// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+func (o ProviderOutput) AccessToken() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.AccessToken }).(pulumi.StringPtrOutput)
+}
+
 // The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
 func (o ProviderOutput) Api() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Api }).(pulumi.StringPtrOutput)
@@ -166,6 +191,11 @@ func (o ProviderOutput) ClientSecret() pulumi.StringPtrOutput {
 // The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
 func (o ProviderOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
+}
+
+// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+func (o ProviderOutput) ProjectId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ProjectId }).(pulumi.StringPtrOutput)
 }
 
 // The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.

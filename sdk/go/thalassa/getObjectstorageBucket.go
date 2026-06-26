@@ -25,7 +25,8 @@ func LookupObjectstorageBucket(ctx *pulumi.Context, args *LookupObjectstorageBuc
 // A collection of arguments for invoking getObjectstorageBucket.
 type LookupObjectstorageBucketArgs struct {
 	// Name of the bucket
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the bucket
 	Region *string `pulumi:"region"`
@@ -38,16 +39,19 @@ type LookupObjectstorageBucketResult struct {
 	// Identity of the bucket
 	Id string `pulumi:"id"`
 	// Name of the bucket
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled bool `pulumi:"objectLockEnabled"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The bucket policy as a JSON string
 	Policy string `pulumi:"policy"`
-	// Whether the bucket is publicly accessible
-	Public bool `pulumi:"public"`
 	// Region of the bucket
 	Region *string `pulumi:"region"`
 	// Status of the bucket
 	Status string `pulumi:"status"`
+	// Whether the bucket is versioned
+	Versioning bool `pulumi:"versioning"`
 }
 
 func LookupObjectstorageBucketOutput(ctx *pulumi.Context, args LookupObjectstorageBucketOutputArgs, opts ...pulumi.InvokeOption) LookupObjectstorageBucketResultOutput {
@@ -62,7 +66,8 @@ func LookupObjectstorageBucketOutput(ctx *pulumi.Context, args LookupObjectstora
 // A collection of arguments for invoking getObjectstorageBucket.
 type LookupObjectstorageBucketOutputArgs struct {
 	// Name of the bucket
-	Name           pulumi.StringInput    `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Region of the bucket
 	Region pulumi.StringPtrInput `pulumi:"region"`
@@ -102,6 +107,12 @@ func (o LookupObjectstorageBucketResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Whether the bucket has object lock enabled
+func (o LookupObjectstorageBucketResultOutput) ObjectLockEnabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupObjectstorageBucketResult) bool { return v.ObjectLockEnabled }).(pulumi.BoolOutput)
+}
+
+// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupObjectstorageBucketResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -109,11 +120,6 @@ func (o LookupObjectstorageBucketResultOutput) OrganisationId() pulumi.StringPtr
 // The bucket policy as a JSON string
 func (o LookupObjectstorageBucketResultOutput) Policy() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) string { return v.Policy }).(pulumi.StringOutput)
-}
-
-// Whether the bucket is publicly accessible
-func (o LookupObjectstorageBucketResultOutput) Public() pulumi.BoolOutput {
-	return o.ApplyT(func(v LookupObjectstorageBucketResult) bool { return v.Public }).(pulumi.BoolOutput)
 }
 
 // Region of the bucket
@@ -124,6 +130,11 @@ func (o LookupObjectstorageBucketResultOutput) Region() pulumi.StringPtrOutput {
 // Status of the bucket
 func (o LookupObjectstorageBucketResultOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) string { return v.Status }).(pulumi.StringOutput)
+}
+
+// Whether the bucket is versioned
+func (o LookupObjectstorageBucketResultOutput) Versioning() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupObjectstorageBucketResult) bool { return v.Versioning }).(pulumi.BoolOutput)
 }
 
 func init() {

@@ -20,7 +20,13 @@ export function getMachineType(args?: GetMachineTypeArgs, opts?: pulumi.InvokeOp
  * A collection of arguments for invoking getMachineType.
  */
 export interface GetMachineTypeArgs {
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
+    /**
+     * The slug of the machine type to look up
+     */
     slug?: string;
 }
 
@@ -28,15 +34,33 @@ export interface GetMachineTypeArgs {
  * A collection of values returned by getMachineType.
  */
 export interface GetMachineTypeResult {
+    /**
+     * The number of CPU cores available in this machine type
+     */
     readonly cpuCores: number;
+    /**
+     * A description of the machine type and its specifications
+     */
     readonly description: string;
     /**
-     * The ID of this resource.
+     * The unique identifier of the machine type
      */
     readonly id: string;
+    /**
+     * The name of the machine type
+     */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
+    /**
+     * The amount of RAM in megabytes available in this machine type
+     */
     readonly ramMb: number;
+    /**
+     * The slug of the machine type to look up
+     */
     readonly slug?: string;
 }
 /**
@@ -55,6 +79,12 @@ export function getMachineTypeOutput(args?: GetMachineTypeOutputArgs, opts?: pul
  * A collection of arguments for invoking getMachineType.
  */
 export interface GetMachineTypeOutputArgs {
-    organisationId?: pulumi.Input<string>;
-    slug?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * The slug of the machine type to look up
+     */
+    slug?: pulumi.Input<string | undefined>;
 }

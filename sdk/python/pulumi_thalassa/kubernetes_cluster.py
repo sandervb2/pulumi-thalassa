@@ -21,395 +21,59 @@ __all__ = ['KubernetesClusterArgs', 'KubernetesCluster']
 @pulumi.input_type
 class KubernetesClusterArgs:
     def __init__(__self__, *,
-                 cluster_version: pulumi.Input[_builtins.str],
-                 networking_cni: pulumi.Input[_builtins.str],
-                 organisation_id: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]] = None,
-                 audit_log_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 auto_upgrade_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 default_network_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 maintenance_day: Optional[pulumi.Input[_builtins.int]] = None,
-                 maintenance_start_at: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_pod_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_service_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_security_standards_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]] = None,
+                 audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 autoscaler_config: pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']] = None,
+                 cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a KubernetesCluster resource.
-        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-        :param pulumi.Input[_builtins.str] networking_cni: CNI of the Kubernetes Cluster
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]] api_server_acls: API server ACLs for the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
+        :param pulumi.Input['KubernetesClusterAutoscalerConfigArgs'] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
+        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] pod_security_standards_profile: Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
         :param pulumi.Input[_builtins.str] region: Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed clusters.
-        """
-        pulumi.set(__self__, "cluster_version", cluster_version)
-        pulumi.set(__self__, "networking_cni", networking_cni)
-        pulumi.set(__self__, "organisation_id", organisation_id)
-        if annotations is not None:
-            pulumi.set(__self__, "annotations", annotations)
-        if api_server_acls is not None:
-            pulumi.set(__self__, "api_server_acls", api_server_acls)
-        if audit_log_profile is not None:
-            pulumi.set(__self__, "audit_log_profile", audit_log_profile)
-        if auto_upgrade_policy is not None:
-            pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
-        if cluster_type is not None:
-            pulumi.set(__self__, "cluster_type", cluster_type)
-        if default_network_policy is not None:
-            pulumi.set(__self__, "default_network_policy", default_network_policy)
-        if delete_protection is not None:
-            pulumi.set(__self__, "delete_protection", delete_protection)
-        if description is not None:
-            pulumi.set(__self__, "description", description)
-        if labels is not None:
-            pulumi.set(__self__, "labels", labels)
-        if maintenance_day is not None:
-            pulumi.set(__self__, "maintenance_day", maintenance_day)
-        if maintenance_start_at is not None:
-            pulumi.set(__self__, "maintenance_start_at", maintenance_start_at)
-        if name is not None:
-            pulumi.set(__self__, "name", name)
-        if networking_pod_cidr is not None:
-            pulumi.set(__self__, "networking_pod_cidr", networking_pod_cidr)
-        if networking_service_cidr is not None:
-            pulumi.set(__self__, "networking_service_cidr", networking_service_cidr)
-        if pod_security_standards_profile is not None:
-            pulumi.set(__self__, "pod_security_standards_profile", pod_security_standards_profile)
-        if region is not None:
-            pulumi.set(__self__, "region", region)
-        if security_group_attachments is not None:
-            pulumi.set(__self__, "security_group_attachments", security_group_attachments)
-        if subnet_id is not None:
-            pulumi.set(__self__, "subnet_id", subnet_id)
-
-    @_builtins.property
-    @pulumi.getter(name="clusterVersion")
-    def cluster_version(self) -> pulumi.Input[_builtins.str]:
-        """
-        Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-        """
-        return pulumi.get(self, "cluster_version")
-
-    @cluster_version.setter
-    def cluster_version(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "cluster_version", value)
-
-    @_builtins.property
-    @pulumi.getter(name="networkingCni")
-    def networking_cni(self) -> pulumi.Input[_builtins.str]:
-        """
-        CNI of the Kubernetes Cluster
-        """
-        return pulumi.get(self, "networking_cni")
-
-    @networking_cni.setter
-    def networking_cni(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "networking_cni", value)
-
-    @_builtins.property
-    @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> pulumi.Input[_builtins.str]:
-        return pulumi.get(self, "organisation_id")
-
-    @organisation_id.setter
-    def organisation_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "organisation_id", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        Annotations for the Kubernetes Cluster
-        """
-        return pulumi.get(self, "annotations")
-
-    @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "annotations", value)
-
-    @_builtins.property
-    @pulumi.getter(name="apiServerAcls")
-    def api_server_acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]:
-        """
-        API server ACLs for the Kubernetes Cluster
-        """
-        return pulumi.get(self, "api_server_acls")
-
-    @api_server_acls.setter
-    def api_server_acls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]):
-        pulumi.set(self, "api_server_acls", value)
-
-    @_builtins.property
-    @pulumi.getter(name="auditLogProfile")
-    def audit_log_profile(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
-        """
-        return pulumi.get(self, "audit_log_profile")
-
-    @audit_log_profile.setter
-    def audit_log_profile(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "audit_log_profile", value)
-
-    @_builtins.property
-    @pulumi.getter(name="autoUpgradePolicy")
-    def auto_upgrade_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
-        """
-        return pulumi.get(self, "auto_upgrade_policy")
-
-    @auto_upgrade_policy.setter
-    def auto_upgrade_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "auto_upgrade_policy", value)
-
-    @_builtins.property
-    @pulumi.getter(name="clusterType")
-    def cluster_type(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
-        """
-        return pulumi.get(self, "cluster_type")
-
-    @cluster_type.setter
-    def cluster_type(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "cluster_type", value)
-
-    @_builtins.property
-    @pulumi.getter(name="defaultNetworkPolicy")
-    def default_network_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
-        """
-        return pulumi.get(self, "default_network_policy")
-
-    @default_network_policy.setter
-    def default_network_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "default_network_policy", value)
-
-    @_builtins.property
-    @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
-        """
-        Delete protection of the Kubernetes Cluster
-        """
-        return pulumi.get(self, "delete_protection")
-
-    @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
-        pulumi.set(self, "delete_protection", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        A human readable description about the Kubernetes Cluster
-        """
-        return pulumi.get(self, "description")
-
-    @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "description", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        Labels for the Kubernetes Cluster
-        """
-        return pulumi.get(self, "labels")
-
-    @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "labels", value)
-
-    @_builtins.property
-    @pulumi.getter(name="maintenanceDay")
-    def maintenance_day(self) -> Optional[pulumi.Input[_builtins.int]]:
-        """
-        Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
-        """
-        return pulumi.get(self, "maintenance_day")
-
-    @maintenance_day.setter
-    def maintenance_day(self, value: Optional[pulumi.Input[_builtins.int]]):
-        pulumi.set(self, "maintenance_day", value)
-
-    @_builtins.property
-    @pulumi.getter(name="maintenanceStartAt")
-    def maintenance_start_at(self) -> Optional[pulumi.Input[_builtins.int]]:
-        """
-        Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
-        """
-        return pulumi.get(self, "maintenance_start_at")
-
-    @maintenance_start_at.setter
-    def maintenance_start_at(self, value: Optional[pulumi.Input[_builtins.int]]):
-        pulumi.set(self, "maintenance_start_at", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Name of the Kubernetes Cluster
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "name", value)
-
-    @_builtins.property
-    @pulumi.getter(name="networkingPodCidr")
-    def networking_pod_cidr(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        """
-        return pulumi.get(self, "networking_pod_cidr")
-
-    @networking_pod_cidr.setter
-    def networking_pod_cidr(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "networking_pod_cidr", value)
-
-    @_builtins.property
-    @pulumi.getter(name="networkingServiceCidr")
-    def networking_service_cidr(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        """
-        return pulumi.get(self, "networking_service_cidr")
-
-    @networking_service_cidr.setter
-    def networking_service_cidr(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "networking_service_cidr", value)
-
-    @_builtins.property
-    @pulumi.getter(name="podSecurityStandardsProfile")
-    def pod_security_standards_profile(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
-        """
-        return pulumi.get(self, "pod_security_standards_profile")
-
-    @pod_security_standards_profile.setter
-    def pod_security_standards_profile(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "pod_security_standards_profile", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
-        """
-        return pulumi.get(self, "region")
-
-    @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "region", value)
-
-    @_builtins.property
-    @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
-        """
-        List identities of security group that will be attached to the Kubernetes Cluster
-        """
-        return pulumi.get(self, "security_group_attachments")
-
-    @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "security_group_attachments", value)
-
-    @_builtins.property
-    @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Subnet of the Kubernetes Cluster. Required for managed clusters.
-        """
-        return pulumi.get(self, "subnet_id")
-
-    @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "subnet_id", value)
-
-
-@pulumi.input_type
-class _KubernetesClusterState:
-    def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]] = None,
-                 audit_log_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 auto_upgrade_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 default_network_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 kubernetes_api_server_ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
-                 kubernetes_api_server_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 maintenance_day: Optional[pulumi.Input[_builtins.int]] = None,
-                 maintenance_start_at: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_cni: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_pod_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_service_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_security_standards_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
-        """
-        Input properties used for looking up and filtering KubernetesCluster resources.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]] api_server_acls: API server ACLs for the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
-        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
-        :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
-        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
-        :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] kubernetes_api_server_ca_certificate: Kubernetes API server CA certificate of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] kubernetes_api_server_endpoint: Kubernetes API server endpoint of the Kubernetes Cluster
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
-        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
-        :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
-        :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        :param pulumi.Input[_builtins.str] pod_security_standards_profile: Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
-        :param pulumi.Input[_builtins.str] region: Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] status: Status of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed clusters.
-        :param pulumi.Input[_builtins.str] vpc_id: VPC of the Kubernetes Cluster. This is automatically set when a subnet is provided.
         """
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
@@ -419,6 +83,8 @@ class _KubernetesClusterState:
             pulumi.set(__self__, "audit_log_profile", audit_log_profile)
         if auto_upgrade_policy is not None:
             pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
+        if autoscaler_config is not None:
+            pulumi.set(__self__, "autoscaler_config", autoscaler_config)
         if cluster_type is not None:
             pulumi.set(__self__, "cluster_type", cluster_type)
         if cluster_version is not None:
@@ -429,6 +95,438 @@ class _KubernetesClusterState:
             pulumi.set(__self__, "delete_protection", delete_protection)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if disable_public_endpoint is not None:
+            pulumi.set(__self__, "disable_public_endpoint", disable_public_endpoint)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if maintenance_day is not None:
+            pulumi.set(__self__, "maintenance_day", maintenance_day)
+        if maintenance_start_at is not None:
+            pulumi.set(__self__, "maintenance_start_at", maintenance_start_at)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if networking_cni is not None:
+            pulumi.set(__self__, "networking_cni", networking_cni)
+        if networking_kube_proxy_deployment is not None:
+            pulumi.set(__self__, "networking_kube_proxy_deployment", networking_kube_proxy_deployment)
+        if networking_kube_proxy_mode is not None:
+            pulumi.set(__self__, "networking_kube_proxy_mode", networking_kube_proxy_mode)
+        if networking_pod_cidr is not None:
+            pulumi.set(__self__, "networking_pod_cidr", networking_pod_cidr)
+        if networking_service_cidr is not None:
+            pulumi.set(__self__, "networking_service_cidr", networking_service_cidr)
+        if organisation_id is not None:
+            pulumi.set(__self__, "organisation_id", organisation_id)
+        if pod_security_standards_profile is not None:
+            pulumi.set(__self__, "pod_security_standards_profile", pod_security_standards_profile)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
+        if security_group_attachments is not None:
+            pulumi.set(__self__, "security_group_attachments", security_group_attachments)
+        if subnet_id is not None:
+            pulumi.set(__self__, "subnet_id", subnet_id)
+
+    @_builtins.property
+    @pulumi.getter
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Annotations for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "annotations")
+
+    @annotations.setter
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "annotations", value)
+
+    @_builtins.property
+    @pulumi.getter(name="apiServerAcls")
+    def api_server_acls(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]:
+        """
+        API server ACLs for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "api_server_acls")
+
+    @api_server_acls.setter
+    def api_server_acls(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]):
+        pulumi.set(self, "api_server_acls", value)
+
+    @_builtins.property
+    @pulumi.getter(name="auditLogProfile")
+    def audit_log_profile(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
+        """
+        return pulumi.get(self, "audit_log_profile")
+
+    @audit_log_profile.setter
+    def audit_log_profile(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "audit_log_profile", value)
+
+    @_builtins.property
+    @pulumi.getter(name="autoUpgradePolicy")
+    def auto_upgrade_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
+        """
+        return pulumi.get(self, "auto_upgrade_policy")
+
+    @auto_upgrade_policy.setter
+    def auto_upgrade_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "auto_upgrade_policy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="autoscalerConfig")
+    def autoscaler_config(self) -> pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']]:
+        """
+        Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        """
+        return pulumi.get(self, "autoscaler_config")
+
+    @autoscaler_config.setter
+    def autoscaler_config(self, value: pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']]):
+        pulumi.set(self, "autoscaler_config", value)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterType")
+    def cluster_type(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
+        """
+        return pulumi.get(self, "cluster_type")
+
+    @cluster_type.setter
+    def cluster_type(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "cluster_type", value)
+
+    @_builtins.property
+    @pulumi.getter(name="clusterVersion")
+    def cluster_version(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+        """
+        return pulumi.get(self, "cluster_version")
+
+    @cluster_version.setter
+    def cluster_version(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "cluster_version", value)
+
+    @_builtins.property
+    @pulumi.getter(name="defaultNetworkPolicy")
+    def default_network_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        """
+        return pulumi.get(self, "default_network_policy")
+
+    @default_network_policy.setter
+    def default_network_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "default_network_policy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="deleteProtection")
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Delete protection of the Kubernetes Cluster
+        """
+        return pulumi.get(self, "delete_protection")
+
+    @delete_protection.setter
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "delete_protection", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        A human readable description about the Kubernetes Cluster
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter(name="disablePublicEndpoint")
+    def disable_public_endpoint(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        """
+        return pulumi.get(self, "disable_public_endpoint")
+
+    @disable_public_endpoint.setter
+    def disable_public_endpoint(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "disable_public_endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Labels for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maintenanceDay")
+    def maintenance_day(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
+        """
+        return pulumi.get(self, "maintenance_day")
+
+    @maintenance_day.setter
+    def maintenance_day(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_day", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maintenanceStartAt")
+    def maintenance_start_at(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
+        """
+        return pulumi.get(self, "maintenance_start_at")
+
+    @maintenance_start_at.setter
+    def maintenance_start_at(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_start_at", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the Kubernetes Cluster
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingCni")
+    def networking_cni(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        """
+        return pulumi.get(self, "networking_cni")
+
+    @networking_cni.setter
+    def networking_cni(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_cni", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyDeployment")
+    def networking_kube_proxy_deployment(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        """
+        return pulumi.get(self, "networking_kube_proxy_deployment")
+
+    @networking_kube_proxy_deployment.setter
+    def networking_kube_proxy_deployment(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_kube_proxy_deployment", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyMode")
+    def networking_kube_proxy_mode(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        """
+        return pulumi.get(self, "networking_kube_proxy_mode")
+
+    @networking_kube_proxy_mode.setter
+    def networking_kube_proxy_mode(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_kube_proxy_mode", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingPodCidr")
+    def networking_pod_cidr(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        """
+        return pulumi.get(self, "networking_pod_cidr")
+
+    @networking_pod_cidr.setter
+    def networking_pod_cidr(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_pod_cidr", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingServiceCidr")
+    def networking_service_cidr(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        """
+        return pulumi.get(self, "networking_service_cidr")
+
+    @networking_service_cidr.setter
+    def networking_service_cidr(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_service_cidr", value)
+
+    @_builtins.property
+    @pulumi.getter(name="organisationId")
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
+        return pulumi.get(self, "organisation_id")
+
+    @organisation_id.setter
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "organisation_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="podSecurityStandardsProfile")
+    def pod_security_standards_profile(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
+        """
+        return pulumi.get(self, "pod_security_standards_profile")
+
+    @pod_security_standards_profile.setter
+    def pod_security_standards_profile(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "pod_security_standards_profile", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @_builtins.property
+    @pulumi.getter(name="securityGroupAttachments")
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List identities of security group that will be attached to the Kubernetes Cluster
+        """
+        return pulumi.get(self, "security_group_attachments")
+
+    @security_group_attachments.setter
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "security_group_attachments", value)
+
+    @_builtins.property
+    @pulumi.getter(name="subnetId")
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Subnet of the Kubernetes Cluster. Required for managed clusters.
+        """
+        return pulumi.get(self, "subnet_id")
+
+    @subnet_id.setter
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "subnet_id", value)
+
+
+@pulumi.input_type
+class _KubernetesClusterState:
+    def __init__(__self__, *,
+                 advertise_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]] = None,
+                 audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 autoscaler_config: pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']] = None,
+                 cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+                 internal_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+                 konnectivity_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 kubernetes_api_server_ca_certificate: pulumi.Input[Optional[_builtins.str]] = None,
+                 kubernetes_api_server_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        Input properties used for looking up and filtering KubernetesCluster resources.
+
+        :param pulumi.Input[_builtins.int] advertise_port: Advertise port for the Kubernetes Cluster within the VPC
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
+        :param pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]] api_server_acls: API server ACLs for the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
+        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
+        :param pulumi.Input['KubernetesClusterAutoscalerConfigArgs'] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
+        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.str] internal_endpoint: VPC-internal endpoint for the Kubernetes Cluster
+        :param pulumi.Input[_builtins.int] konnectivity_port: Konnectivity port for the Kubernetes Cluster within the VPC
+        :param pulumi.Input[_builtins.str] kubernetes_api_server_ca_certificate: Kubernetes API server CA certificate of the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] kubernetes_api_server_endpoint: Kubernetes API server endpoint of the Kubernetes Cluster
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
+        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
+        :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
+        :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] pod_security_standards_profile: Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
+        :param pulumi.Input[_builtins.str] region: Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] status: Status of the Kubernetes Cluster
+        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed clusters.
+        :param pulumi.Input[_builtins.str] vpc_id: VPC of the Kubernetes Cluster. This is automatically set when a subnet is provided.
+        """
+        if advertise_port is not None:
+            pulumi.set(__self__, "advertise_port", advertise_port)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
+        if api_server_acls is not None:
+            pulumi.set(__self__, "api_server_acls", api_server_acls)
+        if audit_log_profile is not None:
+            pulumi.set(__self__, "audit_log_profile", audit_log_profile)
+        if auto_upgrade_policy is not None:
+            pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
+        if autoscaler_config is not None:
+            pulumi.set(__self__, "autoscaler_config", autoscaler_config)
+        if cluster_type is not None:
+            pulumi.set(__self__, "cluster_type", cluster_type)
+        if cluster_version is not None:
+            pulumi.set(__self__, "cluster_version", cluster_version)
+        if default_network_policy is not None:
+            pulumi.set(__self__, "default_network_policy", default_network_policy)
+        if delete_protection is not None:
+            pulumi.set(__self__, "delete_protection", delete_protection)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if disable_public_endpoint is not None:
+            pulumi.set(__self__, "disable_public_endpoint", disable_public_endpoint)
+        if internal_endpoint is not None:
+            pulumi.set(__self__, "internal_endpoint", internal_endpoint)
+        if konnectivity_port is not None:
+            pulumi.set(__self__, "konnectivity_port", konnectivity_port)
         if kubernetes_api_server_ca_certificate is not None:
             pulumi.set(__self__, "kubernetes_api_server_ca_certificate", kubernetes_api_server_ca_certificate)
         if kubernetes_api_server_endpoint is not None:
@@ -443,6 +541,10 @@ class _KubernetesClusterState:
             pulumi.set(__self__, "name", name)
         if networking_cni is not None:
             pulumi.set(__self__, "networking_cni", networking_cni)
+        if networking_kube_proxy_deployment is not None:
+            pulumi.set(__self__, "networking_kube_proxy_deployment", networking_kube_proxy_deployment)
+        if networking_kube_proxy_mode is not None:
+            pulumi.set(__self__, "networking_kube_proxy_mode", networking_kube_proxy_mode)
         if networking_pod_cidr is not None:
             pulumi.set(__self__, "networking_pod_cidr", networking_pod_cidr)
         if networking_service_cidr is not None:
@@ -465,309 +567,396 @@ class _KubernetesClusterState:
             pulumi.set(__self__, "vpc_id", vpc_id)
 
     @_builtins.property
+    @pulumi.getter(name="advertisePort")
+    def advertise_port(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Advertise port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "advertise_port")
+
+    @advertise_port.setter
+    def advertise_port(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "advertise_port", value)
+
+    @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Kubernetes Cluster
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="apiServerAcls")
-    def api_server_acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]:
+    def api_server_acls(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]:
         """
         API server ACLs for the Kubernetes Cluster
         """
         return pulumi.get(self, "api_server_acls")
 
     @api_server_acls.setter
-    def api_server_acls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]):
+    def api_server_acls(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesClusterApiServerAclArgs']]]]):
         pulumi.set(self, "api_server_acls", value)
 
     @_builtins.property
     @pulumi.getter(name="auditLogProfile")
-    def audit_log_profile(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def audit_log_profile(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         """
         return pulumi.get(self, "audit_log_profile")
 
     @audit_log_profile.setter
-    def audit_log_profile(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def audit_log_profile(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "audit_log_profile", value)
 
     @_builtins.property
     @pulumi.getter(name="autoUpgradePolicy")
-    def auto_upgrade_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def auto_upgrade_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
         """
         return pulumi.get(self, "auto_upgrade_policy")
 
     @auto_upgrade_policy.setter
-    def auto_upgrade_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def auto_upgrade_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "auto_upgrade_policy", value)
 
     @_builtins.property
+    @pulumi.getter(name="autoscalerConfig")
+    def autoscaler_config(self) -> pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']]:
+        """
+        Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        """
+        return pulumi.get(self, "autoscaler_config")
+
+    @autoscaler_config.setter
+    def autoscaler_config(self, value: pulumi.Input[Optional['KubernetesClusterAutoscalerConfigArgs']]):
+        pulumi.set(self, "autoscaler_config", value)
+
+    @_builtins.property
     @pulumi.getter(name="clusterType")
-    def cluster_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cluster_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         """
         return pulumi.get(self, "cluster_type")
 
     @cluster_type.setter
-    def cluster_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cluster_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cluster_type", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterVersion")
-    def cluster_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cluster_version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         """
         return pulumi.get(self, "cluster_version")
 
     @cluster_version.setter
-    def cluster_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cluster_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cluster_version", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultNetworkPolicy")
-    def default_network_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def default_network_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
         """
         return pulumi.get(self, "default_network_policy")
 
     @default_network_policy.setter
-    def default_network_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def default_network_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "default_network_policy", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection of the Kubernetes Cluster
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the Kubernetes Cluster
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
+    @pulumi.getter(name="disablePublicEndpoint")
+    def disable_public_endpoint(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        """
+        return pulumi.get(self, "disable_public_endpoint")
+
+    @disable_public_endpoint.setter
+    def disable_public_endpoint(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "disable_public_endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter(name="internalEndpoint")
+    def internal_endpoint(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        VPC-internal endpoint for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "internal_endpoint")
+
+    @internal_endpoint.setter
+    def internal_endpoint(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "internal_endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter(name="konnectivityPort")
+    def konnectivity_port(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Konnectivity port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "konnectivity_port")
+
+    @konnectivity_port.setter
+    def konnectivity_port(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "konnectivity_port", value)
+
+    @_builtins.property
     @pulumi.getter(name="kubernetesApiServerCaCertificate")
-    def kubernetes_api_server_ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def kubernetes_api_server_ca_certificate(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Kubernetes API server CA certificate of the Kubernetes Cluster
         """
         return pulumi.get(self, "kubernetes_api_server_ca_certificate")
 
     @kubernetes_api_server_ca_certificate.setter
-    def kubernetes_api_server_ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kubernetes_api_server_ca_certificate(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kubernetes_api_server_ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="kubernetesApiServerEndpoint")
-    def kubernetes_api_server_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def kubernetes_api_server_endpoint(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Kubernetes API server endpoint of the Kubernetes Cluster
         """
         return pulumi.get(self, "kubernetes_api_server_endpoint")
 
     @kubernetes_api_server_endpoint.setter
-    def kubernetes_api_server_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kubernetes_api_server_endpoint(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kubernetes_api_server_endpoint", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Kubernetes Cluster
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="maintenanceDay")
-    def maintenance_day(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def maintenance_day(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         """
         return pulumi.get(self, "maintenance_day")
 
     @maintenance_day.setter
-    def maintenance_day(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def maintenance_day(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "maintenance_day", value)
 
     @_builtins.property
     @pulumi.getter(name="maintenanceStartAt")
-    def maintenance_start_at(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def maintenance_start_at(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         """
         return pulumi.get(self, "maintenance_start_at")
 
     @maintenance_start_at.setter
-    def maintenance_start_at(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def maintenance_start_at(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "maintenance_start_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Kubernetes Cluster
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="networkingCni")
-    def networking_cni(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def networking_cni(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        CNI of the Kubernetes Cluster
+        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
         """
         return pulumi.get(self, "networking_cni")
 
     @networking_cni.setter
-    def networking_cni(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def networking_cni(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "networking_cni", value)
 
     @_builtins.property
-    @pulumi.getter(name="networkingPodCidr")
-    def networking_pod_cidr(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter(name="networkingKubeProxyDeployment")
+    def networking_kube_proxy_deployment(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        """
+        return pulumi.get(self, "networking_kube_proxy_deployment")
+
+    @networking_kube_proxy_deployment.setter
+    def networking_kube_proxy_deployment(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_kube_proxy_deployment", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyMode")
+    def networking_kube_proxy_mode(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        """
+        return pulumi.get(self, "networking_kube_proxy_mode")
+
+    @networking_kube_proxy_mode.setter
+    def networking_kube_proxy_mode(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "networking_kube_proxy_mode", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkingPodCidr")
+    def networking_pod_cidr(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         """
         return pulumi.get(self, "networking_pod_cidr")
 
     @networking_pod_cidr.setter
-    def networking_pod_cidr(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def networking_pod_cidr(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "networking_pod_cidr", value)
 
     @_builtins.property
     @pulumi.getter(name="networkingServiceCidr")
-    def networking_service_cidr(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def networking_service_cidr(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         """
         return pulumi.get(self, "networking_service_cidr")
 
     @networking_service_cidr.setter
-    def networking_service_cidr(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def networking_service_cidr(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "networking_service_cidr", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="podSecurityStandardsProfile")
-    def pod_security_standards_profile(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def pod_security_standards_profile(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
         """
         return pulumi.get(self, "pod_security_standards_profile")
 
     @pod_security_standards_profile.setter
-    def pod_security_standards_profile(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def pod_security_standards_profile(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "pod_security_standards_profile", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
         """
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the Kubernetes Cluster
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the Kubernetes Cluster
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Subnet of the Kubernetes Cluster. Required for managed clusters.
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
-    def vpc_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vpc_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         VPC of the Kubernetes Cluster. This is automatically set when a subnet is provided.
         """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
-    def vpc_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vpc_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vpc_id", value)
 
 
@@ -777,30 +966,105 @@ class KubernetesCluster(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
-                 audit_log_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 auto_upgrade_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 default_network_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 maintenance_day: Optional[pulumi.Input[_builtins.int]] = None,
-                 maintenance_start_at: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_cni: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_pod_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_service_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_security_standards_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+                 audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+                 cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+
+        ## Cluster Types
+
+        ### Managed Clusters (Default)
+        - **Requires**: `subnet_id` - Must specify a subnet for node deployment
+        - **Use case**: Production workloads requiring full control
+        - **Features**: Complete control over node pools and configuration
+
+        ### Hosted Control Plane Clusters
+        - **Requires**: `region` - Must specify a region for deployment
+        - **Use case**: Development and testing environments
+        - **Features**: Thalassa manages the control plane components
+
+        ## Important Notes
+
+        - **`cluster_version` is optional** - If not specified, the latest stable version is used
+        - **`networking_cni` defaults to "cilium"**
+        - **Network CIDRs cannot be changed** after creation (ForceNew)
+        - **Cluster type cannot be changed** after creation (ForceNew)
+
+        ## Security Configuration
+
+        - **Pod Security Standards**: `restricted` (most secure), `baseline` (default), `privileged`
+        - **Network Policies**: `deny-all` (default), `allow-all`, or custom policies
+        - **API Server ACLs**: Restrict API server access to specific CIDR blocks
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        config = pulumi.Config()
+        # Region for the Kubernetes cluster
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for Kubernetes cluster",
+            region=region,
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the Kubernetes cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for Kubernetes cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a Kubernetes cluster
+        example_kubernetes_cluster = thalassa.KubernetesCluster("example",
+            name="example-kubernetes-cluster",
+            description="Example Kubernetes cluster",
+            region=region,
+            subnet_id=example_subnet.id)
+        # Create a Kubernetes node pool with Thalassa default values
+        example_kubernetes_node_pool = thalassa.KubernetesNodePool("example",
+            name="example-node-pool",
+            cluster_id=example_kubernetes_cluster.id,
+            subnet_id=example_subnet.id,
+            availability_zone=f"{region}a",
+            machine_type="pgp-small",
+            enable_autoscaling=True,
+            min_replicas=1,
+            max_replicas=2)
+        pulumi.export("kubernetesClusterId", example_kubernetes_cluster.id)
+        pulumi.export("kubernetesClusterName", example_kubernetes_cluster.name)
+        pulumi.export("advertiseAddress", example_kubernetes_cluster.internal_endpoint)
+        pulumi.export("nodePoolId", example_kubernetes_node_pool.id)
+        pulumi.export("nodePoolName", example_kubernetes_node_pool.name)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -808,18 +1072,23 @@ class KubernetesCluster(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
+        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
-        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] pod_security_standards_profile: Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
         :param pulumi.Input[_builtins.str] region: Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Kubernetes Cluster
@@ -829,10 +1098,81 @@ class KubernetesCluster(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: KubernetesClusterArgs,
+                 args: Optional[KubernetesClusterArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+
+        ## Cluster Types
+
+        ### Managed Clusters (Default)
+        - **Requires**: `subnet_id` - Must specify a subnet for node deployment
+        - **Use case**: Production workloads requiring full control
+        - **Features**: Complete control over node pools and configuration
+
+        ### Hosted Control Plane Clusters
+        - **Requires**: `region` - Must specify a region for deployment
+        - **Use case**: Development and testing environments
+        - **Features**: Thalassa manages the control plane components
+
+        ## Important Notes
+
+        - **`cluster_version` is optional** - If not specified, the latest stable version is used
+        - **`networking_cni` defaults to "cilium"**
+        - **Network CIDRs cannot be changed** after creation (ForceNew)
+        - **Cluster type cannot be changed** after creation (ForceNew)
+
+        ## Security Configuration
+
+        - **Pod Security Standards**: `restricted` (most secure), `baseline` (default), `privileged`
+        - **Network Policies**: `deny-all` (default), `allow-all`, or custom policies
+        - **API Server ACLs**: Restrict API server access to specific CIDR blocks
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        config = pulumi.Config()
+        # Region for the Kubernetes cluster
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for Kubernetes cluster",
+            region=region,
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the Kubernetes cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for Kubernetes cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a Kubernetes cluster
+        example_kubernetes_cluster = thalassa.KubernetesCluster("example",
+            name="example-kubernetes-cluster",
+            description="Example Kubernetes cluster",
+            region=region,
+            subnet_id=example_subnet.id)
+        # Create a Kubernetes node pool with Thalassa default values
+        example_kubernetes_node_pool = thalassa.KubernetesNodePool("example",
+            name="example-node-pool",
+            cluster_id=example_kubernetes_cluster.id,
+            subnet_id=example_subnet.id,
+            availability_zone=f"{region}a",
+            machine_type="pgp-small",
+            enable_autoscaling=True,
+            min_replicas=1,
+            max_replicas=2)
+        pulumi.export("kubernetesClusterId", example_kubernetes_cluster.id)
+        pulumi.export("kubernetesClusterName", example_kubernetes_cluster.name)
+        pulumi.export("advertiseAddress", example_kubernetes_cluster.internal_endpoint)
+        pulumi.export("nodePoolId", example_kubernetes_node_pool.id)
+        pulumi.export("nodePoolName", example_kubernetes_node_pool.name)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param KubernetesClusterArgs args: The arguments to use to populate this resource's properties.
@@ -849,27 +1189,31 @@ class KubernetesCluster(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
-                 audit_log_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 auto_upgrade_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 default_network_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 maintenance_day: Optional[pulumi.Input[_builtins.int]] = None,
-                 maintenance_start_at: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_cni: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_pod_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking_service_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 pod_security_standards_profile: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+                 audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+                 cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -883,29 +1227,30 @@ class KubernetesCluster(pulumi.CustomResource):
             __props__.__dict__["api_server_acls"] = api_server_acls
             __props__.__dict__["audit_log_profile"] = audit_log_profile
             __props__.__dict__["auto_upgrade_policy"] = auto_upgrade_policy
+            __props__.__dict__["autoscaler_config"] = autoscaler_config
             __props__.__dict__["cluster_type"] = cluster_type
-            if cluster_version is None and not opts.urn:
-                raise TypeError("Missing required property 'cluster_version'")
             __props__.__dict__["cluster_version"] = cluster_version
             __props__.__dict__["default_network_policy"] = default_network_policy
             __props__.__dict__["delete_protection"] = delete_protection
             __props__.__dict__["description"] = description
+            __props__.__dict__["disable_public_endpoint"] = disable_public_endpoint
             __props__.__dict__["labels"] = labels
             __props__.__dict__["maintenance_day"] = maintenance_day
             __props__.__dict__["maintenance_start_at"] = maintenance_start_at
             __props__.__dict__["name"] = name
-            if networking_cni is None and not opts.urn:
-                raise TypeError("Missing required property 'networking_cni'")
             __props__.__dict__["networking_cni"] = networking_cni
+            __props__.__dict__["networking_kube_proxy_deployment"] = networking_kube_proxy_deployment
+            __props__.__dict__["networking_kube_proxy_mode"] = networking_kube_proxy_mode
             __props__.__dict__["networking_pod_cidr"] = networking_pod_cidr
             __props__.__dict__["networking_service_cidr"] = networking_service_cidr
-            if organisation_id is None and not opts.urn:
-                raise TypeError("Missing required property 'organisation_id'")
             __props__.__dict__["organisation_id"] = organisation_id
             __props__.__dict__["pod_security_standards_profile"] = pod_security_standards_profile
             __props__.__dict__["region"] = region
             __props__.__dict__["security_group_attachments"] = security_group_attachments
             __props__.__dict__["subnet_id"] = subnet_id
+            __props__.__dict__["advertise_port"] = None
+            __props__.__dict__["internal_endpoint"] = None
+            __props__.__dict__["konnectivity_port"] = None
             __props__.__dict__["kubernetes_api_server_ca_certificate"] = None
             __props__.__dict__["kubernetes_api_server_endpoint"] = None
             __props__.__dict__["slug"] = None
@@ -921,32 +1266,39 @@ class KubernetesCluster(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            api_server_acls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
-            audit_log_profile: Optional[pulumi.Input[_builtins.str]] = None,
-            auto_upgrade_policy: Optional[pulumi.Input[_builtins.str]] = None,
-            cluster_type: Optional[pulumi.Input[_builtins.str]] = None,
-            cluster_version: Optional[pulumi.Input[_builtins.str]] = None,
-            default_network_policy: Optional[pulumi.Input[_builtins.str]] = None,
-            delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            kubernetes_api_server_ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
-            kubernetes_api_server_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            maintenance_day: Optional[pulumi.Input[_builtins.int]] = None,
-            maintenance_start_at: Optional[pulumi.Input[_builtins.int]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            networking_cni: Optional[pulumi.Input[_builtins.str]] = None,
-            networking_pod_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-            networking_service_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            pod_security_standards_profile: Optional[pulumi.Input[_builtins.str]] = None,
-            region: Optional[pulumi.Input[_builtins.str]] = None,
-            security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-            vpc_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'KubernetesCluster':
+            advertise_port: pulumi.Input[Optional[_builtins.int]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+            audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+            auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+            cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+            cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+            default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+            internal_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            konnectivity_port: pulumi.Input[Optional[_builtins.int]] = None,
+            kubernetes_api_server_ca_certificate: pulumi.Input[Optional[_builtins.str]] = None,
+            kubernetes_api_server_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+            maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'KubernetesCluster':
         """
         Get an existing KubernetesCluster resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -954,24 +1306,32 @@ class KubernetesCluster(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.int] advertise_port: Advertise port for the Kubernetes Cluster within the VPC
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
+        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
-        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.str] internal_endpoint: VPC-internal endpoint for the Kubernetes Cluster
+        :param pulumi.Input[_builtins.int] konnectivity_port: Konnectivity port for the Kubernetes Cluster within the VPC
         :param pulumi.Input[_builtins.str] kubernetes_api_server_ca_certificate: Kubernetes API server CA certificate of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] kubernetes_api_server_endpoint: Kubernetes API server endpoint of the Kubernetes Cluster
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
-        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] networking_service_cidr: Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] pod_security_standards_profile: Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
         :param pulumi.Input[_builtins.str] region: Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Kubernetes Cluster
@@ -983,15 +1343,20 @@ class KubernetesCluster(pulumi.CustomResource):
 
         __props__ = _KubernetesClusterState.__new__(_KubernetesClusterState)
 
+        __props__.__dict__["advertise_port"] = advertise_port
         __props__.__dict__["annotations"] = annotations
         __props__.__dict__["api_server_acls"] = api_server_acls
         __props__.__dict__["audit_log_profile"] = audit_log_profile
         __props__.__dict__["auto_upgrade_policy"] = auto_upgrade_policy
+        __props__.__dict__["autoscaler_config"] = autoscaler_config
         __props__.__dict__["cluster_type"] = cluster_type
         __props__.__dict__["cluster_version"] = cluster_version
         __props__.__dict__["default_network_policy"] = default_network_policy
         __props__.__dict__["delete_protection"] = delete_protection
         __props__.__dict__["description"] = description
+        __props__.__dict__["disable_public_endpoint"] = disable_public_endpoint
+        __props__.__dict__["internal_endpoint"] = internal_endpoint
+        __props__.__dict__["konnectivity_port"] = konnectivity_port
         __props__.__dict__["kubernetes_api_server_ca_certificate"] = kubernetes_api_server_ca_certificate
         __props__.__dict__["kubernetes_api_server_endpoint"] = kubernetes_api_server_endpoint
         __props__.__dict__["labels"] = labels
@@ -999,6 +1364,8 @@ class KubernetesCluster(pulumi.CustomResource):
         __props__.__dict__["maintenance_start_at"] = maintenance_start_at
         __props__.__dict__["name"] = name
         __props__.__dict__["networking_cni"] = networking_cni
+        __props__.__dict__["networking_kube_proxy_deployment"] = networking_kube_proxy_deployment
+        __props__.__dict__["networking_kube_proxy_mode"] = networking_kube_proxy_mode
         __props__.__dict__["networking_pod_cidr"] = networking_pod_cidr
         __props__.__dict__["networking_service_cidr"] = networking_service_cidr
         __props__.__dict__["organisation_id"] = organisation_id
@@ -1010,6 +1377,14 @@ class KubernetesCluster(pulumi.CustomResource):
         __props__.__dict__["subnet_id"] = subnet_id
         __props__.__dict__["vpc_id"] = vpc_id
         return KubernetesCluster(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter(name="advertisePort")
+    def advertise_port(self) -> pulumi.Output[_builtins.int]:
+        """
+        Advertise port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "advertise_port")
 
     @_builtins.property
     @pulumi.getter
@@ -1044,6 +1419,14 @@ class KubernetesCluster(pulumi.CustomResource):
         return pulumi.get(self, "auto_upgrade_policy")
 
     @_builtins.property
+    @pulumi.getter(name="autoscalerConfig")
+    def autoscaler_config(self) -> pulumi.Output['outputs.KubernetesClusterAutoscalerConfig']:
+        """
+        Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        """
+        return pulumi.get(self, "autoscaler_config")
+
+    @_builtins.property
     @pulumi.getter(name="clusterType")
     def cluster_type(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
@@ -1053,9 +1436,9 @@ class KubernetesCluster(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="clusterVersion")
-    def cluster_version(self) -> pulumi.Output[_builtins.str]:
+    def cluster_version(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         """
         return pulumi.get(self, "cluster_version")
 
@@ -1082,6 +1465,30 @@ class KubernetesCluster(pulumi.CustomResource):
         A human readable description about the Kubernetes Cluster
         """
         return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter(name="disablePublicEndpoint")
+    def disable_public_endpoint(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        """
+        return pulumi.get(self, "disable_public_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="internalEndpoint")
+    def internal_endpoint(self) -> pulumi.Output[_builtins.str]:
+        """
+        VPC-internal endpoint for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "internal_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="konnectivityPort")
+    def konnectivity_port(self) -> pulumi.Output[_builtins.int]:
+        """
+        Konnectivity port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "konnectivity_port")
 
     @_builtins.property
     @pulumi.getter(name="kubernetesApiServerCaCertificate")
@@ -1133,17 +1540,33 @@ class KubernetesCluster(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="networkingCni")
-    def networking_cni(self) -> pulumi.Output[_builtins.str]:
+    def networking_cni(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        CNI of the Kubernetes Cluster
+        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
         """
         return pulumi.get(self, "networking_cni")
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyDeployment")
+    def networking_kube_proxy_deployment(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        """
+        return pulumi.get(self, "networking_kube_proxy_deployment")
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyMode")
+    def networking_kube_proxy_mode(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        """
+        return pulumi.get(self, "networking_kube_proxy_mode")
 
     @_builtins.property
     @pulumi.getter(name="networkingPodCidr")
     def networking_pod_cidr(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         """
         return pulumi.get(self, "networking_pod_cidr")
 
@@ -1151,13 +1574,16 @@ class KubernetesCluster(pulumi.CustomResource):
     @pulumi.getter(name="networkingServiceCidr")
     def networking_service_cidr(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         """
         return pulumi.get(self, "networking_service_cidr")
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> pulumi.Output[_builtins.str]:
+    def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

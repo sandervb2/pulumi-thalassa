@@ -38,6 +38,33 @@ import (
 //				Annotations: pulumi.StringMap{
 //					"example.com/created-by": pulumi.String("terraform"),
 //				},
+//				Rules: thalassa.IamRoleRuleTypeArray{
+//					&thalassa.IamRoleRuleTypeArgs{
+//						Resources: pulumi.StringArray{
+//							pulumi.String("cloud_vpc"),
+//							pulumi.String("cloud_subnet"),
+//						},
+//						Permissions: pulumi.StringArray{
+//							pulumi.String("read"),
+//							pulumi.String("list"),
+//						},
+//						Note: pulumi.String("Allow read access to VPCs and subnets"),
+//					},
+//					&thalassa.IamRoleRuleTypeArgs{
+//						Resources: pulumi.StringArray{
+//							pulumi.String("cloud_vpc"),
+//						},
+//						ResourceIdentities: pulumi.StringArray{
+//							pulumi.String("vpc-123"),
+//							pulumi.String("vpc-456"),
+//						},
+//						Permissions: pulumi.StringArray{
+//							pulumi.String("update"),
+//							pulumi.String("delete"),
+//						},
+//						Note: pulumi.String("Allow update/delete for specific VPCs"),
+//					},
+//				},
 //			})
 //			if err != nil {
 //				return err
@@ -46,6 +73,7 @@ import (
 //			ctx.Export("roleName", example.Name)
 //			ctx.Export("roleSlug", example.Slug)
 //			ctx.Export("roleDescription", example.Description)
+//			ctx.Export("roleRules", example.Rules)
 //			return nil
 //		})
 //	}
@@ -66,6 +94,8 @@ type IamRole struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Whether the role is read-only and cannot be modified.
 	RoleIsReadOnly pulumi.BoolOutput `pulumi:"roleIsReadOnly"`
+	// Permission rules for the organisation role
+	Rules IamRoleRuleTypeArrayOutput `pulumi:"rules"`
 	// Slug of the organisation role
 	Slug pulumi.StringOutput `pulumi:"slug"`
 	// Whether the role is a system role
@@ -116,6 +146,8 @@ type iamRoleState struct {
 	Name *string `pulumi:"name"`
 	// Whether the role is read-only and cannot be modified.
 	RoleIsReadOnly *bool `pulumi:"roleIsReadOnly"`
+	// Permission rules for the organisation role
+	Rules []IamRoleRuleType `pulumi:"rules"`
 	// Slug of the organisation role
 	Slug *string `pulumi:"slug"`
 	// Whether the role is a system role
@@ -137,6 +169,8 @@ type IamRoleState struct {
 	Name pulumi.StringPtrInput
 	// Whether the role is read-only and cannot be modified.
 	RoleIsReadOnly pulumi.BoolPtrInput
+	// Permission rules for the organisation role
+	Rules IamRoleRuleTypeArrayInput
 	// Slug of the organisation role
 	Slug pulumi.StringPtrInput
 	// Whether the role is a system role
@@ -158,6 +192,8 @@ type iamRoleArgs struct {
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the organisation role
 	Name *string `pulumi:"name"`
+	// Permission rules for the organisation role
+	Rules []IamRoleRuleType `pulumi:"rules"`
 }
 
 // The set of arguments for constructing a IamRole resource.
@@ -170,6 +206,8 @@ type IamRoleArgs struct {
 	Labels pulumi.StringMapInput
 	// Name of the organisation role
 	Name pulumi.StringPtrInput
+	// Permission rules for the organisation role
+	Rules IamRoleRuleTypeArrayInput
 }
 
 func (IamRoleArgs) ElementType() reflect.Type {
@@ -287,6 +325,11 @@ func (o IamRoleOutput) Name() pulumi.StringOutput {
 // Whether the role is read-only and cannot be modified.
 func (o IamRoleOutput) RoleIsReadOnly() pulumi.BoolOutput {
 	return o.ApplyT(func(v *IamRole) pulumi.BoolOutput { return v.RoleIsReadOnly }).(pulumi.BoolOutput)
+}
+
+// Permission rules for the organisation role
+func (o IamRoleOutput) Rules() IamRoleRuleTypeArrayOutput {
+	return o.ApplyT(func(v *IamRole) IamRoleRuleTypeArrayOutput { return v.Rules }).(IamRoleRuleTypeArrayOutput)
 }
 
 // Slug of the organisation role

@@ -24,56 +24,67 @@ class KubernetesNodePoolArgs:
                  availability_zone: pulumi.Input[_builtins.str],
                  cluster_id: pulumi.Input[_builtins.str],
                  machine_type: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 enable_autohealing: Optional[pulumi.Input[_builtins.bool]] = None,
-                 kubernetes_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 max_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 min_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 node_annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 upgrade_strategy: Optional[pulumi.Input[_builtins.str]] = None):
+                 subnet_id: pulumi.Input[_builtins.str],
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+                 kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a KubernetesNodePool resource.
+
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] subnet_id: Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
-        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
         :param pulumi.Input[_builtins.str] upgrade_strategy: Upgrade strategy for the Kubernetes Node Pool
         """
         pulumi.set(__self__, "availability_zone", availability_zone)
         pulumi.set(__self__, "cluster_id", cluster_id)
         pulumi.set(__self__, "machine_type", machine_type)
+        pulumi.set(__self__, "subnet_id", subnet_id)
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if enable_autohealing is not None:
             pulumi.set(__self__, "enable_autohealing", enable_autohealing)
+        if enable_autoscaling is not None:
+            pulumi.set(__self__, "enable_autoscaling", enable_autoscaling)
         if kubernetes_version is not None:
             pulumi.set(__self__, "kubernetes_version", kubernetes_version)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if manage_node_allocatable is not None:
+            pulumi.set(__self__, "manage_node_allocatable", manage_node_allocatable)
         if max_replicas is not None:
             pulumi.set(__self__, "max_replicas", max_replicas)
         if min_replicas is not None:
@@ -92,8 +103,6 @@ class KubernetesNodePoolArgs:
             pulumi.set(__self__, "replicas", replicas)
         if security_group_attachments is not None:
             pulumi.set(__self__, "security_group_attachments", security_group_attachments)
-        if subnet_id is not None:
-            pulumi.set(__self__, "subnet_id", subnet_id)
         if upgrade_strategy is not None:
             pulumi.set(__self__, "upgrade_strategy", upgrade_strategy)
 
@@ -134,240 +143,273 @@ class KubernetesNodePoolArgs:
         pulumi.set(self, "machine_type", value)
 
     @_builtins.property
+    @pulumi.getter(name="subnetId")
+    def subnet_id(self) -> pulumi.Input[_builtins.str]:
+        """
+        Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
+        """
+        return pulumi.get(self, "subnet_id")
+
+    @subnet_id.setter
+    def subnet_id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "subnet_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the Kubernetes Node Pool
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="enableAutohealing")
-    def enable_autohealing(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enable_autohealing(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Enable autohealing for the Kubernetes Node Pool
         """
         return pulumi.get(self, "enable_autohealing")
 
     @enable_autohealing.setter
-    def enable_autohealing(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enable_autohealing(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enable_autohealing", value)
 
     @_builtins.property
-    @pulumi.getter(name="kubernetesVersion")
-    def kubernetes_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter(name="enableAutoscaling")
+    def enable_autoscaling(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        Enable autoscaling for the Kubernetes Node Pool
+        """
+        return pulumi.get(self, "enable_autoscaling")
+
+    @enable_autoscaling.setter
+    def enable_autoscaling(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enable_autoscaling", value)
+
+    @_builtins.property
+    @pulumi.getter(name="kubernetesVersion")
+    def kubernetes_version(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         """
         return pulumi.get(self, "kubernetes_version")
 
     @kubernetes_version.setter
-    def kubernetes_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kubernetes_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kubernetes_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="manageNodeAllocatable")
+    def manage_node_allocatable(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+        """
+        return pulumi.get(self, "manage_node_allocatable")
+
+    @manage_node_allocatable.setter
+    def manage_node_allocatable(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "manage_node_allocatable", value)
+
+    @_builtins.property
     @pulumi.getter(name="maxReplicas")
-    def max_replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def max_replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         """
         return pulumi.get(self, "max_replicas")
 
     @max_replicas.setter
-    def max_replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def max_replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "max_replicas", value)
 
     @_builtins.property
     @pulumi.getter(name="minReplicas")
-    def min_replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def min_replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         """
         return pulumi.get(self, "min_replicas")
 
     @min_replicas.setter
-    def min_replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def min_replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "min_replicas", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Kubernetes Node Pool
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeAnnotations")
-    def node_annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def node_annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         """
         return pulumi.get(self, "node_annotations")
 
     @node_annotations.setter
-    def node_annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def node_annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "node_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeLabels")
-    def node_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def node_labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         """
         return pulumi.get(self, "node_labels")
 
     @node_labels.setter
-    def node_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def node_labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "node_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeTaints")
-    def node_taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]:
+    def node_taints(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]:
         """
         Taints for the Kubernetes Node Pool
         """
         return pulumi.get(self, "node_taints")
 
     @node_taints.setter
-    def node_taints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]):
+    def node_taints(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]):
         pulumi.set(self, "node_taints", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
-    def replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "replicas", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the machines in the Node Pool
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
-    @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
-        """
-        Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
-        """
-        return pulumi.get(self, "subnet_id")
-
-    @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "subnet_id", value)
-
-    @_builtins.property
     @pulumi.getter(name="upgradeStrategy")
-    def upgrade_strategy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def upgrade_strategy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Upgrade strategy for the Kubernetes Node Pool
         """
         return pulumi.get(self, "upgrade_strategy")
 
     @upgrade_strategy.setter
-    def upgrade_strategy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def upgrade_strategy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "upgrade_strategy", value)
 
 
 @pulumi.input_type
 class _KubernetesNodePoolState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 enable_autohealing: Optional[pulumi.Input[_builtins.bool]] = None,
-                 kubernetes_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 max_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 min_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 node_annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 upgrade_strategy: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+                 kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering KubernetesNodePool resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
         :param pulumi.Input[_builtins.str] slug: Slug of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] status: Status of the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+        :param pulumi.Input[_builtins.str] subnet_id: Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         :param pulumi.Input[_builtins.str] upgrade_strategy: Upgrade strategy for the Kubernetes Node Pool
         """
         if annotations is not None:
@@ -380,12 +422,16 @@ class _KubernetesNodePoolState:
             pulumi.set(__self__, "description", description)
         if enable_autohealing is not None:
             pulumi.set(__self__, "enable_autohealing", enable_autohealing)
+        if enable_autoscaling is not None:
+            pulumi.set(__self__, "enable_autoscaling", enable_autoscaling)
         if kubernetes_version is not None:
             pulumi.set(__self__, "kubernetes_version", kubernetes_version)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if machine_type is not None:
             pulumi.set(__self__, "machine_type", machine_type)
+        if manage_node_allocatable is not None:
+            pulumi.set(__self__, "manage_node_allocatable", manage_node_allocatable)
         if max_replicas is not None:
             pulumi.set(__self__, "max_replicas", max_replicas)
         if min_replicas is not None:
@@ -415,251 +461,278 @@ class _KubernetesNodePoolState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="availabilityZone")
-    def availability_zone(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def availability_zone(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Availability zone for the Kubernetes Node Pool
         """
         return pulumi.get(self, "availability_zone")
 
     @availability_zone.setter
-    def availability_zone(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def availability_zone(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "availability_zone", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterId")
-    def cluster_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cluster_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Kubernetes Cluster of the Kubernetes Node Pool
         """
         return pulumi.get(self, "cluster_id")
 
     @cluster_id.setter
-    def cluster_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cluster_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cluster_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the Kubernetes Node Pool
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="enableAutohealing")
-    def enable_autohealing(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def enable_autohealing(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Enable autohealing for the Kubernetes Node Pool
         """
         return pulumi.get(self, "enable_autohealing")
 
     @enable_autohealing.setter
-    def enable_autohealing(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def enable_autohealing(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "enable_autohealing", value)
 
     @_builtins.property
-    @pulumi.getter(name="kubernetesVersion")
-    def kubernetes_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter(name="enableAutoscaling")
+    def enable_autoscaling(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        Enable autoscaling for the Kubernetes Node Pool
+        """
+        return pulumi.get(self, "enable_autoscaling")
+
+    @enable_autoscaling.setter
+    def enable_autoscaling(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enable_autoscaling", value)
+
+    @_builtins.property
+    @pulumi.getter(name="kubernetesVersion")
+    def kubernetes_version(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         """
         return pulumi.get(self, "kubernetes_version")
 
     @kubernetes_version.setter
-    def kubernetes_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def kubernetes_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "kubernetes_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="machineType")
-    def machine_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def machine_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Machine type for the Kubernetes Node Pool
         """
         return pulumi.get(self, "machine_type")
 
     @machine_type.setter
-    def machine_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def machine_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "machine_type", value)
 
     @_builtins.property
+    @pulumi.getter(name="manageNodeAllocatable")
+    def manage_node_allocatable(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+        """
+        return pulumi.get(self, "manage_node_allocatable")
+
+    @manage_node_allocatable.setter
+    def manage_node_allocatable(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "manage_node_allocatable", value)
+
+    @_builtins.property
     @pulumi.getter(name="maxReplicas")
-    def max_replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def max_replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         """
         return pulumi.get(self, "max_replicas")
 
     @max_replicas.setter
-    def max_replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def max_replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "max_replicas", value)
 
     @_builtins.property
     @pulumi.getter(name="minReplicas")
-    def min_replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def min_replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         """
         return pulumi.get(self, "min_replicas")
 
     @min_replicas.setter
-    def min_replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def min_replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "min_replicas", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Kubernetes Node Pool
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeAnnotations")
-    def node_annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def node_annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         """
         return pulumi.get(self, "node_annotations")
 
     @node_annotations.setter
-    def node_annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def node_annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "node_annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeLabels")
-    def node_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def node_labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         """
         return pulumi.get(self, "node_labels")
 
     @node_labels.setter
-    def node_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def node_labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "node_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="nodeTaints")
-    def node_taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]:
+    def node_taints(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]:
         """
         Taints for the Kubernetes Node Pool
         """
         return pulumi.get(self, "node_taints")
 
     @node_taints.setter
-    def node_taints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]):
+    def node_taints(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]]]):
         pulumi.set(self, "node_taints", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
-    def replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "replicas", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the machines in the Node Pool
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Slug of the Kubernetes Node Pool
         """
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the Kubernetes Node Pool
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+        Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
     @_builtins.property
     @pulumi.getter(name="upgradeStrategy")
-    def upgrade_strategy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def upgrade_strategy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Upgrade strategy for the Kubernetes Node Pool
         """
         return pulumi.get(self, "upgrade_strategy")
 
     @upgrade_strategy.setter
-    def upgrade_strategy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def upgrade_strategy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "upgrade_strategy", value)
 
 
@@ -669,28 +742,94 @@ class KubernetesNodePool(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 enable_autohealing: Optional[pulumi.Input[_builtins.bool]] = None,
-                 kubernetes_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 max_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 min_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 node_annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 upgrade_strategy: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+                 kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+
+        ## Autoscaling Configuration
+
+        ### When Autoscaling is Enabled (`enable_autoscaling = true`)
+        - **`replicas` must be unset** - The autoscaler manages the number of nodes
+        - **`min_replicas` is required** - Minimum number of nodes (must be ≥ 0)
+        - **`max_replicas` is required** - Maximum number of nodes
+        - **Current replicas are computed** - Shows the current number of nodes managed by the autoscaler
+
+        ### When Autoscaling is Disabled (`enable_autoscaling = false`)
+        - **`replicas` is required** - Fixed number of nodes for the pool
+        - **`min_replicas` and `max_replicas` are ignored** - Not used in manual scaling mode
+
+        ## Important Notes
+
+        - **Only available for managed clusters** - Not supported for hosted-control-plane clusters
+        - **`kubernetes_version` is optional** - If not specified, the cluster's version is used during initial creation of the node pool
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        # Create a VPC for the Kubernetes cluster
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for Kubernetes cluster",
+            region="nl-01",
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the Kubernetes cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for Kubernetes cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a Kubernetes cluster
+        example_kubernetes_cluster = thalassa.KubernetesCluster("example",
+            name="example-kubernetes-cluster",
+            description="Example Kubernetes cluster",
+            region="nl-01",
+            subnet_id=example_subnet.id,
+            api_server_acls=[{
+                "allowed_cidrs": [
+                    "10.0.0.0/16",
+                    "10.0.1.0/24",
+                ],
+            }])
+        # Create a Kubernetes node pool with Thalassa default values
+        example_kubernetes_node_pool = thalassa.KubernetesNodePool("example",
+            name="example-node-pool",
+            cluster_id=example_kubernetes_cluster.id,
+            subnet_id=example_subnet.id,
+            availability_zone="nl-01a",
+            machine_type="pgp-small",
+            enable_autoscaling=True,
+            min_replicas=1,
+            max_replicas=2)
+        pulumi.export("kubernetesClusterId", example_kubernetes_cluster.id)
+        pulumi.export("kubernetesClusterName", example_kubernetes_cluster.name)
+        pulumi.export("nodePoolId", example_kubernetes_node_pool.id)
+        pulumi.export("nodePoolName", example_kubernetes_node_pool.name)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -699,18 +838,21 @@ class KubernetesNodePool(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
-        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+        :param pulumi.Input[_builtins.str] subnet_id: Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         :param pulumi.Input[_builtins.str] upgrade_strategy: Upgrade strategy for the Kubernetes Node Pool
         """
         ...
@@ -721,6 +863,70 @@ class KubernetesNodePool(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+
+        ## Autoscaling Configuration
+
+        ### When Autoscaling is Enabled (`enable_autoscaling = true`)
+        - **`replicas` must be unset** - The autoscaler manages the number of nodes
+        - **`min_replicas` is required** - Minimum number of nodes (must be ≥ 0)
+        - **`max_replicas` is required** - Maximum number of nodes
+        - **Current replicas are computed** - Shows the current number of nodes managed by the autoscaler
+
+        ### When Autoscaling is Disabled (`enable_autoscaling = false`)
+        - **`replicas` is required** - Fixed number of nodes for the pool
+        - **`min_replicas` and `max_replicas` are ignored** - Not used in manual scaling mode
+
+        ## Important Notes
+
+        - **Only available for managed clusters** - Not supported for hosted-control-plane clusters
+        - **`kubernetes_version` is optional** - If not specified, the cluster's version is used during initial creation of the node pool
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        # Create a VPC for the Kubernetes cluster
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for Kubernetes cluster",
+            region="nl-01",
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the Kubernetes cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for Kubernetes cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a Kubernetes cluster
+        example_kubernetes_cluster = thalassa.KubernetesCluster("example",
+            name="example-kubernetes-cluster",
+            description="Example Kubernetes cluster",
+            region="nl-01",
+            subnet_id=example_subnet.id,
+            api_server_acls=[{
+                "allowed_cidrs": [
+                    "10.0.0.0/16",
+                    "10.0.1.0/24",
+                ],
+            }])
+        # Create a Kubernetes node pool with Thalassa default values
+        example_kubernetes_node_pool = thalassa.KubernetesNodePool("example",
+            name="example-node-pool",
+            cluster_id=example_kubernetes_cluster.id,
+            subnet_id=example_subnet.id,
+            availability_zone="nl-01a",
+            machine_type="pgp-small",
+            enable_autoscaling=True,
+            min_replicas=1,
+            max_replicas=2)
+        pulumi.export("kubernetesClusterId", example_kubernetes_cluster.id)
+        pulumi.export("kubernetesClusterName", example_kubernetes_cluster.name)
+        pulumi.export("nodePoolId", example_kubernetes_node_pool.id)
+        pulumi.export("nodePoolName", example_kubernetes_node_pool.name)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param KubernetesNodePoolArgs args: The arguments to use to populate this resource's properties.
@@ -737,25 +943,27 @@ class KubernetesNodePool(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 enable_autohealing: Optional[pulumi.Input[_builtins.bool]] = None,
-                 kubernetes_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 max_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 min_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 node_annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 upgrade_strategy: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+                 kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+                 max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -774,11 +982,13 @@ class KubernetesNodePool(pulumi.CustomResource):
             __props__.__dict__["cluster_id"] = cluster_id
             __props__.__dict__["description"] = description
             __props__.__dict__["enable_autohealing"] = enable_autohealing
+            __props__.__dict__["enable_autoscaling"] = enable_autoscaling
             __props__.__dict__["kubernetes_version"] = kubernetes_version
             __props__.__dict__["labels"] = labels
             if machine_type is None and not opts.urn:
                 raise TypeError("Missing required property 'machine_type'")
             __props__.__dict__["machine_type"] = machine_type
+            __props__.__dict__["manage_node_allocatable"] = manage_node_allocatable
             __props__.__dict__["max_replicas"] = max_replicas
             __props__.__dict__["min_replicas"] = min_replicas
             __props__.__dict__["name"] = name
@@ -788,6 +998,8 @@ class KubernetesNodePool(pulumi.CustomResource):
             __props__.__dict__["organisation_id"] = organisation_id
             __props__.__dict__["replicas"] = replicas
             __props__.__dict__["security_group_attachments"] = security_group_attachments
+            if subnet_id is None and not opts.urn:
+                raise TypeError("Missing required property 'subnet_id'")
             __props__.__dict__["subnet_id"] = subnet_id
             __props__.__dict__["upgrade_strategy"] = upgrade_strategy
             __props__.__dict__["slug"] = None
@@ -802,27 +1014,29 @@ class KubernetesNodePool(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-            cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            enable_autohealing: Optional[pulumi.Input[_builtins.bool]] = None,
-            kubernetes_version: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-            max_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-            min_replicas: Optional[pulumi.Input[_builtins.int]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            node_annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            node_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            node_taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            replicas: Optional[pulumi.Input[_builtins.int]] = None,
-            security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-            upgrade_strategy: Optional[pulumi.Input[_builtins.str]] = None) -> 'KubernetesNodePool':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+            cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+            enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+            kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+            manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+            max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None) -> 'KubernetesNodePool':
         """
         Get an existing KubernetesNodePool resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -835,20 +1049,23 @@ class KubernetesNodePool(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
         :param pulumi.Input[_builtins.str] slug: Slug of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] status: Status of the Kubernetes Node Pool
-        :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+        :param pulumi.Input[_builtins.str] subnet_id: Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         :param pulumi.Input[_builtins.str] upgrade_strategy: Upgrade strategy for the Kubernetes Node Pool
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -860,9 +1077,11 @@ class KubernetesNodePool(pulumi.CustomResource):
         __props__.__dict__["cluster_id"] = cluster_id
         __props__.__dict__["description"] = description
         __props__.__dict__["enable_autohealing"] = enable_autohealing
+        __props__.__dict__["enable_autoscaling"] = enable_autoscaling
         __props__.__dict__["kubernetes_version"] = kubernetes_version
         __props__.__dict__["labels"] = labels
         __props__.__dict__["machine_type"] = machine_type
+        __props__.__dict__["manage_node_allocatable"] = manage_node_allocatable
         __props__.__dict__["max_replicas"] = max_replicas
         __props__.__dict__["min_replicas"] = min_replicas
         __props__.__dict__["name"] = name
@@ -919,10 +1138,18 @@ class KubernetesNodePool(pulumi.CustomResource):
         return pulumi.get(self, "enable_autohealing")
 
     @_builtins.property
+    @pulumi.getter(name="enableAutoscaling")
+    def enable_autoscaling(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Enable autoscaling for the Kubernetes Node Pool
+        """
+        return pulumi.get(self, "enable_autoscaling")
+
+    @_builtins.property
     @pulumi.getter(name="kubernetesVersion")
     def kubernetes_version(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+        Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
         """
         return pulumi.get(self, "kubernetes_version")
 
@@ -941,6 +1168,14 @@ class KubernetesNodePool(pulumi.CustomResource):
         Machine type for the Kubernetes Node Pool
         """
         return pulumi.get(self, "machine_type")
+
+    @_builtins.property
+    @pulumi.getter(name="manageNodeAllocatable")
+    def manage_node_allocatable(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+        """
+        return pulumi.get(self, "manage_node_allocatable")
 
     @_builtins.property
     @pulumi.getter(name="maxReplicas")
@@ -993,6 +1228,9 @@ class KubernetesNodePool(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -1029,9 +1267,9 @@ class KubernetesNodePool(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+        Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
         """
         return pulumi.get(self, "subnet_id")
 

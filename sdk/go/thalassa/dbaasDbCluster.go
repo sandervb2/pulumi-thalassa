@@ -13,6 +13,78 @@ import (
 )
 
 // Create an DB Cluster
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			// Create a VPC for the database cluster
+//			example, err := thalassa.NewVpc(ctx, "example", &thalassa.VpcArgs{
+//				Name:        pulumi.String("example-vpc"),
+//				Description: pulumi.String("Example VPC for database cluster"),
+//				Region:      pulumi.String("nl-01"),
+//				Cidrs: pulumi.StringArray{
+//					pulumi.String("10.0.0.0/16"),
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a subnet for the database cluster
+//			exampleSubnet, err := thalassa.NewSubnet(ctx, "example", &thalassa.SubnetArgs{
+//				Name:        pulumi.String("example-subnet"),
+//				Description: pulumi.String("Example subnet for database cluster"),
+//				VpcId:       example.ID(),
+//				Cidr:        pulumi.String("10.0.1.0/24"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a security group for the DB cluster
+//			_, err = thalassa.NewSecurityGroup(ctx, "example", &thalassa.SecurityGroupArgs{
+//				Name:        pulumi.String("example-db-security-group"),
+//				Description: pulumi.String("Example security group for DB cluster"),
+//				VpcIdentity: example.ID(),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a database cluster with Thalassa default values
+//			exampleDbaasDbCluster, err := thalassa.NewDbaasDbCluster(ctx, "example", &thalassa.DbaasDbClusterArgs{
+//				Name:                             pulumi.String("example-db-cluster"),
+//				Description:                      pulumi.String("Example database cluster for documentation"),
+//				SubnetId:                         exampleSubnet.ID(),
+//				DatabaseInstanceType:             pulumi.String("db-pgp-small"),
+//				Engine:                           pulumi.String("postgres"),
+//				EngineVersion:                    pulumi.String("15.13"),
+//				AllocatedStorage:                 pulumi.Int(100),
+//				VolumeTypeClass:                  pulumi.String("block"),
+//				ProvisionDbObjectStore:           pulumi.Bool(true),
+//				CreateBackupBeforeDestroy:        pulumi.Bool(true),
+//				CreateBackupBeforeDestroyTimeout: pulumi.Int(30),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("dbClusterId", exampleDbaasDbCluster.ID())
+//			ctx.Export("dbClusterName", exampleDbaasDbCluster.Name)
+//			ctx.Export("dbClusterEndpoint", exampleDbaasDbCluster.EndpointIpv4)
+//			ctx.Export("dbClusterPort", exampleDbaasDbCluster.Port)
+//			return nil
+//		})
+//	}
+//
+// ```
 type DbaasDbCluster struct {
 	pulumi.CustomResourceState
 
@@ -22,6 +94,12 @@ type DbaasDbCluster struct {
 	Annotations pulumi.StringMapOutput `pulumi:"annotations"`
 	// Flag indicating if the cluster should automatically upgrade to the latest minor version
 	AutoMinorVersionUpgrade pulumi.BoolPtrOutput `pulumi:"autoMinorVersionUpgrade"`
+	// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+	AutoUpgradePolicy pulumi.StringPtrOutput `pulumi:"autoUpgradePolicy"`
+	// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+	CreateBackupBeforeDestroy pulumi.BoolPtrOutput `pulumi:"createBackupBeforeDestroy"`
+	// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+	CreateBackupBeforeDestroyTimeout pulumi.IntPtrOutput `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringOutput `pulumi:"databaseInstanceType"`
 	// Flag indicating if the cluster should be protected from deletion
@@ -40,17 +118,26 @@ type DbaasDbCluster struct {
 	InitDb pulumi.StringMapOutput `pulumi:"initDb"`
 	// Labels of the DB Cluster
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
+	// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+	MaintenanceDay pulumi.IntPtrOutput `pulumi:"maintenanceDay"`
+	// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+	MaintenanceStartAt pulumi.IntPtrOutput `pulumi:"maintenanceStartAt"`
 	// Name of the DB Cluster
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Map of parameter name to database engine specific parameter value
 	Parameters pulumi.StringMapOutput `pulumi:"parameters"`
 	// Port of the cluster endpoint
 	Port pulumi.IntOutput `pulumi:"port"`
+	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	ProvisionDbObjectStore pulumi.BoolPtrOutput `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrOutput `pulumi:"replicas"`
-	// Identity of the backup to restore from
-	RestoreFromBackupIdentity pulumi.StringPtrOutput `pulumi:"restoreFromBackupIdentity"`
+	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	RestoreFromBackupId pulumi.StringPtrOutput `pulumi:"restoreFromBackupId"`
+	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrOutput `pulumi:"restoreRecoveryTarget"`
 	// List of security groups associated with the cluster
 	SecurityGroups pulumi.StringArrayOutput `pulumi:"securityGroups"`
 	// Status of the cluster
@@ -115,6 +202,12 @@ type dbaasDbClusterState struct {
 	Annotations map[string]string `pulumi:"annotations"`
 	// Flag indicating if the cluster should automatically upgrade to the latest minor version
 	AutoMinorVersionUpgrade *bool `pulumi:"autoMinorVersionUpgrade"`
+	// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+	AutoUpgradePolicy *string `pulumi:"autoUpgradePolicy"`
+	// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+	CreateBackupBeforeDestroy *bool `pulumi:"createBackupBeforeDestroy"`
+	// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+	CreateBackupBeforeDestroyTimeout *int `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType *string `pulumi:"databaseInstanceType"`
 	// Flag indicating if the cluster should be protected from deletion
@@ -133,17 +226,26 @@ type dbaasDbClusterState struct {
 	InitDb map[string]string `pulumi:"initDb"`
 	// Labels of the DB Cluster
 	Labels map[string]string `pulumi:"labels"`
+	// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+	MaintenanceDay *int `pulumi:"maintenanceDay"`
+	// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the DB Cluster
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Map of parameter name to database engine specific parameter value
 	Parameters map[string]string `pulumi:"parameters"`
 	// Port of the cluster endpoint
 	Port *int `pulumi:"port"`
+	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	ProvisionDbObjectStore *bool `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas *int `pulumi:"replicas"`
-	// Identity of the backup to restore from
-	RestoreFromBackupIdentity *string `pulumi:"restoreFromBackupIdentity"`
+	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	RestoreFromBackupId *string `pulumi:"restoreFromBackupId"`
+	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+	RestoreRecoveryTarget *DbaasDbClusterRestoreRecoveryTarget `pulumi:"restoreRecoveryTarget"`
 	// List of security groups associated with the cluster
 	SecurityGroups []string `pulumi:"securityGroups"`
 	// Status of the cluster
@@ -161,6 +263,12 @@ type DbaasDbClusterState struct {
 	Annotations pulumi.StringMapInput
 	// Flag indicating if the cluster should automatically upgrade to the latest minor version
 	AutoMinorVersionUpgrade pulumi.BoolPtrInput
+	// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+	AutoUpgradePolicy pulumi.StringPtrInput
+	// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+	CreateBackupBeforeDestroy pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+	CreateBackupBeforeDestroyTimeout pulumi.IntPtrInput
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringPtrInput
 	// Flag indicating if the cluster should be protected from deletion
@@ -179,17 +287,26 @@ type DbaasDbClusterState struct {
 	InitDb pulumi.StringMapInput
 	// Labels of the DB Cluster
 	Labels pulumi.StringMapInput
+	// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+	MaintenanceDay pulumi.IntPtrInput
+	// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the DB Cluster
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Map of parameter name to database engine specific parameter value
 	Parameters pulumi.StringMapInput
 	// Port of the cluster endpoint
 	Port pulumi.IntPtrInput
+	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	ProvisionDbObjectStore pulumi.BoolPtrInput
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrInput
-	// Identity of the backup to restore from
-	RestoreFromBackupIdentity pulumi.StringPtrInput
+	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	RestoreFromBackupId pulumi.StringPtrInput
+	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrInput
 	// List of security groups associated with the cluster
 	SecurityGroups pulumi.StringArrayInput
 	// Status of the cluster
@@ -211,6 +328,12 @@ type dbaasDbClusterArgs struct {
 	Annotations map[string]string `pulumi:"annotations"`
 	// Flag indicating if the cluster should automatically upgrade to the latest minor version
 	AutoMinorVersionUpgrade *bool `pulumi:"autoMinorVersionUpgrade"`
+	// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+	AutoUpgradePolicy *string `pulumi:"autoUpgradePolicy"`
+	// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+	CreateBackupBeforeDestroy *bool `pulumi:"createBackupBeforeDestroy"`
+	// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+	CreateBackupBeforeDestroyTimeout *int `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType string `pulumi:"databaseInstanceType"`
 	// Flag indicating if the cluster should be protected from deletion
@@ -225,15 +348,24 @@ type dbaasDbClusterArgs struct {
 	InitDb map[string]string `pulumi:"initDb"`
 	// Labels of the DB Cluster
 	Labels map[string]string `pulumi:"labels"`
+	// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+	MaintenanceDay *int `pulumi:"maintenanceDay"`
+	// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the DB Cluster
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Map of parameter name to database engine specific parameter value
 	Parameters map[string]string `pulumi:"parameters"`
+	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	ProvisionDbObjectStore *bool `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas *int `pulumi:"replicas"`
-	// Identity of the backup to restore from
-	RestoreFromBackupIdentity *string `pulumi:"restoreFromBackupIdentity"`
+	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	RestoreFromBackupId *string `pulumi:"restoreFromBackupId"`
+	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+	RestoreRecoveryTarget *DbaasDbClusterRestoreRecoveryTarget `pulumi:"restoreRecoveryTarget"`
 	// List of security groups associated with the cluster
 	SecurityGroups []string `pulumi:"securityGroups"`
 	// Subnet of the DB Cluster
@@ -250,6 +382,12 @@ type DbaasDbClusterArgs struct {
 	Annotations pulumi.StringMapInput
 	// Flag indicating if the cluster should automatically upgrade to the latest minor version
 	AutoMinorVersionUpgrade pulumi.BoolPtrInput
+	// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+	AutoUpgradePolicy pulumi.StringPtrInput
+	// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+	CreateBackupBeforeDestroy pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+	CreateBackupBeforeDestroyTimeout pulumi.IntPtrInput
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringInput
 	// Flag indicating if the cluster should be protected from deletion
@@ -264,15 +402,24 @@ type DbaasDbClusterArgs struct {
 	InitDb pulumi.StringMapInput
 	// Labels of the DB Cluster
 	Labels pulumi.StringMapInput
+	// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+	MaintenanceDay pulumi.IntPtrInput
+	// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the DB Cluster
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Map of parameter name to database engine specific parameter value
 	Parameters pulumi.StringMapInput
+	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	ProvisionDbObjectStore pulumi.BoolPtrInput
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrInput
-	// Identity of the backup to restore from
-	RestoreFromBackupIdentity pulumi.StringPtrInput
+	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	RestoreFromBackupId pulumi.StringPtrInput
+	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrInput
 	// List of security groups associated with the cluster
 	SecurityGroups pulumi.StringArrayInput
 	// Subnet of the DB Cluster
@@ -383,6 +530,21 @@ func (o DbaasDbClusterOutput) AutoMinorVersionUpgrade() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.BoolPtrOutput { return v.AutoMinorVersionUpgrade }).(pulumi.BoolPtrOutput)
 }
 
+// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+func (o DbaasDbClusterOutput) AutoUpgradePolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.AutoUpgradePolicy }).(pulumi.StringPtrOutput)
+}
+
+// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+func (o DbaasDbClusterOutput) CreateBackupBeforeDestroy() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.BoolPtrOutput { return v.CreateBackupBeforeDestroy }).(pulumi.BoolPtrOutput)
+}
+
+// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+func (o DbaasDbClusterOutput) CreateBackupBeforeDestroyTimeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntPtrOutput { return v.CreateBackupBeforeDestroyTimeout }).(pulumi.IntPtrOutput)
+}
+
 // Database instance type of the DB Cluster
 func (o DbaasDbClusterOutput) DatabaseInstanceType() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringOutput { return v.DatabaseInstanceType }).(pulumi.StringOutput)
@@ -428,11 +590,22 @@ func (o DbaasDbClusterOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
 
+// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+func (o DbaasDbClusterOutput) MaintenanceDay() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntPtrOutput { return v.MaintenanceDay }).(pulumi.IntPtrOutput)
+}
+
+// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+func (o DbaasDbClusterOutput) MaintenanceStartAt() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntPtrOutput { return v.MaintenanceStartAt }).(pulumi.IntPtrOutput)
+}
+
 // Name of the DB Cluster
 func (o DbaasDbClusterOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 func (o DbaasDbClusterOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -447,14 +620,24 @@ func (o DbaasDbClusterOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntOutput { return v.Port }).(pulumi.IntOutput)
 }
 
+// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+func (o DbaasDbClusterOutput) ProvisionDbObjectStore() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.BoolPtrOutput { return v.ProvisionDbObjectStore }).(pulumi.BoolPtrOutput)
+}
+
 // Number of instances in the cluster
 func (o DbaasDbClusterOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntPtrOutput { return v.Replicas }).(pulumi.IntPtrOutput)
 }
 
-// Identity of the backup to restore from
-func (o DbaasDbClusterOutput) RestoreFromBackupIdentity() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.RestoreFromBackupIdentity }).(pulumi.StringPtrOutput)
+// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+func (o DbaasDbClusterOutput) RestoreFromBackupId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.RestoreFromBackupId }).(pulumi.StringPtrOutput)
+}
+
+// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+func (o DbaasDbClusterOutput) RestoreRecoveryTarget() DbaasDbClusterRestoreRecoveryTargetPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) DbaasDbClusterRestoreRecoveryTargetPtrOutput { return v.RestoreRecoveryTarget }).(DbaasDbClusterRestoreRecoveryTargetPtrOutput)
 }
 
 // List of security groups associated with the cluster

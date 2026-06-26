@@ -77,10 +77,10 @@ namespace Pulumi.Thalassa
     public partial class DbaasDbBackupschedule : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// The backup target of the database backup schedule (primary, prefer-standby)
+        /// The annotations of the database backup schedule
         /// </summary>
-        [Output("backupTarget")]
-        public Output<string?> BackupTarget { get; private set; } = null!;
+        [Output("annotations")]
+        public Output<ImmutableDictionary<string, string>?> Annotations { get; private set; } = null!;
 
         /// <summary>
         /// The ID of the database cluster
@@ -89,11 +89,32 @@ namespace Pulumi.Thalassa
         public Output<string> DbClusterId { get; private set; } = null!;
 
         /// <summary>
+        /// The description of the database backup schedule
+        /// </summary>
+        [Output("description")]
+        public Output<string?> Description { get; private set; } = null!;
+
+        /// <summary>
+        /// The labels of the database backup schedule
+        /// </summary>
+        [Output("labels")]
+        public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
+
+        /// <summary>
+        /// The method of the backup schedule (barman)
+        /// </summary>
+        [Output("method")]
+        public Output<string?> Method { get; private set; } = null!;
+
+        /// <summary>
         /// The name of the database backup schedule
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -162,11 +183,17 @@ namespace Pulumi.Thalassa
 
     public sealed class DbaasDbBackupscheduleArgs : global::Pulumi.ResourceArgs
     {
+        [Input("annotations")]
+        private InputMap<string>? _annotations;
+
         /// <summary>
-        /// The backup target of the database backup schedule (primary, prefer-standby)
+        /// The annotations of the database backup schedule
         /// </summary>
-        [Input("backupTarget")]
-        public Input<string>? BackupTarget { get; set; }
+        public InputMap<string> Annotations
+        {
+            get => _annotations ?? (_annotations = new InputMap<string>());
+            set => _annotations = value;
+        }
 
         /// <summary>
         /// The ID of the database cluster
@@ -175,11 +202,38 @@ namespace Pulumi.Thalassa
         public Input<string> DbClusterId { get; set; } = null!;
 
         /// <summary>
+        /// The description of the database backup schedule
+        /// </summary>
+        [Input("description")]
+        public Input<string>? Description { get; set; }
+
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// The labels of the database backup schedule
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
+        /// <summary>
+        /// The method of the backup schedule (barman)
+        /// </summary>
+        [Input("method")]
+        public Input<string>? Method { get; set; }
+
+        /// <summary>
         /// The name of the database backup schedule
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -209,11 +263,17 @@ namespace Pulumi.Thalassa
 
     public sealed class DbaasDbBackupscheduleState : global::Pulumi.ResourceArgs
     {
+        [Input("annotations")]
+        private InputMap<string>? _annotations;
+
         /// <summary>
-        /// The backup target of the database backup schedule (primary, prefer-standby)
+        /// The annotations of the database backup schedule
         /// </summary>
-        [Input("backupTarget")]
-        public Input<string>? BackupTarget { get; set; }
+        public InputMap<string> Annotations
+        {
+            get => _annotations ?? (_annotations = new InputMap<string>());
+            set => _annotations = value;
+        }
 
         /// <summary>
         /// The ID of the database cluster
@@ -222,11 +282,38 @@ namespace Pulumi.Thalassa
         public Input<string>? DbClusterId { get; set; }
 
         /// <summary>
+        /// The description of the database backup schedule
+        /// </summary>
+        [Input("description")]
+        public Input<string>? Description { get; set; }
+
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// The labels of the database backup schedule
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
+        /// <summary>
+        /// The method of the backup schedule (barman)
+        /// </summary>
+        [Input("method")]
+        public Input<string>? Method { get; set; }
+
+        /// <summary>
         /// The name of the database backup schedule
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

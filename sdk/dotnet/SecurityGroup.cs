@@ -37,7 +37,7 @@ namespace Pulumi.Thalassa
     ///     var exampleSecurityGroup = new Thalassa.SecurityGroup("example", new()
     ///     {
     ///         Name = "example-security-group",
-    ///         Description = "Example security group for documentation",
+    ///         Description = "Example security group",
     ///         VpcId = example.Id,
     ///         AllowSameGroupTraffic = false,
     ///         IngressRules = new[]
@@ -82,6 +82,93 @@ namespace Pulumi.Thalassa
     ///         },
     ///     });
     /// 
+    ///     // Create a security group with rules managed separately
+    ///     var controlplane = new Thalassa.SecurityGroup("controlplane", new()
+    ///     {
+    ///         Name = "controlplane-security-group",
+    ///         Description = "Control plane security group",
+    ///         VpcId = example.Id,
+    ///         AllowSameGroupTraffic = false,
+    ///     });
+    /// 
+    ///     // Create a security group
+    ///     var cluster = new Thalassa.SecurityGroup("cluster", new()
+    ///     {
+    ///         Name = "cluster-security-group",
+    ///         Description = "Cluster security group",
+    ///         VpcId = example.Id,
+    ///         AllowSameGroupTraffic = false,
+    ///     });
+    /// 
+    ///     // ingress rules
+    ///     var controlplaneSecurityGroupIngressRule = new Thalassa.SecurityGroupIngressRule("controlplane", new()
+    ///     {
+    ///         SecurityGroupId = controlplane.Id,
+    ///         Rules = new[]
+    ///         {
+    ///             new Thalassa.Inputs.SecurityGroupIngressRuleRuleArgs
+    ///             {
+    ///                 Name = "allow-http",
+    ///                 IpVersion = "ipv4",
+    ///                 Protocol = "tcp",
+    ///                 Priority = 100,
+    ///                 Policy = "allow",
+    ///                 RemoteType = "securityGroup",
+    ///                 RemoteSecurityGroupIdentity = cluster.Id,
+    ///                 PortRangeMin = 80,
+    ///                 PortRangeMax = 80,
+    ///             },
+    ///             new Thalassa.Inputs.SecurityGroupIngressRuleRuleArgs
+    ///             {
+    ///                 Name = "allow-ssh",
+    ///                 IpVersion = "ipv4",
+    ///                 Protocol = "tcp",
+    ///                 Priority = 100,
+    ///                 Policy = "allow",
+    ///                 RemoteType = "address",
+    ///                 RemoteAddress = "0.0.0.0/0",
+    ///                 PortRangeMin = 22,
+    ///                 PortRangeMax = 22,
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    ///     var controlplaneSecurityGroupEgressRule = new Thalassa.SecurityGroupEgressRule("controlplane", new()
+    ///     {
+    ///         SecurityGroupId = controlplane.Id,
+    ///         Rules = new[]
+    ///         {
+    ///             new Thalassa.Inputs.SecurityGroupEgressRuleRuleArgs
+    ///             {
+    ///                 Name = "allow-all",
+    ///                 IpVersion = "ipv4",
+    ///                 Protocol = "all",
+    ///                 Priority = 100,
+    ///                 Policy = "allow",
+    ///                 RemoteType = "address",
+    ///                 RemoteAddress = "0.0.0.0/0",
+    ///             },
+    ///         },
+    ///     });
+    /// 
+    ///     var clusterSecurityGroupEgressRule = new Thalassa.SecurityGroupEgressRule("cluster", new()
+    ///     {
+    ///         SecurityGroupId = cluster.Id,
+    ///         Rules = new[]
+    ///         {
+    ///             new Thalassa.Inputs.SecurityGroupEgressRuleRuleArgs
+    ///             {
+    ///                 Name = "allow-controlplane",
+    ///                 IpVersion = "ipv4",
+    ///                 Protocol = "tcp",
+    ///                 Priority = 100,
+    ///                 Policy = "allow",
+    ///                 RemoteType = "securityGroup",
+    ///                 RemoteSecurityGroupIdentity = controlplane.Id,
+    ///             },
+    ///         },
+    ///     });
+    /// 
     ///     return new Dictionary&lt;string, object?&gt;
     ///     {
     ///         ["securityGroupId"] = exampleSecurityGroup.Id,
@@ -100,6 +187,12 @@ namespace Pulumi.Thalassa
         public Output<bool?> AllowSameGroupTraffic { get; private set; } = null!;
 
         /// <summary>
+        /// Annotations of the security group
+        /// </summary>
+        [Output("annotations")]
+        public Output<ImmutableDictionary<string, string>?> Annotations { get; private set; } = null!;
+
+        /// <summary>
         /// Creation timestamp of the security group
         /// </summary>
         [Output("createdAt")]
@@ -112,7 +205,7 @@ namespace Pulumi.Thalassa
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// List of egress rules for the security group
+        /// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         /// </summary>
         [Output("egressRules")]
         public Output<ImmutableArray<Outputs.SecurityGroupEgressRule>> EgressRules { get; private set; } = null!;
@@ -130,11 +223,20 @@ namespace Pulumi.Thalassa
         public Output<ImmutableArray<Outputs.SecurityGroupIngressRule>> IngressRules { get; private set; } = null!;
 
         /// <summary>
+        /// Labels of the security group
+        /// </summary>
+        [Output("labels")]
+        public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
+
+        /// <summary>
         /// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -209,6 +311,18 @@ namespace Pulumi.Thalassa
         [Input("allowSameGroupTraffic")]
         public Input<bool>? AllowSameGroupTraffic { get; set; }
 
+        [Input("annotations")]
+        private InputMap<string>? _annotations;
+
+        /// <summary>
+        /// Annotations of the security group
+        /// </summary>
+        public InputMap<string> Annotations
+        {
+            get => _annotations ?? (_annotations = new InputMap<string>());
+            set => _annotations = value;
+        }
+
         /// <summary>
         /// Description of the security group
         /// </summary>
@@ -219,7 +333,7 @@ namespace Pulumi.Thalassa
         private InputList<Inputs.SecurityGroupEgressRuleArgs>? _egressRules;
 
         /// <summary>
-        /// List of egress rules for the security group
+        /// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         /// </summary>
         public InputList<Inputs.SecurityGroupEgressRuleArgs> EgressRules
         {
@@ -239,12 +353,27 @@ namespace Pulumi.Thalassa
             set => _ingressRules = value;
         }
 
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels of the security group
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
         /// <summary>
         /// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -268,6 +397,18 @@ namespace Pulumi.Thalassa
         [Input("allowSameGroupTraffic")]
         public Input<bool>? AllowSameGroupTraffic { get; set; }
 
+        [Input("annotations")]
+        private InputMap<string>? _annotations;
+
+        /// <summary>
+        /// Annotations of the security group
+        /// </summary>
+        public InputMap<string> Annotations
+        {
+            get => _annotations ?? (_annotations = new InputMap<string>());
+            set => _annotations = value;
+        }
+
         /// <summary>
         /// Creation timestamp of the security group
         /// </summary>
@@ -284,7 +425,7 @@ namespace Pulumi.Thalassa
         private InputList<Inputs.SecurityGroupEgressRuleGetArgs>? _egressRules;
 
         /// <summary>
-        /// List of egress rules for the security group
+        /// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         /// </summary>
         public InputList<Inputs.SecurityGroupEgressRuleGetArgs> EgressRules
         {
@@ -310,12 +451,27 @@ namespace Pulumi.Thalassa
             set => _ingressRules = value;
         }
 
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels of the security group
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
         /// <summary>
         /// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

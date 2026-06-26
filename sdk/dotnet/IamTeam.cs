@@ -45,6 +45,8 @@ namespace Pulumi.Thalassa
     ///         ["teamName"] = example.Name,
     ///         ["teamSlug"] = example.Slug,
     ///         ["teamDescription"] = example.Description,
+    ///         ["teamMembers"] = example.Members,
+    ///         ["teamMemberCount"] = example.Members.Length(),
     ///     };
     /// });
     /// ```
@@ -77,11 +79,20 @@ namespace Pulumi.Thalassa
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
         /// <summary>
+        /// List of team members
+        /// </summary>
+        [Output("members")]
+        public Output<ImmutableArray<Outputs.IamTeamMember>> Members { get; private set; } = null!;
+
+        /// <summary>
         /// Name of the Team
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -174,12 +185,27 @@ namespace Pulumi.Thalassa
             set => _labels = value;
         }
 
+        [Input("members")]
+        private InputList<Inputs.IamTeamMemberArgs>? _members;
+
+        /// <summary>
+        /// List of team members
+        /// </summary>
+        public InputList<Inputs.IamTeamMemberArgs> Members
+        {
+            get => _members ?? (_members = new InputList<Inputs.IamTeamMemberArgs>());
+            set => _members = value;
+        }
+
         /// <summary>
         /// Name of the Team
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -227,12 +253,27 @@ namespace Pulumi.Thalassa
             set => _labels = value;
         }
 
+        [Input("members")]
+        private InputList<Inputs.IamTeamMemberGetArgs>? _members;
+
+        /// <summary>
+        /// List of team members
+        /// </summary>
+        public InputList<Inputs.IamTeamMemberGetArgs> Members
+        {
+            get => _members ?? (_members = new InputList<Inputs.IamTeamMemberGetArgs>());
+            set => _members = value;
+        }
+
         /// <summary>
         /// Name of the Team
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

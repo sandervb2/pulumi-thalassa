@@ -23,6 +23,9 @@ export interface GetVolumeTypeArgs {
      * The name of the volume type.
      */
     name: string;
+    /**
+     * Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
 }
 
@@ -46,6 +49,9 @@ export interface GetVolumeTypeResult {
      * The name of the volume type.
      */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * The storage type of the volume type. For example: 'block'.
@@ -71,5 +77,8 @@ export interface GetVolumeTypeOutputArgs {
      * The name of the volume type.
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

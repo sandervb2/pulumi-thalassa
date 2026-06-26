@@ -78,6 +78,9 @@ class GetDbaasDbBackupscheduleResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -118,6 +121,8 @@ def get_dbaas_db_backupschedule(db_cluster_id: Optional[_builtins.str] = None,
                                 opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetDbaasDbBackupscheduleResult:
     """
     Use this data source to access information about an existing resource.
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['dbClusterId'] = db_cluster_id
@@ -135,12 +140,14 @@ def get_dbaas_db_backupschedule(db_cluster_id: Optional[_builtins.str] = None,
         retention_policy=pulumi.get(__ret__, 'retention_policy'),
         schedule=pulumi.get(__ret__, 'schedule'),
         suspended=pulumi.get(__ret__, 'suspended'))
-def get_dbaas_db_backupschedule_output(db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                                       name: Optional[pulumi.Input[_builtins.str]] = None,
-                                       organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_dbaas_db_backupschedule_output(db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                                       name: pulumi.Input[Optional[_builtins.str]] = None,
+                                       organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetDbaasDbBackupscheduleResult]:
     """
     Use this data source to access information about an existing resource.
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['dbClusterId'] = db_cluster_id

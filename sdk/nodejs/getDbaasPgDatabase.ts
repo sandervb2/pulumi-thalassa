@@ -25,6 +25,9 @@ export interface GetDbaasPgDatabaseArgs {
      * The name of the database
      */
     name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
 }
 
@@ -48,6 +51,9 @@ export interface GetDbaasPgDatabaseResult {
      * The name of the database
      */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * The ID of the owner role
@@ -75,5 +81,8 @@ export interface GetDbaasPgDatabaseOutputArgs {
      * The name of the database
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

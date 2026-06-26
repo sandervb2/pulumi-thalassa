@@ -109,6 +109,9 @@ class GetVpcResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -166,6 +169,7 @@ def get_vpc(description: Optional[_builtins.str] = None,
 
     :param _builtins.str description: A human readable description about the vpc
     :param _builtins.str name: Name of the Vpc
+    :param _builtins.str organisation_id: Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str region: Region of the Vpc. Provide the identity of the region. Can only be set on creation.
     :param _builtins.str slug: Slug of the Vpc
     """
@@ -189,11 +193,11 @@ def get_vpc(description: Optional[_builtins.str] = None,
         region=pulumi.get(__ret__, 'region'),
         slug=pulumi.get(__ret__, 'slug'),
         status=pulumi.get(__ret__, 'status'))
-def get_vpc_output(description: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                   name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                   organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                   region: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                   slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_vpc_output(description: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                   name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                   organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                   region: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                   slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                    opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetVpcResult]:
     """
     Get an vpc
@@ -201,6 +205,7 @@ def get_vpc_output(description: Optional[pulumi.Input[Optional[_builtins.str]]] 
 
     :param _builtins.str description: A human readable description about the vpc
     :param _builtins.str name: Name of the Vpc
+    :param _builtins.str organisation_id: Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str region: Region of the Vpc. Provide the identity of the region. Can only be set on creation.
     :param _builtins.str slug: Slug of the Vpc
     """

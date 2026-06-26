@@ -27,7 +27,8 @@ type LookupSecurityGroupArgs struct {
 	// Identity of the security group
 	Identity *string `pulumi:"identity"`
 	// Name of the security group
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Identity of the VPC that the security group belongs to. Required when searching by name.
 	VpcIdentity *string `pulumi:"vpcIdentity"`
@@ -42,15 +43,16 @@ type LookupSecurityGroupResult struct {
 	// Description of the security group
 	Description string `pulumi:"description"`
 	// List of egress rules for the security group
-	EgressRules []GetSecurityGroupEgressRule `pulumi:"egressRules"`
+	EgressRules []GetSecurityGroupEgressRuleType `pulumi:"egressRules"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// Identity of the security group
 	Identity *string `pulumi:"identity"`
 	// List of ingress rules for the security group
-	IngressRules []GetSecurityGroupIngressRule `pulumi:"ingressRules"`
+	IngressRules []GetSecurityGroupIngressRuleType `pulumi:"ingressRules"`
 	// Name of the security group
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Status of the security group
 	Status string `pulumi:"status"`
@@ -74,7 +76,8 @@ type LookupSecurityGroupOutputArgs struct {
 	// Identity of the security group
 	Identity pulumi.StringPtrInput `pulumi:"identity"`
 	// Name of the security group
-	Name           pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Identity of the VPC that the security group belongs to. Required when searching by name.
 	VpcIdentity pulumi.StringPtrInput `pulumi:"vpcIdentity"`
@@ -115,8 +118,8 @@ func (o LookupSecurityGroupResultOutput) Description() pulumi.StringOutput {
 }
 
 // List of egress rules for the security group
-func (o LookupSecurityGroupResultOutput) EgressRules() GetSecurityGroupEgressRuleArrayOutput {
-	return o.ApplyT(func(v LookupSecurityGroupResult) []GetSecurityGroupEgressRule { return v.EgressRules }).(GetSecurityGroupEgressRuleArrayOutput)
+func (o LookupSecurityGroupResultOutput) EgressRules() GetSecurityGroupEgressRuleTypeArrayOutput {
+	return o.ApplyT(func(v LookupSecurityGroupResult) []GetSecurityGroupEgressRuleType { return v.EgressRules }).(GetSecurityGroupEgressRuleTypeArrayOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
@@ -130,8 +133,8 @@ func (o LookupSecurityGroupResultOutput) Identity() pulumi.StringPtrOutput {
 }
 
 // List of ingress rules for the security group
-func (o LookupSecurityGroupResultOutput) IngressRules() GetSecurityGroupIngressRuleArrayOutput {
-	return o.ApplyT(func(v LookupSecurityGroupResult) []GetSecurityGroupIngressRule { return v.IngressRules }).(GetSecurityGroupIngressRuleArrayOutput)
+func (o LookupSecurityGroupResultOutput) IngressRules() GetSecurityGroupIngressRuleTypeArrayOutput {
+	return o.ApplyT(func(v LookupSecurityGroupResult) []GetSecurityGroupIngressRuleType { return v.IngressRules }).(GetSecurityGroupIngressRuleTypeArrayOutput)
 }
 
 // Name of the security group
@@ -139,6 +142,7 @@ func (o LookupSecurityGroupResultOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupSecurityGroupResult) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
+// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupSecurityGroupResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupSecurityGroupResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

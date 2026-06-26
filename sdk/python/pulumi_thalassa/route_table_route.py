@@ -21,13 +21,15 @@ class RouteTableRouteArgs:
     def __init__(__self__, *,
                  destination_cidr: pulumi.Input[_builtins.str],
                  route_table_id: pulumi.Input[_builtins.str],
-                 gateway_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 notes: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_gateway: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_natgateway: Optional[pulumi.Input[_builtins.str]] = None):
+                 gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 notes: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a RouteTableRoute resource.
+
         :param pulumi.Input[_builtins.str] destination_cidr: Destination CIDR of the Route
         :param pulumi.Input[_builtins.str] route_table_id: RouteTable of the Route
         :param pulumi.Input[_builtins.str] gateway_address: Gateway Address of the Route
@@ -35,6 +37,7 @@ class RouteTableRouteArgs:
         :param pulumi.Input[_builtins.str] organisation_id: Organisation of the RouteTable
         :param pulumi.Input[_builtins.str] target_gateway: Target Gateway of the Route
         :param pulumi.Input[_builtins.str] target_natgateway: Target NAT Gateway of the Route
+        :param pulumi.Input[_builtins.str] target_vpc_peering_connection: Target VPC Peering Connection ID of the Route
         """
         pulumi.set(__self__, "destination_cidr", destination_cidr)
         pulumi.set(__self__, "route_table_id", route_table_id)
@@ -48,6 +51,8 @@ class RouteTableRouteArgs:
             pulumi.set(__self__, "target_gateway", target_gateway)
         if target_natgateway is not None:
             pulumi.set(__self__, "target_natgateway", target_natgateway)
+        if target_vpc_peering_connection is not None:
+            pulumi.set(__self__, "target_vpc_peering_connection", target_vpc_peering_connection)
 
     @_builtins.property
     @pulumi.getter(name="destinationCidr")
@@ -75,77 +80,91 @@ class RouteTableRouteArgs:
 
     @_builtins.property
     @pulumi.getter(name="gatewayAddress")
-    def gateway_address(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def gateway_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Gateway Address of the Route
         """
         return pulumi.get(self, "gateway_address")
 
     @gateway_address.setter
-    def gateway_address(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def gateway_address(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "gateway_address", value)
 
     @_builtins.property
     @pulumi.getter
-    def notes(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def notes(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Notes for the Route
         """
         return pulumi.get(self, "notes")
 
     @notes.setter
-    def notes(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def notes(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "notes", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Organisation of the RouteTable
         """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="targetGateway")
-    def target_gateway(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def target_gateway(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target Gateway of the Route
         """
         return pulumi.get(self, "target_gateway")
 
     @target_gateway.setter
-    def target_gateway(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def target_gateway(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "target_gateway", value)
 
     @_builtins.property
     @pulumi.getter(name="targetNatgateway")
-    def target_natgateway(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def target_natgateway(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target NAT Gateway of the Route
         """
         return pulumi.get(self, "target_natgateway")
 
     @target_natgateway.setter
-    def target_natgateway(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def target_natgateway(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "target_natgateway", value)
+
+    @_builtins.property
+    @pulumi.getter(name="targetVpcPeeringConnection")
+    def target_vpc_peering_connection(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Target VPC Peering Connection ID of the Route
+        """
+        return pulumi.get(self, "target_vpc_peering_connection")
+
+    @target_vpc_peering_connection.setter
+    def target_vpc_peering_connection(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "target_vpc_peering_connection", value)
 
 
 @pulumi.input_type
 class _RouteTableRouteState:
     def __init__(__self__, *,
-                 destination_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 gateway_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 notes: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 route_table_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_gateway: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_natgateway: Optional[pulumi.Input[_builtins.str]] = None):
+                 destination_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 notes: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering RouteTableRoute resources.
+
         :param pulumi.Input[_builtins.str] destination_cidr: Destination CIDR of the Route
         :param pulumi.Input[_builtins.str] gateway_address: Gateway Address of the Route
         :param pulumi.Input[_builtins.str] notes: Notes for the Route
@@ -153,6 +172,7 @@ class _RouteTableRouteState:
         :param pulumi.Input[_builtins.str] route_table_id: RouteTable of the Route
         :param pulumi.Input[_builtins.str] target_gateway: Target Gateway of the Route
         :param pulumi.Input[_builtins.str] target_natgateway: Target NAT Gateway of the Route
+        :param pulumi.Input[_builtins.str] target_vpc_peering_connection: Target VPC Peering Connection ID of the Route
         """
         if destination_cidr is not None:
             pulumi.set(__self__, "destination_cidr", destination_cidr)
@@ -168,90 +188,104 @@ class _RouteTableRouteState:
             pulumi.set(__self__, "target_gateway", target_gateway)
         if target_natgateway is not None:
             pulumi.set(__self__, "target_natgateway", target_natgateway)
+        if target_vpc_peering_connection is not None:
+            pulumi.set(__self__, "target_vpc_peering_connection", target_vpc_peering_connection)
 
     @_builtins.property
     @pulumi.getter(name="destinationCidr")
-    def destination_cidr(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def destination_cidr(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Destination CIDR of the Route
         """
         return pulumi.get(self, "destination_cidr")
 
     @destination_cidr.setter
-    def destination_cidr(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def destination_cidr(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "destination_cidr", value)
 
     @_builtins.property
     @pulumi.getter(name="gatewayAddress")
-    def gateway_address(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def gateway_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Gateway Address of the Route
         """
         return pulumi.get(self, "gateway_address")
 
     @gateway_address.setter
-    def gateway_address(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def gateway_address(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "gateway_address", value)
 
     @_builtins.property
     @pulumi.getter
-    def notes(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def notes(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Notes for the Route
         """
         return pulumi.get(self, "notes")
 
     @notes.setter
-    def notes(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def notes(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "notes", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Organisation of the RouteTable
         """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="routeTableId")
-    def route_table_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def route_table_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         RouteTable of the Route
         """
         return pulumi.get(self, "route_table_id")
 
     @route_table_id.setter
-    def route_table_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def route_table_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "route_table_id", value)
 
     @_builtins.property
     @pulumi.getter(name="targetGateway")
-    def target_gateway(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def target_gateway(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target Gateway of the Route
         """
         return pulumi.get(self, "target_gateway")
 
     @target_gateway.setter
-    def target_gateway(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def target_gateway(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "target_gateway", value)
 
     @_builtins.property
     @pulumi.getter(name="targetNatgateway")
-    def target_natgateway(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def target_natgateway(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Target NAT Gateway of the Route
         """
         return pulumi.get(self, "target_natgateway")
 
     @target_natgateway.setter
-    def target_natgateway(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def target_natgateway(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "target_natgateway", value)
+
+    @_builtins.property
+    @pulumi.getter(name="targetVpcPeeringConnection")
+    def target_vpc_peering_connection(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Target VPC Peering Connection ID of the Route
+        """
+        return pulumi.get(self, "target_vpc_peering_connection")
+
+    @target_vpc_peering_connection.setter
+    def target_vpc_peering_connection(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "target_vpc_peering_connection", value)
 
 
 @pulumi.type_token("thalassa:index/routeTableRoute:RouteTableRoute")
@@ -260,13 +294,14 @@ class RouteTableRoute(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 destination_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 gateway_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 notes: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 route_table_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_gateway: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_natgateway: Optional[pulumi.Input[_builtins.str]] = None,
+                 destination_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 notes: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an route table route with a destination cidr block, target gateway, target nat gateway and gateway address within a route table.
@@ -307,6 +342,7 @@ class RouteTableRoute(pulumi.CustomResource):
         pulumi.export("routeDestination", example_route_table_route.destination_cidr)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] destination_cidr: Destination CIDR of the Route
@@ -316,6 +352,7 @@ class RouteTableRoute(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] route_table_id: RouteTable of the Route
         :param pulumi.Input[_builtins.str] target_gateway: Target Gateway of the Route
         :param pulumi.Input[_builtins.str] target_natgateway: Target NAT Gateway of the Route
+        :param pulumi.Input[_builtins.str] target_vpc_peering_connection: Target VPC Peering Connection ID of the Route
         """
         ...
     @overload
@@ -362,6 +399,7 @@ class RouteTableRoute(pulumi.CustomResource):
         pulumi.export("routeDestination", example_route_table_route.destination_cidr)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param RouteTableRouteArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -377,13 +415,14 @@ class RouteTableRoute(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 destination_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-                 gateway_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 notes: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 route_table_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_gateway: Optional[pulumi.Input[_builtins.str]] = None,
-                 target_natgateway: Optional[pulumi.Input[_builtins.str]] = None,
+                 destination_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+                 gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 notes: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -404,6 +443,7 @@ class RouteTableRoute(pulumi.CustomResource):
             __props__.__dict__["route_table_id"] = route_table_id
             __props__.__dict__["target_gateway"] = target_gateway
             __props__.__dict__["target_natgateway"] = target_natgateway
+            __props__.__dict__["target_vpc_peering_connection"] = target_vpc_peering_connection
         super(RouteTableRoute, __self__).__init__(
             'thalassa:index/routeTableRoute:RouteTableRoute',
             resource_name,
@@ -414,13 +454,14 @@ class RouteTableRoute(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            destination_cidr: Optional[pulumi.Input[_builtins.str]] = None,
-            gateway_address: Optional[pulumi.Input[_builtins.str]] = None,
-            notes: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            route_table_id: Optional[pulumi.Input[_builtins.str]] = None,
-            target_gateway: Optional[pulumi.Input[_builtins.str]] = None,
-            target_natgateway: Optional[pulumi.Input[_builtins.str]] = None) -> 'RouteTableRoute':
+            destination_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+            notes: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+            target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+            target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+            target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None) -> 'RouteTableRoute':
         """
         Get an existing RouteTableRoute resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -435,6 +476,7 @@ class RouteTableRoute(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] route_table_id: RouteTable of the Route
         :param pulumi.Input[_builtins.str] target_gateway: Target Gateway of the Route
         :param pulumi.Input[_builtins.str] target_natgateway: Target NAT Gateway of the Route
+        :param pulumi.Input[_builtins.str] target_vpc_peering_connection: Target VPC Peering Connection ID of the Route
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -447,6 +489,7 @@ class RouteTableRoute(pulumi.CustomResource):
         __props__.__dict__["route_table_id"] = route_table_id
         __props__.__dict__["target_gateway"] = target_gateway
         __props__.__dict__["target_natgateway"] = target_natgateway
+        __props__.__dict__["target_vpc_peering_connection"] = target_vpc_peering_connection
         return RouteTableRoute(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -504,4 +547,12 @@ class RouteTableRoute(pulumi.CustomResource):
         Target NAT Gateway of the Route
         """
         return pulumi.get(self, "target_natgateway")
+
+    @_builtins.property
+    @pulumi.getter(name="targetVpcPeeringConnection")
+    def target_vpc_peering_connection(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Target VPC Peering Connection ID of the Route
+        """
+        return pulumi.get(self, "target_vpc_peering_connection")
 

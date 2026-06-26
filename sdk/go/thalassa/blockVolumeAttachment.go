@@ -92,6 +92,7 @@ import (
 type BlockVolumeAttachment struct {
 	pulumi.CustomResourceState
 
+	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The device name to use for the volume attachment (e.g., /dev/sdb)
 	Serial pulumi.StringOutput `pulumi:"serial"`
@@ -145,6 +146,7 @@ func GetBlockVolumeAttachment(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering BlockVolumeAttachment resources.
 type blockVolumeAttachmentState struct {
+	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The device name to use for the volume attachment (e.g., /dev/sdb)
 	Serial *string `pulumi:"serial"`
@@ -163,6 +165,7 @@ type blockVolumeAttachmentState struct {
 }
 
 type BlockVolumeAttachmentState struct {
+	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The device name to use for the volume attachment (e.g., /dev/sdb)
 	Serial pulumi.StringPtrInput
@@ -185,6 +188,7 @@ func (BlockVolumeAttachmentState) ElementType() reflect.Type {
 }
 
 type blockVolumeAttachmentArgs struct {
+	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the virtual machine to attach the volume to
 	VmiId string `pulumi:"vmiId"`
@@ -202,6 +206,7 @@ type blockVolumeAttachmentArgs struct {
 
 // The set of arguments for constructing a BlockVolumeAttachment resource.
 type BlockVolumeAttachmentArgs struct {
+	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The ID of the virtual machine to attach the volume to
 	VmiId pulumi.StringInput
@@ -304,6 +309,7 @@ func (o BlockVolumeAttachmentOutput) ToBlockVolumeAttachmentOutputWithContext(ct
 	return o
 }
 
+// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 func (o BlockVolumeAttachmentOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BlockVolumeAttachment) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

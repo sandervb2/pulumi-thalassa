@@ -132,6 +132,9 @@ class GetSecurityGroupResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -190,6 +193,7 @@ def get_security_group(identity: Optional[_builtins.str] = None,
 
     :param _builtins.str identity: Identity of the security group
     :param _builtins.str name: Name of the security group
+    :param _builtins.str organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str vpc_identity: Identity of the VPC that the security group belongs to. Required when searching by name.
     """
     __args__ = dict()
@@ -213,10 +217,10 @@ def get_security_group(identity: Optional[_builtins.str] = None,
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'),
         vpc_identity=pulumi.get(__ret__, 'vpc_identity'))
-def get_security_group_output(identity: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                              name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                              organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                              vpc_identity: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_security_group_output(identity: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                              name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                              organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                              vpc_identity: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                               opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetSecurityGroupResult]:
     """
     A security group is a collection of rules that control the traffic to and from a virtual machine instance or other cloud resource within a VPC.
@@ -224,6 +228,7 @@ def get_security_group_output(identity: Optional[pulumi.Input[Optional[_builtins
 
     :param _builtins.str identity: Identity of the security group
     :param _builtins.str name: Name of the security group
+    :param _builtins.str organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str vpc_identity: Identity of the VPC that the security group belongs to. Required when searching by name.
     """
     __args__ = dict()

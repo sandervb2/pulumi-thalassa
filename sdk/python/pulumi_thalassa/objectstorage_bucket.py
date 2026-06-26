@@ -20,26 +20,54 @@ __all__ = ['ObjectstorageBucketArgs', 'ObjectstorageBucket']
 class ObjectstorageBucketArgs:
     def __init__(__self__, *,
                  region: pulumi.Input[_builtins.str],
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 public: Optional[pulumi.Input[_builtins.bool]] = None):
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 public: pulumi.Input[Optional[_builtins.bool]] = None,
+                 versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None):
         """
         The set of arguments for constructing a ObjectstorageBucket resource.
+
         :param pulumi.Input[_builtins.str] region: Region of the bucket
         :param pulumi.Input[_builtins.str] name: Name of the bucket
+        :param pulumi.Input[_builtins.bool] object_lock_enabled: Whether the bucket has object lock enabled
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] policy: The bucket policy as a JSON string
-        :param pulumi.Input[_builtins.bool] public: Whether the bucket is publicly accessible
+        :param pulumi.Input[_builtins.bool] versioning: Whether the bucket is versioned
+        :param pulumi.Input[_builtins.bool] wait_for_deleted: Whether to wait for the bucket to be deleted
+        :param pulumi.Input[_builtins.int] wait_for_deleted_timeout: The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        :param pulumi.Input[_builtins.bool] wait_for_ready: Whether to wait for the bucket to be ready
+        :param pulumi.Input[_builtins.int] wait_for_ready_timeout: The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
         """
         pulumi.set(__self__, "region", region)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if object_lock_enabled is not None:
+            pulumi.set(__self__, "object_lock_enabled", object_lock_enabled)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
         if policy is not None:
             pulumi.set(__self__, "policy", policy)
         if public is not None:
+            warnings.warn("""Does not have any effect. Will be removed in a future version.""", DeprecationWarning)
+            pulumi.log.warn("""public is deprecated: Does not have any effect. Will be removed in a future version.""")
+        if public is not None:
             pulumi.set(__self__, "public", public)
+        if versioning is not None:
+            pulumi.set(__self__, "versioning", versioning)
+        if wait_for_deleted is not None:
+            pulumi.set(__self__, "wait_for_deleted", wait_for_deleted)
+        if wait_for_deleted_timeout is not None:
+            pulumi.set(__self__, "wait_for_deleted_timeout", wait_for_deleted_timeout)
+        if wait_for_ready is not None:
+            pulumi.set(__self__, "wait_for_ready", wait_for_ready)
+        if wait_for_ready_timeout is not None:
+            pulumi.set(__self__, "wait_for_ready_timeout", wait_for_ready_timeout)
 
     @_builtins.property
     @pulumi.getter
@@ -55,164 +83,338 @@ class ObjectstorageBucketArgs:
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the bucket
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="objectLockEnabled")
+    def object_lock_enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the bucket has object lock enabled
+        """
+        return pulumi.get(self, "object_lock_enabled")
+
+    @object_lock_enabled.setter
+    def object_lock_enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "object_lock_enabled", value)
+
+    @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The bucket policy as a JSON string
         """
         return pulumi.get(self, "policy")
 
     @policy.setter
-    def policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def public(self) -> Optional[pulumi.Input[_builtins.bool]]:
-        """
-        Whether the bucket is publicly accessible
-        """
+    @_utilities.deprecated("""Does not have any effect. Will be removed in a future version.""")
+    def public(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "public")
 
     @public.setter
-    def public(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def public(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "public", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def versioning(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the bucket is versioned
+        """
+        return pulumi.get(self, "versioning")
+
+    @versioning.setter
+    def versioning(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "versioning", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeleted")
+    def wait_for_deleted(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be deleted
+        """
+        return pulumi.get(self, "wait_for_deleted")
+
+    @wait_for_deleted.setter
+    def wait_for_deleted(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "wait_for_deleted", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeletedTimeout")
+    def wait_for_deleted_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        """
+        return pulumi.get(self, "wait_for_deleted_timeout")
+
+    @wait_for_deleted_timeout.setter
+    def wait_for_deleted_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "wait_for_deleted_timeout", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReady")
+    def wait_for_ready(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be ready
+        """
+        return pulumi.get(self, "wait_for_ready")
+
+    @wait_for_ready.setter
+    def wait_for_ready(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "wait_for_ready", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReadyTimeout")
+    def wait_for_ready_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        """
+        return pulumi.get(self, "wait_for_ready_timeout")
+
+    @wait_for_ready_timeout.setter
+    def wait_for_ready_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "wait_for_ready_timeout", value)
 
 
 @pulumi.input_type
 class _ObjectstorageBucketState:
     def __init__(__self__, *,
-                 endpoint: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 public: Optional[pulumi.Input[_builtins.bool]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None):
+                 endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 public: pulumi.Input[Optional[_builtins.bool]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering ObjectstorageBucket resources.
+
         :param pulumi.Input[_builtins.str] endpoint: The endpoint URL for the bucket
         :param pulumi.Input[_builtins.str] name: Name of the bucket
+        :param pulumi.Input[_builtins.bool] object_lock_enabled: Whether the bucket has object lock enabled
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] policy: The bucket policy as a JSON string
-        :param pulumi.Input[_builtins.bool] public: Whether the bucket is publicly accessible
         :param pulumi.Input[_builtins.str] region: Region of the bucket
         :param pulumi.Input[_builtins.str] status: Status of the bucket
+        :param pulumi.Input[_builtins.bool] versioning: Whether the bucket is versioned
+        :param pulumi.Input[_builtins.bool] wait_for_deleted: Whether to wait for the bucket to be deleted
+        :param pulumi.Input[_builtins.int] wait_for_deleted_timeout: The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        :param pulumi.Input[_builtins.bool] wait_for_ready: Whether to wait for the bucket to be ready
+        :param pulumi.Input[_builtins.int] wait_for_ready_timeout: The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
         """
         if endpoint is not None:
             pulumi.set(__self__, "endpoint", endpoint)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if object_lock_enabled is not None:
+            pulumi.set(__self__, "object_lock_enabled", object_lock_enabled)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
         if policy is not None:
             pulumi.set(__self__, "policy", policy)
+        if public is not None:
+            warnings.warn("""Does not have any effect. Will be removed in a future version.""", DeprecationWarning)
+            pulumi.log.warn("""public is deprecated: Does not have any effect. Will be removed in a future version.""")
         if public is not None:
             pulumi.set(__self__, "public", public)
         if region is not None:
             pulumi.set(__self__, "region", region)
         if status is not None:
             pulumi.set(__self__, "status", status)
+        if versioning is not None:
+            pulumi.set(__self__, "versioning", versioning)
+        if wait_for_deleted is not None:
+            pulumi.set(__self__, "wait_for_deleted", wait_for_deleted)
+        if wait_for_deleted_timeout is not None:
+            pulumi.set(__self__, "wait_for_deleted_timeout", wait_for_deleted_timeout)
+        if wait_for_ready is not None:
+            pulumi.set(__self__, "wait_for_ready", wait_for_ready)
+        if wait_for_ready_timeout is not None:
+            pulumi.set(__self__, "wait_for_ready_timeout", wait_for_ready_timeout)
 
     @_builtins.property
     @pulumi.getter
-    def endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def endpoint(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The endpoint URL for the bucket
         """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
-    def endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def endpoint(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "endpoint", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the bucket
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="objectLockEnabled")
+    def object_lock_enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the bucket has object lock enabled
+        """
+        return pulumi.get(self, "object_lock_enabled")
+
+    @object_lock_enabled.setter
+    def object_lock_enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "object_lock_enabled", value)
+
+    @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The bucket policy as a JSON string
         """
         return pulumi.get(self, "policy")
 
     @policy.setter
-    def policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def public(self) -> Optional[pulumi.Input[_builtins.bool]]:
-        """
-        Whether the bucket is publicly accessible
-        """
+    @_utilities.deprecated("""Does not have any effect. Will be removed in a future version.""")
+    def public(self) -> pulumi.Input[Optional[_builtins.bool]]:
         return pulumi.get(self, "public")
 
     @public.setter
-    def public(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def public(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "public", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Region of the bucket
         """
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the bucket
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def versioning(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the bucket is versioned
+        """
+        return pulumi.get(self, "versioning")
+
+    @versioning.setter
+    def versioning(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "versioning", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeleted")
+    def wait_for_deleted(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be deleted
+        """
+        return pulumi.get(self, "wait_for_deleted")
+
+    @wait_for_deleted.setter
+    def wait_for_deleted(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "wait_for_deleted", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeletedTimeout")
+    def wait_for_deleted_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        """
+        return pulumi.get(self, "wait_for_deleted_timeout")
+
+    @wait_for_deleted_timeout.setter
+    def wait_for_deleted_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "wait_for_deleted_timeout", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReady")
+    def wait_for_ready(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be ready
+        """
+        return pulumi.get(self, "wait_for_ready")
+
+    @wait_for_ready.setter
+    def wait_for_ready(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "wait_for_ready", value)
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReadyTimeout")
+    def wait_for_ready_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        """
+        return pulumi.get(self, "wait_for_ready_timeout")
+
+    @wait_for_ready_timeout.setter
+    def wait_for_ready_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "wait_for_ready_timeout", value)
 
 
 @pulumi.type_token("thalassa:index/objectstorageBucket:ObjectstorageBucket")
@@ -221,11 +423,17 @@ class ObjectstorageBucket(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 public: Optional[pulumi.Input[_builtins.bool]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 public: pulumi.Input[Optional[_builtins.bool]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  __props__=None):
         """
         Create and manage an object storage bucket
@@ -235,54 +443,98 @@ class ObjectstorageBucket(pulumi.CustomResource):
         ```python
         import pulumi
         import json
+        import pulumi_random as random
         import pulumi_thalassa as thalassa
 
-        # Create a basic object storage bucket
-        basic = thalassa.ObjectstorageBucket("basic",
-            name="my-basic-bucket",
-            region="nl-01")
-        # Create a public object storage bucket
-        public = thalassa.ObjectstorageBucket("public",
-            name="my-public-bucket",
+        # Create a service account first
+        example = thalassa.IamServiceAccount("example",
+            name="cluster-service-account",
+            description="Service account for cluster access",
+            labels={
+                "environment": "production",
+                "project": "cluster",
+            })
+        # Create object storage access credentials
+        storage_credential = thalassa.IamServiceAccountAccessCredential("storage_credential",
+            service_account_id=example.id,
+            scopes=["objectStorage"])
+        # # random uuid
+        bucket_name = random.Uuid("bucket_name")
+        org = thalassa.get_organisation(slug=organisation_slug)
+        # # Create a bucket with a custom policy
+        cluster_bucket = thalassa.ObjectstorageBucket("cluster_bucket",
+            name=f"cluster-bucket-{bucket_name['result']}",
             region="nl-01",
-            public=True)
-        # Create a bucket with a custom policy
-        with_policy = thalassa.ObjectstorageBucket("with_policy",
-            name="my-policy-bucket",
-            region="nl-01",
-            public=False,
-            policy=json.dumps({
+            policy=pulumi.Output.json_dumps({
                 "Version": "2012-10-17",
                 "Statement": [{
-                    "Sid": "AllowReadAccess",
+                    "Sid": "Statement1",
+                    "Action": [
+                        "s3:GetObject",
+                        "s3:GetObjectVersion",
+                        "s3:PutObject",
+                        "s3:GetObjectAcl",
+                        "s3:GetObjectVersionAcl",
+                        "s3:PutObjectAcl",
+                        "s3:PutObjectVersionAcl",
+                        "s3:DeleteObject",
+                        "s3:DeleteObjectVersion",
+                        "s3:ListMultipartUploadParts",
+                        "s3:AbortMultipartUpload",
+                        "s3:RestoreObject",
+                        "s3:ListBucket",
+                        "s3:ListBucketVersions",
+                        "s3:ListBucketMultipartUploads",
+                        "s3:GetBucketAcl",
+                        "s3:PutBucketAcl",
+                        "s3:GetBucketCORS",
+                        "s3:PutBucketCORS",
+                        "s3:GetBucketVersioning",
+                        "s3:PutBucketVersioning",
+                        "s3:GetBucketRequestPayment",
+                        "s3:PutBucketRequestPayment",
+                        "s3:GetLifecycleConfiguration",
+                        "s3:PutLifecycleConfiguration",
+                        "s3:GetObjectTagging",
+                        "s3:PutObjectTagging",
+                        "s3:DeleteObjectTagging",
+                        "s3:GetObjectVersionTagging",
+                        "s3:PutObjectVersionTagging",
+                        "s3:DeleteObjectVersionTagging",
+                        "s3:PutBucketObjectLockConfiguration",
+                        "s3:GetBucketObjectLockConfiguration",
+                        "s3:PutObjectRetention",
+                        "s3:GetObjectRetention",
+                        "s3:PutObjectLegalHold",
+                        "s3:GetObjectLegalHold",
+                        "s3:BypassGovernanceRetention",
+                        "s3:GetBucketPolicyStatus",
+                    ],
                     "Effect": "Allow",
+                    "Resource": [
+                        f"arn:thalassa:s3:::cluster-bucket-{bucket_name['result']}",
+                        f"arn:thalassa:s3:::cluster-bucket-{bucket_name['result']}/*",
+                    ],
                     "Principal": {
-                        "Thalassa": "*",
-                    },
-                    "Action": ["s3:GetObject"],
-                    "Resource": ["arn:thalassa:s3:::my-policy-bucket/*"],
-                    "Condition": {
-                        "StringEquals": {
-                            "thalassa:User": "u-exampleuserid",
-                        },
+                        "Thalassa": [example.id.apply(lambda id: f"arn:thalassa:iam:::serviceaccount/{org.id}:{id}")],
                     },
                 }],
             }))
-        pulumi.export("basicBucketId", basic.id)
-        pulumi.export("basicBucketName", basic.name)
-        pulumi.export("basicBucketEndpoint", basic.endpoint)
-        pulumi.export("publicBucketId", public.id)
-        pulumi.export("publicBucketName", public.name)
-        pulumi.export("policyBucketId", with_policy.id)
-        pulumi.export("policyBucketName", with_policy.name)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: Name of the bucket
+        :param pulumi.Input[_builtins.bool] object_lock_enabled: Whether the bucket has object lock enabled
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] policy: The bucket policy as a JSON string
-        :param pulumi.Input[_builtins.bool] public: Whether the bucket is publicly accessible
         :param pulumi.Input[_builtins.str] region: Region of the bucket
+        :param pulumi.Input[_builtins.bool] versioning: Whether the bucket is versioned
+        :param pulumi.Input[_builtins.bool] wait_for_deleted: Whether to wait for the bucket to be deleted
+        :param pulumi.Input[_builtins.int] wait_for_deleted_timeout: The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        :param pulumi.Input[_builtins.bool] wait_for_ready: Whether to wait for the bucket to be ready
+        :param pulumi.Input[_builtins.int] wait_for_ready_timeout: The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
         """
         ...
     @overload
@@ -298,47 +550,85 @@ class ObjectstorageBucket(pulumi.CustomResource):
         ```python
         import pulumi
         import json
+        import pulumi_random as random
         import pulumi_thalassa as thalassa
 
-        # Create a basic object storage bucket
-        basic = thalassa.ObjectstorageBucket("basic",
-            name="my-basic-bucket",
-            region="nl-01")
-        # Create a public object storage bucket
-        public = thalassa.ObjectstorageBucket("public",
-            name="my-public-bucket",
+        # Create a service account first
+        example = thalassa.IamServiceAccount("example",
+            name="cluster-service-account",
+            description="Service account for cluster access",
+            labels={
+                "environment": "production",
+                "project": "cluster",
+            })
+        # Create object storage access credentials
+        storage_credential = thalassa.IamServiceAccountAccessCredential("storage_credential",
+            service_account_id=example.id,
+            scopes=["objectStorage"])
+        # # random uuid
+        bucket_name = random.Uuid("bucket_name")
+        org = thalassa.get_organisation(slug=organisation_slug)
+        # # Create a bucket with a custom policy
+        cluster_bucket = thalassa.ObjectstorageBucket("cluster_bucket",
+            name=f"cluster-bucket-{bucket_name['result']}",
             region="nl-01",
-            public=True)
-        # Create a bucket with a custom policy
-        with_policy = thalassa.ObjectstorageBucket("with_policy",
-            name="my-policy-bucket",
-            region="nl-01",
-            public=False,
-            policy=json.dumps({
+            policy=pulumi.Output.json_dumps({
                 "Version": "2012-10-17",
                 "Statement": [{
-                    "Sid": "AllowReadAccess",
+                    "Sid": "Statement1",
+                    "Action": [
+                        "s3:GetObject",
+                        "s3:GetObjectVersion",
+                        "s3:PutObject",
+                        "s3:GetObjectAcl",
+                        "s3:GetObjectVersionAcl",
+                        "s3:PutObjectAcl",
+                        "s3:PutObjectVersionAcl",
+                        "s3:DeleteObject",
+                        "s3:DeleteObjectVersion",
+                        "s3:ListMultipartUploadParts",
+                        "s3:AbortMultipartUpload",
+                        "s3:RestoreObject",
+                        "s3:ListBucket",
+                        "s3:ListBucketVersions",
+                        "s3:ListBucketMultipartUploads",
+                        "s3:GetBucketAcl",
+                        "s3:PutBucketAcl",
+                        "s3:GetBucketCORS",
+                        "s3:PutBucketCORS",
+                        "s3:GetBucketVersioning",
+                        "s3:PutBucketVersioning",
+                        "s3:GetBucketRequestPayment",
+                        "s3:PutBucketRequestPayment",
+                        "s3:GetLifecycleConfiguration",
+                        "s3:PutLifecycleConfiguration",
+                        "s3:GetObjectTagging",
+                        "s3:PutObjectTagging",
+                        "s3:DeleteObjectTagging",
+                        "s3:GetObjectVersionTagging",
+                        "s3:PutObjectVersionTagging",
+                        "s3:DeleteObjectVersionTagging",
+                        "s3:PutBucketObjectLockConfiguration",
+                        "s3:GetBucketObjectLockConfiguration",
+                        "s3:PutObjectRetention",
+                        "s3:GetObjectRetention",
+                        "s3:PutObjectLegalHold",
+                        "s3:GetObjectLegalHold",
+                        "s3:BypassGovernanceRetention",
+                        "s3:GetBucketPolicyStatus",
+                    ],
                     "Effect": "Allow",
+                    "Resource": [
+                        f"arn:thalassa:s3:::cluster-bucket-{bucket_name['result']}",
+                        f"arn:thalassa:s3:::cluster-bucket-{bucket_name['result']}/*",
+                    ],
                     "Principal": {
-                        "Thalassa": "*",
-                    },
-                    "Action": ["s3:GetObject"],
-                    "Resource": ["arn:thalassa:s3:::my-policy-bucket/*"],
-                    "Condition": {
-                        "StringEquals": {
-                            "thalassa:User": "u-exampleuserid",
-                        },
+                        "Thalassa": [example.id.apply(lambda id: f"arn:thalassa:iam:::serviceaccount/{org.id}:{id}")],
                     },
                 }],
             }))
-        pulumi.export("basicBucketId", basic.id)
-        pulumi.export("basicBucketName", basic.name)
-        pulumi.export("basicBucketEndpoint", basic.endpoint)
-        pulumi.export("publicBucketId", public.id)
-        pulumi.export("publicBucketName", public.name)
-        pulumi.export("policyBucketId", with_policy.id)
-        pulumi.export("policyBucketName", with_policy.name)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param ObjectstorageBucketArgs args: The arguments to use to populate this resource's properties.
@@ -355,11 +645,17 @@ class ObjectstorageBucket(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 public: Optional[pulumi.Input[_builtins.bool]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 public: pulumi.Input[Optional[_builtins.bool]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -370,12 +666,18 @@ class ObjectstorageBucket(pulumi.CustomResource):
             __props__ = ObjectstorageBucketArgs.__new__(ObjectstorageBucketArgs)
 
             __props__.__dict__["name"] = name
+            __props__.__dict__["object_lock_enabled"] = object_lock_enabled
             __props__.__dict__["organisation_id"] = organisation_id
             __props__.__dict__["policy"] = policy
             __props__.__dict__["public"] = public
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
+            __props__.__dict__["versioning"] = versioning
+            __props__.__dict__["wait_for_deleted"] = wait_for_deleted
+            __props__.__dict__["wait_for_deleted_timeout"] = wait_for_deleted_timeout
+            __props__.__dict__["wait_for_ready"] = wait_for_ready
+            __props__.__dict__["wait_for_ready_timeout"] = wait_for_ready_timeout
             __props__.__dict__["endpoint"] = None
             __props__.__dict__["status"] = None
         super(ObjectstorageBucket, __self__).__init__(
@@ -388,13 +690,19 @@ class ObjectstorageBucket(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            endpoint: Optional[pulumi.Input[_builtins.str]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            policy: Optional[pulumi.Input[_builtins.str]] = None,
-            public: Optional[pulumi.Input[_builtins.bool]] = None,
-            region: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None) -> 'ObjectstorageBucket':
+            endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            policy: pulumi.Input[Optional[_builtins.str]] = None,
+            public: pulumi.Input[Optional[_builtins.bool]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> 'ObjectstorageBucket':
         """
         Get an existing ObjectstorageBucket resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -404,10 +712,16 @@ class ObjectstorageBucket(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] endpoint: The endpoint URL for the bucket
         :param pulumi.Input[_builtins.str] name: Name of the bucket
+        :param pulumi.Input[_builtins.bool] object_lock_enabled: Whether the bucket has object lock enabled
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] policy: The bucket policy as a JSON string
-        :param pulumi.Input[_builtins.bool] public: Whether the bucket is publicly accessible
         :param pulumi.Input[_builtins.str] region: Region of the bucket
         :param pulumi.Input[_builtins.str] status: Status of the bucket
+        :param pulumi.Input[_builtins.bool] versioning: Whether the bucket is versioned
+        :param pulumi.Input[_builtins.bool] wait_for_deleted: Whether to wait for the bucket to be deleted
+        :param pulumi.Input[_builtins.int] wait_for_deleted_timeout: The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        :param pulumi.Input[_builtins.bool] wait_for_ready: Whether to wait for the bucket to be ready
+        :param pulumi.Input[_builtins.int] wait_for_ready_timeout: The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -415,11 +729,17 @@ class ObjectstorageBucket(pulumi.CustomResource):
 
         __props__.__dict__["endpoint"] = endpoint
         __props__.__dict__["name"] = name
+        __props__.__dict__["object_lock_enabled"] = object_lock_enabled
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["policy"] = policy
         __props__.__dict__["public"] = public
         __props__.__dict__["region"] = region
         __props__.__dict__["status"] = status
+        __props__.__dict__["versioning"] = versioning
+        __props__.__dict__["wait_for_deleted"] = wait_for_deleted
+        __props__.__dict__["wait_for_deleted_timeout"] = wait_for_deleted_timeout
+        __props__.__dict__["wait_for_ready"] = wait_for_ready
+        __props__.__dict__["wait_for_ready_timeout"] = wait_for_ready_timeout
         return ObjectstorageBucket(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -439,8 +759,19 @@ class ObjectstorageBucket(pulumi.CustomResource):
         return pulumi.get(self, "name")
 
     @_builtins.property
+    @pulumi.getter(name="objectLockEnabled")
+    def object_lock_enabled(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether the bucket has object lock enabled
+        """
+        return pulumi.get(self, "object_lock_enabled")
+
+    @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -453,10 +784,8 @@ class ObjectstorageBucket(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    @_utilities.deprecated("""Does not have any effect. Will be removed in a future version.""")
     def public(self) -> pulumi.Output[Optional[_builtins.bool]]:
-        """
-        Whether the bucket is publicly accessible
-        """
         return pulumi.get(self, "public")
 
     @_builtins.property
@@ -474,4 +803,44 @@ class ObjectstorageBucket(pulumi.CustomResource):
         Status of the bucket
         """
         return pulumi.get(self, "status")
+
+    @_builtins.property
+    @pulumi.getter
+    def versioning(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether the bucket is versioned
+        """
+        return pulumi.get(self, "versioning")
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeleted")
+    def wait_for_deleted(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be deleted
+        """
+        return pulumi.get(self, "wait_for_deleted")
+
+    @_builtins.property
+    @pulumi.getter(name="waitForDeletedTimeout")
+    def wait_for_deleted_timeout(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        """
+        return pulumi.get(self, "wait_for_deleted_timeout")
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReady")
+    def wait_for_ready(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether to wait for the bucket to be ready
+        """
+        return pulumi.get(self, "wait_for_ready")
+
+    @_builtins.property
+    @pulumi.getter(name="waitForReadyTimeout")
+    def wait_for_ready_timeout(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        """
+        return pulumi.get(self, "wait_for_ready_timeout")
 

@@ -21,18 +21,24 @@ class DbaasPgDatabaseArgs:
     def __init__(__self__, *,
                  db_cluster_id: pulumi.Input[_builtins.str],
                  owner_role_id: pulumi.Input[_builtins.str],
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a DbaasPgDatabase resource.
+
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
         :param pulumi.Input[_builtins.str] owner_role_id: The ID of the owner role
+        :param pulumi.Input[_builtins.bool] allow_connections: If false then no one can connect to this database. Defaults to true.
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the database
         :param pulumi.Input[_builtins.str] name: The name of the database
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         """
         pulumi.set(__self__, "db_cluster_id", db_cluster_id)
         pulumi.set(__self__, "owner_role_id", owner_role_id)
+        if allow_connections is not None:
+            pulumi.set(__self__, "allow_connections", allow_connections)
         if connection_limit is not None:
             pulumi.set(__self__, "connection_limit", connection_limit)
         if name is not None:
@@ -65,54 +71,75 @@ class DbaasPgDatabaseArgs:
         pulumi.set(self, "owner_role_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="allowConnections")
+    def allow_connections(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        If false then no one can connect to this database. Defaults to true.
+        """
+        return pulumi.get(self, "allow_connections")
+
+    @allow_connections.setter
+    def allow_connections(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "allow_connections", value)
+
+    @_builtins.property
     @pulumi.getter(name="connectionLimit")
-    def connection_limit(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def connection_limit(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The connection limit of the database
         """
         return pulumi.get(self, "connection_limit")
 
     @connection_limit.setter
-    def connection_limit(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def connection_limit(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "connection_limit", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the database
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
 
 @pulumi.input_type
 class _DbaasPgDatabaseState:
     def __init__(__self__, *,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 owner_role_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 owner_role_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DbaasPgDatabase resources.
+
+        :param pulumi.Input[_builtins.bool] allow_connections: If false then no one can connect to this database. Defaults to true.
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the database
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
         :param pulumi.Input[_builtins.str] name: The name of the database
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] owner_role_id: The ID of the owner role
         """
+        if allow_connections is not None:
+            pulumi.set(__self__, "allow_connections", allow_connections)
         if connection_limit is not None:
             pulumi.set(__self__, "connection_limit", connection_limit)
         if db_cluster_id is not None:
@@ -125,60 +152,75 @@ class _DbaasPgDatabaseState:
             pulumi.set(__self__, "owner_role_id", owner_role_id)
 
     @_builtins.property
+    @pulumi.getter(name="allowConnections")
+    def allow_connections(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        If false then no one can connect to this database. Defaults to true.
+        """
+        return pulumi.get(self, "allow_connections")
+
+    @allow_connections.setter
+    def allow_connections(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "allow_connections", value)
+
+    @_builtins.property
     @pulumi.getter(name="connectionLimit")
-    def connection_limit(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def connection_limit(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The connection limit of the database
         """
         return pulumi.get(self, "connection_limit")
 
     @connection_limit.setter
-    def connection_limit(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def connection_limit(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "connection_limit", value)
 
     @_builtins.property
     @pulumi.getter(name="dbClusterId")
-    def db_cluster_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def db_cluster_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the database cluster
         """
         return pulumi.get(self, "db_cluster_id")
 
     @db_cluster_id.setter
-    def db_cluster_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def db_cluster_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "db_cluster_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the database
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="ownerRoleId")
-    def owner_role_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def owner_role_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the owner role
         """
         return pulumi.get(self, "owner_role_id")
 
     @owner_role_id.setter
-    def owner_role_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def owner_role_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "owner_role_id", value)
 
 
@@ -188,11 +230,12 @@ class DbaasPgDatabase(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 owner_role_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 owner_role_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a PostgreSQL database
@@ -239,11 +282,14 @@ class DbaasPgDatabase(pulumi.CustomResource):
         pulumi.export("pgDatabaseName", example_dbaas_pg_database.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.bool] allow_connections: If false then no one can connect to this database. Defaults to true.
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the database
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
         :param pulumi.Input[_builtins.str] name: The name of the database
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] owner_role_id: The ID of the owner role
         """
         ...
@@ -297,6 +343,7 @@ class DbaasPgDatabase(pulumi.CustomResource):
         pulumi.export("pgDatabaseName", example_dbaas_pg_database.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param DbaasPgDatabaseArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -312,11 +359,12 @@ class DbaasPgDatabase(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 owner_role_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 owner_role_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -326,6 +374,7 @@ class DbaasPgDatabase(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DbaasPgDatabaseArgs.__new__(DbaasPgDatabaseArgs)
 
+            __props__.__dict__["allow_connections"] = allow_connections
             __props__.__dict__["connection_limit"] = connection_limit
             if db_cluster_id is None and not opts.urn:
                 raise TypeError("Missing required property 'db_cluster_id'")
@@ -345,11 +394,12 @@ class DbaasPgDatabase(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-            db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            owner_role_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'DbaasPgDatabase':
+            allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+            connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+            db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            owner_role_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'DbaasPgDatabase':
         """
         Get an existing DbaasPgDatabase resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -357,21 +407,32 @@ class DbaasPgDatabase(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.bool] allow_connections: If false then no one can connect to this database. Defaults to true.
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the database
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
         :param pulumi.Input[_builtins.str] name: The name of the database
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] owner_role_id: The ID of the owner role
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _DbaasPgDatabaseState.__new__(_DbaasPgDatabaseState)
 
+        __props__.__dict__["allow_connections"] = allow_connections
         __props__.__dict__["connection_limit"] = connection_limit
         __props__.__dict__["db_cluster_id"] = db_cluster_id
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["owner_role_id"] = owner_role_id
         return DbaasPgDatabase(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter(name="allowConnections")
+    def allow_connections(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        If false then no one can connect to this database. Defaults to true.
+        """
+        return pulumi.get(self, "allow_connections")
 
     @_builtins.property
     @pulumi.getter(name="connectionLimit")
@@ -400,6 +461,9 @@ class DbaasPgDatabase(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

@@ -11,6 +11,16 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+func GetAccessToken(ctx *pulumi.Context) string {
+	return config.Get(ctx, "thalassa:accessToken")
+}
+
+// Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+func GetAllowInsecureOidc(ctx *pulumi.Context) bool {
+	return config.GetBool(ctx, "thalassa:allowInsecureOidc")
+}
+
 // The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
 func GetApi(ctx *pulumi.Context) string {
 	return config.Get(ctx, "thalassa:api")
@@ -29,6 +39,11 @@ func GetClientSecret(ctx *pulumi.Context) string {
 // The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
 func GetOrganisationId(ctx *pulumi.Context) string {
 	return config.Get(ctx, "thalassa:organisationId")
+}
+
+// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+func GetProjectId(ctx *pulumi.Context) string {
+	return config.Get(ctx, "thalassa:projectId")
 }
 
 // The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.

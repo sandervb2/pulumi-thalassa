@@ -20,24 +20,38 @@ __all__ = ['DbaasDbBackupscheduleArgs', 'DbaasDbBackupschedule']
 class DbaasDbBackupscheduleArgs:
     def __init__(__self__, *,
                  db_cluster_id: pulumi.Input[_builtins.str],
-                 backup_target: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 retention_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 schedule: Optional[pulumi.Input[_builtins.str]] = None,
-                 suspended: Optional[pulumi.Input[_builtins.bool]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 method: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 schedule: pulumi.Input[Optional[_builtins.str]] = None,
+                 suspended: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         The set of arguments for constructing a DbaasDbBackupschedule resource.
+
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
-        :param pulumi.Input[_builtins.str] backup_target: The backup target of the database backup schedule (primary, prefer-standby)
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: The annotations of the database backup schedule
+        :param pulumi.Input[_builtins.str] description: The description of the database backup schedule
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: The labels of the database backup schedule
+        :param pulumi.Input[_builtins.str] method: The method of the backup schedule (barman)
         :param pulumi.Input[_builtins.str] name: The name of the database backup schedule
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] retention_policy: The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         :param pulumi.Input[_builtins.str] schedule: The cron schedule of the database backup schedule (0 0 * * *)
         :param pulumi.Input[_builtins.bool] suspended: Whether the database backup schedule is suspended
         """
         pulumi.set(__self__, "db_cluster_id", db_cluster_id)
-        if backup_target is not None:
-            pulumi.set(__self__, "backup_target", backup_target)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if method is not None:
+            pulumi.set(__self__, "method", method)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -62,98 +76,151 @@ class DbaasDbBackupscheduleArgs:
         pulumi.set(self, "db_cluster_id", value)
 
     @_builtins.property
-    @pulumi.getter(name="backupTarget")
-    def backup_target(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        The backup target of the database backup schedule (primary, prefer-standby)
+        The annotations of the database backup schedule
         """
-        return pulumi.get(self, "backup_target")
+        return pulumi.get(self, "annotations")
 
-    @backup_target.setter
-    def backup_target(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "backup_target", value)
+    @annotations.setter
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The description of the database backup schedule
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        The labels of the database backup schedule
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The method of the backup schedule (barman)
+        """
+        return pulumi.get(self, "method")
+
+    @method.setter
+    def method(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "method", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the database backup schedule
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="retentionPolicy")
-    def retention_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def retention_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         """
         return pulumi.get(self, "retention_policy")
 
     @retention_policy.setter
-    def retention_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def retention_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "retention_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def schedule(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def schedule(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The cron schedule of the database backup schedule (0 0 * * *)
         """
         return pulumi.get(self, "schedule")
 
     @schedule.setter
-    def schedule(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def schedule(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "schedule", value)
 
     @_builtins.property
     @pulumi.getter
-    def suspended(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def suspended(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the database backup schedule is suspended
         """
         return pulumi.get(self, "suspended")
 
     @suspended.setter
-    def suspended(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def suspended(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "suspended", value)
 
 
 @pulumi.input_type
 class _DbaasDbBackupscheduleState:
     def __init__(__self__, *,
-                 backup_target: Optional[pulumi.Input[_builtins.str]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 retention_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 schedule: Optional[pulumi.Input[_builtins.str]] = None,
-                 suspended: Optional[pulumi.Input[_builtins.bool]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 method: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 schedule: pulumi.Input[Optional[_builtins.str]] = None,
+                 suspended: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering DbaasDbBackupschedule resources.
-        :param pulumi.Input[_builtins.str] backup_target: The backup target of the database backup schedule (primary, prefer-standby)
+
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: The annotations of the database backup schedule
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
+        :param pulumi.Input[_builtins.str] description: The description of the database backup schedule
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: The labels of the database backup schedule
+        :param pulumi.Input[_builtins.str] method: The method of the backup schedule (barman)
         :param pulumi.Input[_builtins.str] name: The name of the database backup schedule
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] retention_policy: The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         :param pulumi.Input[_builtins.str] schedule: The cron schedule of the database backup schedule (0 0 * * *)
         :param pulumi.Input[_builtins.bool] suspended: Whether the database backup schedule is suspended
         """
-        if backup_target is not None:
-            pulumi.set(__self__, "backup_target", backup_target)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
         if db_cluster_id is not None:
             pulumi.set(__self__, "db_cluster_id", db_cluster_id)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if method is not None:
+            pulumi.set(__self__, "method", method)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -166,84 +233,123 @@ class _DbaasDbBackupscheduleState:
             pulumi.set(__self__, "suspended", suspended)
 
     @_builtins.property
-    @pulumi.getter(name="backupTarget")
-    def backup_target(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        The backup target of the database backup schedule (primary, prefer-standby)
+        The annotations of the database backup schedule
         """
-        return pulumi.get(self, "backup_target")
+        return pulumi.get(self, "annotations")
 
-    @backup_target.setter
-    def backup_target(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "backup_target", value)
+    @annotations.setter
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="dbClusterId")
-    def db_cluster_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def db_cluster_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the database cluster
         """
         return pulumi.get(self, "db_cluster_id")
 
     @db_cluster_id.setter
-    def db_cluster_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def db_cluster_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "db_cluster_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The description of the database backup schedule
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        The labels of the database backup schedule
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The method of the backup schedule (barman)
+        """
+        return pulumi.get(self, "method")
+
+    @method.setter
+    def method(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "method", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the database backup schedule
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="retentionPolicy")
-    def retention_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def retention_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         """
         return pulumi.get(self, "retention_policy")
 
     @retention_policy.setter
-    def retention_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def retention_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "retention_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def schedule(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def schedule(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The cron schedule of the database backup schedule (0 0 * * *)
         """
         return pulumi.get(self, "schedule")
 
     @schedule.setter
-    def schedule(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def schedule(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "schedule", value)
 
     @_builtins.property
     @pulumi.getter
-    def suspended(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def suspended(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the database backup schedule is suspended
         """
         return pulumi.get(self, "suspended")
 
     @suspended.setter
-    def suspended(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def suspended(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "suspended", value)
 
 
@@ -253,13 +359,16 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup_target: Optional[pulumi.Input[_builtins.str]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 retention_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 schedule: Optional[pulumi.Input[_builtins.str]] = None,
-                 suspended: Optional[pulumi.Input[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 method: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 schedule: pulumi.Input[Optional[_builtins.str]] = None,
+                 suspended: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         """
         Create a database backup schedule
@@ -302,11 +411,16 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         pulumi.export("backupScheduleName", example_dbaas_db_backupschedule.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] backup_target: The backup target of the database backup schedule (primary, prefer-standby)
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: The annotations of the database backup schedule
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
+        :param pulumi.Input[_builtins.str] description: The description of the database backup schedule
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: The labels of the database backup schedule
+        :param pulumi.Input[_builtins.str] method: The method of the backup schedule (barman)
         :param pulumi.Input[_builtins.str] name: The name of the database backup schedule
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] retention_policy: The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         :param pulumi.Input[_builtins.str] schedule: The cron schedule of the database backup schedule (0 0 * * *)
         :param pulumi.Input[_builtins.bool] suspended: Whether the database backup schedule is suspended
@@ -358,6 +472,7 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         pulumi.export("backupScheduleName", example_dbaas_db_backupschedule.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param DbaasDbBackupscheduleArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -373,13 +488,16 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup_target: Optional[pulumi.Input[_builtins.str]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 retention_policy: Optional[pulumi.Input[_builtins.str]] = None,
-                 schedule: Optional[pulumi.Input[_builtins.str]] = None,
-                 suspended: Optional[pulumi.Input[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 method: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 schedule: pulumi.Input[Optional[_builtins.str]] = None,
+                 suspended: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -389,10 +507,13 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DbaasDbBackupscheduleArgs.__new__(DbaasDbBackupscheduleArgs)
 
-            __props__.__dict__["backup_target"] = backup_target
+            __props__.__dict__["annotations"] = annotations
             if db_cluster_id is None and not opts.urn:
                 raise TypeError("Missing required property 'db_cluster_id'")
             __props__.__dict__["db_cluster_id"] = db_cluster_id
+            __props__.__dict__["description"] = description
+            __props__.__dict__["labels"] = labels
+            __props__.__dict__["method"] = method
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
             __props__.__dict__["retention_policy"] = retention_policy
@@ -408,13 +529,16 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            backup_target: Optional[pulumi.Input[_builtins.str]] = None,
-            db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            retention_policy: Optional[pulumi.Input[_builtins.str]] = None,
-            schedule: Optional[pulumi.Input[_builtins.str]] = None,
-            suspended: Optional[pulumi.Input[_builtins.bool]] = None) -> 'DbaasDbBackupschedule':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            method: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            schedule: pulumi.Input[Optional[_builtins.str]] = None,
+            suspended: pulumi.Input[Optional[_builtins.bool]] = None) -> 'DbaasDbBackupschedule':
         """
         Get an existing DbaasDbBackupschedule resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -422,9 +546,13 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] backup_target: The backup target of the database backup schedule (primary, prefer-standby)
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: The annotations of the database backup schedule
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database cluster
+        :param pulumi.Input[_builtins.str] description: The description of the database backup schedule
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: The labels of the database backup schedule
+        :param pulumi.Input[_builtins.str] method: The method of the backup schedule (barman)
         :param pulumi.Input[_builtins.str] name: The name of the database backup schedule
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] retention_policy: The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
         :param pulumi.Input[_builtins.str] schedule: The cron schedule of the database backup schedule (0 0 * * *)
         :param pulumi.Input[_builtins.bool] suspended: Whether the database backup schedule is suspended
@@ -433,8 +561,11 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
 
         __props__ = _DbaasDbBackupscheduleState.__new__(_DbaasDbBackupscheduleState)
 
-        __props__.__dict__["backup_target"] = backup_target
+        __props__.__dict__["annotations"] = annotations
         __props__.__dict__["db_cluster_id"] = db_cluster_id
+        __props__.__dict__["description"] = description
+        __props__.__dict__["labels"] = labels
+        __props__.__dict__["method"] = method
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["retention_policy"] = retention_policy
@@ -443,12 +574,12 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         return DbaasDbBackupschedule(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
-    @pulumi.getter(name="backupTarget")
-    def backup_target(self) -> pulumi.Output[Optional[_builtins.str]]:
+    @pulumi.getter
+    def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        The backup target of the database backup schedule (primary, prefer-standby)
+        The annotations of the database backup schedule
         """
-        return pulumi.get(self, "backup_target")
+        return pulumi.get(self, "annotations")
 
     @_builtins.property
     @pulumi.getter(name="dbClusterId")
@@ -457,6 +588,30 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         The ID of the database cluster
         """
         return pulumi.get(self, "db_cluster_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The description of the database backup schedule
+        """
+        return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
+        """
+        The labels of the database backup schedule
+        """
+        return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The method of the backup schedule (barman)
+        """
+        return pulumi.get(self, "method")
 
     @_builtins.property
     @pulumi.getter
@@ -469,6 +624,9 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

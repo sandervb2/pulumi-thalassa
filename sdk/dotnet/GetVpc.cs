@@ -45,6 +45,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public string? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -80,6 +83,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -129,6 +135,9 @@ namespace Pulumi.Thalassa
         /// Name of the Vpc
         /// </summary>
         public readonly string? Name;
+        /// <summary>
+        /// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// Region of the Vpc. Provide the identity of the region. Can only be set on creation.

@@ -11,13 +11,15 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
+ * const config = new pulumi.Config();
+ * const region = config.get("region") || "nl-01";
  * // Create a VPC for the virtual machine instance
  * const example = new thalassa.Vpc("example", {
  *     name: "example-vpc",
  *     description: "Example VPC for virtual machine instance",
- *     region: "nl-01",
+ *     region: region,
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the virtual machine instance
@@ -51,15 +53,16 @@ import * as utilities from "./utilities";
  *     name: "Block",
  * });
  * const ubuntu = thalassa.getMachineImage({
- *     name: "ubuntu-22-04-01",
+ *     name: "ubuntu-22.04-8f08afc54644",
  * });
+ * const availabilityZone = config.get("availabilityZone") || "nl-01a";
  * // Create a virtual machine instance with Thalassa default values
  * const exampleVirtualMachineInstance = new thalassa.VirtualMachineInstance("example", {
  *     name: "example-instance",
  *     subnetId: exampleSubnet.id,
  *     machineType: "pgp-small",
  *     machineImage: ubuntu.then(ubuntu => ubuntu.name),
- *     availabilityZone: "nl-01a",
+ *     availabilityZone: availabilityZone,
  *     rootVolumeSizeGb: 20,
  *     rootVolumeType: block.then(block => block.id),
  *     cloudInitTemplateId: exampleCloudInitTemplate.id,
@@ -69,7 +72,7 @@ import * as utilities from "./utilities";
  * // Create a load balancer for the virtual machine instance
  * const exampleLoadbalancer = new thalassa.Loadbalancer("example", {
  *     name: "example-lb",
- *     region: "nl-01",
+ *     region: region,
  *     description: "Example load balancer for virtual machine instance",
  *     subnetId: exampleSubnet.id,
  * });
@@ -137,7 +140,7 @@ export class VirtualMachineInstance extends pulumi.CustomResource {
     /**
      * Availability zone of the virtual machine instance
      */
-    declare public readonly availabilityZone: pulumi.Output<string | undefined>;
+    declare public readonly availabilityZone: pulumi.Output<string>;
     /**
      * Cloud init of the virtual machine instance
      */
@@ -163,7 +166,7 @@ export class VirtualMachineInstance extends pulumi.CustomResource {
      */
     declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * Machine image of the virtual machine instance
+     * Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
      */
     declare public readonly machineImage: pulumi.Output<string>;
     /**
@@ -174,6 +177,9 @@ export class VirtualMachineInstance extends pulumi.CustomResource {
      * Name of the Virtual Machine Instance
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
@@ -287,84 +293,87 @@ export interface VirtualMachineInstanceState {
     /**
      * Annotations for the virtual machine instance
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Attached volume ids of the virtual machine instance
      */
-    attachedVolumeIds?: pulumi.Input<pulumi.Input<string>[]>;
+    attachedVolumeIds?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Availability zone of the virtual machine instance
      */
-    availabilityZone?: pulumi.Input<string>;
+    availabilityZone?: pulumi.Input<string | undefined>;
     /**
      * Cloud init of the virtual machine instance
      */
-    cloudInit?: pulumi.Input<string>;
+    cloudInit?: pulumi.Input<string | undefined>;
     /**
      * Cloud init template id of the virtual machine instance. If provided, the cloud init will be set to the content of the template.
      */
-    cloudInitTemplateId?: pulumi.Input<string>;
+    cloudInitTemplateId?: pulumi.Input<string | undefined>;
     /**
      * Delete protection of the virtual machine instance
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the virtual machine instance
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * IP addresses of the virtual machine instance
      */
-    ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
+    ipAddresses?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Labels for the virtual machine instance
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Machine image of the virtual machine instance
+     * Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
      */
-    machineImage?: pulumi.Input<string>;
+    machineImage?: pulumi.Input<string | undefined>;
     /**
      * Machine type of the virtual machine instance
      */
-    machineType?: pulumi.Input<string>;
+    machineType?: pulumi.Input<string | undefined>;
     /**
      * Name of the Virtual Machine Instance
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
      */
-    rootVolumeId?: pulumi.Input<string>;
+    rootVolumeId?: pulumi.Input<string | undefined>;
     /**
      * Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
      */
-    rootVolumeSizeGb?: pulumi.Input<number>;
+    rootVolumeSizeGb?: pulumi.Input<number | undefined>;
     /**
      * Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
      */
-    rootVolumeType?: pulumi.Input<string>;
+    rootVolumeType?: pulumi.Input<string | undefined>;
     /**
      * List identities of security group that will be attached to the Virtual Machine Instance
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Slug of the Virtual Machine Instance
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Desired state of the virtual machine instance. Can be 'running', 'stopped', 'deleted'
      */
-    state?: pulumi.Input<string>;
+    state?: pulumi.Input<string | undefined>;
     /**
      * Status of the virtual machine instance
      */
-    status?: pulumi.Input<string>;
+    status?: pulumi.Input<string | undefined>;
     /**
      * Subnet of the Virtual Machine Instance
      */
-    subnetId?: pulumi.Input<string>;
+    subnetId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -374,33 +383,33 @@ export interface VirtualMachineInstanceArgs {
     /**
      * Annotations for the virtual machine instance
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Availability zone of the virtual machine instance
      */
-    availabilityZone?: pulumi.Input<string>;
+    availabilityZone?: pulumi.Input<string | undefined>;
     /**
      * Cloud init of the virtual machine instance
      */
-    cloudInit?: pulumi.Input<string>;
+    cloudInit?: pulumi.Input<string | undefined>;
     /**
      * Cloud init template id of the virtual machine instance. If provided, the cloud init will be set to the content of the template.
      */
-    cloudInitTemplateId?: pulumi.Input<string>;
+    cloudInitTemplateId?: pulumi.Input<string | undefined>;
     /**
      * Delete protection of the virtual machine instance
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the virtual machine instance
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the virtual machine instance
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Machine image of the virtual machine instance
+     * Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
      */
     machineImage: pulumi.Input<string>;
     /**
@@ -410,24 +419,27 @@ export interface VirtualMachineInstanceArgs {
     /**
      * Name of the Virtual Machine Instance
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
      */
-    rootVolumeId?: pulumi.Input<string>;
+    rootVolumeId?: pulumi.Input<string | undefined>;
     /**
      * Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
      */
-    rootVolumeSizeGb?: pulumi.Input<number>;
+    rootVolumeSizeGb?: pulumi.Input<number | undefined>;
     /**
      * Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
      */
-    rootVolumeType?: pulumi.Input<string>;
+    rootVolumeType?: pulumi.Input<string | undefined>;
     /**
      * List identities of security group that will be attached to the Virtual Machine Instance
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Subnet of the Virtual Machine Instance
      */

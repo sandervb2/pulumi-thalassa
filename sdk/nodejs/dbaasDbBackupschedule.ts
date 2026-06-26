@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
  * const example = new thalassa.Vpc("example", {
@@ -78,17 +78,32 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
     }
 
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    declare public readonly backupTarget: pulumi.Output<string | undefined>;
+    declare public readonly annotations: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The ID of the database cluster
      */
     declare public readonly dbClusterId: pulumi.Output<string>;
     /**
+     * The description of the database backup schedule
+     */
+    declare public readonly description: pulumi.Output<string | undefined>;
+    /**
+     * The labels of the database backup schedule
+     */
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    declare public readonly method: pulumi.Output<string | undefined>;
+    /**
      * The name of the database backup schedule
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
@@ -116,8 +131,11 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DbaasDbBackupscheduleState | undefined;
-            resourceInputs["backupTarget"] = state?.backupTarget;
+            resourceInputs["annotations"] = state?.annotations;
             resourceInputs["dbClusterId"] = state?.dbClusterId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["method"] = state?.method;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["retentionPolicy"] = state?.retentionPolicy;
@@ -128,8 +146,11 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
             if (args?.dbClusterId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'dbClusterId'");
             }
-            resourceInputs["backupTarget"] = args?.backupTarget;
+            resourceInputs["annotations"] = args?.annotations;
             resourceInputs["dbClusterId"] = args?.dbClusterId;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["method"] = args?.method;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["retentionPolicy"] = args?.retentionPolicy;
@@ -146,30 +167,45 @@ export class DbaasDbBackupschedule extends pulumi.CustomResource {
  */
 export interface DbaasDbBackupscheduleState {
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    backupTarget?: pulumi.Input<string>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The ID of the database cluster
      */
-    dbClusterId?: pulumi.Input<string>;
+    dbClusterId?: pulumi.Input<string | undefined>;
+    /**
+     * The description of the database backup schedule
+     */
+    description?: pulumi.Input<string | undefined>;
+    /**
+     * The labels of the database backup schedule
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    method?: pulumi.Input<string | undefined>;
     /**
      * The name of the database backup schedule
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
      */
-    retentionPolicy?: pulumi.Input<string>;
+    retentionPolicy?: pulumi.Input<string | undefined>;
     /**
      * The cron schedule of the database backup schedule (0 0 * * *)
      */
-    schedule?: pulumi.Input<string>;
+    schedule?: pulumi.Input<string | undefined>;
     /**
      * Whether the database backup schedule is suspended
      */
-    suspended?: pulumi.Input<boolean>;
+    suspended?: pulumi.Input<boolean | undefined>;
 }
 
 /**
@@ -177,28 +213,43 @@ export interface DbaasDbBackupscheduleState {
  */
 export interface DbaasDbBackupscheduleArgs {
     /**
-     * The backup target of the database backup schedule (primary, prefer-standby)
+     * The annotations of the database backup schedule
      */
-    backupTarget?: pulumi.Input<string>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The ID of the database cluster
      */
     dbClusterId: pulumi.Input<string>;
     /**
+     * The description of the database backup schedule
+     */
+    description?: pulumi.Input<string | undefined>;
+    /**
+     * The labels of the database backup schedule
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * The method of the backup schedule (barman)
+     */
+    method?: pulumi.Input<string | undefined>;
+    /**
      * The name of the database backup schedule
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
      */
-    retentionPolicy?: pulumi.Input<string>;
+    retentionPolicy?: pulumi.Input<string | undefined>;
     /**
      * The cron schedule of the database backup schedule (0 0 * * *)
      */
-    schedule?: pulumi.Input<string>;
+    schedule?: pulumi.Input<string | undefined>;
     /**
      * Whether the database backup schedule is suspended
      */
-    suspended?: pulumi.Input<boolean>;
+    suspended?: pulumi.Input<boolean | undefined>;
 }

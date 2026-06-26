@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
  * const example = new thalassa.Vpc("example", {
@@ -83,6 +83,10 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
     }
 
     /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    declare public readonly allowConnections: pulumi.Output<boolean | undefined>;
+    /**
      * The connection limit of the database
      */
     declare public readonly connectionLimit: pulumi.Output<number | undefined>;
@@ -94,6 +98,9 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
      * The name of the database
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The ID of the owner role
@@ -113,6 +120,7 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DbaasPgDatabaseState | undefined;
+            resourceInputs["allowConnections"] = state?.allowConnections;
             resourceInputs["connectionLimit"] = state?.connectionLimit;
             resourceInputs["dbClusterId"] = state?.dbClusterId;
             resourceInputs["name"] = state?.name;
@@ -126,6 +134,7 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
             if (args?.ownerRoleId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ownerRoleId'");
             }
+            resourceInputs["allowConnections"] = args?.allowConnections;
             resourceInputs["connectionLimit"] = args?.connectionLimit;
             resourceInputs["dbClusterId"] = args?.dbClusterId;
             resourceInputs["name"] = args?.name;
@@ -142,22 +151,29 @@ export class DbaasPgDatabase extends pulumi.CustomResource {
  */
 export interface DbaasPgDatabaseState {
     /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    allowConnections?: pulumi.Input<boolean | undefined>;
+    /**
      * The connection limit of the database
      */
-    connectionLimit?: pulumi.Input<number>;
+    connectionLimit?: pulumi.Input<number | undefined>;
     /**
      * The ID of the database cluster
      */
-    dbClusterId?: pulumi.Input<string>;
+    dbClusterId?: pulumi.Input<string | undefined>;
     /**
      * The name of the database
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the owner role
      */
-    ownerRoleId?: pulumi.Input<string>;
+    ownerRoleId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -165,9 +181,13 @@ export interface DbaasPgDatabaseState {
  */
 export interface DbaasPgDatabaseArgs {
     /**
+     * If false then no one can connect to this database. Defaults to true.
+     */
+    allowConnections?: pulumi.Input<boolean | undefined>;
+    /**
      * The connection limit of the database
      */
-    connectionLimit?: pulumi.Input<number>;
+    connectionLimit?: pulumi.Input<number | undefined>;
     /**
      * The ID of the database cluster
      */
@@ -175,8 +195,11 @@ export interface DbaasPgDatabaseArgs {
     /**
      * The name of the database
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the owner role
      */

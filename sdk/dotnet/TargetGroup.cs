@@ -86,37 +86,43 @@ namespace Pulumi.Thalassa
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// The approximate amount of time, in seconds, between health checks of an individual target
+        /// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        /// </summary>
+        [Output("enableProxyProtocol")]
+        public Output<bool?> EnableProxyProtocol { get; private set; } = null!;
+
+        /// <summary>
+        /// Seconds between health checks of each target (periodSeconds).
         /// </summary>
         [Output("healthCheckInterval")]
         public Output<int?> HealthCheckInterval { get; private set; } = null!;
 
         /// <summary>
-        /// The path to use for health checks (only for HTTP/HTTPS)
+        /// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         /// </summary>
         [Output("healthCheckPath")]
         public Output<string?> HealthCheckPath { get; private set; } = null!;
 
         /// <summary>
-        /// The port to use for health checks
+        /// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         /// </summary>
         [Output("healthCheckPort")]
         public Output<int?> HealthCheckPort { get; private set; } = null!;
 
         /// <summary>
-        /// The protocol to use for health checks. Must be one of: tcp, http.
+        /// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         /// </summary>
         [Output("healthCheckProtocol")]
         public Output<string?> HealthCheckProtocol { get; private set; } = null!;
 
         /// <summary>
-        /// The amount of time, in seconds, during which no response means a failed health check
+        /// Seconds to wait for a health check response before failure (timeoutSeconds).
         /// </summary>
         [Output("healthCheckTimeout")]
         public Output<int?> HealthCheckTimeout { get; private set; } = null!;
 
         /// <summary>
-        /// The number of consecutive health checks successes required before considering an unhealthy target healthy
+        /// Consecutive successes required to mark a target healthy.
         /// </summary>
         [Output("healthyThreshold")]
         public Output<int?> HealthyThreshold { get; private set; } = null!;
@@ -128,11 +134,20 @@ namespace Pulumi.Thalassa
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
         /// <summary>
+        /// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        /// </summary>
+        [Output("loadbalancingPolicy")]
+        public Output<string?> LoadbalancingPolicy { get; private set; } = null!;
+
+        /// <summary>
         /// Name of the Target Group
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -143,7 +158,7 @@ namespace Pulumi.Thalassa
         public Output<int> Port { get; private set; } = null!;
 
         /// <summary>
-        /// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        /// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         /// </summary>
         [Output("protocol")]
         public Output<string> Protocol { get; private set; } = null!;
@@ -152,7 +167,13 @@ namespace Pulumi.Thalassa
         public Output<string> Slug { get; private set; } = null!;
 
         /// <summary>
-        /// The number of consecutive health check failures required before considering a target unhealthy
+        /// Label selector for automatic target membership; when set, targets matching these labels join the group.
+        /// </summary>
+        [Output("targetSelector")]
+        public Output<ImmutableDictionary<string, string>?> TargetSelector { get; private set; } = null!;
+
+        /// <summary>
+        /// Consecutive failures required to mark a target unhealthy.
         /// </summary>
         [Output("unhealthyThreshold")]
         public Output<int?> UnhealthyThreshold { get; private set; } = null!;
@@ -241,37 +262,43 @@ namespace Pulumi.Thalassa
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The approximate amount of time, in seconds, between health checks of an individual target
+        /// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        /// </summary>
+        [Input("enableProxyProtocol")]
+        public Input<bool>? EnableProxyProtocol { get; set; }
+
+        /// <summary>
+        /// Seconds between health checks of each target (periodSeconds).
         /// </summary>
         [Input("healthCheckInterval")]
         public Input<int>? HealthCheckInterval { get; set; }
 
         /// <summary>
-        /// The path to use for health checks (only for HTTP/HTTPS)
+        /// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         /// </summary>
         [Input("healthCheckPath")]
         public Input<string>? HealthCheckPath { get; set; }
 
         /// <summary>
-        /// The port to use for health checks
+        /// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         /// </summary>
         [Input("healthCheckPort")]
         public Input<int>? HealthCheckPort { get; set; }
 
         /// <summary>
-        /// The protocol to use for health checks. Must be one of: tcp, http.
+        /// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         /// </summary>
         [Input("healthCheckProtocol")]
         public Input<string>? HealthCheckProtocol { get; set; }
 
         /// <summary>
-        /// The amount of time, in seconds, during which no response means a failed health check
+        /// Seconds to wait for a health check response before failure (timeoutSeconds).
         /// </summary>
         [Input("healthCheckTimeout")]
         public Input<int>? HealthCheckTimeout { get; set; }
 
         /// <summary>
-        /// The number of consecutive health checks successes required before considering an unhealthy target healthy
+        /// Consecutive successes required to mark a target healthy.
         /// </summary>
         [Input("healthyThreshold")]
         public Input<int>? HealthyThreshold { get; set; }
@@ -289,11 +316,20 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
+        /// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        /// </summary>
+        [Input("loadbalancingPolicy")]
+        public Input<string>? LoadbalancingPolicy { get; set; }
+
+        /// <summary>
         /// Name of the Target Group
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -304,13 +340,25 @@ namespace Pulumi.Thalassa
         public Input<int> Port { get; set; } = null!;
 
         /// <summary>
-        /// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        /// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         /// </summary>
         [Input("protocol", required: true)]
         public Input<string> Protocol { get; set; } = null!;
 
+        [Input("targetSelector")]
+        private InputMap<string>? _targetSelector;
+
         /// <summary>
-        /// The number of consecutive health check failures required before considering a target unhealthy
+        /// Label selector for automatic target membership; when set, targets matching these labels join the group.
+        /// </summary>
+        public InputMap<string> TargetSelector
+        {
+            get => _targetSelector ?? (_targetSelector = new InputMap<string>());
+            set => _targetSelector = value;
+        }
+
+        /// <summary>
+        /// Consecutive failures required to mark a target unhealthy.
         /// </summary>
         [Input("unhealthyThreshold")]
         public Input<int>? UnhealthyThreshold { get; set; }
@@ -360,37 +408,43 @@ namespace Pulumi.Thalassa
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The approximate amount of time, in seconds, between health checks of an individual target
+        /// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        /// </summary>
+        [Input("enableProxyProtocol")]
+        public Input<bool>? EnableProxyProtocol { get; set; }
+
+        /// <summary>
+        /// Seconds between health checks of each target (periodSeconds).
         /// </summary>
         [Input("healthCheckInterval")]
         public Input<int>? HealthCheckInterval { get; set; }
 
         /// <summary>
-        /// The path to use for health checks (only for HTTP/HTTPS)
+        /// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         /// </summary>
         [Input("healthCheckPath")]
         public Input<string>? HealthCheckPath { get; set; }
 
         /// <summary>
-        /// The port to use for health checks
+        /// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         /// </summary>
         [Input("healthCheckPort")]
         public Input<int>? HealthCheckPort { get; set; }
 
         /// <summary>
-        /// The protocol to use for health checks. Must be one of: tcp, http.
+        /// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         /// </summary>
         [Input("healthCheckProtocol")]
         public Input<string>? HealthCheckProtocol { get; set; }
 
         /// <summary>
-        /// The amount of time, in seconds, during which no response means a failed health check
+        /// Seconds to wait for a health check response before failure (timeoutSeconds).
         /// </summary>
         [Input("healthCheckTimeout")]
         public Input<int>? HealthCheckTimeout { get; set; }
 
         /// <summary>
-        /// The number of consecutive health checks successes required before considering an unhealthy target healthy
+        /// Consecutive successes required to mark a target healthy.
         /// </summary>
         [Input("healthyThreshold")]
         public Input<int>? HealthyThreshold { get; set; }
@@ -408,11 +462,20 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
+        /// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        /// </summary>
+        [Input("loadbalancingPolicy")]
+        public Input<string>? LoadbalancingPolicy { get; set; }
+
+        /// <summary>
         /// Name of the Target Group
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -423,7 +486,7 @@ namespace Pulumi.Thalassa
         public Input<int>? Port { get; set; }
 
         /// <summary>
-        /// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        /// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         /// </summary>
         [Input("protocol")]
         public Input<string>? Protocol { get; set; }
@@ -431,8 +494,20 @@ namespace Pulumi.Thalassa
         [Input("slug")]
         public Input<string>? Slug { get; set; }
 
+        [Input("targetSelector")]
+        private InputMap<string>? _targetSelector;
+
         /// <summary>
-        /// The number of consecutive health check failures required before considering a target unhealthy
+        /// Label selector for automatic target membership; when set, targets matching these labels join the group.
+        /// </summary>
+        public InputMap<string> TargetSelector
+        {
+            get => _targetSelector ?? (_targetSelector = new InputMap<string>());
+            set => _targetSelector = value;
+        }
+
+        /// <summary>
+        /// Consecutive failures required to mark a target unhealthy.
         /// </summary>
         [Input("unhealthyThreshold")]
         public Input<int>? UnhealthyThreshold { get; set; }

@@ -22,17 +22,24 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 //	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			// Region for the VPC
+//			region := "nl-01"
+//			if param := cfg.Get("region"); param != "" {
+//				region = param
+//			}
 //			// Create a VPC for the NAT gateway
 //			example, err := thalassa.NewVpc(ctx, "example", &thalassa.VpcArgs{
 //				Name:        pulumi.String("example-vpc"),
 //				Description: pulumi.String("Example VPC for NAT gateway"),
-//				Region:      pulumi.String("nl-01"),
+//				Region:      pulumi.String(region),
 //				Cidrs: pulumi.StringArray{
 //					pulumi.String("10.0.0.0/16"),
 //				},
@@ -50,20 +57,13 @@ import (
 //			if err != nil {
 //				return err
 //			}
-//			// Create a NAT gateway with all optional attributes
 //			exampleNatgateway, err := thalassa.NewNatgateway(ctx, "example", &thalassa.NatgatewayArgs{
 //				Name:        pulumi.String("example-nat-gateway"),
 //				SubnetId:    exampleSubnet.ID(),
-//				Description: pulumi.String("Example NAT gateway for documentation"),
+//				Description: pulumi.String("Example NAT gateway"),
 //				Labels: pulumi.StringMap{
 //					"environment": pulumi.String("production"),
-//					"service":     pulumi.String("networking"),
 //					"tier":        pulumi.String("public"),
-//				},
-//				Annotations: pulumi.StringMap{
-//					"cost-center":   pulumi.String("cc-12345"),
-//					"backup-policy": pulumi.String("none"),
-//					"monitoring":    pulumi.String("enabled"),
 //				},
 //			})
 //			if err != nil {
@@ -88,8 +88,11 @@ type Natgateway struct {
 	// Labels for the NatGateway
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the NatGateway
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
+	// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+	ReservedIpId pulumi.StringOutput `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the NAT Gateway
 	SecurityGroupAttachments pulumi.StringArrayOutput `pulumi:"securityGroupAttachments"`
 	Slug                     pulumi.StringOutput      `pulumi:"slug"`
@@ -147,8 +150,11 @@ type natgatewayState struct {
 	// Labels for the NatGateway
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the NatGateway
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
+	// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+	ReservedIpId *string `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the NAT Gateway
 	SecurityGroupAttachments []string `pulumi:"securityGroupAttachments"`
 	Slug                     *string  `pulumi:"slug"`
@@ -174,8 +180,11 @@ type NatgatewayState struct {
 	// Labels for the NatGateway
 	Labels pulumi.StringMapInput
 	// Name of the NatGateway
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
+	// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+	ReservedIpId pulumi.StringPtrInput
 	// List identities of security group that will be attached to the NAT Gateway
 	SecurityGroupAttachments pulumi.StringArrayInput
 	Slug                     pulumi.StringPtrInput
@@ -203,8 +212,11 @@ type natgatewayArgs struct {
 	// Labels for the NatGateway
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the NatGateway
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
+	// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+	ReservedIpId *string `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the NAT Gateway
 	SecurityGroupAttachments []string `pulumi:"securityGroupAttachments"`
 	// Subnet of the NatGateway
@@ -220,8 +232,11 @@ type NatgatewayArgs struct {
 	// Labels for the NatGateway
 	Labels pulumi.StringMapInput
 	// Name of the NatGateway
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
+	// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+	ReservedIpId pulumi.StringPtrInput
 	// List identities of security group that will be attached to the NAT Gateway
 	SecurityGroupAttachments pulumi.StringArrayInput
 	// Subnet of the NatGateway
@@ -340,8 +355,14 @@ func (o NatgatewayOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Natgateway) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
 func (o NatgatewayOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Natgateway) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
+}
+
+// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+func (o NatgatewayOutput) ReservedIpId() pulumi.StringOutput {
+	return o.ApplyT(func(v *Natgateway) pulumi.StringOutput { return v.ReservedIpId }).(pulumi.StringOutput)
 }
 
 // List identities of security group that will be attached to the NAT Gateway

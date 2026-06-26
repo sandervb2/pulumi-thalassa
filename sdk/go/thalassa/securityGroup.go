@@ -42,11 +42,11 @@ import (
 //			// Create a security group
 //			exampleSecurityGroup, err := thalassa.NewSecurityGroup(ctx, "example", &thalassa.SecurityGroupArgs{
 //				Name:                  pulumi.String("example-security-group"),
-//				Description:           pulumi.String("Example security group for documentation"),
+//				Description:           pulumi.String("Example security group"),
 //				VpcId:                 example.ID(),
 //				AllowSameGroupTraffic: pulumi.Bool(false),
-//				IngressRules: thalassa.SecurityGroupIngressRuleArray{
-//					&thalassa.SecurityGroupIngressRuleArgs{
+//				IngressRules: thalassa.SecurityGroupIngressRuleTypeArray{
+//					&thalassa.SecurityGroupIngressRuleTypeArgs{
 //						Name:          pulumi.String("allow-http"),
 //						IpVersion:     pulumi.String("ipv4"),
 //						Protocol:      pulumi.String("tcp"),
@@ -57,7 +57,7 @@ import (
 //						PortRangeMax:  pulumi.Int(80),
 //						Policy:        pulumi.String("allow"),
 //					},
-//					&thalassa.SecurityGroupIngressRuleArgs{
+//					&thalassa.SecurityGroupIngressRuleTypeArgs{
 //						Name:          pulumi.String("allow-https"),
 //						IpVersion:     pulumi.String("ipv4"),
 //						Protocol:      pulumi.String("tcp"),
@@ -69,8 +69,8 @@ import (
 //						Policy:        pulumi.String("allow"),
 //					},
 //				},
-//				EgressRules: thalassa.SecurityGroupEgressRuleArray{
-//					&thalassa.SecurityGroupEgressRuleArgs{
+//				EgressRules: thalassa.SecurityGroupEgressRuleTypeArray{
+//					&thalassa.SecurityGroupEgressRuleTypeArgs{
 //						Name:          pulumi.String("allow-all"),
 //						IpVersion:     pulumi.String("ipv4"),
 //						Protocol:      pulumi.String("all"),
@@ -86,6 +86,91 @@ import (
 //			}
 //			ctx.Export("securityGroupId", exampleSecurityGroup.ID())
 //			ctx.Export("securityGroupName", exampleSecurityGroup.Name)
+//			// Create a security group with rules managed separately
+//			controlplane, err := thalassa.NewSecurityGroup(ctx, "controlplane", &thalassa.SecurityGroupArgs{
+//				Name:                  pulumi.String("controlplane-security-group"),
+//				Description:           pulumi.String("Control plane security group"),
+//				VpcId:                 example.ID(),
+//				AllowSameGroupTraffic: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a security group
+//			cluster, err := thalassa.NewSecurityGroup(ctx, "cluster", &thalassa.SecurityGroupArgs{
+//				Name:                  pulumi.String("cluster-security-group"),
+//				Description:           pulumi.String("Cluster security group"),
+//				VpcId:                 example.ID(),
+//				AllowSameGroupTraffic: pulumi.Bool(false),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// ingress rules
+//			_, err = thalassa.NewSecurityGroupIngressRule(ctx, "controlplane", &thalassa.SecurityGroupIngressRuleArgs{
+//				SecurityGroupId: controlplane.ID(),
+//				Rules: thalassa.SecurityGroupIngressRuleRuleArray{
+//					&thalassa.SecurityGroupIngressRuleRuleArgs{
+//						Name:                        pulumi.String("allow-http"),
+//						IpVersion:                   pulumi.String("ipv4"),
+//						Protocol:                    pulumi.String("tcp"),
+//						Priority:                    pulumi.Int(100),
+//						Policy:                      pulumi.String("allow"),
+//						RemoteType:                  pulumi.String("securityGroup"),
+//						RemoteSecurityGroupIdentity: cluster.ID(),
+//						PortRangeMin:                pulumi.Int(80),
+//						PortRangeMax:                pulumi.Int(80),
+//					},
+//					&thalassa.SecurityGroupIngressRuleRuleArgs{
+//						Name:          pulumi.String("allow-ssh"),
+//						IpVersion:     pulumi.String("ipv4"),
+//						Protocol:      pulumi.String("tcp"),
+//						Priority:      pulumi.Int(100),
+//						Policy:        pulumi.String("allow"),
+//						RemoteType:    pulumi.String("address"),
+//						RemoteAddress: pulumi.String("0.0.0.0/0"),
+//						PortRangeMin:  pulumi.Int(22),
+//						PortRangeMax:  pulumi.Int(22),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = thalassa.NewSecurityGroupEgressRule(ctx, "controlplane", &thalassa.SecurityGroupEgressRuleArgs{
+//				SecurityGroupId: controlplane.ID(),
+//				Rules: thalassa.SecurityGroupEgressRuleRuleArray{
+//					&thalassa.SecurityGroupEgressRuleRuleArgs{
+//						Name:          pulumi.String("allow-all"),
+//						IpVersion:     pulumi.String("ipv4"),
+//						Protocol:      pulumi.String("all"),
+//						Priority:      pulumi.Int(100),
+//						Policy:        pulumi.String("allow"),
+//						RemoteType:    pulumi.String("address"),
+//						RemoteAddress: pulumi.String("0.0.0.0/0"),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = thalassa.NewSecurityGroupEgressRule(ctx, "cluster", &thalassa.SecurityGroupEgressRuleArgs{
+//				SecurityGroupId: cluster.ID(),
+//				Rules: thalassa.SecurityGroupEgressRuleRuleArray{
+//					&thalassa.SecurityGroupEgressRuleRuleArgs{
+//						Name:                        pulumi.String("allow-controlplane"),
+//						IpVersion:                   pulumi.String("ipv4"),
+//						Protocol:                    pulumi.String("tcp"),
+//						Priority:                    pulumi.Int(100),
+//						Policy:                      pulumi.String("allow"),
+//						RemoteType:                  pulumi.String("securityGroup"),
+//						RemoteSecurityGroupIdentity: controlplane.ID(),
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
 //			return nil
 //		})
 //	}
@@ -96,18 +181,23 @@ type SecurityGroup struct {
 
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic pulumi.BoolPtrOutput `pulumi:"allowSameGroupTraffic"`
+	// Annotations of the security group
+	Annotations pulumi.StringMapOutput `pulumi:"annotations"`
 	// Creation timestamp of the security group
 	CreatedAt pulumi.StringOutput `pulumi:"createdAt"`
 	// Description of the security group
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// List of egress rules for the security group
-	EgressRules SecurityGroupEgressRuleArrayOutput `pulumi:"egressRules"`
+	// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+	EgressRules SecurityGroupEgressRuleTypeArrayOutput `pulumi:"egressRules"`
 	// Identity of the security group
 	Identity pulumi.StringOutput `pulumi:"identity"`
 	// List of ingress rules for the security group
-	IngressRules SecurityGroupIngressRuleArrayOutput `pulumi:"ingressRules"`
+	IngressRules SecurityGroupIngressRuleTypeArrayOutput `pulumi:"ingressRules"`
+	// Labels of the security group
+	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Status of the security group
 	Status pulumi.StringOutput `pulumi:"status"`
@@ -152,18 +242,23 @@ func GetSecurityGroup(ctx *pulumi.Context,
 type securityGroupState struct {
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic *bool `pulumi:"allowSameGroupTraffic"`
+	// Annotations of the security group
+	Annotations map[string]string `pulumi:"annotations"`
 	// Creation timestamp of the security group
 	CreatedAt *string `pulumi:"createdAt"`
 	// Description of the security group
 	Description *string `pulumi:"description"`
-	// List of egress rules for the security group
-	EgressRules []SecurityGroupEgressRule `pulumi:"egressRules"`
+	// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+	EgressRules []SecurityGroupEgressRuleType `pulumi:"egressRules"`
 	// Identity of the security group
 	Identity *string `pulumi:"identity"`
 	// List of ingress rules for the security group
-	IngressRules []SecurityGroupIngressRule `pulumi:"ingressRules"`
+	IngressRules []SecurityGroupIngressRuleType `pulumi:"ingressRules"`
+	// Labels of the security group
+	Labels map[string]string `pulumi:"labels"`
 	// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Status of the security group
 	Status *string `pulumi:"status"`
@@ -176,18 +271,23 @@ type securityGroupState struct {
 type SecurityGroupState struct {
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic pulumi.BoolPtrInput
+	// Annotations of the security group
+	Annotations pulumi.StringMapInput
 	// Creation timestamp of the security group
 	CreatedAt pulumi.StringPtrInput
 	// Description of the security group
 	Description pulumi.StringPtrInput
-	// List of egress rules for the security group
-	EgressRules SecurityGroupEgressRuleArrayInput
+	// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+	EgressRules SecurityGroupEgressRuleTypeArrayInput
 	// Identity of the security group
 	Identity pulumi.StringPtrInput
 	// List of ingress rules for the security group
-	IngressRules SecurityGroupIngressRuleArrayInput
+	IngressRules SecurityGroupIngressRuleTypeArrayInput
+	// Labels of the security group
+	Labels pulumi.StringMapInput
 	// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Status of the security group
 	Status pulumi.StringPtrInput
@@ -204,14 +304,19 @@ func (SecurityGroupState) ElementType() reflect.Type {
 type securityGroupArgs struct {
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic *bool `pulumi:"allowSameGroupTraffic"`
+	// Annotations of the security group
+	Annotations map[string]string `pulumi:"annotations"`
 	// Description of the security group
 	Description *string `pulumi:"description"`
-	// List of egress rules for the security group
-	EgressRules []SecurityGroupEgressRule `pulumi:"egressRules"`
+	// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+	EgressRules []SecurityGroupEgressRuleType `pulumi:"egressRules"`
 	// List of ingress rules for the security group
-	IngressRules []SecurityGroupIngressRule `pulumi:"ingressRules"`
+	IngressRules []SecurityGroupIngressRuleType `pulumi:"ingressRules"`
+	// Labels of the security group
+	Labels map[string]string `pulumi:"labels"`
 	// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Identity of the VPC that the security group belongs to
 	VpcId string `pulumi:"vpcId"`
@@ -221,14 +326,19 @@ type securityGroupArgs struct {
 type SecurityGroupArgs struct {
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic pulumi.BoolPtrInput
+	// Annotations of the security group
+	Annotations pulumi.StringMapInput
 	// Description of the security group
 	Description pulumi.StringPtrInput
-	// List of egress rules for the security group
-	EgressRules SecurityGroupEgressRuleArrayInput
+	// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+	EgressRules SecurityGroupEgressRuleTypeArrayInput
 	// List of ingress rules for the security group
-	IngressRules SecurityGroupIngressRuleArrayInput
+	IngressRules SecurityGroupIngressRuleTypeArrayInput
+	// Labels of the security group
+	Labels pulumi.StringMapInput
 	// Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Identity of the VPC that the security group belongs to
 	VpcId pulumi.StringInput
@@ -326,6 +436,11 @@ func (o SecurityGroupOutput) AllowSameGroupTraffic() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *SecurityGroup) pulumi.BoolPtrOutput { return v.AllowSameGroupTraffic }).(pulumi.BoolPtrOutput)
 }
 
+// Annotations of the security group
+func (o SecurityGroupOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *SecurityGroup) pulumi.StringMapOutput { return v.Annotations }).(pulumi.StringMapOutput)
+}
+
 // Creation timestamp of the security group
 func (o SecurityGroupOutput) CreatedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v *SecurityGroup) pulumi.StringOutput { return v.CreatedAt }).(pulumi.StringOutput)
@@ -336,9 +451,9 @@ func (o SecurityGroupOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecurityGroup) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// List of egress rules for the security group
-func (o SecurityGroupOutput) EgressRules() SecurityGroupEgressRuleArrayOutput {
-	return o.ApplyT(func(v *SecurityGroup) SecurityGroupEgressRuleArrayOutput { return v.EgressRules }).(SecurityGroupEgressRuleArrayOutput)
+// List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+func (o SecurityGroupOutput) EgressRules() SecurityGroupEgressRuleTypeArrayOutput {
+	return o.ApplyT(func(v *SecurityGroup) SecurityGroupEgressRuleTypeArrayOutput { return v.EgressRules }).(SecurityGroupEgressRuleTypeArrayOutput)
 }
 
 // Identity of the security group
@@ -347,8 +462,13 @@ func (o SecurityGroupOutput) Identity() pulumi.StringOutput {
 }
 
 // List of ingress rules for the security group
-func (o SecurityGroupOutput) IngressRules() SecurityGroupIngressRuleArrayOutput {
-	return o.ApplyT(func(v *SecurityGroup) SecurityGroupIngressRuleArrayOutput { return v.IngressRules }).(SecurityGroupIngressRuleArrayOutput)
+func (o SecurityGroupOutput) IngressRules() SecurityGroupIngressRuleTypeArrayOutput {
+	return o.ApplyT(func(v *SecurityGroup) SecurityGroupIngressRuleTypeArrayOutput { return v.IngressRules }).(SecurityGroupIngressRuleTypeArrayOutput)
+}
+
+// Labels of the security group
+func (o SecurityGroupOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *SecurityGroup) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
 
 // Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
@@ -356,6 +476,7 @@ func (o SecurityGroupOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *SecurityGroup) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
 func (o SecurityGroupOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecurityGroup) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

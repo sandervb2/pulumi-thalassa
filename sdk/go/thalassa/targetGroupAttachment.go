@@ -91,6 +91,7 @@ import (
 type TargetGroupAttachment struct {
 	pulumi.CustomResourceState
 
+	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The ID of the target group to attach to
 	TargetGroupId pulumi.StringOutput `pulumi:"targetGroupId"`
@@ -134,6 +135,7 @@ func GetTargetGroupAttachment(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering TargetGroupAttachment resources.
 type targetGroupAttachmentState struct {
+	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the target group to attach to
 	TargetGroupId *string `pulumi:"targetGroupId"`
@@ -142,6 +144,7 @@ type targetGroupAttachmentState struct {
 }
 
 type TargetGroupAttachmentState struct {
+	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The ID of the target group to attach to
 	TargetGroupId pulumi.StringPtrInput
@@ -154,6 +157,7 @@ func (TargetGroupAttachmentState) ElementType() reflect.Type {
 }
 
 type targetGroupAttachmentArgs struct {
+	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the target group to attach to
 	TargetGroupId string `pulumi:"targetGroupId"`
@@ -163,6 +167,7 @@ type targetGroupAttachmentArgs struct {
 
 // The set of arguments for constructing a TargetGroupAttachment resource.
 type TargetGroupAttachmentArgs struct {
+	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The ID of the target group to attach to
 	TargetGroupId pulumi.StringInput
@@ -257,6 +262,7 @@ func (o TargetGroupAttachmentOutput) ToTargetGroupAttachmentOutputWithContext(ct
 	return o
 }
 
+// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 func (o TargetGroupAttachmentOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetGroupAttachment) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

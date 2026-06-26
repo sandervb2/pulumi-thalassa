@@ -22,30 +22,40 @@ __all__ = ['SecurityGroupArgs', 'SecurityGroup']
 class SecurityGroupArgs:
     def __init__(__self__, *,
                  vpc_id: pulumi.Input[_builtins.str],
-                 allow_same_group_traffic: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress_rules: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]] = None,
-                 ingress_rules: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a SecurityGroup resource.
+
         :param pulumi.Input[_builtins.str] vpc_id: Identity of the VPC that the security group belongs to
         :param pulumi.Input[_builtins.bool] allow_same_group_traffic: Flag that indicates if the security group allows traffic between instances in the same security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]] egress_rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
         """
         pulumi.set(__self__, "vpc_id", vpc_id)
         if allow_same_group_traffic is not None:
             pulumi.set(__self__, "allow_same_group_traffic", allow_same_group_traffic)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if egress_rules is not None:
             pulumi.set(__self__, "egress_rules", egress_rules)
         if ingress_rules is not None:
             pulumi.set(__self__, "ingress_rules", ingress_rules)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -65,103 +75,138 @@ class SecurityGroupArgs:
 
     @_builtins.property
     @pulumi.getter(name="allowSameGroupTraffic")
-    def allow_same_group_traffic(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def allow_same_group_traffic(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag that indicates if the security group allows traffic between instances in the same security group
         """
         return pulumi.get(self, "allow_same_group_traffic")
 
     @allow_same_group_traffic.setter
-    def allow_same_group_traffic(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def allow_same_group_traffic(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "allow_same_group_traffic", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Annotations of the security group
+        """
+        return pulumi.get(self, "annotations")
+
+    @annotations.setter
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "annotations", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the security group
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="egressRules")
-    def egress_rules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]:
+    def egress_rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]:
         """
-        List of egress rules for the security group
+        List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         """
         return pulumi.get(self, "egress_rules")
 
     @egress_rules.setter
-    def egress_rules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]):
+    def egress_rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]):
         pulumi.set(self, "egress_rules", value)
 
     @_builtins.property
     @pulumi.getter(name="ingressRules")
-    def ingress_rules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]:
+    def ingress_rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]:
         """
         List of ingress rules for the security group
         """
         return pulumi.get(self, "ingress_rules")
 
     @ingress_rules.setter
-    def ingress_rules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]):
+    def ingress_rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]):
         pulumi.set(self, "ingress_rules", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Labels of the security group
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
 
 @pulumi.input_type
 class _SecurityGroupState:
     def __init__(__self__, *,
-                 allow_same_group_traffic: Optional[pulumi.Input[_builtins.bool]] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress_rules: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]] = None,
-                 identity: Optional[pulumi.Input[_builtins.str]] = None,
-                 ingress_rules: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]] = None,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering SecurityGroup resources.
+
         :param pulumi.Input[_builtins.bool] allow_same_group_traffic: Flag that indicates if the security group allows traffic between instances in the same security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]] egress_rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         :param pulumi.Input[_builtins.str] identity: Identity of the security group
         :param pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] status: Status of the security group
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the security group
         :param pulumi.Input[_builtins.str] vpc_id: Identity of the VPC that the security group belongs to
         """
         if allow_same_group_traffic is not None:
             pulumi.set(__self__, "allow_same_group_traffic", allow_same_group_traffic)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
         if created_at is not None:
             pulumi.set(__self__, "created_at", created_at)
         if description is not None:
@@ -172,6 +217,8 @@ class _SecurityGroupState:
             pulumi.set(__self__, "identity", identity)
         if ingress_rules is not None:
             pulumi.set(__self__, "ingress_rules", ingress_rules)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -185,131 +232,158 @@ class _SecurityGroupState:
 
     @_builtins.property
     @pulumi.getter(name="allowSameGroupTraffic")
-    def allow_same_group_traffic(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def allow_same_group_traffic(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag that indicates if the security group allows traffic between instances in the same security group
         """
         return pulumi.get(self, "allow_same_group_traffic")
 
     @allow_same_group_traffic.setter
-    def allow_same_group_traffic(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def allow_same_group_traffic(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "allow_same_group_traffic", value)
 
     @_builtins.property
+    @pulumi.getter
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Annotations of the security group
+        """
+        return pulumi.get(self, "annotations")
+
+    @annotations.setter
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "annotations", value)
+
+    @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Creation timestamp of the security group
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the security group
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="egressRules")
-    def egress_rules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]:
+    def egress_rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]:
         """
-        List of egress rules for the security group
+        List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         """
         return pulumi.get(self, "egress_rules")
 
     @egress_rules.setter
-    def egress_rules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]):
+    def egress_rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupEgressRuleArgs']]]]):
         pulumi.set(self, "egress_rules", value)
 
     @_builtins.property
     @pulumi.getter
-    def identity(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identity of the security group
         """
         return pulumi.get(self, "identity")
 
     @identity.setter
-    def identity(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "identity", value)
 
     @_builtins.property
     @pulumi.getter(name="ingressRules")
-    def ingress_rules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]:
+    def ingress_rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]:
         """
         List of ingress rules for the security group
         """
         return pulumi.get(self, "ingress_rules")
 
     @ingress_rules.setter
-    def ingress_rules(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]):
+    def ingress_rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['SecurityGroupIngressRuleArgs']]]]):
         pulumi.set(self, "ingress_rules", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Labels of the security group
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the security group
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Last update timestamp of the security group
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
-    def vpc_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vpc_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identity of the VPC that the security group belongs to
         """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
-    def vpc_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vpc_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vpc_id", value)
 
 
@@ -319,13 +393,15 @@ class SecurityGroup(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allow_same_group_traffic: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
-                 ingress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         A security group is a collection of rules that control the traffic to and from a virtual machine instance or other cloud resource within a VPC.
@@ -344,7 +420,7 @@ class SecurityGroup(pulumi.CustomResource):
         # Create a security group
         example_security_group = thalassa.SecurityGroup("example",
             name="example-security-group",
-            description="Example security group for documentation",
+            description="Example security group",
             vpc_id=example.id,
             allow_same_group_traffic=False,
             ingress_rules=[
@@ -382,15 +458,80 @@ class SecurityGroup(pulumi.CustomResource):
             }])
         pulumi.export("securityGroupId", example_security_group.id)
         pulumi.export("securityGroupName", example_security_group.name)
+        # Create a security group with rules managed separately
+        controlplane = thalassa.SecurityGroup("controlplane",
+            name="controlplane-security-group",
+            description="Control plane security group",
+            vpc_id=example.id,
+            allow_same_group_traffic=False)
+        # Create a security group
+        cluster = thalassa.SecurityGroup("cluster",
+            name="cluster-security-group",
+            description="Cluster security group",
+            vpc_id=example.id,
+            allow_same_group_traffic=False)
+        # ingress rules
+        controlplane_security_group_ingress_rule = thalassa.SecurityGroupIngressRule("controlplane",
+            security_group_id=controlplane.id,
+            rules=[
+                {
+                    "name": "allow-http",
+                    "ip_version": "ipv4",
+                    "protocol": "tcp",
+                    "priority": 100,
+                    "policy": "allow",
+                    "remote_type": "securityGroup",
+                    "remote_security_group_identity": cluster.id,
+                    "port_range_min": 80,
+                    "port_range_max": 80,
+                },
+                {
+                    "name": "allow-ssh",
+                    "ip_version": "ipv4",
+                    "protocol": "tcp",
+                    "priority": 100,
+                    "policy": "allow",
+                    "remote_type": "address",
+                    "remote_address": "0.0.0.0/0",
+                    "port_range_min": 22,
+                    "port_range_max": 22,
+                },
+            ])
+        controlplane_security_group_egress_rule = thalassa.SecurityGroupEgressRule("controlplane",
+            security_group_id=controlplane.id,
+            rules=[{
+                "name": "allow-all",
+                "ip_version": "ipv4",
+                "protocol": "all",
+                "priority": 100,
+                "policy": "allow",
+                "remote_type": "address",
+                "remote_address": "0.0.0.0/0",
+            }])
+        cluster_security_group_egress_rule = thalassa.SecurityGroupEgressRule("cluster",
+            security_group_id=cluster.id,
+            rules=[{
+                "name": "allow-controlplane",
+                "ip_version": "ipv4",
+                "protocol": "tcp",
+                "priority": 100,
+                "policy": "allow",
+                "remote_type": "securityGroup",
+                "remote_security_group_identity": controlplane.id,
+            }])
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] allow_same_group_traffic: Flag that indicates if the security group allows traffic between instances in the same security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] vpc_id: Identity of the VPC that the security group belongs to
         """
         ...
@@ -416,7 +557,7 @@ class SecurityGroup(pulumi.CustomResource):
         # Create a security group
         example_security_group = thalassa.SecurityGroup("example",
             name="example-security-group",
-            description="Example security group for documentation",
+            description="Example security group",
             vpc_id=example.id,
             allow_same_group_traffic=False,
             ingress_rules=[
@@ -454,7 +595,69 @@ class SecurityGroup(pulumi.CustomResource):
             }])
         pulumi.export("securityGroupId", example_security_group.id)
         pulumi.export("securityGroupName", example_security_group.name)
+        # Create a security group with rules managed separately
+        controlplane = thalassa.SecurityGroup("controlplane",
+            name="controlplane-security-group",
+            description="Control plane security group",
+            vpc_id=example.id,
+            allow_same_group_traffic=False)
+        # Create a security group
+        cluster = thalassa.SecurityGroup("cluster",
+            name="cluster-security-group",
+            description="Cluster security group",
+            vpc_id=example.id,
+            allow_same_group_traffic=False)
+        # ingress rules
+        controlplane_security_group_ingress_rule = thalassa.SecurityGroupIngressRule("controlplane",
+            security_group_id=controlplane.id,
+            rules=[
+                {
+                    "name": "allow-http",
+                    "ip_version": "ipv4",
+                    "protocol": "tcp",
+                    "priority": 100,
+                    "policy": "allow",
+                    "remote_type": "securityGroup",
+                    "remote_security_group_identity": cluster.id,
+                    "port_range_min": 80,
+                    "port_range_max": 80,
+                },
+                {
+                    "name": "allow-ssh",
+                    "ip_version": "ipv4",
+                    "protocol": "tcp",
+                    "priority": 100,
+                    "policy": "allow",
+                    "remote_type": "address",
+                    "remote_address": "0.0.0.0/0",
+                    "port_range_min": 22,
+                    "port_range_max": 22,
+                },
+            ])
+        controlplane_security_group_egress_rule = thalassa.SecurityGroupEgressRule("controlplane",
+            security_group_id=controlplane.id,
+            rules=[{
+                "name": "allow-all",
+                "ip_version": "ipv4",
+                "protocol": "all",
+                "priority": 100,
+                "policy": "allow",
+                "remote_type": "address",
+                "remote_address": "0.0.0.0/0",
+            }])
+        cluster_security_group_egress_rule = thalassa.SecurityGroupEgressRule("cluster",
+            security_group_id=cluster.id,
+            rules=[{
+                "name": "allow-controlplane",
+                "ip_version": "ipv4",
+                "protocol": "tcp",
+                "priority": 100,
+                "policy": "allow",
+                "remote_type": "securityGroup",
+                "remote_security_group_identity": controlplane.id,
+            }])
         ```
+
 
         :param str resource_name: The name of the resource.
         :param SecurityGroupArgs args: The arguments to use to populate this resource's properties.
@@ -471,13 +674,15 @@ class SecurityGroup(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allow_same_group_traffic: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
-                 ingress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -488,9 +693,11 @@ class SecurityGroup(pulumi.CustomResource):
             __props__ = SecurityGroupArgs.__new__(SecurityGroupArgs)
 
             __props__.__dict__["allow_same_group_traffic"] = allow_same_group_traffic
+            __props__.__dict__["annotations"] = annotations
             __props__.__dict__["description"] = description
             __props__.__dict__["egress_rules"] = egress_rules
             __props__.__dict__["ingress_rules"] = ingress_rules
+            __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
             if vpc_id is None and not opts.urn:
@@ -510,17 +717,19 @@ class SecurityGroup(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            allow_same_group_traffic: Optional[pulumi.Input[_builtins.bool]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            egress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
-            identity: Optional[pulumi.Input[_builtins.str]] = None,
-            ingress_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-            vpc_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'SecurityGroup':
+            allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
+            identity: pulumi.Input[Optional[_builtins.str]] = None,
+            ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'SecurityGroup':
         """
         Get an existing SecurityGroup resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -529,12 +738,15 @@ class SecurityGroup(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] allow_same_group_traffic: Flag that indicates if the security group allows traffic between instances in the same security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         :param pulumi.Input[_builtins.str] identity: Identity of the security group
         :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] status: Status of the security group
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the security group
         :param pulumi.Input[_builtins.str] vpc_id: Identity of the VPC that the security group belongs to
@@ -544,11 +756,13 @@ class SecurityGroup(pulumi.CustomResource):
         __props__ = _SecurityGroupState.__new__(_SecurityGroupState)
 
         __props__.__dict__["allow_same_group_traffic"] = allow_same_group_traffic
+        __props__.__dict__["annotations"] = annotations
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["description"] = description
         __props__.__dict__["egress_rules"] = egress_rules
         __props__.__dict__["identity"] = identity
         __props__.__dict__["ingress_rules"] = ingress_rules
+        __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["status"] = status
@@ -563,6 +777,14 @@ class SecurityGroup(pulumi.CustomResource):
         Flag that indicates if the security group allows traffic between instances in the same security group
         """
         return pulumi.get(self, "allow_same_group_traffic")
+
+    @_builtins.property
+    @pulumi.getter
+    def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
+        """
+        Annotations of the security group
+        """
+        return pulumi.get(self, "annotations")
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
@@ -584,7 +806,7 @@ class SecurityGroup(pulumi.CustomResource):
     @pulumi.getter(name="egressRules")
     def egress_rules(self) -> pulumi.Output[Optional[Sequence['outputs.SecurityGroupEgressRule']]]:
         """
-        List of egress rules for the security group
+        List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         """
         return pulumi.get(self, "egress_rules")
 
@@ -606,6 +828,14 @@ class SecurityGroup(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
+        """
+        Labels of the security group
+        """
+        return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
         Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
@@ -615,6 +845,9 @@ class SecurityGroup(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

@@ -21,6 +21,20 @@ __config__ = pulumi.Config('thalassa')
 
 class _ExportableConfig(types.ModuleType):
     @_builtins.property
+    def access_token(self) -> Optional[str]:
+        """
+        The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        """
+        return __config__.get('accessToken')
+
+    @_builtins.property
+    def allow_insecure_oidc(self) -> Optional[bool]:
+        """
+        Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+        """
+        return __config__.get_bool('allowInsecureOidc')
+
+    @_builtins.property
     def api(self) -> Optional[str]:
         """
         The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
@@ -47,6 +61,13 @@ class _ExportableConfig(types.ModuleType):
         The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
         """
         return __config__.get('organisationId')
+
+    @_builtins.property
+    def project_id(self) -> Optional[str]:
+        """
+        The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        """
+        return __config__.get('projectId')
 
     @_builtins.property
     def token(self) -> Optional[str]:

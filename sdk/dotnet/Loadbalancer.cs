@@ -122,6 +122,9 @@ namespace Pulumi.Thalassa
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -130,6 +133,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
+
+        /// <summary>
+        /// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        /// </summary>
+        [Output("reservedIpId")]
+        public Output<string> ReservedIpId { get; private set; } = null!;
 
         /// <summary>
         /// List identities of security group that will be attached to the Loadbalancer
@@ -247,6 +256,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -255,6 +267,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
+
+        /// <summary>
+        /// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        /// </summary>
+        [Input("reservedIpId")]
+        public Input<string>? ReservedIpId { get; set; }
 
         [Input("securityGroupAttachments")]
         private InputList<string>? _securityGroupAttachments;
@@ -348,6 +366,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -356,6 +377,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
+
+        /// <summary>
+        /// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        /// </summary>
+        [Input("reservedIpId")]
+        public Input<string>? ReservedIpId { get; set; }
 
         [Input("securityGroupAttachments")]
         private InputList<string>? _securityGroupAttachments;

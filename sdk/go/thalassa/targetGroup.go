@@ -78,29 +78,36 @@ type TargetGroup struct {
 	Attachments TargetGroupAttachmentTypeArrayOutput `pulumi:"attachments"`
 	// A human readable description about the target group
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// The approximate amount of time, in seconds, between health checks of an individual target
+	// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+	EnableProxyProtocol pulumi.BoolPtrOutput `pulumi:"enableProxyProtocol"`
+	// Seconds between health checks of each target (periodSeconds).
 	HealthCheckInterval pulumi.IntPtrOutput `pulumi:"healthCheckInterval"`
-	// The path to use for health checks (only for HTTP/HTTPS)
+	// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 	HealthCheckPath pulumi.StringPtrOutput `pulumi:"healthCheckPath"`
-	// The port to use for health checks
+	// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 	HealthCheckPort pulumi.IntPtrOutput `pulumi:"healthCheckPort"`
-	// The protocol to use for health checks. Must be one of: tcp, http.
+	// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 	HealthCheckProtocol pulumi.StringPtrOutput `pulumi:"healthCheckProtocol"`
-	// The amount of time, in seconds, during which no response means a failed health check
+	// Seconds to wait for a health check response before failure (timeoutSeconds).
 	HealthCheckTimeout pulumi.IntPtrOutput `pulumi:"healthCheckTimeout"`
-	// The number of consecutive health checks successes required before considering an unhealthy target healthy
+	// Consecutive successes required to mark a target healthy.
 	HealthyThreshold pulumi.IntPtrOutput `pulumi:"healthyThreshold"`
 	// Labels for the Target Group
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
+	// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+	LoadbalancingPolicy pulumi.StringPtrOutput `pulumi:"loadbalancingPolicy"`
 	// Name of the Target Group
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The port on which the targets receive traffic
 	Port pulumi.IntOutput `pulumi:"port"`
-	// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+	// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 	Protocol pulumi.StringOutput `pulumi:"protocol"`
 	Slug     pulumi.StringOutput `pulumi:"slug"`
-	// The number of consecutive health check failures required before considering a target unhealthy
+	// Label selector for automatic target membership; when set, targets matching these labels join the group.
+	TargetSelector pulumi.StringMapOutput `pulumi:"targetSelector"`
+	// Consecutive failures required to mark a target unhealthy.
 	UnhealthyThreshold pulumi.IntPtrOutput `pulumi:"unhealthyThreshold"`
 	// The VPC this target group belongs to
 	VpcId pulumi.StringOutput `pulumi:"vpcId"`
@@ -151,29 +158,36 @@ type targetGroupState struct {
 	Attachments []TargetGroupAttachmentType `pulumi:"attachments"`
 	// A human readable description about the target group
 	Description *string `pulumi:"description"`
-	// The approximate amount of time, in seconds, between health checks of an individual target
+	// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+	EnableProxyProtocol *bool `pulumi:"enableProxyProtocol"`
+	// Seconds between health checks of each target (periodSeconds).
 	HealthCheckInterval *int `pulumi:"healthCheckInterval"`
-	// The path to use for health checks (only for HTTP/HTTPS)
+	// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 	HealthCheckPath *string `pulumi:"healthCheckPath"`
-	// The port to use for health checks
+	// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 	HealthCheckPort *int `pulumi:"healthCheckPort"`
-	// The protocol to use for health checks. Must be one of: tcp, http.
+	// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 	HealthCheckProtocol *string `pulumi:"healthCheckProtocol"`
-	// The amount of time, in seconds, during which no response means a failed health check
+	// Seconds to wait for a health check response before failure (timeoutSeconds).
 	HealthCheckTimeout *int `pulumi:"healthCheckTimeout"`
-	// The number of consecutive health checks successes required before considering an unhealthy target healthy
+	// Consecutive successes required to mark a target healthy.
 	HealthyThreshold *int `pulumi:"healthyThreshold"`
 	// Labels for the Target Group
 	Labels map[string]string `pulumi:"labels"`
+	// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+	LoadbalancingPolicy *string `pulumi:"loadbalancingPolicy"`
 	// Name of the Target Group
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The port on which the targets receive traffic
 	Port *int `pulumi:"port"`
-	// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+	// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 	Protocol *string `pulumi:"protocol"`
 	Slug     *string `pulumi:"slug"`
-	// The number of consecutive health check failures required before considering a target unhealthy
+	// Label selector for automatic target membership; when set, targets matching these labels join the group.
+	TargetSelector map[string]string `pulumi:"targetSelector"`
+	// Consecutive failures required to mark a target unhealthy.
 	UnhealthyThreshold *int `pulumi:"unhealthyThreshold"`
 	// The VPC this target group belongs to
 	VpcId *string `pulumi:"vpcId"`
@@ -186,29 +200,36 @@ type TargetGroupState struct {
 	Attachments TargetGroupAttachmentTypeArrayInput
 	// A human readable description about the target group
 	Description pulumi.StringPtrInput
-	// The approximate amount of time, in seconds, between health checks of an individual target
+	// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+	EnableProxyProtocol pulumi.BoolPtrInput
+	// Seconds between health checks of each target (periodSeconds).
 	HealthCheckInterval pulumi.IntPtrInput
-	// The path to use for health checks (only for HTTP/HTTPS)
+	// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 	HealthCheckPath pulumi.StringPtrInput
-	// The port to use for health checks
+	// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 	HealthCheckPort pulumi.IntPtrInput
-	// The protocol to use for health checks. Must be one of: tcp, http.
+	// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 	HealthCheckProtocol pulumi.StringPtrInput
-	// The amount of time, in seconds, during which no response means a failed health check
+	// Seconds to wait for a health check response before failure (timeoutSeconds).
 	HealthCheckTimeout pulumi.IntPtrInput
-	// The number of consecutive health checks successes required before considering an unhealthy target healthy
+	// Consecutive successes required to mark a target healthy.
 	HealthyThreshold pulumi.IntPtrInput
 	// Labels for the Target Group
 	Labels pulumi.StringMapInput
+	// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+	LoadbalancingPolicy pulumi.StringPtrInput
 	// Name of the Target Group
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The port on which the targets receive traffic
 	Port pulumi.IntPtrInput
-	// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+	// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 	Protocol pulumi.StringPtrInput
 	Slug     pulumi.StringPtrInput
-	// The number of consecutive health check failures required before considering a target unhealthy
+	// Label selector for automatic target membership; when set, targets matching these labels join the group.
+	TargetSelector pulumi.StringMapInput
+	// Consecutive failures required to mark a target unhealthy.
 	UnhealthyThreshold pulumi.IntPtrInput
 	// The VPC this target group belongs to
 	VpcId pulumi.StringPtrInput
@@ -225,28 +246,35 @@ type targetGroupArgs struct {
 	Attachments []TargetGroupAttachmentType `pulumi:"attachments"`
 	// A human readable description about the target group
 	Description *string `pulumi:"description"`
-	// The approximate amount of time, in seconds, between health checks of an individual target
+	// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+	EnableProxyProtocol *bool `pulumi:"enableProxyProtocol"`
+	// Seconds between health checks of each target (periodSeconds).
 	HealthCheckInterval *int `pulumi:"healthCheckInterval"`
-	// The path to use for health checks (only for HTTP/HTTPS)
+	// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 	HealthCheckPath *string `pulumi:"healthCheckPath"`
-	// The port to use for health checks
+	// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 	HealthCheckPort *int `pulumi:"healthCheckPort"`
-	// The protocol to use for health checks. Must be one of: tcp, http.
+	// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 	HealthCheckProtocol *string `pulumi:"healthCheckProtocol"`
-	// The amount of time, in seconds, during which no response means a failed health check
+	// Seconds to wait for a health check response before failure (timeoutSeconds).
 	HealthCheckTimeout *int `pulumi:"healthCheckTimeout"`
-	// The number of consecutive health checks successes required before considering an unhealthy target healthy
+	// Consecutive successes required to mark a target healthy.
 	HealthyThreshold *int `pulumi:"healthyThreshold"`
 	// Labels for the Target Group
 	Labels map[string]string `pulumi:"labels"`
+	// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+	LoadbalancingPolicy *string `pulumi:"loadbalancingPolicy"`
 	// Name of the Target Group
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The port on which the targets receive traffic
 	Port int `pulumi:"port"`
-	// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+	// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 	Protocol string `pulumi:"protocol"`
-	// The number of consecutive health check failures required before considering a target unhealthy
+	// Label selector for automatic target membership; when set, targets matching these labels join the group.
+	TargetSelector map[string]string `pulumi:"targetSelector"`
+	// Consecutive failures required to mark a target unhealthy.
 	UnhealthyThreshold *int `pulumi:"unhealthyThreshold"`
 	// The VPC this target group belongs to
 	VpcId string `pulumi:"vpcId"`
@@ -260,28 +288,35 @@ type TargetGroupArgs struct {
 	Attachments TargetGroupAttachmentTypeArrayInput
 	// A human readable description about the target group
 	Description pulumi.StringPtrInput
-	// The approximate amount of time, in seconds, between health checks of an individual target
+	// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+	EnableProxyProtocol pulumi.BoolPtrInput
+	// Seconds between health checks of each target (periodSeconds).
 	HealthCheckInterval pulumi.IntPtrInput
-	// The path to use for health checks (only for HTTP/HTTPS)
+	// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 	HealthCheckPath pulumi.StringPtrInput
-	// The port to use for health checks
+	// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 	HealthCheckPort pulumi.IntPtrInput
-	// The protocol to use for health checks. Must be one of: tcp, http.
+	// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 	HealthCheckProtocol pulumi.StringPtrInput
-	// The amount of time, in seconds, during which no response means a failed health check
+	// Seconds to wait for a health check response before failure (timeoutSeconds).
 	HealthCheckTimeout pulumi.IntPtrInput
-	// The number of consecutive health checks successes required before considering an unhealthy target healthy
+	// Consecutive successes required to mark a target healthy.
 	HealthyThreshold pulumi.IntPtrInput
 	// Labels for the Target Group
 	Labels pulumi.StringMapInput
+	// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+	LoadbalancingPolicy pulumi.StringPtrInput
 	// Name of the Target Group
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The port on which the targets receive traffic
 	Port pulumi.IntInput
-	// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+	// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 	Protocol pulumi.StringInput
-	// The number of consecutive health check failures required before considering a target unhealthy
+	// Label selector for automatic target membership; when set, targets matching these labels join the group.
+	TargetSelector pulumi.StringMapInput
+	// Consecutive failures required to mark a target unhealthy.
 	UnhealthyThreshold pulumi.IntPtrInput
 	// The VPC this target group belongs to
 	VpcId pulumi.StringInput
@@ -389,32 +424,37 @@ func (o TargetGroupOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// The approximate amount of time, in seconds, between health checks of an individual target
+// When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+func (o TargetGroupOutput) EnableProxyProtocol() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *TargetGroup) pulumi.BoolPtrOutput { return v.EnableProxyProtocol }).(pulumi.BoolPtrOutput)
+}
+
+// Seconds between health checks of each target (periodSeconds).
 func (o TargetGroupOutput) HealthCheckInterval() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntPtrOutput { return v.HealthCheckInterval }).(pulumi.IntPtrOutput)
 }
 
-// The path to use for health checks (only for HTTP/HTTPS)
+// HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
 func (o TargetGroupOutput) HealthCheckPath() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringPtrOutput { return v.HealthCheckPath }).(pulumi.StringPtrOutput)
 }
 
-// The port to use for health checks
+// Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
 func (o TargetGroupOutput) HealthCheckPort() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntPtrOutput { return v.HealthCheckPort }).(pulumi.IntPtrOutput)
 }
 
-// The protocol to use for health checks. Must be one of: tcp, http.
+// Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
 func (o TargetGroupOutput) HealthCheckProtocol() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringPtrOutput { return v.HealthCheckProtocol }).(pulumi.StringPtrOutput)
 }
 
-// The amount of time, in seconds, during which no response means a failed health check
+// Seconds to wait for a health check response before failure (timeoutSeconds).
 func (o TargetGroupOutput) HealthCheckTimeout() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntPtrOutput { return v.HealthCheckTimeout }).(pulumi.IntPtrOutput)
 }
 
-// The number of consecutive health checks successes required before considering an unhealthy target healthy
+// Consecutive successes required to mark a target healthy.
 func (o TargetGroupOutput) HealthyThreshold() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntPtrOutput { return v.HealthyThreshold }).(pulumi.IntPtrOutput)
 }
@@ -424,11 +464,17 @@ func (o TargetGroupOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
 
+// Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+func (o TargetGroupOutput) LoadbalancingPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *TargetGroup) pulumi.StringPtrOutput { return v.LoadbalancingPolicy }).(pulumi.StringPtrOutput)
+}
+
 // Name of the Target Group
 func (o TargetGroupOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
 func (o TargetGroupOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -438,7 +484,7 @@ func (o TargetGroupOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntOutput { return v.Port }).(pulumi.IntOutput)
 }
 
-// The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+// Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
 func (o TargetGroupOutput) Protocol() pulumi.StringOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringOutput { return v.Protocol }).(pulumi.StringOutput)
 }
@@ -447,7 +493,12 @@ func (o TargetGroupOutput) Slug() pulumi.StringOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.StringOutput { return v.Slug }).(pulumi.StringOutput)
 }
 
-// The number of consecutive health check failures required before considering a target unhealthy
+// Label selector for automatic target membership; when set, targets matching these labels join the group.
+func (o TargetGroupOutput) TargetSelector() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *TargetGroup) pulumi.StringMapOutput { return v.TargetSelector }).(pulumi.StringMapOutput)
+}
+
+// Consecutive failures required to mark a target unhealthy.
 func (o TargetGroupOutput) UnhealthyThreshold() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *TargetGroup) pulumi.IntPtrOutput { return v.UnhealthyThreshold }).(pulumi.IntPtrOutput)
 }

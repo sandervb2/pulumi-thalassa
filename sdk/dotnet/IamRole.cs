@@ -36,6 +36,41 @@ namespace Pulumi.Thalassa
     ///         {
     ///             { "example.com/created-by", "terraform" },
     ///         },
+    ///         Rules = new[]
+    ///         {
+    ///             new Thalassa.Inputs.IamRoleRuleArgs
+    ///             {
+    ///                 Resources = new[]
+    ///                 {
+    ///                     "cloud_vpc",
+    ///                     "cloud_subnet",
+    ///                 },
+    ///                 Permissions = new[]
+    ///                 {
+    ///                     "read",
+    ///                     "list",
+    ///                 },
+    ///                 Note = "Allow read access to VPCs and subnets",
+    ///             },
+    ///             new Thalassa.Inputs.IamRoleRuleArgs
+    ///             {
+    ///                 Resources = new[]
+    ///                 {
+    ///                     "cloud_vpc",
+    ///                 },
+    ///                 ResourceIdentities = new[]
+    ///                 {
+    ///                     "vpc-123",
+    ///                     "vpc-456",
+    ///                 },
+    ///                 Permissions = new[]
+    ///                 {
+    ///                     "update",
+    ///                     "delete",
+    ///                 },
+    ///                 Note = "Allow update/delete for specific VPCs",
+    ///             },
+    ///         },
     ///     });
     /// 
     ///     return new Dictionary&lt;string, object?&gt;
@@ -44,6 +79,7 @@ namespace Pulumi.Thalassa
     ///         ["roleName"] = example.Name,
     ///         ["roleSlug"] = example.Slug,
     ///         ["roleDescription"] = example.Description,
+    ///         ["roleRules"] = example.Rules,
     ///     };
     /// });
     /// ```
@@ -86,6 +122,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("roleIsReadOnly")]
         public Output<bool> RoleIsReadOnly { get; private set; } = null!;
+
+        /// <summary>
+        /// Permission rules for the organisation role
+        /// </summary>
+        [Output("rules")]
+        public Output<ImmutableArray<Outputs.IamRoleRule>> Rules { get; private set; } = null!;
 
         /// <summary>
         /// Slug of the organisation role
@@ -188,6 +230,18 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        [Input("rules")]
+        private InputList<Inputs.IamRoleRuleArgs>? _rules;
+
+        /// <summary>
+        /// Permission rules for the organisation role
+        /// </summary>
+        public InputList<Inputs.IamRoleRuleArgs> Rules
+        {
+            get => _rules ?? (_rules = new InputList<Inputs.IamRoleRuleArgs>());
+            set => _rules = value;
+        }
+
         public IamRoleArgs()
         {
         }
@@ -243,6 +297,18 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("roleIsReadOnly")]
         public Input<bool>? RoleIsReadOnly { get; set; }
+
+        [Input("rules")]
+        private InputList<Inputs.IamRoleRuleGetArgs>? _rules;
+
+        /// <summary>
+        /// Permission rules for the organisation role
+        /// </summary>
+        public InputList<Inputs.IamRoleRuleGetArgs> Rules
+        {
+            get => _rules ?? (_rules = new InputList<Inputs.IamRoleRuleGetArgs>());
+            set => _rules = value;
+        }
 
         /// <summary>
         /// Slug of the organisation role

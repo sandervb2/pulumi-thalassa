@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the resources
  * const example = new thalassa.Vpc("example", {
@@ -82,6 +82,9 @@ export class BlockVolumeAttachment extends pulumi.CustomResource {
         return obj['__pulumiType'] === BlockVolumeAttachment.__pulumiType;
     }
 
+    /**
+     * Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The device name to use for the volume attachment (e.g., /dev/sdb)
@@ -159,42 +162,48 @@ export class BlockVolumeAttachment extends pulumi.CustomResource {
  * Input properties used for looking up and filtering BlockVolumeAttachment resources.
  */
 export interface BlockVolumeAttachmentState {
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The device name to use for the volume attachment (e.g., /dev/sdb)
      */
-    serial?: pulumi.Input<string>;
+    serial?: pulumi.Input<string | undefined>;
     /**
      * The ID of the virtual machine to attach the volume to
      */
-    vmiId?: pulumi.Input<string>;
+    vmiId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the volume to attach
      */
-    volumeId?: pulumi.Input<string>;
+    volumeId?: pulumi.Input<string | undefined>;
     /**
      * Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
      */
-    waitForAttached?: pulumi.Input<boolean>;
+    waitForAttached?: pulumi.Input<boolean | undefined>;
     /**
      * The timeout in minutes to wait for the volume to be attached to the virtual machine. Only used if wait*for*attached is true. If not provided, the default timeout of 5 minutes will be used.
      */
-    waitForAttachedTimeout?: pulumi.Input<number>;
+    waitForAttachedTimeout?: pulumi.Input<number | undefined>;
     /**
      * Wait for the volume to be detached from the virtual machine. If false, the volume will be detached and the resource will be marked as deleted, but the volume may not be detached from the virtual machine yet.
      */
-    waitForDetached?: pulumi.Input<boolean>;
+    waitForDetached?: pulumi.Input<boolean | undefined>;
     /**
      * The timeout in minutes to wait for the volume to be detached from the virtual machine. Only used if wait*for*detached is true. If not provided, the default timeout of 5 minutes will be used.
      */
-    waitForDetachedTimeout?: pulumi.Input<number>;
+    waitForDetachedTimeout?: pulumi.Input<number | undefined>;
 }
 
 /**
  * The set of arguments for constructing a BlockVolumeAttachment resource.
  */
 export interface BlockVolumeAttachmentArgs {
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the virtual machine to attach the volume to
      */
@@ -206,17 +215,17 @@ export interface BlockVolumeAttachmentArgs {
     /**
      * Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
      */
-    waitForAttached?: pulumi.Input<boolean>;
+    waitForAttached?: pulumi.Input<boolean | undefined>;
     /**
      * The timeout in minutes to wait for the volume to be attached to the virtual machine. Only used if wait*for*attached is true. If not provided, the default timeout of 5 minutes will be used.
      */
-    waitForAttachedTimeout?: pulumi.Input<number>;
+    waitForAttachedTimeout?: pulumi.Input<number | undefined>;
     /**
      * Wait for the volume to be detached from the virtual machine. If false, the volume will be detached and the resource will be marked as deleted, but the volume may not be detached from the virtual machine yet.
      */
-    waitForDetached?: pulumi.Input<boolean>;
+    waitForDetached?: pulumi.Input<boolean | undefined>;
     /**
      * The timeout in minutes to wait for the volume to be detached from the virtual machine. Only used if wait*for*detached is true. If not provided, the default timeout of 5 minutes will be used.
      */
-    waitForDetachedTimeout?: pulumi.Input<number>;
+    waitForDetachedTimeout?: pulumi.Input<number | undefined>;
 }

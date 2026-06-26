@@ -30,6 +30,9 @@ export interface GetKubernetesVersionArgs {
      * The name of the Kubernetes version.
      */
     name?: string;
+    /**
+     * Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * The slug of the Kubernetes version.
@@ -81,6 +84,9 @@ export interface GetKubernetesVersionResult {
      * The name of the Kubernetes version.
      */
     readonly name?: string;
+    /**
+     * Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * The runc version.
@@ -112,14 +118,17 @@ export interface GetKubernetesVersionOutputArgs {
     /**
      * The ID of this resource.
      */
-    id?: pulumi.Input<string>;
+    id?: pulumi.Input<string | undefined>;
     /**
      * The name of the Kubernetes version.
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The slug of the Kubernetes version.
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

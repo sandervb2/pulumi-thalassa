@@ -92,12 +92,15 @@ import (
 type DbaasPgDatabase struct {
 	pulumi.CustomResourceState
 
+	// If false then no one can connect to this database. Defaults to true.
+	AllowConnections pulumi.BoolPtrOutput `pulumi:"allowConnections"`
 	// The connection limit of the database
 	ConnectionLimit pulumi.IntPtrOutput `pulumi:"connectionLimit"`
 	// The ID of the database cluster
 	DbClusterId pulumi.StringOutput `pulumi:"dbClusterId"`
 	// The name of the database
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The ID of the owner role
 	OwnerRoleId pulumi.StringOutput `pulumi:"ownerRoleId"`
@@ -139,24 +142,30 @@ func GetDbaasPgDatabase(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DbaasPgDatabase resources.
 type dbaasPgDatabaseState struct {
+	// If false then no one can connect to this database. Defaults to true.
+	AllowConnections *bool `pulumi:"allowConnections"`
 	// The connection limit of the database
 	ConnectionLimit *int `pulumi:"connectionLimit"`
 	// The ID of the database cluster
 	DbClusterId *string `pulumi:"dbClusterId"`
 	// The name of the database
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the owner role
 	OwnerRoleId *string `pulumi:"ownerRoleId"`
 }
 
 type DbaasPgDatabaseState struct {
+	// If false then no one can connect to this database. Defaults to true.
+	AllowConnections pulumi.BoolPtrInput
 	// The connection limit of the database
 	ConnectionLimit pulumi.IntPtrInput
 	// The ID of the database cluster
 	DbClusterId pulumi.StringPtrInput
 	// The name of the database
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The ID of the owner role
 	OwnerRoleId pulumi.StringPtrInput
@@ -167,12 +176,15 @@ func (DbaasPgDatabaseState) ElementType() reflect.Type {
 }
 
 type dbaasPgDatabaseArgs struct {
+	// If false then no one can connect to this database. Defaults to true.
+	AllowConnections *bool `pulumi:"allowConnections"`
 	// The connection limit of the database
 	ConnectionLimit *int `pulumi:"connectionLimit"`
 	// The ID of the database cluster
 	DbClusterId string `pulumi:"dbClusterId"`
 	// The name of the database
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the owner role
 	OwnerRoleId string `pulumi:"ownerRoleId"`
@@ -180,12 +192,15 @@ type dbaasPgDatabaseArgs struct {
 
 // The set of arguments for constructing a DbaasPgDatabase resource.
 type DbaasPgDatabaseArgs struct {
+	// If false then no one can connect to this database. Defaults to true.
+	AllowConnections pulumi.BoolPtrInput
 	// The connection limit of the database
 	ConnectionLimit pulumi.IntPtrInput
 	// The ID of the database cluster
 	DbClusterId pulumi.StringInput
 	// The name of the database
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The ID of the owner role
 	OwnerRoleId pulumi.StringInput
@@ -278,6 +293,11 @@ func (o DbaasPgDatabaseOutput) ToDbaasPgDatabaseOutputWithContext(ctx context.Co
 	return o
 }
 
+// If false then no one can connect to this database. Defaults to true.
+func (o DbaasPgDatabaseOutput) AllowConnections() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DbaasPgDatabase) pulumi.BoolPtrOutput { return v.AllowConnections }).(pulumi.BoolPtrOutput)
+}
+
 // The connection limit of the database
 func (o DbaasPgDatabaseOutput) ConnectionLimit() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DbaasPgDatabase) pulumi.IntPtrOutput { return v.ConnectionLimit }).(pulumi.IntPtrOutput)
@@ -293,6 +313,7 @@ func (o DbaasPgDatabaseOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasPgDatabase) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 func (o DbaasPgDatabaseOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasPgDatabase) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

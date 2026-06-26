@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the database cluster
  * const example = new thalassa.Vpc("example", {
@@ -100,6 +100,9 @@ export class DbaasPgRoles extends pulumi.CustomResource {
      * The name of the role
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The password of the role
@@ -158,32 +161,35 @@ export interface DbaasPgRolesState {
     /**
      * The connection limit of the role
      */
-    connectionLimit?: pulumi.Input<number>;
+    connectionLimit?: pulumi.Input<number | undefined>;
     /**
      * Whether the role can create databases
      */
-    createDb?: pulumi.Input<boolean>;
+    createDb?: pulumi.Input<boolean | undefined>;
     /**
      * Whether the role can create roles
      */
-    createRole?: pulumi.Input<boolean>;
+    createRole?: pulumi.Input<boolean | undefined>;
     /**
      * The ID of the database
      */
-    dbClusterId?: pulumi.Input<string>;
+    dbClusterId?: pulumi.Input<string | undefined>;
     /**
      * Whether the role can login
      */
-    login?: pulumi.Input<boolean>;
+    login?: pulumi.Input<boolean | undefined>;
     /**
      * The name of the role
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The password of the role
      */
-    password?: pulumi.Input<string>;
+    password?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -193,15 +199,15 @@ export interface DbaasPgRolesArgs {
     /**
      * The connection limit of the role
      */
-    connectionLimit?: pulumi.Input<number>;
+    connectionLimit?: pulumi.Input<number | undefined>;
     /**
      * Whether the role can create databases
      */
-    createDb?: pulumi.Input<boolean>;
+    createDb?: pulumi.Input<boolean | undefined>;
     /**
      * Whether the role can create roles
      */
-    createRole?: pulumi.Input<boolean>;
+    createRole?: pulumi.Input<boolean | undefined>;
     /**
      * The ID of the database
      */
@@ -209,12 +215,15 @@ export interface DbaasPgRolesArgs {
     /**
      * Whether the role can login
      */
-    login?: pulumi.Input<boolean>;
+    login?: pulumi.Input<boolean | undefined>;
     /**
      * The name of the role
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The password of the role
      */

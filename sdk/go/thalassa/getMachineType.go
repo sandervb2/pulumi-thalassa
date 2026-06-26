@@ -24,20 +24,28 @@ func GetMachineType(ctx *pulumi.Context, args *GetMachineTypeArgs, opts ...pulum
 
 // A collection of arguments for invoking getMachineType.
 type GetMachineTypeArgs struct {
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	Slug           *string `pulumi:"slug"`
+	// The slug of the machine type to look up
+	Slug *string `pulumi:"slug"`
 }
 
 // A collection of values returned by getMachineType.
 type GetMachineTypeResult struct {
-	CpuCores    int    `pulumi:"cpuCores"`
+	// The number of CPU cores available in this machine type
+	CpuCores int `pulumi:"cpuCores"`
+	// A description of the machine type and its specifications
 	Description string `pulumi:"description"`
-	// The ID of this resource.
-	Id             string  `pulumi:"id"`
-	Name           string  `pulumi:"name"`
+	// The unique identifier of the machine type
+	Id string `pulumi:"id"`
+	// The name of the machine type
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	RamMb          int     `pulumi:"ramMb"`
-	Slug           *string `pulumi:"slug"`
+	// The amount of RAM in megabytes available in this machine type
+	RamMb int `pulumi:"ramMb"`
+	// The slug of the machine type to look up
+	Slug *string `pulumi:"slug"`
 }
 
 func GetMachineTypeOutput(ctx *pulumi.Context, args GetMachineTypeOutputArgs, opts ...pulumi.InvokeOption) GetMachineTypeResultOutput {
@@ -51,8 +59,10 @@ func GetMachineTypeOutput(ctx *pulumi.Context, args GetMachineTypeOutputArgs, op
 
 // A collection of arguments for invoking getMachineType.
 type GetMachineTypeOutputArgs struct {
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
-	Slug           pulumi.StringPtrInput `pulumi:"slug"`
+	// The slug of the machine type to look up
+	Slug pulumi.StringPtrInput `pulumi:"slug"`
 }
 
 func (GetMachineTypeOutputArgs) ElementType() reflect.Type {
@@ -74,31 +84,37 @@ func (o GetMachineTypeResultOutput) ToGetMachineTypeResultOutputWithContext(ctx 
 	return o
 }
 
+// The number of CPU cores available in this machine type
 func (o GetMachineTypeResultOutput) CpuCores() pulumi.IntOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) int { return v.CpuCores }).(pulumi.IntOutput)
 }
 
+// A description of the machine type and its specifications
 func (o GetMachineTypeResultOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
-// The ID of this resource.
+// The unique identifier of the machine type
 func (o GetMachineTypeResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// The name of the machine type
 func (o GetMachineTypeResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 func (o GetMachineTypeResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
 
+// The amount of RAM in megabytes available in this machine type
 func (o GetMachineTypeResultOutput) RamMb() pulumi.IntOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) int { return v.RamMb }).(pulumi.IntOutput)
 }
 
+// The slug of the machine type to look up
 func (o GetMachineTypeResultOutput) Slug() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMachineTypeResult) *string { return v.Slug }).(pulumi.StringPtrOutput)
 }

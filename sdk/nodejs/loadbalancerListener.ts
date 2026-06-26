@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the load balancer
  * const example = new thalassa.Vpc("example", {
@@ -114,6 +114,9 @@ export class LoadbalancerListener extends pulumi.CustomResource {
      * Name of the Loadbalancer Listener
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The port the listener is listening on
@@ -195,49 +198,52 @@ export interface LoadbalancerListenerState {
     /**
      * A list of CIDR blocks or IP addresses that are allowed to connect to the listener
      */
-    allowedSources?: pulumi.Input<pulumi.Input<string>[]>;
+    allowedSources?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Annotations for the Loadbalancer Listener
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The amount of seconds used for configuring the idle connection timeout on a listener
      */
-    connectionIdleTimeout?: pulumi.Input<number>;
+    connectionIdleTimeout?: pulumi.Input<number | undefined>;
     /**
      * A human readable description about the loadbalancer listener
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Loadbalancer Listener
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The ID of the loadbalancer to create the listener on
      */
-    loadbalancerId?: pulumi.Input<string>;
+    loadbalancerId?: pulumi.Input<string | undefined>;
     /**
      * The maximum number of connections that the listener can handle
      */
-    maxConnections?: pulumi.Input<number>;
+    maxConnections?: pulumi.Input<number | undefined>;
     /**
      * Name of the Loadbalancer Listener
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The port the listener is listening on
      */
-    port?: pulumi.Input<number>;
+    port?: pulumi.Input<number | undefined>;
     /**
      * The protocol the listener is using
      */
-    protocol?: pulumi.Input<string>;
-    slug?: pulumi.Input<string>;
+    protocol?: pulumi.Input<string | undefined>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * The ID of the target group to attach to the listener
      */
-    targetGroupId?: pulumi.Input<string>;
+    targetGroupId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -247,23 +253,23 @@ export interface LoadbalancerListenerArgs {
     /**
      * A list of CIDR blocks or IP addresses that are allowed to connect to the listener
      */
-    allowedSources?: pulumi.Input<pulumi.Input<string>[]>;
+    allowedSources?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Annotations for the Loadbalancer Listener
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The amount of seconds used for configuring the idle connection timeout on a listener
      */
-    connectionIdleTimeout?: pulumi.Input<number>;
+    connectionIdleTimeout?: pulumi.Input<number | undefined>;
     /**
      * A human readable description about the loadbalancer listener
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Loadbalancer Listener
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The ID of the loadbalancer to create the listener on
      */
@@ -271,12 +277,15 @@ export interface LoadbalancerListenerArgs {
     /**
      * The maximum number of connections that the listener can handle
      */
-    maxConnections?: pulumi.Input<number>;
+    maxConnections?: pulumi.Input<number | undefined>;
     /**
      * Name of the Loadbalancer Listener
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Loadbalancer Listener. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The port the listener is listening on
      */

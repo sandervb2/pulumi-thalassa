@@ -12,19 +12,19 @@ namespace Pulumi.Thalassa
     public static class GetMachineImage
     {
         /// <summary>
-        /// Get an machine image
+        /// Get an machine image by name or slug
         /// </summary>
         public static Task<GetMachineImageResult> InvokeAsync(GetMachineImageArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetMachineImageResult>("thalassa:index/getMachineImage:getMachineImage", args ?? new GetMachineImageArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Get an machine image
+        /// Get an machine image by name or slug
         /// </summary>
         public static Output<GetMachineImageResult> Invoke(GetMachineImageInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetMachineImageResult>("thalassa:index/getMachineImage:getMachineImage", args ?? new GetMachineImageInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Get an machine image
+        /// Get an machine image by name or slug
         /// </summary>
         public static Output<GetMachineImageResult> Invoke(GetMachineImageInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetMachineImageResult>("thalassa:index/getMachineImage:getMachineImage", args ?? new GetMachineImageInvokeArgs(), options.WithDefaults());
@@ -39,6 +39,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -62,6 +65,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -82,9 +88,9 @@ namespace Pulumi.Thalassa
     public sealed class GetMachineImageResult
     {
         /// <summary>
-        /// Annotations of the machine image
+        /// Architecture of the machine image
         /// </summary>
-        public readonly ImmutableDictionary<string, string> Annotations;
+        public readonly string Architecture;
         /// <summary>
         /// Description of the machine image
         /// </summary>
@@ -101,6 +107,9 @@ namespace Pulumi.Thalassa
         /// Name of the machine image
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// Slug of the machine image
@@ -109,7 +118,7 @@ namespace Pulumi.Thalassa
 
         [OutputConstructor]
         private GetMachineImageResult(
-            ImmutableDictionary<string, string> annotations,
+            string architecture,
 
             string description,
 
@@ -123,7 +132,7 @@ namespace Pulumi.Thalassa
 
             string? slug)
         {
-            Annotations = annotations;
+            Architecture = architecture;
             Description = description;
             Id = id;
             Labels = labels;

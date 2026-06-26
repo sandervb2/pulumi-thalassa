@@ -22,12 +22,15 @@ namespace Pulumi.Thalassa
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
+    ///     var config = new Config();
+    ///     // Region for the VPC
+    ///     var region = config.Get("region") ?? "nl-01";
     ///     // Create a VPC for the NAT gateway
     ///     var example = new Thalassa.Vpc("example", new()
     ///     {
     ///         Name = "example-vpc",
     ///         Description = "Example VPC for NAT gateway",
-    ///         Region = "nl-01",
+    ///         Region = region,
     ///         Cidrs = new[]
     ///         {
     ///             "10.0.0.0/16",
@@ -43,23 +46,15 @@ namespace Pulumi.Thalassa
     ///         Cidr = "10.0.1.0/24",
     ///     });
     /// 
-    ///     // Create a NAT gateway with all optional attributes
     ///     var exampleNatgateway = new Thalassa.Natgateway("example", new()
     ///     {
     ///         Name = "example-nat-gateway",
     ///         SubnetId = exampleSubnet.Id,
-    ///         Description = "Example NAT gateway for documentation",
+    ///         Description = "Example NAT gateway",
     ///         Labels = 
     ///         {
     ///             { "environment", "production" },
-    ///             { "service", "networking" },
     ///             { "tier", "public" },
-    ///         },
-    ///         Annotations = 
-    ///         {
-    ///             { "cost-center", "cc-12345" },
-    ///             { "backup-policy", "none" },
-    ///             { "monitoring", "enabled" },
     ///         },
     ///     });
     /// 
@@ -104,8 +99,17 @@ namespace Pulumi.Thalassa
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
+
+        /// <summary>
+        /// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        /// </summary>
+        [Output("reservedIpId")]
+        public Output<string> ReservedIpId { get; private set; } = null!;
 
         /// <summary>
         /// List identities of security group that will be attached to the NAT Gateway
@@ -229,8 +233,17 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
+
+        /// <summary>
+        /// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        /// </summary>
+        [Input("reservedIpId")]
+        public Input<string>? ReservedIpId { get; set; }
 
         [Input("securityGroupAttachments")]
         private InputList<string>? _securityGroupAttachments;
@@ -300,8 +313,17 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
+
+        /// <summary>
+        /// Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        /// </summary>
+        [Input("reservedIpId")]
+        public Input<string>? ReservedIpId { get; set; }
 
         [Input("securityGroupAttachments")]
         private InputList<string>? _securityGroupAttachments;

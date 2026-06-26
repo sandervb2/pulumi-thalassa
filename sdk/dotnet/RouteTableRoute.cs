@@ -119,6 +119,12 @@ namespace Pulumi.Thalassa
         [Output("targetNatgateway")]
         public Output<string?> TargetNatgateway { get; private set; } = null!;
 
+        /// <summary>
+        /// Target VPC Peering Connection ID of the Route
+        /// </summary>
+        [Output("targetVpcPeeringConnection")]
+        public Output<string?> TargetVpcPeeringConnection { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a RouteTableRoute resource with the given unique name, arguments, and options.
@@ -208,6 +214,12 @@ namespace Pulumi.Thalassa
         [Input("targetNatgateway")]
         public Input<string>? TargetNatgateway { get; set; }
 
+        /// <summary>
+        /// Target VPC Peering Connection ID of the Route
+        /// </summary>
+        [Input("targetVpcPeeringConnection")]
+        public Input<string>? TargetVpcPeeringConnection { get; set; }
+
         public RouteTableRouteArgs()
         {
         }
@@ -257,6 +269,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("targetNatgateway")]
         public Input<string>? TargetNatgateway { get; set; }
+
+        /// <summary>
+        /// Target VPC Peering Connection ID of the Route
+        /// </summary>
+        [Input("targetVpcPeeringConnection")]
+        public Input<string>? TargetVpcPeeringConnection { get; set; }
 
         public RouteTableRouteState()
         {

@@ -39,6 +39,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -62,6 +65,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -93,15 +99,18 @@ namespace Pulumi.Thalassa
         /// Name of the bucket
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Whether the bucket has object lock enabled
+        /// </summary>
+        public readonly bool ObjectLockEnabled;
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// The bucket policy as a JSON string
         /// </summary>
         public readonly string Policy;
-        /// <summary>
-        /// Whether the bucket is publicly accessible
-        /// </summary>
-        public readonly bool Public;
         /// <summary>
         /// Region of the bucket
         /// </summary>
@@ -110,6 +119,10 @@ namespace Pulumi.Thalassa
         /// Status of the bucket
         /// </summary>
         public readonly string Status;
+        /// <summary>
+        /// Whether the bucket is versioned
+        /// </summary>
+        public readonly bool Versioning;
 
         [OutputConstructor]
         private GetObjectstorageBucketResult(
@@ -119,24 +132,27 @@ namespace Pulumi.Thalassa
 
             string name,
 
+            bool objectLockEnabled,
+
             string? organisationId,
 
             string policy,
 
-            bool @public,
-
             string? region,
 
-            string status)
+            string status,
+
+            bool versioning)
         {
             Endpoint = endpoint;
             Id = id;
             Name = name;
+            ObjectLockEnabled = objectLockEnabled;
             OrganisationId = organisationId;
             Policy = policy;
-            Public = @public;
             Region = region;
             Status = status;
+            Versioning = versioning;
         }
     }
 }

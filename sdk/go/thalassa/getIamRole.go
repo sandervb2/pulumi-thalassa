@@ -27,7 +27,8 @@ type LookupIamRoleArgs struct {
 	// A human readable description about the role
 	Description *string `pulumi:"description"`
 	// Name of the Organisation Role
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the Organisation Role
 	Slug *string `pulumi:"slug"`
@@ -46,10 +47,13 @@ type LookupIamRoleResult struct {
 	// Labels for the Organisation Role
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Organisation Role
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Whether the role is read-only and cannot be modified.
 	RoleIsReadOnly bool `pulumi:"roleIsReadOnly"`
+	// Permission rules for the organisation role
+	Rules []GetIamRoleRuleType `pulumi:"rules"`
 	// Slug of the Organisation Role
 	Slug *string `pulumi:"slug"`
 	// Whether the role is a system role
@@ -72,7 +76,8 @@ type LookupIamRoleOutputArgs struct {
 	// A human readable description about the role
 	Description pulumi.StringPtrInput `pulumi:"description"`
 	// Name of the Organisation Role
-	Name           pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Slug of the Organisation Role
 	Slug pulumi.StringPtrInput `pulumi:"slug"`
@@ -127,6 +132,7 @@ func (o LookupIamRoleResultOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupIamRoleResult) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
+// Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupIamRoleResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupIamRoleResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -134,6 +140,11 @@ func (o LookupIamRoleResultOutput) OrganisationId() pulumi.StringPtrOutput {
 // Whether the role is read-only and cannot be modified.
 func (o LookupIamRoleResultOutput) RoleIsReadOnly() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupIamRoleResult) bool { return v.RoleIsReadOnly }).(pulumi.BoolOutput)
+}
+
+// Permission rules for the organisation role
+func (o LookupIamRoleResultOutput) Rules() GetIamRoleRuleTypeArrayOutput {
+	return o.ApplyT(func(v LookupIamRoleResult) []GetIamRoleRuleType { return v.Rules }).(GetIamRoleRuleTypeArrayOutput)
 }
 
 // Slug of the Organisation Role

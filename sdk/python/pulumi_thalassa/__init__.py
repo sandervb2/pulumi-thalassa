@@ -12,42 +12,83 @@ from .cloud_init_template import *
 from .dbaas_db_backupschedule import *
 from .dbaas_db_cluster import *
 from .dbaas_pg_database import *
+from .dbaas_pg_grant import *
 from .dbaas_pg_roles import *
+from .dns_record import *
+from .dns_zone import *
+from .dns_zone_dnssec import *
+from .get_dbaas_db_backup import *
 from .get_dbaas_db_backupschedule import *
 from .get_dbaas_db_cluster import *
 from .get_dbaas_pg_database import *
 from .get_dbaas_pg_roles import *
+from .get_iam_organisation_members import *
 from .get_iam_role import *
+from .get_iam_service_account import *
 from .get_iam_team import *
+from .get_kms_key import *
 from .get_kubernetes_cluster import *
+from .get_kubernetes_cluster_role import *
+from .get_kubernetes_cluster_session_token import *
 from .get_kubernetes_version import *
+from .get_loadbalancer import *
 from .get_machine_image import *
 from .get_machine_type import *
+from .get_natgateway import *
 from .get_objectstorage_bucket import *
 from .get_organisation import *
 from .get_region import *
 from .get_regions import *
+from .get_route_table import *
 from .get_security_group import *
+from .get_snapshot import *
+from .get_snapshot_policy import *
 from .get_subnet import *
+from .get_tfs_instance import *
 from .get_volume_type import *
 from .get_vpc import *
+from .get_vpc_default_route_table import *
+from .get_vpc_firewall_rule import *
+from .get_vpc_firewall_rules import *
+from .get_vpc_peering_connection import *
+from .get_vpc_peering_connections import *
 from .iam_role import *
+from .iam_role_binding import *
+from .iam_role_rule import *
+from .iam_service_account import *
+from .iam_service_account_access_credential import *
 from .iam_team import *
+from .kms_key import *
 from .kubernetes_cluster import *
+from .kubernetes_cluster_role import *
+from .kubernetes_cluster_role_binding import *
 from .kubernetes_node_pool import *
 from .loadbalancer import *
 from .loadbalancer_listener import *
 from .natgateway import *
 from .objectstorage_bucket import *
+from .objectstorage_bucket_lifecycle import *
 from .provider import *
+from .reserved_ip import *
 from .route_table import *
 from .route_table_route import *
+from .secret import *
+from .secret_access_policy import *
+from .secret_version import *
 from .security_group import *
+from .security_group_egress_rule import *
+from .security_group_ingress_rule import *
+from .snapshot import *
+from .snapshot_policy import *
 from .subnet import *
 from .target_group import *
 from .target_group_attachment import *
+from .tfs_instance import *
 from .virtual_machine_instance import *
 from .vpc import *
+from .vpc_firewall_rule import *
+from .vpc_peering_connection import *
+from .vpc_peering_connection_acceptance import *
 from ._inputs import *
 from . import outputs
 
@@ -111,10 +152,42 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/dbaasPgGrant",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/dbaasPgGrant:DbaasPgGrant": "DbaasPgGrant"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/dbaasPgRoles",
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/dbaasPgRoles:DbaasPgRoles": "DbaasPgRoles"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/dnsRecord",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/dnsRecord:DnsRecord": "DnsRecord"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/dnsZone",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/dnsZone:DnsZone": "DnsZone"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/dnsZoneDnssec",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/dnsZoneDnssec:DnsZoneDnssec": "DnsZoneDnssec"
   }
  },
  {
@@ -127,6 +200,38 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/iamRoleBinding",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamRoleBinding:IamRoleBinding": "IamRoleBinding"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/iamRoleRule",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamRoleRule:IamRoleRule": "IamRoleRule"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/iamServiceAccount",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamServiceAccount:IamServiceAccount": "IamServiceAccount"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/iamServiceAccountAccessCredential",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential": "IamServiceAccountAccessCredential"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/iamTeam",
   "fqn": "pulumi_thalassa",
   "classes": {
@@ -135,10 +240,34 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/kmsKey",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/kmsKey:KmsKey": "KmsKey"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/kubernetesCluster",
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/kubernetesCluster:KubernetesCluster": "KubernetesCluster"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/kubernetesClusterRole",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/kubernetesClusterRole:KubernetesClusterRole": "KubernetesClusterRole"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/kubernetesClusterRoleBinding",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/kubernetesClusterRoleBinding:KubernetesClusterRoleBinding": "KubernetesClusterRoleBinding"
   }
  },
  {
@@ -183,6 +312,22 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/objectstorageBucketLifecycle",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle": "ObjectstorageBucketLifecycle"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/reservedIp",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/reservedIp:ReservedIp": "ReservedIp"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/routeTable",
   "fqn": "pulumi_thalassa",
   "classes": {
@@ -199,10 +344,66 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/secret",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/secret:Secret": "Secret"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/secretAccessPolicy",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/secretAccessPolicy:SecretAccessPolicy": "SecretAccessPolicy"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/secretVersion",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/secretVersion:SecretVersion": "SecretVersion"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/securityGroup",
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/securityGroup:SecurityGroup": "SecurityGroup"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/securityGroupEgressRule",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/securityGroupEgressRule:SecurityGroupEgressRule": "SecurityGroupEgressRule"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/securityGroupIngressRule",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/securityGroupIngressRule:SecurityGroupIngressRule": "SecurityGroupIngressRule"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/snapshot",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/snapshot:Snapshot": "Snapshot"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/snapshotPolicy",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/snapshotPolicy:SnapshotPolicy": "SnapshotPolicy"
   }
  },
  {
@@ -231,6 +432,14 @@ _utilities.register(
  },
  {
   "pkg": "thalassa",
+  "mod": "index/tfsInstance",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/tfsInstance:TfsInstance": "TfsInstance"
+  }
+ },
+ {
+  "pkg": "thalassa",
   "mod": "index/virtualMachineInstance",
   "fqn": "pulumi_thalassa",
   "classes": {
@@ -243,6 +452,30 @@ _utilities.register(
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/vpc:Vpc": "Vpc"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/vpcFirewallRule",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/vpcFirewallRule:VpcFirewallRule": "VpcFirewallRule"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/vpcPeeringConnection",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/vpcPeeringConnection:VpcPeeringConnection": "VpcPeeringConnection"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/vpcPeeringConnectionAcceptance",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/vpcPeeringConnectionAcceptance:VpcPeeringConnectionAcceptance": "VpcPeeringConnectionAcceptance"
   }
  }
 ]

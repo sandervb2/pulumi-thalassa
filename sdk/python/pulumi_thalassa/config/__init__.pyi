@@ -14,6 +14,16 @@ else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
+accessToken: Optional[str]
+"""
+The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+"""
+
+allowInsecureOidc: Optional[bool]
+"""
+Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+"""
+
 api: Optional[str]
 """
 The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
@@ -32,6 +42,11 @@ The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SE
 organisationId: Optional[str]
 """
 The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
+"""
+
+projectId: Optional[str]
+"""
+The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
 """
 
 token: Optional[str]

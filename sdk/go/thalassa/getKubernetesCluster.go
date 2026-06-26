@@ -32,6 +32,8 @@ type LookupKubernetesClusterArgs struct {
 
 // A collection of values returned by getKubernetesCluster.
 type LookupKubernetesClusterResult struct {
+	// Advertise port for the Kubernetes Cluster within the VPC
+	AdvertisePort int `pulumi:"advertisePort"`
 	// Annotations for the Kubernetes Cluster
 	Annotations map[string]string `pulumi:"annotations"`
 	// API server ACLs for the Kubernetes Cluster
@@ -40,6 +42,8 @@ type LookupKubernetesClusterResult struct {
 	AuditLogProfile string `pulumi:"auditLogProfile"`
 	// Auto upgrade policy of the Kubernetes Cluster
 	AutoUpgradePolicy string `pulumi:"autoUpgradePolicy"`
+	// Configuration for the cluster autoscaler
+	AutoscalerConfigs []GetKubernetesClusterAutoscalerConfig `pulumi:"autoscalerConfigs"`
 	// Cluster type of the Kubernetes Cluster
 	ClusterType string `pulumi:"clusterType"`
 	// Cluster version of the Kubernetes Cluster
@@ -50,8 +54,14 @@ type LookupKubernetesClusterResult struct {
 	DeleteProtection bool `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description string `pulumi:"description"`
+	// Disable public endpoint of the Kubernetes Cluster
+	DisablePublicEndpoint bool `pulumi:"disablePublicEndpoint"`
 	// The ID of this resource.
 	Id string `pulumi:"id"`
+	// VPC-internal endpoint for the Kubernetes Cluster
+	InternalEndpoint string `pulumi:"internalEndpoint"`
+	// Konnectivity port for the Kubernetes Cluster within the VPC
+	KonnectivityPort int `pulumi:"konnectivityPort"`
 	// Kubernetes API server CA certificate of the Kubernetes Cluster
 	KubernetesApiServerCaCertificate string `pulumi:"kubernetesApiServerCaCertificate"`
 	// Kubernetes API server endpoint of the Kubernetes Cluster
@@ -66,6 +76,10 @@ type LookupKubernetesClusterResult struct {
 	Name string `pulumi:"name"`
 	// CNI of the Kubernetes Cluster
 	NetworkingCni string `pulumi:"networkingCni"`
+	// Deployment mode of the kube proxy
+	NetworkingKubeProxyDeployment string `pulumi:"networkingKubeProxyDeployment"`
+	// Mode of the kube proxy
+	NetworkingKubeProxyMode string `pulumi:"networkingKubeProxyMode"`
 	// Pod CIDR of the Kubernetes Cluster
 	NetworkingPodCidr string `pulumi:"networkingPodCidr"`
 	// Service CIDR of the Kubernetes Cluster
@@ -120,6 +134,11 @@ func (o LookupKubernetesClusterResultOutput) ToLookupKubernetesClusterResultOutp
 	return o
 }
 
+// Advertise port for the Kubernetes Cluster within the VPC
+func (o LookupKubernetesClusterResultOutput) AdvertisePort() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) int { return v.AdvertisePort }).(pulumi.IntOutput)
+}
+
 // Annotations for the Kubernetes Cluster
 func (o LookupKubernetesClusterResultOutput) Annotations() pulumi.StringMapOutput {
 	return o.ApplyT(func(v LookupKubernetesClusterResult) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
@@ -138,6 +157,13 @@ func (o LookupKubernetesClusterResultOutput) AuditLogProfile() pulumi.StringOutp
 // Auto upgrade policy of the Kubernetes Cluster
 func (o LookupKubernetesClusterResultOutput) AutoUpgradePolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.AutoUpgradePolicy }).(pulumi.StringOutput)
+}
+
+// Configuration for the cluster autoscaler
+func (o LookupKubernetesClusterResultOutput) AutoscalerConfigs() GetKubernetesClusterAutoscalerConfigArrayOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) []GetKubernetesClusterAutoscalerConfig {
+		return v.AutoscalerConfigs
+	}).(GetKubernetesClusterAutoscalerConfigArrayOutput)
 }
 
 // Cluster type of the Kubernetes Cluster
@@ -165,9 +191,24 @@ func (o LookupKubernetesClusterResultOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
+// Disable public endpoint of the Kubernetes Cluster
+func (o LookupKubernetesClusterResultOutput) DisablePublicEndpoint() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) bool { return v.DisablePublicEndpoint }).(pulumi.BoolOutput)
+}
+
 // The ID of this resource.
 func (o LookupKubernetesClusterResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// VPC-internal endpoint for the Kubernetes Cluster
+func (o LookupKubernetesClusterResultOutput) InternalEndpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.InternalEndpoint }).(pulumi.StringOutput)
+}
+
+// Konnectivity port for the Kubernetes Cluster within the VPC
+func (o LookupKubernetesClusterResultOutput) KonnectivityPort() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) int { return v.KonnectivityPort }).(pulumi.IntOutput)
 }
 
 // Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -203,6 +244,16 @@ func (o LookupKubernetesClusterResultOutput) Name() pulumi.StringOutput {
 // CNI of the Kubernetes Cluster
 func (o LookupKubernetesClusterResultOutput) NetworkingCni() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.NetworkingCni }).(pulumi.StringOutput)
+}
+
+// Deployment mode of the kube proxy
+func (o LookupKubernetesClusterResultOutput) NetworkingKubeProxyDeployment() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.NetworkingKubeProxyDeployment }).(pulumi.StringOutput)
+}
+
+// Mode of the kube proxy
+func (o LookupKubernetesClusterResultOutput) NetworkingKubeProxyMode() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesClusterResult) string { return v.NetworkingKubeProxyMode }).(pulumi.StringOutput)
 }
 
 // Pod CIDR of the Kubernetes Cluster

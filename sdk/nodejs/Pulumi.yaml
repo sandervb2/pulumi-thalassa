@@ -1,0 +1,3 @@
+name: thalassa
+description: A Pulumi resource provider for thalassa.
+language: nodejs

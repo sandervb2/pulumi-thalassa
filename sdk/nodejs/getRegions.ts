@@ -59,5 +59,5 @@ export interface GetRegionsOutputArgs {
     /**
      * The organisation to get the regions for. If not provided, the current organisation will be used.
      */
-    organisationId?: pulumi.Input<string>;
+    organisationId?: pulumi.Input<string | undefined>;
 }

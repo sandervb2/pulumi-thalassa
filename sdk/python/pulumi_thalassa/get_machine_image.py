@@ -26,10 +26,10 @@ class GetMachineImageResult:
     """
     A collection of values returned by getMachineImage.
     """
-    def __init__(__self__, annotations=None, description=None, id=None, labels=None, name=None, organisation_id=None, slug=None):
-        if annotations and not isinstance(annotations, dict):
-            raise TypeError("Expected argument 'annotations' to be a dict")
-        pulumi.set(__self__, "annotations", annotations)
+    def __init__(__self__, architecture=None, description=None, id=None, labels=None, name=None, organisation_id=None, slug=None):
+        if architecture and not isinstance(architecture, str):
+            raise TypeError("Expected argument 'architecture' to be a str")
+        pulumi.set(__self__, "architecture", architecture)
         if description and not isinstance(description, str):
             raise TypeError("Expected argument 'description' to be a str")
         pulumi.set(__self__, "description", description)
@@ -51,11 +51,11 @@ class GetMachineImageResult:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Mapping[str, _builtins.str]:
+    def architecture(self) -> _builtins.str:
         """
-        Annotations of the machine image
+        Architecture of the machine image
         """
-        return pulumi.get(self, "annotations")
+        return pulumi.get(self, "architecture")
 
     @_builtins.property
     @pulumi.getter
@@ -92,6 +92,9 @@ class GetMachineImageResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -109,7 +112,7 @@ class AwaitableGetMachineImageResult(GetMachineImageResult):
         if False:
             yield self
         return GetMachineImageResult(
-            annotations=self.annotations,
+            architecture=self.architecture,
             description=self.description,
             id=self.id,
             labels=self.labels,
@@ -123,10 +126,11 @@ def get_machine_image(name: Optional[_builtins.str] = None,
                       slug: Optional[_builtins.str] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMachineImageResult:
     """
-    Get an machine image
+    Get an machine image by name or slug
 
 
     :param _builtins.str name: Name of the machine image
+    :param _builtins.str organisation_id: Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
     :param _builtins.str slug: Slug of the machine image
     """
     __args__ = dict()
@@ -137,22 +141,23 @@ def get_machine_image(name: Optional[_builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('thalassa:index/getMachineImage:getMachineImage', __args__, opts=opts, typ=GetMachineImageResult).value
 
     return AwaitableGetMachineImageResult(
-        annotations=pulumi.get(__ret__, 'annotations'),
+        architecture=pulumi.get(__ret__, 'architecture'),
         description=pulumi.get(__ret__, 'description'),
         id=pulumi.get(__ret__, 'id'),
         labels=pulumi.get(__ret__, 'labels'),
         name=pulumi.get(__ret__, 'name'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         slug=pulumi.get(__ret__, 'slug'))
-def get_machine_image_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                             organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                             slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_machine_image_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                             organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                             slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                              opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMachineImageResult]:
     """
-    Get an machine image
+    Get an machine image by name or slug
 
 
     :param _builtins.str name: Name of the machine image
+    :param _builtins.str organisation_id: Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
     :param _builtins.str slug: Slug of the machine image
     """
     __args__ = dict()
@@ -162,7 +167,7 @@ def get_machine_image_output(name: Optional[pulumi.Input[_builtins.str]] = None,
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('thalassa:index/getMachineImage:getMachineImage', __args__, opts=opts, typ=GetMachineImageResult)
     return __ret__.apply(lambda __response__: GetMachineImageResult(
-        annotations=pulumi.get(__response__, 'annotations'),
+        architecture=pulumi.get(__response__, 'architecture'),
         description=pulumi.get(__response__, 'description'),
         id=pulumi.get(__response__, 'id'),
         labels=pulumi.get(__response__, 'labels'),

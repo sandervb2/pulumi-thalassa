@@ -22,17 +22,23 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 //	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			region := "nl-01"
+//			if param := cfg.Get("region"); param != "" {
+//				region = param
+//			}
 //			// Create a VPC for the virtual machine instance
 //			example, err := thalassa.NewVpc(ctx, "example", &thalassa.VpcArgs{
 //				Name:        pulumi.String("example-vpc"),
 //				Description: pulumi.String("Example VPC for virtual machine instance"),
-//				Region:      pulumi.String("nl-01"),
+//				Region:      pulumi.String(region),
 //				Cidrs: pulumi.StringArray{
 //					pulumi.String("10.0.0.0/16"),
 //				},
@@ -87,10 +93,14 @@ import (
 //				return err
 //			}
 //			ubuntu, err := thalassa.GetMachineImage(ctx, &thalassa.GetMachineImageArgs{
-//				Name: "ubuntu-22-04-01",
+//				Name: "ubuntu-22.04-8f08afc54644",
 //			}, nil)
 //			if err != nil {
 //				return err
+//			}
+//			availabilityZone := "nl-01a"
+//			if param := cfg.Get("availabilityZone"); param != "" {
+//				availabilityZone = param
 //			}
 //			// Create a virtual machine instance with Thalassa default values
 //			exampleVirtualMachineInstance, err := thalassa.NewVirtualMachineInstance(ctx, "example", &thalassa.VirtualMachineInstanceArgs{
@@ -98,7 +108,7 @@ import (
 //				SubnetId:            exampleSubnet.ID(),
 //				MachineType:         pulumi.String("pgp-small"),
 //				MachineImage:        pulumi.String(ubuntu.Name),
-//				AvailabilityZone:    pulumi.String("nl-01a"),
+//				AvailabilityZone:    pulumi.String(availabilityZone),
 //				RootVolumeSizeGb:    pulumi.Int(20),
 //				RootVolumeType:      pulumi.String(block.Id),
 //				CloudInitTemplateId: exampleCloudInitTemplate.ID(),
@@ -111,7 +121,7 @@ import (
 //			// Create a load balancer for the virtual machine instance
 //			exampleLoadbalancer, err := thalassa.NewLoadbalancer(ctx, "example", &thalassa.LoadbalancerArgs{
 //				Name:        pulumi.String("example-lb"),
-//				Region:      pulumi.String("nl-01"),
+//				Region:      pulumi.String(region),
 //				Description: pulumi.String("Example load balancer for virtual machine instance"),
 //				SubnetId:    exampleSubnet.ID(),
 //			})
@@ -163,7 +173,7 @@ type VirtualMachineInstance struct {
 	// Attached volume ids of the virtual machine instance
 	AttachedVolumeIds pulumi.StringArrayOutput `pulumi:"attachedVolumeIds"`
 	// Availability zone of the virtual machine instance
-	AvailabilityZone pulumi.StringPtrOutput `pulumi:"availabilityZone"`
+	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
 	// Cloud init of the virtual machine instance
 	CloudInit pulumi.StringPtrOutput `pulumi:"cloudInit"`
 	// Cloud init template id of the virtual machine instance. If provided, the cloud init will be set to the content of the template.
@@ -176,12 +186,13 @@ type VirtualMachineInstance struct {
 	IpAddresses pulumi.StringArrayOutput `pulumi:"ipAddresses"`
 	// Labels for the virtual machine instance
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
-	// Machine image of the virtual machine instance
+	// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 	MachineImage pulumi.StringOutput `pulumi:"machineImage"`
 	// Machine type of the virtual machine instance
 	MachineType pulumi.StringOutput `pulumi:"machineType"`
 	// Name of the Virtual Machine Instance
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
 	RootVolumeId pulumi.StringOutput `pulumi:"rootVolumeId"`
@@ -258,12 +269,13 @@ type virtualMachineInstanceState struct {
 	IpAddresses []string `pulumi:"ipAddresses"`
 	// Labels for the virtual machine instance
 	Labels map[string]string `pulumi:"labels"`
-	// Machine image of the virtual machine instance
+	// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 	MachineImage *string `pulumi:"machineImage"`
 	// Machine type of the virtual machine instance
 	MachineType *string `pulumi:"machineType"`
 	// Name of the Virtual Machine Instance
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
 	RootVolumeId *string `pulumi:"rootVolumeId"`
@@ -302,12 +314,13 @@ type VirtualMachineInstanceState struct {
 	IpAddresses pulumi.StringArrayInput
 	// Labels for the virtual machine instance
 	Labels pulumi.StringMapInput
-	// Machine image of the virtual machine instance
+	// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 	MachineImage pulumi.StringPtrInput
 	// Machine type of the virtual machine instance
 	MachineType pulumi.StringPtrInput
 	// Name of the Virtual Machine Instance
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
 	RootVolumeId pulumi.StringPtrInput
@@ -346,12 +359,13 @@ type virtualMachineInstanceArgs struct {
 	Description *string `pulumi:"description"`
 	// Labels for the virtual machine instance
 	Labels map[string]string `pulumi:"labels"`
-	// Machine image of the virtual machine instance
+	// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 	MachineImage string `pulumi:"machineImage"`
 	// Machine type of the virtual machine instance
 	MachineType string `pulumi:"machineType"`
 	// Name of the Virtual Machine Instance
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
 	RootVolumeId *string `pulumi:"rootVolumeId"`
@@ -381,12 +395,13 @@ type VirtualMachineInstanceArgs struct {
 	Description pulumi.StringPtrInput
 	// Labels for the virtual machine instance
 	Labels pulumi.StringMapInput
-	// Machine image of the virtual machine instance
+	// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 	MachineImage pulumi.StringInput
 	// Machine type of the virtual machine instance
 	MachineType pulumi.StringInput
 	// Name of the Virtual Machine Instance
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
 	RootVolumeId pulumi.StringPtrInput
@@ -498,8 +513,8 @@ func (o VirtualMachineInstanceOutput) AttachedVolumeIds() pulumi.StringArrayOutp
 }
 
 // Availability zone of the virtual machine instance
-func (o VirtualMachineInstanceOutput) AvailabilityZone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringPtrOutput { return v.AvailabilityZone }).(pulumi.StringPtrOutput)
+func (o VirtualMachineInstanceOutput) AvailabilityZone() pulumi.StringOutput {
+	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringOutput { return v.AvailabilityZone }).(pulumi.StringOutput)
 }
 
 // Cloud init of the virtual machine instance
@@ -532,7 +547,7 @@ func (o VirtualMachineInstanceOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
 
-// Machine image of the virtual machine instance
+// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
 func (o VirtualMachineInstanceOutput) MachineImage() pulumi.StringOutput {
 	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringOutput { return v.MachineImage }).(pulumi.StringOutput)
 }
@@ -547,6 +562,7 @@ func (o VirtualMachineInstanceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 func (o VirtualMachineInstanceOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *VirtualMachineInstance) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

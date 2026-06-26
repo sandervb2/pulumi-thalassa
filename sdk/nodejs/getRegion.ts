@@ -20,6 +20,9 @@ export function getRegion(args?: GetRegionArgs, opts?: pulumi.InvokeOptions): Pr
  * A collection of arguments for invoking getRegion.
  */
 export interface GetRegionArgs {
+    /**
+     * Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     slug?: string;
 }
@@ -36,6 +39,9 @@ export interface GetRegionResult {
     readonly id: string;
     readonly labels: {[key: string]: string};
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId: string;
     readonly slug?: string;
 }
@@ -55,6 +61,9 @@ export function getRegionOutput(args?: GetRegionOutputArgs, opts?: pulumi.Invoke
  * A collection of arguments for invoking getRegion.
  */
 export interface GetRegionOutputArgs {
-    organisationId?: pulumi.Input<string>;
-    slug?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
+    slug?: pulumi.Input<string | undefined>;
 }

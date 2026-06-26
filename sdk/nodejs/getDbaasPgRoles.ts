@@ -25,6 +25,9 @@ export interface GetDbaasPgRolesArgs {
      * The name of the role
      */
     name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
 }
 
@@ -60,6 +63,9 @@ export interface GetDbaasPgRolesResult {
      * The name of the role
      */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
 }
 export function getDbaasPgRolesOutput(args: GetDbaasPgRolesOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetDbaasPgRolesResult> {
@@ -83,5 +89,8 @@ export interface GetDbaasPgRolesOutputArgs {
      * The name of the role
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

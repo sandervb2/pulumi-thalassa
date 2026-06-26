@@ -22,22 +22,23 @@ class VirtualMachineInstanceArgs:
                  machine_image: pulumi.Input[_builtins.str],
                  machine_type: pulumi.Input[_builtins.str],
                  subnet_id: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init_template_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 root_volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a VirtualMachineInstance resource.
-        :param pulumi.Input[_builtins.str] machine_image: Machine image of the virtual machine instance
+
+        :param pulumi.Input[_builtins.str] machine_image: Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         :param pulumi.Input[_builtins.str] machine_type: Machine type of the virtual machine instance
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Virtual Machine Instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the virtual machine instance
@@ -48,6 +49,7 @@ class VirtualMachineInstanceArgs:
         :param pulumi.Input[_builtins.str] description: A human readable description about the virtual machine instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the virtual machine instance
         :param pulumi.Input[_builtins.str] name: Name of the Virtual Machine Instance
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] root_volume_id: Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         :param pulumi.Input[_builtins.int] root_volume_size_gb: Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         :param pulumi.Input[_builtins.str] root_volume_type: Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
@@ -87,7 +89,7 @@ class VirtualMachineInstanceArgs:
     @pulumi.getter(name="machineImage")
     def machine_image(self) -> pulumi.Input[_builtins.str]:
         """
-        Machine image of the virtual machine instance
+        Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         """
         return pulumi.get(self, "machine_image")
 
@@ -121,184 +123,188 @@ class VirtualMachineInstanceArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the virtual machine instance
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="availabilityZone")
-    def availability_zone(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def availability_zone(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Availability zone of the virtual machine instance
         """
         return pulumi.get(self, "availability_zone")
 
     @availability_zone.setter
-    def availability_zone(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def availability_zone(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "availability_zone", value)
 
     @_builtins.property
     @pulumi.getter(name="cloudInit")
-    def cloud_init(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cloud_init(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Cloud init of the virtual machine instance
         """
         return pulumi.get(self, "cloud_init")
 
     @cloud_init.setter
-    def cloud_init(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cloud_init(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cloud_init", value)
 
     @_builtins.property
     @pulumi.getter(name="cloudInitTemplateId")
-    def cloud_init_template_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cloud_init_template_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Cloud init template id of the virtual machine instance. If provided, the cloud init will be set to the content of the template.
         """
         return pulumi.get(self, "cloud_init_template_id")
 
     @cloud_init_template_id.setter
-    def cloud_init_template_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cloud_init_template_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cloud_init_template_id", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection of the virtual machine instance
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the virtual machine instance
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the virtual machine instance
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Virtual Machine Instance
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeId")
-    def root_volume_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def root_volume_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         """
         return pulumi.get(self, "root_volume_id")
 
     @root_volume_id.setter
-    def root_volume_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def root_volume_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "root_volume_id", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeSizeGb")
-    def root_volume_size_gb(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def root_volume_size_gb(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         """
         return pulumi.get(self, "root_volume_size_gb")
 
     @root_volume_size_gb.setter
-    def root_volume_size_gb(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def root_volume_size_gb(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "root_volume_size_gb", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeType")
-    def root_volume_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def root_volume_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
         """
         return pulumi.get(self, "root_volume_type")
 
     @root_volume_type.setter
-    def root_volume_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def root_volume_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "root_volume_type", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the Virtual Machine Instance
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
 
 @pulumi.input_type
 class _VirtualMachineInstanceState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attached_volume_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init_template_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_image: Optional[pulumi.Input[_builtins.str]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 root_volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 state: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 attached_volume_ids: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 ip_addresses: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_image: pulumi.Input[Optional[_builtins.str]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 state: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering VirtualMachineInstance resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the virtual machine instance
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_volume_ids: Attached volume ids of the virtual machine instance
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone of the virtual machine instance
@@ -308,9 +314,10 @@ class _VirtualMachineInstanceState:
         :param pulumi.Input[_builtins.str] description: A human readable description about the virtual machine instance
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_addresses: IP addresses of the virtual machine instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the virtual machine instance
-        :param pulumi.Input[_builtins.str] machine_image: Machine image of the virtual machine instance
+        :param pulumi.Input[_builtins.str] machine_image: Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         :param pulumi.Input[_builtins.str] machine_type: Machine type of the virtual machine instance
         :param pulumi.Input[_builtins.str] name: Name of the Virtual Machine Instance
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] root_volume_id: Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         :param pulumi.Input[_builtins.int] root_volume_size_gb: Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         :param pulumi.Input[_builtins.str] root_volume_type: Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
@@ -365,251 +372,254 @@ class _VirtualMachineInstanceState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the virtual machine instance
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="attachedVolumeIds")
-    def attached_volume_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def attached_volume_ids(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         Attached volume ids of the virtual machine instance
         """
         return pulumi.get(self, "attached_volume_ids")
 
     @attached_volume_ids.setter
-    def attached_volume_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def attached_volume_ids(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "attached_volume_ids", value)
 
     @_builtins.property
     @pulumi.getter(name="availabilityZone")
-    def availability_zone(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def availability_zone(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Availability zone of the virtual machine instance
         """
         return pulumi.get(self, "availability_zone")
 
     @availability_zone.setter
-    def availability_zone(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def availability_zone(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "availability_zone", value)
 
     @_builtins.property
     @pulumi.getter(name="cloudInit")
-    def cloud_init(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cloud_init(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Cloud init of the virtual machine instance
         """
         return pulumi.get(self, "cloud_init")
 
     @cloud_init.setter
-    def cloud_init(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cloud_init(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cloud_init", value)
 
     @_builtins.property
     @pulumi.getter(name="cloudInitTemplateId")
-    def cloud_init_template_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def cloud_init_template_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Cloud init template id of the virtual machine instance. If provided, the cloud init will be set to the content of the template.
         """
         return pulumi.get(self, "cloud_init_template_id")
 
     @cloud_init_template_id.setter
-    def cloud_init_template_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def cloud_init_template_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "cloud_init_template_id", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection of the virtual machine instance
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the virtual machine instance
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="ipAddresses")
-    def ip_addresses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def ip_addresses(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         IP addresses of the virtual machine instance
         """
         return pulumi.get(self, "ip_addresses")
 
     @ip_addresses.setter
-    def ip_addresses(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def ip_addresses(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "ip_addresses", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the virtual machine instance
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="machineImage")
-    def machine_image(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def machine_image(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Machine image of the virtual machine instance
+        Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         """
         return pulumi.get(self, "machine_image")
 
     @machine_image.setter
-    def machine_image(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def machine_image(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "machine_image", value)
 
     @_builtins.property
     @pulumi.getter(name="machineType")
-    def machine_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def machine_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Machine type of the virtual machine instance
         """
         return pulumi.get(self, "machine_type")
 
     @machine_type.setter
-    def machine_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def machine_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "machine_type", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Virtual Machine Instance
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeId")
-    def root_volume_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def root_volume_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         """
         return pulumi.get(self, "root_volume_id")
 
     @root_volume_id.setter
-    def root_volume_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def root_volume_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "root_volume_id", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeSizeGb")
-    def root_volume_size_gb(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def root_volume_size_gb(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         """
         return pulumi.get(self, "root_volume_size_gb")
 
     @root_volume_size_gb.setter
-    def root_volume_size_gb(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def root_volume_size_gb(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "root_volume_size_gb", value)
 
     @_builtins.property
     @pulumi.getter(name="rootVolumeType")
-    def root_volume_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def root_volume_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
         """
         return pulumi.get(self, "root_volume_type")
 
     @root_volume_type.setter
-    def root_volume_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def root_volume_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "root_volume_type", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the Virtual Machine Instance
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Slug of the Virtual Machine Instance
         """
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def state(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def state(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Desired state of the virtual machine instance. Can be 'running', 'stopped', 'deleted'
         """
         return pulumi.get(self, "state")
 
     @state.setter
-    def state(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def state(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "state", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the virtual machine instance
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Subnet of the Virtual Machine Instance
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
 
@@ -619,22 +629,22 @@ class VirtualMachineInstance(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init_template_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_image: Optional[pulumi.Input[_builtins.str]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 root_volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_image: pulumi.Input[Optional[_builtins.str]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an virtual machine instance within a subnet on the Thalassa Cloud platform
@@ -645,11 +655,15 @@ class VirtualMachineInstance(pulumi.CustomResource):
         import pulumi
         import pulumi_thalassa as thalassa
 
+        config = pulumi.Config()
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
         # Create a VPC for the virtual machine instance
         example = thalassa.Vpc("example",
             name="example-vpc",
             description="Example VPC for virtual machine instance",
-            region="nl-01",
+            region=region,
             cidrs=["10.0.0.0/16"])
         # Create a subnet for the virtual machine instance
         example_subnet = thalassa.Subnet("example",
@@ -676,14 +690,17 @@ class VirtualMachineInstance(pulumi.CustomResource):
           - systemctl start nginx
         \"\"\")
         block = thalassa.get_volume_type(name="Block")
-        ubuntu = thalassa.get_machine_image(name="ubuntu-22-04-01")
+        ubuntu = thalassa.get_machine_image(name="ubuntu-22.04-8f08afc54644")
+        availability_zone = config.get("availabilityZone")
+        if availability_zone is None:
+            availability_zone = "nl-01a"
         # Create a virtual machine instance with Thalassa default values
         example_virtual_machine_instance = thalassa.VirtualMachineInstance("example",
             name="example-instance",
             subnet_id=example_subnet.id,
             machine_type="pgp-small",
             machine_image=ubuntu.name,
-            availability_zone="nl-01a",
+            availability_zone=availability_zone,
             root_volume_size_gb=20,
             root_volume_type=block.id,
             cloud_init_template_id=example_cloud_init_template.id)
@@ -692,7 +709,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
         # Create a load balancer for the virtual machine instance
         example_loadbalancer = thalassa.Loadbalancer("example",
             name="example-lb",
-            region="nl-01",
+            region=region,
             description="Example load balancer for virtual machine instance",
             subnet_id=example_subnet.id)
         # Create a load balancer target group
@@ -717,6 +734,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
         pulumi.export("loadBalancerPort", example_loadbalancer_listener.port)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the virtual machine instance
@@ -726,9 +744,10 @@ class VirtualMachineInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the virtual machine instance
         :param pulumi.Input[_builtins.str] description: A human readable description about the virtual machine instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the virtual machine instance
-        :param pulumi.Input[_builtins.str] machine_image: Machine image of the virtual machine instance
+        :param pulumi.Input[_builtins.str] machine_image: Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         :param pulumi.Input[_builtins.str] machine_type: Machine type of the virtual machine instance
         :param pulumi.Input[_builtins.str] name: Name of the Virtual Machine Instance
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] root_volume_id: Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         :param pulumi.Input[_builtins.int] root_volume_size_gb: Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         :param pulumi.Input[_builtins.str] root_volume_type: Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
@@ -750,11 +769,15 @@ class VirtualMachineInstance(pulumi.CustomResource):
         import pulumi
         import pulumi_thalassa as thalassa
 
+        config = pulumi.Config()
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
         # Create a VPC for the virtual machine instance
         example = thalassa.Vpc("example",
             name="example-vpc",
             description="Example VPC for virtual machine instance",
-            region="nl-01",
+            region=region,
             cidrs=["10.0.0.0/16"])
         # Create a subnet for the virtual machine instance
         example_subnet = thalassa.Subnet("example",
@@ -781,14 +804,17 @@ class VirtualMachineInstance(pulumi.CustomResource):
           - systemctl start nginx
         \"\"\")
         block = thalassa.get_volume_type(name="Block")
-        ubuntu = thalassa.get_machine_image(name="ubuntu-22-04-01")
+        ubuntu = thalassa.get_machine_image(name="ubuntu-22.04-8f08afc54644")
+        availability_zone = config.get("availabilityZone")
+        if availability_zone is None:
+            availability_zone = "nl-01a"
         # Create a virtual machine instance with Thalassa default values
         example_virtual_machine_instance = thalassa.VirtualMachineInstance("example",
             name="example-instance",
             subnet_id=example_subnet.id,
             machine_type="pgp-small",
             machine_image=ubuntu.name,
-            availability_zone="nl-01a",
+            availability_zone=availability_zone,
             root_volume_size_gb=20,
             root_volume_type=block.id,
             cloud_init_template_id=example_cloud_init_template.id)
@@ -797,7 +823,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
         # Create a load balancer for the virtual machine instance
         example_loadbalancer = thalassa.Loadbalancer("example",
             name="example-lb",
-            region="nl-01",
+            region=region,
             description="Example load balancer for virtual machine instance",
             subnet_id=example_subnet.id)
         # Create a load balancer target group
@@ -822,6 +848,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
         pulumi.export("loadBalancerPort", example_loadbalancer_listener.port)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param VirtualMachineInstanceArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -837,22 +864,22 @@ class VirtualMachineInstance(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init: Optional[pulumi.Input[_builtins.str]] = None,
-                 cloud_init_template_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 machine_image: Optional[pulumi.Input[_builtins.str]] = None,
-                 machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 root_volume_size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 root_volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+                 cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 machine_image: pulumi.Input[Optional[_builtins.str]] = None,
+                 machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -899,27 +926,27 @@ class VirtualMachineInstance(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            attached_volume_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
-            cloud_init: Optional[pulumi.Input[_builtins.str]] = None,
-            cloud_init_template_id: Optional[pulumi.Input[_builtins.str]] = None,
-            delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            machine_image: Optional[pulumi.Input[_builtins.str]] = None,
-            machine_type: Optional[pulumi.Input[_builtins.str]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            root_volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-            root_volume_size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-            root_volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-            security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            state: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'VirtualMachineInstance':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            attached_volume_ids: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+            cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+            cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            ip_addresses: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            machine_image: pulumi.Input[Optional[_builtins.str]] = None,
+            machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+            root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+            root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            state: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'VirtualMachineInstance':
         """
         Get an existing VirtualMachineInstance resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -936,9 +963,10 @@ class VirtualMachineInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: A human readable description about the virtual machine instance
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_addresses: IP addresses of the virtual machine instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the virtual machine instance
-        :param pulumi.Input[_builtins.str] machine_image: Machine image of the virtual machine instance
+        :param pulumi.Input[_builtins.str] machine_image: Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         :param pulumi.Input[_builtins.str] machine_type: Machine type of the virtual machine instance
         :param pulumi.Input[_builtins.str] name: Name of the Virtual Machine Instance
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] root_volume_id: Root volume id of the virtual machine instance. Must be provided if root*volume*type is not set.
         :param pulumi.Input[_builtins.int] root_volume_size_gb: Root volume size of the virtual machine instance. Must be provided if root*volume*id is not set.
         :param pulumi.Input[_builtins.str] root_volume_type: Root volume type of the virtual machine instance. Must be provided if root*volume*id is not set.
@@ -993,7 +1021,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="availabilityZone")
-    def availability_zone(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def availability_zone(self) -> pulumi.Output[_builtins.str]:
         """
         Availability zone of the virtual machine instance
         """
@@ -1051,7 +1079,7 @@ class VirtualMachineInstance(pulumi.CustomResource):
     @pulumi.getter(name="machineImage")
     def machine_image(self) -> pulumi.Output[_builtins.str]:
         """
-        Machine image of the virtual machine instance
+        Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         """
         return pulumi.get(self, "machine_image")
 
@@ -1074,6 +1102,9 @@ class VirtualMachineInstance(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

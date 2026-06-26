@@ -19,6 +19,12 @@ namespace Pulumi.Thalassa
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
+        /// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        /// </summary>
+        [Output("accessToken")]
+        public Output<string?> AccessToken { get; private set; } = null!;
+
+        /// <summary>
         /// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         /// </summary>
         [Output("api")]
@@ -41,6 +47,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
+
+        /// <summary>
+        /// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        /// </summary>
+        [Output("projectId")]
+        public Output<string?> ProjectId { get; private set; } = null!;
 
         /// <summary>
         /// The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
@@ -69,6 +81,7 @@ namespace Pulumi.Thalassa
                 PluginDownloadURL = "github://api.github.com/sandervb2/pulumi-thalassa",
                 AdditionalSecretOutputs =
                 {
+                    "accessToken",
                     "clientId",
                     "clientSecret",
                     "token",
@@ -89,6 +102,28 @@ namespace Pulumi.Thalassa
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
+        [Input("accessToken")]
+        private Input<string>? _accessToken;
+
+        /// <summary>
+        /// The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+        /// </summary>
+        public Input<string>? AccessToken
+        {
+            get => _accessToken;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _accessToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        /// <summary>
+        /// Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+        /// </summary>
+        [Input("allowInsecureOidc", json: true)]
+        public Input<bool>? AllowInsecureOidc { get; set; }
+
         /// <summary>
         /// The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
         /// </summary>
@@ -132,6 +167,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
+
+        /// <summary>
+        /// The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+        /// </summary>
+        [Input("projectId")]
+        public Input<string>? ProjectId { get; set; }
 
         [Input("token")]
         private Input<string>? _token;

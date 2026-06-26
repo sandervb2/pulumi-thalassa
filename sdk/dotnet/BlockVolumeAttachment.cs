@@ -83,6 +83,9 @@ namespace Pulumi.Thalassa
     [ThalassaResourceType("thalassa:index/blockVolumeAttachment:BlockVolumeAttachment")]
     public partial class BlockVolumeAttachment : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -175,6 +178,9 @@ namespace Pulumi.Thalassa
 
     public sealed class BlockVolumeAttachmentArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -222,6 +228,9 @@ namespace Pulumi.Thalassa
 
     public sealed class BlockVolumeAttachmentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

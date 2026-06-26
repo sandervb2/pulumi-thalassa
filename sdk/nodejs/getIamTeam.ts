@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -30,6 +32,9 @@ export interface GetIamTeamArgs {
      * Name of the Team
      */
     name?: string;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Slug of the Team
@@ -62,9 +67,16 @@ export interface GetIamTeamResult {
      */
     readonly labels: {[key: string]: string};
     /**
+     * List of team members
+     */
+    readonly members: outputs.GetIamTeamMember[];
+    /**
      * Name of the Team
      */
     readonly name?: string;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Slug of the Team
@@ -96,14 +108,17 @@ export interface GetIamTeamOutputArgs {
     /**
      * A human readable description about the team
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Name of the Team
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the Team
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

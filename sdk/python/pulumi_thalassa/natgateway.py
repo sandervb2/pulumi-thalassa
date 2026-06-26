@@ -20,19 +20,23 @@ __all__ = ['NatgatewayArgs', 'Natgateway']
 class NatgatewayArgs:
     def __init__(__self__, *,
                  subnet_id: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Natgateway resource.
+
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the NatGateway
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the NatGateway
         :param pulumi.Input[_builtins.str] description: A human readable description about the natGateway
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the NatGateway
         :param pulumi.Input[_builtins.str] name: Name of the NatGateway
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the NAT Gateway
         """
         pulumi.set(__self__, "subnet_id", subnet_id)
@@ -46,6 +50,8 @@ class NatgatewayArgs:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
+        if reserved_ip_id is not None:
+            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
         if security_group_attachments is not None:
             pulumi.set(__self__, "security_group_attachments", security_group_attachments)
 
@@ -63,97 +69,116 @@ class NatgatewayArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the NatGateway
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the natGateway
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the NatGateway
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the NatGateway
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
+
+    @reserved_ip_id.setter
+    def reserved_ip_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "reserved_ip_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the NAT Gateway
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
 
 @pulumi.input_type
 class _NatgatewayState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 endpoint_ip: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 v4_ip: Optional[pulumi.Input[_builtins.str]] = None,
-                 v6_ip: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 endpoint_ip: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 v4_ip: pulumi.Input[Optional[_builtins.str]] = None,
+                 v6_ip: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Natgateway resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the NatGateway
         :param pulumi.Input[_builtins.str] description: A human readable description about the natGateway
         :param pulumi.Input[_builtins.str] endpoint_ip: Endpoint IP of the NatGateway
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the NatGateway
         :param pulumi.Input[_builtins.str] name: Name of the NatGateway
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the NAT Gateway
         :param pulumi.Input[_builtins.str] status: Status of the NatGateway
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the NatGateway
@@ -173,6 +198,8 @@ class _NatgatewayState:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
+        if reserved_ip_id is not None:
+            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
         if security_group_attachments is not None:
             pulumi.set(__self__, "security_group_attachments", security_group_attachments)
         if slug is not None:
@@ -190,152 +217,167 @@ class _NatgatewayState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the NatGateway
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the natGateway
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="endpointIp")
-    def endpoint_ip(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def endpoint_ip(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Endpoint IP of the NatGateway
         """
         return pulumi.get(self, "endpoint_ip")
 
     @endpoint_ip.setter
-    def endpoint_ip(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def endpoint_ip(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "endpoint_ip", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the NatGateway
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the NatGateway
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
+
+    @reserved_ip_id.setter
+    def reserved_ip_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "reserved_ip_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the NAT Gateway
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the NatGateway
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Subnet of the NatGateway
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
     @_builtins.property
     @pulumi.getter(name="v4Ip")
-    def v4_ip(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def v4_ip(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         V4 IP of the NatGateway
         """
         return pulumi.get(self, "v4_ip")
 
     @v4_ip.setter
-    def v4_ip(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def v4_ip(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "v4_ip", value)
 
     @_builtins.property
     @pulumi.getter(name="v6Ip")
-    def v6_ip(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def v6_ip(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         V6 IP of the NatGateway
         """
         return pulumi.get(self, "v6_ip")
 
     @v6_ip.setter
-    def v6_ip(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def v6_ip(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "v6_ip", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
-    def vpc_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vpc_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         VPC of the NatGateway
         """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
-    def vpc_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vpc_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vpc_id", value)
 
 
@@ -345,13 +387,14 @@ class Natgateway(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an NAT Gateway within a VPC
@@ -362,11 +405,16 @@ class Natgateway(pulumi.CustomResource):
         import pulumi
         import pulumi_thalassa as thalassa
 
+        config = pulumi.Config()
+        # Region for the VPC
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
         # Create a VPC for the NAT gateway
         example = thalassa.Vpc("example",
             name="example-vpc",
             description="Example VPC for NAT gateway",
-            region="nl-01",
+            region=region,
             cidrs=["10.0.0.0/16"])
         # Create a subnet for the NAT gateway
         example_subnet = thalassa.Subnet("example",
@@ -374,24 +422,18 @@ class Natgateway(pulumi.CustomResource):
             description="Example subnet for NAT gateway",
             vpc_id=example.id,
             cidr="10.0.1.0/24")
-        # Create a NAT gateway with all optional attributes
         example_natgateway = thalassa.Natgateway("example",
             name="example-nat-gateway",
             subnet_id=example_subnet.id,
-            description="Example NAT gateway for documentation",
+            description="Example NAT gateway",
             labels={
                 "environment": "production",
-                "service": "networking",
                 "tier": "public",
-            },
-            annotations={
-                "cost-center": "cc-12345",
-                "backup-policy": "none",
-                "monitoring": "enabled",
             })
         pulumi.export("natGatewayId", example_natgateway.id)
         pulumi.export("natGatewayEndpointIp", example_natgateway.endpoint_ip)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -399,6 +441,8 @@ class Natgateway(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: A human readable description about the natGateway
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the NatGateway
         :param pulumi.Input[_builtins.str] name: Name of the NatGateway
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the NAT Gateway
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the NatGateway
         """
@@ -417,11 +461,16 @@ class Natgateway(pulumi.CustomResource):
         import pulumi
         import pulumi_thalassa as thalassa
 
+        config = pulumi.Config()
+        # Region for the VPC
+        region = config.get("region")
+        if region is None:
+            region = "nl-01"
         # Create a VPC for the NAT gateway
         example = thalassa.Vpc("example",
             name="example-vpc",
             description="Example VPC for NAT gateway",
-            region="nl-01",
+            region=region,
             cidrs=["10.0.0.0/16"])
         # Create a subnet for the NAT gateway
         example_subnet = thalassa.Subnet("example",
@@ -429,24 +478,18 @@ class Natgateway(pulumi.CustomResource):
             description="Example subnet for NAT gateway",
             vpc_id=example.id,
             cidr="10.0.1.0/24")
-        # Create a NAT gateway with all optional attributes
         example_natgateway = thalassa.Natgateway("example",
             name="example-nat-gateway",
             subnet_id=example_subnet.id,
-            description="Example NAT gateway for documentation",
+            description="Example NAT gateway",
             labels={
                 "environment": "production",
-                "service": "networking",
                 "tier": "public",
-            },
-            annotations={
-                "cost-center": "cc-12345",
-                "backup-policy": "none",
-                "monitoring": "enabled",
             })
         pulumi.export("natGatewayId", example_natgateway.id)
         pulumi.export("natGatewayEndpointIp", example_natgateway.endpoint_ip)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param NatgatewayArgs args: The arguments to use to populate this resource's properties.
@@ -463,13 +506,14 @@ class Natgateway(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -484,6 +528,7 @@ class Natgateway(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
+            __props__.__dict__["reserved_ip_id"] = reserved_ip_id
             __props__.__dict__["security_group_attachments"] = security_group_attachments
             if subnet_id is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet_id'")
@@ -504,19 +549,20 @@ class Natgateway(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            endpoint_ip: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-            v4_ip: Optional[pulumi.Input[_builtins.str]] = None,
-            v6_ip: Optional[pulumi.Input[_builtins.str]] = None,
-            vpc_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'Natgateway':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoint_ip: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            v4_ip: pulumi.Input[Optional[_builtins.str]] = None,
+            v6_ip: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'Natgateway':
         """
         Get an existing Natgateway resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -529,6 +575,8 @@ class Natgateway(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] endpoint_ip: Endpoint IP of the NatGateway
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the NatGateway
         :param pulumi.Input[_builtins.str] name: Name of the NatGateway
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the NAT Gateway
         :param pulumi.Input[_builtins.str] status: Status of the NatGateway
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the NatGateway
@@ -546,6 +594,7 @@ class Natgateway(pulumi.CustomResource):
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
+        __props__.__dict__["reserved_ip_id"] = reserved_ip_id
         __props__.__dict__["security_group_attachments"] = security_group_attachments
         __props__.__dict__["slug"] = slug
         __props__.__dict__["status"] = status
@@ -598,7 +647,18 @@ class Natgateway(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
+
+    @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")

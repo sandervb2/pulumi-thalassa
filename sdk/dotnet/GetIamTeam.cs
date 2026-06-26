@@ -45,6 +45,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public string? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -74,6 +77,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -114,9 +120,16 @@ namespace Pulumi.Thalassa
         /// </summary>
         public readonly ImmutableDictionary<string, string> Labels;
         /// <summary>
+        /// List of team members
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetIamTeamMemberResult> Members;
+        /// <summary>
         /// Name of the Team
         /// </summary>
         public readonly string? Name;
+        /// <summary>
+        /// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// Slug of the Team
@@ -139,6 +152,8 @@ namespace Pulumi.Thalassa
 
             ImmutableDictionary<string, string> labels,
 
+            ImmutableArray<Outputs.GetIamTeamMemberResult> members,
+
             string? name,
 
             string? organisationId,
@@ -152,6 +167,7 @@ namespace Pulumi.Thalassa
             Description = description;
             Id = id;
             Labels = labels;
+            Members = members;
             Name = name;
             OrganisationId = organisationId;
             Slug = slug;

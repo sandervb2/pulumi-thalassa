@@ -24,21 +24,30 @@ func LookupSubnet(ctx *pulumi.Context, args *LookupSubnetArgs, opts ...pulumi.In
 
 // A collection of arguments for invoking getSubnet.
 type LookupSubnetArgs struct {
-	Name           string  `pulumi:"name"`
+	// The name of the subnet to look up
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	Slug           *string `pulumi:"slug"`
-	VpcId          string  `pulumi:"vpcId"`
+	// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+	Slug *string `pulumi:"slug"`
+	// The ID of the VPC that contains the subnet
+	VpcId string `pulumi:"vpcId"`
 }
 
 // A collection of values returned by getSubnet.
 type LookupSubnetResult struct {
+	// The CIDR block of the subnet
 	Cidr string `pulumi:"cidr"`
-	// The ID of this resource.
-	Id             string  `pulumi:"id"`
-	Name           string  `pulumi:"name"`
+	// The unique identifier of the subnet
+	Id string `pulumi:"id"`
+	// The name of the subnet to look up
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	Slug           string  `pulumi:"slug"`
-	VpcId          string  `pulumi:"vpcId"`
+	// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+	Slug string `pulumi:"slug"`
+	// The ID of the VPC that contains the subnet
+	VpcId string `pulumi:"vpcId"`
 }
 
 func LookupSubnetOutput(ctx *pulumi.Context, args LookupSubnetOutputArgs, opts ...pulumi.InvokeOption) LookupSubnetResultOutput {
@@ -52,10 +61,14 @@ func LookupSubnetOutput(ctx *pulumi.Context, args LookupSubnetOutputArgs, opts .
 
 // A collection of arguments for invoking getSubnet.
 type LookupSubnetOutputArgs struct {
-	Name           pulumi.StringInput    `pulumi:"name"`
+	// The name of the subnet to look up
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
-	Slug           pulumi.StringPtrInput `pulumi:"slug"`
-	VpcId          pulumi.StringInput    `pulumi:"vpcId"`
+	// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+	Slug pulumi.StringPtrInput `pulumi:"slug"`
+	// The ID of the VPC that contains the subnet
+	VpcId pulumi.StringInput `pulumi:"vpcId"`
 }
 
 func (LookupSubnetOutputArgs) ElementType() reflect.Type {
@@ -77,27 +90,32 @@ func (o LookupSubnetResultOutput) ToLookupSubnetResultOutputWithContext(ctx cont
 	return o
 }
 
+// The CIDR block of the subnet
 func (o LookupSubnetResultOutput) Cidr() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSubnetResult) string { return v.Cidr }).(pulumi.StringOutput)
 }
 
-// The ID of this resource.
+// The unique identifier of the subnet
 func (o LookupSubnetResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSubnetResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// The name of the subnet to look up
 func (o LookupSubnetResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSubnetResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupSubnetResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupSubnetResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
 
+// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
 func (o LookupSubnetResultOutput) Slug() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSubnetResult) string { return v.Slug }).(pulumi.StringOutput)
 }
 
+// The ID of the VPC that contains the subnet
 func (o LookupSubnetResultOutput) VpcId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSubnetResult) string { return v.VpcId }).(pulumi.StringOutput)
 }

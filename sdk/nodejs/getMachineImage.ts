@@ -5,7 +5,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * Get an machine image
+ * Get an machine image by name or slug
  */
 export function getMachineImage(args: GetMachineImageArgs, opts?: pulumi.InvokeOptions): Promise<GetMachineImageResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
@@ -24,6 +24,9 @@ export interface GetMachineImageArgs {
      * Name of the machine image
      */
     name: string;
+    /**
+     * Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+     */
     organisationId?: string;
     /**
      * Slug of the machine image
@@ -36,9 +39,9 @@ export interface GetMachineImageArgs {
  */
 export interface GetMachineImageResult {
     /**
-     * Annotations of the machine image
+     * Architecture of the machine image
      */
-    readonly annotations: {[key: string]: string};
+    readonly architecture: string;
     /**
      * Description of the machine image
      */
@@ -55,6 +58,9 @@ export interface GetMachineImageResult {
      * Name of the machine image
      */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Slug of the machine image
@@ -62,7 +68,7 @@ export interface GetMachineImageResult {
     readonly slug?: string;
 }
 /**
- * Get an machine image
+ * Get an machine image by name or slug
  */
 export function getMachineImageOutput(args: GetMachineImageOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetMachineImageResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
@@ -81,9 +87,12 @@ export interface GetMachineImageOutputArgs {
      * Name of the machine image
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Machine Image. If not provided, the organisation configured in the Terraform provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the machine image
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

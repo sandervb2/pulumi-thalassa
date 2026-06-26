@@ -76,7 +76,8 @@ type Vpc struct {
 	// Labels for the Vpc
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the Vpc
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region pulumi.StringOutput `pulumi:"region"`
@@ -131,7 +132,8 @@ type vpcState struct {
 	// Labels for the Vpc
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Vpc
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region *string `pulumi:"region"`
@@ -151,7 +153,8 @@ type VpcState struct {
 	// Labels for the Vpc
 	Labels pulumi.StringMapInput
 	// Name of the Vpc
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region pulumi.StringPtrInput
@@ -175,7 +178,8 @@ type vpcArgs struct {
 	// Labels for the Vpc
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Vpc
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region string `pulumi:"region"`
@@ -192,7 +196,8 @@ type VpcArgs struct {
 	// Labels for the Vpc
 	Labels pulumi.StringMapInput
 	// Name of the Vpc
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region pulumi.StringInput
@@ -310,6 +315,7 @@ func (o VpcOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Vpc) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 func (o VpcOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Vpc) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

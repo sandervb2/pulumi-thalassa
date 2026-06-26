@@ -36,6 +36,10 @@ export interface GetKubernetesClusterArgs {
  */
 export interface GetKubernetesClusterResult {
     /**
+     * Advertise port for the Kubernetes Cluster within the VPC
+     */
+    readonly advertisePort: number;
+    /**
      * Annotations for the Kubernetes Cluster
      */
     readonly annotations: {[key: string]: string};
@@ -51,6 +55,10 @@ export interface GetKubernetesClusterResult {
      * Auto upgrade policy of the Kubernetes Cluster
      */
     readonly autoUpgradePolicy: string;
+    /**
+     * Configuration for the cluster autoscaler
+     */
+    readonly autoscalerConfigs: outputs.GetKubernetesClusterAutoscalerConfig[];
     /**
      * Cluster type of the Kubernetes Cluster
      */
@@ -72,9 +80,21 @@ export interface GetKubernetesClusterResult {
      */
     readonly description: string;
     /**
+     * Disable public endpoint of the Kubernetes Cluster
+     */
+    readonly disablePublicEndpoint: boolean;
+    /**
      * The ID of this resource.
      */
     readonly id: string;
+    /**
+     * VPC-internal endpoint for the Kubernetes Cluster
+     */
+    readonly internalEndpoint: string;
+    /**
+     * Konnectivity port for the Kubernetes Cluster within the VPC
+     */
+    readonly konnectivityPort: number;
     /**
      * Kubernetes API server CA certificate of the Kubernetes Cluster
      */
@@ -103,6 +123,14 @@ export interface GetKubernetesClusterResult {
      * CNI of the Kubernetes Cluster
      */
     readonly networkingCni: string;
+    /**
+     * Deployment mode of the kube proxy
+     */
+    readonly networkingKubeProxyDeployment: string;
+    /**
+     * Mode of the kube proxy
+     */
+    readonly networkingKubeProxyMode: string;
     /**
      * Pod CIDR of the Kubernetes Cluster
      */

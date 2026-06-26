@@ -11,6 +11,71 @@ namespace Pulumi.Thalassa
 {
     /// <summary>
     /// Create an DB Cluster
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Thalassa = Pulumi.Thalassa;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     // Create a VPC for the database cluster
+    ///     var example = new Thalassa.Vpc("example", new()
+    ///     {
+    ///         Name = "example-vpc",
+    ///         Description = "Example VPC for database cluster",
+    ///         Region = "nl-01",
+    ///         Cidrs = new[]
+    ///         {
+    ///             "10.0.0.0/16",
+    ///         },
+    ///     });
+    /// 
+    ///     // Create a subnet for the database cluster
+    ///     var exampleSubnet = new Thalassa.Subnet("example", new()
+    ///     {
+    ///         Name = "example-subnet",
+    ///         Description = "Example subnet for database cluster",
+    ///         VpcId = example.Id,
+    ///         Cidr = "10.0.1.0/24",
+    ///     });
+    /// 
+    ///     // Create a security group for the DB cluster
+    ///     var exampleSecurityGroup = new Thalassa.SecurityGroup("example", new()
+    ///     {
+    ///         Name = "example-db-security-group",
+    ///         Description = "Example security group for DB cluster",
+    ///         VpcIdentity = example.Id,
+    ///     });
+    /// 
+    ///     // Create a database cluster with Thalassa default values
+    ///     var exampleDbaasDbCluster = new Thalassa.DbaasDbCluster("example", new()
+    ///     {
+    ///         Name = "example-db-cluster",
+    ///         Description = "Example database cluster for documentation",
+    ///         SubnetId = exampleSubnet.Id,
+    ///         DatabaseInstanceType = "db-pgp-small",
+    ///         Engine = "postgres",
+    ///         EngineVersion = "15.13",
+    ///         AllocatedStorage = 100,
+    ///         VolumeTypeClass = "block",
+    ///         ProvisionDbObjectStore = true,
+    ///         CreateBackupBeforeDestroy = true,
+    ///         CreateBackupBeforeDestroyTimeout = 30,
+    ///     });
+    /// 
+    ///     return new Dictionary&lt;string, object?&gt;
+    ///     {
+    ///         ["dbClusterId"] = exampleDbaasDbCluster.Id,
+    ///         ["dbClusterName"] = exampleDbaasDbCluster.Name,
+    ///         ["dbClusterEndpoint"] = exampleDbaasDbCluster.EndpointIpv4,
+    ///         ["dbClusterPort"] = exampleDbaasDbCluster.Port,
+    ///     };
+    /// });
+    /// ```
     /// </summary>
     [ThalassaResourceType("thalassa:index/dbaasDbCluster:DbaasDbCluster")]
     public partial class DbaasDbCluster : global::Pulumi.CustomResource
@@ -32,6 +97,24 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("autoMinorVersionUpgrade")]
         public Output<bool?> AutoMinorVersionUpgrade { get; private set; } = null!;
+
+        /// <summary>
+        /// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        /// </summary>
+        [Output("autoUpgradePolicy")]
+        public Output<string?> AutoUpgradePolicy { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        /// </summary>
+        [Output("createBackupBeforeDestroy")]
+        public Output<bool?> CreateBackupBeforeDestroy { get; private set; } = null!;
+
+        /// <summary>
+        /// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        /// </summary>
+        [Output("createBackupBeforeDestroyTimeout")]
+        public Output<int?> CreateBackupBeforeDestroyTimeout { get; private set; } = null!;
 
         /// <summary>
         /// Database instance type of the DB Cluster
@@ -88,11 +171,26 @@ namespace Pulumi.Thalassa
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
         /// <summary>
+        /// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        /// </summary>
+        [Output("maintenanceDay")]
+        public Output<int?> MaintenanceDay { get; private set; } = null!;
+
+        /// <summary>
+        /// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        /// </summary>
+        [Output("maintenanceStartAt")]
+        public Output<int?> MaintenanceStartAt { get; private set; } = null!;
+
+        /// <summary>
         /// Name of the DB Cluster
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -109,16 +207,28 @@ namespace Pulumi.Thalassa
         public Output<int> Port { get; private set; } = null!;
 
         /// <summary>
+        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// </summary>
+        [Output("provisionDbObjectStore")]
+        public Output<bool?> ProvisionDbObjectStore { get; private set; } = null!;
+
+        /// <summary>
         /// Number of instances in the cluster
         /// </summary>
         [Output("replicas")]
         public Output<int?> Replicas { get; private set; } = null!;
 
         /// <summary>
-        /// Identity of the backup to restore from
+        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         /// </summary>
-        [Output("restoreFromBackupIdentity")]
-        public Output<string?> RestoreFromBackupIdentity { get; private set; } = null!;
+        [Output("restoreFromBackupId")]
+        public Output<string?> RestoreFromBackupId { get; private set; } = null!;
+
+        /// <summary>
+        /// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        /// </summary>
+        [Output("restoreRecoveryTarget")]
+        public Output<Outputs.DbaasDbClusterRestoreRecoveryTarget?> RestoreRecoveryTarget { get; private set; } = null!;
 
         /// <summary>
         /// List of security groups associated with the cluster
@@ -216,6 +326,24 @@ namespace Pulumi.Thalassa
         public Input<bool>? AutoMinorVersionUpgrade { get; set; }
 
         /// <summary>
+        /// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        /// </summary>
+        [Input("autoUpgradePolicy")]
+        public Input<string>? AutoUpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        /// </summary>
+        [Input("createBackupBeforeDestroy")]
+        public Input<bool>? CreateBackupBeforeDestroy { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        /// </summary>
+        [Input("createBackupBeforeDestroyTimeout")]
+        public Input<int>? CreateBackupBeforeDestroyTimeout { get; set; }
+
+        /// <summary>
         /// Database instance type of the DB Cluster
         /// </summary>
         [Input("databaseInstanceType", required: true)]
@@ -270,11 +398,26 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
+        /// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        /// </summary>
+        [Input("maintenanceDay")]
+        public Input<int>? MaintenanceDay { get; set; }
+
+        /// <summary>
+        /// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        /// </summary>
+        [Input("maintenanceStartAt")]
+        public Input<int>? MaintenanceStartAt { get; set; }
+
+        /// <summary>
         /// Name of the DB Cluster
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -291,16 +434,28 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
+        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// </summary>
+        [Input("provisionDbObjectStore")]
+        public Input<bool>? ProvisionDbObjectStore { get; set; }
+
+        /// <summary>
         /// Number of instances in the cluster
         /// </summary>
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
 
         /// <summary>
-        /// Identity of the backup to restore from
+        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         /// </summary>
-        [Input("restoreFromBackupIdentity")]
-        public Input<string>? RestoreFromBackupIdentity { get; set; }
+        [Input("restoreFromBackupId")]
+        public Input<string>? RestoreFromBackupId { get; set; }
+
+        /// <summary>
+        /// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        /// </summary>
+        [Input("restoreRecoveryTarget")]
+        public Input<Inputs.DbaasDbClusterRestoreRecoveryTargetArgs>? RestoreRecoveryTarget { get; set; }
 
         [Input("securityGroups")]
         private InputList<string>? _securityGroups;
@@ -357,6 +512,24 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("autoMinorVersionUpgrade")]
         public Input<bool>? AutoMinorVersionUpgrade { get; set; }
+
+        /// <summary>
+        /// Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        /// </summary>
+        [Input("autoUpgradePolicy")]
+        public Input<string>? AutoUpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        /// </summary>
+        [Input("createBackupBeforeDestroy")]
+        public Input<bool>? CreateBackupBeforeDestroy { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        /// </summary>
+        [Input("createBackupBeforeDestroyTimeout")]
+        public Input<int>? CreateBackupBeforeDestroyTimeout { get; set; }
 
         /// <summary>
         /// Database instance type of the DB Cluster
@@ -425,11 +598,26 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
+        /// Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        /// </summary>
+        [Input("maintenanceDay")]
+        public Input<int>? MaintenanceDay { get; set; }
+
+        /// <summary>
+        /// Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        /// </summary>
+        [Input("maintenanceStartAt")]
+        public Input<int>? MaintenanceStartAt { get; set; }
+
+        /// <summary>
         /// Name of the DB Cluster
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -452,16 +640,28 @@ namespace Pulumi.Thalassa
         public Input<int>? Port { get; set; }
 
         /// <summary>
+        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// </summary>
+        [Input("provisionDbObjectStore")]
+        public Input<bool>? ProvisionDbObjectStore { get; set; }
+
+        /// <summary>
         /// Number of instances in the cluster
         /// </summary>
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
 
         /// <summary>
-        /// Identity of the backup to restore from
+        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         /// </summary>
-        [Input("restoreFromBackupIdentity")]
-        public Input<string>? RestoreFromBackupIdentity { get; set; }
+        [Input("restoreFromBackupId")]
+        public Input<string>? RestoreFromBackupId { get; set; }
+
+        /// <summary>
+        /// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        /// </summary>
+        [Input("restoreRecoveryTarget")]
+        public Input<Inputs.DbaasDbClusterRestoreRecoveryTargetGetArgs>? RestoreRecoveryTarget { get; set; }
 
         [Input("securityGroups")]
         private InputList<string>? _securityGroups;
