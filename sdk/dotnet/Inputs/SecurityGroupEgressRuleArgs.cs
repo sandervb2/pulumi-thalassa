@@ -61,7 +61,7 @@ namespace Pulumi.Thalassa.Inputs
         public Input<string>? RemoteAddress { get; set; }
 
         /// <summary>
-        /// Identity of the security group that the rule applies to
+        /// ID of the Security Group that the rule applies to
         /// </summary>
         [Input("remoteSecurityGroupIdentity")]
         public Input<string>? RemoteSecurityGroupIdentity { get; set; }

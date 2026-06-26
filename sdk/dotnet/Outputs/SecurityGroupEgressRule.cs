@@ -46,7 +46,7 @@ namespace Pulumi.Thalassa.Outputs
         /// </summary>
         public readonly string? RemoteAddress;
         /// <summary>
-        /// Identity of the security group that the rule applies to
+        /// ID of the Security Group that the rule applies to
         /// </summary>
         public readonly string? RemoteSecurityGroupIdentity;
         /// <summary>

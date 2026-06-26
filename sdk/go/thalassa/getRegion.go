@@ -24,6 +24,7 @@ func GetRegion(ctx *pulumi.Context, args *GetRegionArgs, opts ...pulumi.InvokeOp
 
 // A collection of arguments for invoking getRegion.
 type GetRegionArgs struct {
+	// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	Slug           *string `pulumi:"slug"`
 }
@@ -33,11 +34,12 @@ type GetRegionResult struct {
 	Annotations map[string]string `pulumi:"annotations"`
 	Description string            `pulumi:"description"`
 	// The ID of this resource.
-	Id             string            `pulumi:"id"`
-	Labels         map[string]string `pulumi:"labels"`
-	Name           string            `pulumi:"name"`
-	OrganisationId string            `pulumi:"organisationId"`
-	Slug           *string           `pulumi:"slug"`
+	Id     string            `pulumi:"id"`
+	Labels map[string]string `pulumi:"labels"`
+	Name   string            `pulumi:"name"`
+	// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId string  `pulumi:"organisationId"`
+	Slug           *string `pulumi:"slug"`
 }
 
 func GetRegionOutput(ctx *pulumi.Context, args GetRegionOutputArgs, opts ...pulumi.InvokeOption) GetRegionResultOutput {
@@ -51,6 +53,7 @@ func GetRegionOutput(ctx *pulumi.Context, args GetRegionOutputArgs, opts ...pulu
 
 // A collection of arguments for invoking getRegion.
 type GetRegionOutputArgs struct {
+	// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	Slug           pulumi.StringPtrInput `pulumi:"slug"`
 }
@@ -95,6 +98,7 @@ func (o GetRegionResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRegionResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
 func (o GetRegionResultOutput) OrganisationId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRegionResult) string { return v.OrganisationId }).(pulumi.StringOutput)
 }

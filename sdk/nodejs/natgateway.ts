@@ -11,13 +11,16 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
+ * const config = new pulumi.Config();
+ * // Region for the VPC
+ * const region = config.get("region") || "nl-01";
  * // Create a VPC for the NAT gateway
  * const example = new thalassa.Vpc("example", {
  *     name: "example-vpc",
  *     description: "Example VPC for NAT gateway",
- *     region: "nl-01",
+ *     region: region,
  *     cidrs: ["10.0.0.0/16"],
  * });
  * // Create a subnet for the NAT gateway
@@ -27,20 +30,13 @@ import * as utilities from "./utilities";
  *     vpcId: example.id,
  *     cidr: "10.0.1.0/24",
  * });
- * // Create a NAT gateway with all optional attributes
  * const exampleNatgateway = new thalassa.Natgateway("example", {
  *     name: "example-nat-gateway",
  *     subnetId: exampleSubnet.id,
- *     description: "Example NAT gateway for documentation",
+ *     description: "Example NAT gateway",
  *     labels: {
  *         environment: "production",
- *         service: "networking",
  *         tier: "public",
- *     },
- *     annotations: {
- *         "cost-center": "cc-12345",
- *         "backup-policy": "none",
- *         monitoring: "enabled",
  *     },
  * });
  * export const natGatewayId = exampleNatgateway.id;
@@ -95,7 +91,14 @@ export class Natgateway extends pulumi.CustomResource {
      * Name of the NatGateway
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
+    /**
+     * Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+     */
+    declare public readonly reservedIpId: pulumi.Output<string>;
     /**
      * List identities of security group that will be attached to the NAT Gateway
      */
@@ -141,6 +144,7 @@ export class Natgateway extends pulumi.CustomResource {
             resourceInputs["labels"] = state?.labels;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
+            resourceInputs["reservedIpId"] = state?.reservedIpId;
             resourceInputs["securityGroupAttachments"] = state?.securityGroupAttachments;
             resourceInputs["slug"] = state?.slug;
             resourceInputs["status"] = state?.status;
@@ -158,6 +162,7 @@ export class Natgateway extends pulumi.CustomResource {
             resourceInputs["labels"] = args?.labels;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
+            resourceInputs["reservedIpId"] = args?.reservedIpId;
             resourceInputs["securityGroupAttachments"] = args?.securityGroupAttachments;
             resourceInputs["subnetId"] = args?.subnetId;
             resourceInputs["endpointIp"] = undefined /*out*/;
@@ -179,49 +184,56 @@ export interface NatgatewayState {
     /**
      * Annotations for the NatGateway
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * A human readable description about the natGateway
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Endpoint IP of the NatGateway
      */
-    endpointIp?: pulumi.Input<string>;
+    endpointIp?: pulumi.Input<string | undefined>;
     /**
      * Labels for the NatGateway
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the NatGateway
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+     */
+    reservedIpId?: pulumi.Input<string | undefined>;
     /**
      * List identities of security group that will be attached to the NAT Gateway
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
-    slug?: pulumi.Input<string>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Status of the NatGateway
      */
-    status?: pulumi.Input<string>;
+    status?: pulumi.Input<string | undefined>;
     /**
      * Subnet of the NatGateway
      */
-    subnetId?: pulumi.Input<string>;
+    subnetId?: pulumi.Input<string | undefined>;
     /**
      * V4 IP of the NatGateway
      */
-    v4Ip?: pulumi.Input<string>;
+    v4Ip?: pulumi.Input<string | undefined>;
     /**
      * V6 IP of the NatGateway
      */
-    v6Ip?: pulumi.Input<string>;
+    v6Ip?: pulumi.Input<string | undefined>;
     /**
      * VPC of the NatGateway
      */
-    vpcId?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -231,24 +243,31 @@ export interface NatgatewayArgs {
     /**
      * Annotations for the NatGateway
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * A human readable description about the natGateway
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the NatGateway
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the NatGateway
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the NatGateway. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * Reserved IP ID to attach to this NAT gateway. Set to empty string to detach.
+     */
+    reservedIpId?: pulumi.Input<string | undefined>;
     /**
      * List identities of security group that will be attached to the NAT Gateway
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Subnet of the NatGateway
      */

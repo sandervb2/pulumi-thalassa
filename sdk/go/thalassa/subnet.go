@@ -96,7 +96,8 @@ type Subnet struct {
 	// Labels for the Subnet
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the Subnet
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Route Table of the Subnet
 	RouteTableId pulumi.StringPtrOutput `pulumi:"routeTableId"`
@@ -163,7 +164,8 @@ type subnetState struct {
 	// Labels for the Subnet
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Subnet
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Route Table of the Subnet
 	RouteTableId *string `pulumi:"routeTableId"`
@@ -195,7 +197,8 @@ type SubnetState struct {
 	// Labels for the Subnet
 	Labels pulumi.StringMapInput
 	// Name of the Subnet
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Route Table of the Subnet
 	RouteTableId pulumi.StringPtrInput
@@ -223,7 +226,8 @@ type subnetArgs struct {
 	// Labels for the Subnet
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Subnet
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Route Table of the Subnet
 	RouteTableId *string `pulumi:"routeTableId"`
@@ -242,7 +246,8 @@ type SubnetArgs struct {
 	// Labels for the Subnet
 	Labels pulumi.StringMapInput
 	// Name of the Subnet
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Route Table of the Subnet
 	RouteTableId pulumi.StringPtrInput
@@ -382,6 +387,7 @@ func (o SubnetOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Subnet) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
 func (o SubnetOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Subnet) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

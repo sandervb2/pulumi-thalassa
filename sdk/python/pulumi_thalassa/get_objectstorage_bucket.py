@@ -26,7 +26,7 @@ class GetObjectstorageBucketResult:
     """
     A collection of values returned by getObjectstorageBucket.
     """
-    def __init__(__self__, endpoint=None, id=None, name=None, organisation_id=None, policy=None, public=None, region=None, status=None):
+    def __init__(__self__, endpoint=None, id=None, name=None, object_lock_enabled=None, organisation_id=None, policy=None, region=None, status=None, versioning=None):
         if endpoint and not isinstance(endpoint, str):
             raise TypeError("Expected argument 'endpoint' to be a str")
         pulumi.set(__self__, "endpoint", endpoint)
@@ -36,21 +36,24 @@ class GetObjectstorageBucketResult:
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
+        if object_lock_enabled and not isinstance(object_lock_enabled, bool):
+            raise TypeError("Expected argument 'object_lock_enabled' to be a bool")
+        pulumi.set(__self__, "object_lock_enabled", object_lock_enabled)
         if organisation_id and not isinstance(organisation_id, str):
             raise TypeError("Expected argument 'organisation_id' to be a str")
         pulumi.set(__self__, "organisation_id", organisation_id)
         if policy and not isinstance(policy, str):
             raise TypeError("Expected argument 'policy' to be a str")
         pulumi.set(__self__, "policy", policy)
-        if public and not isinstance(public, bool):
-            raise TypeError("Expected argument 'public' to be a bool")
-        pulumi.set(__self__, "public", public)
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
+        if versioning and not isinstance(versioning, bool):
+            raise TypeError("Expected argument 'versioning' to be a bool")
+        pulumi.set(__self__, "versioning", versioning)
 
     @_builtins.property
     @pulumi.getter
@@ -77,8 +80,19 @@ class GetObjectstorageBucketResult:
         return pulumi.get(self, "name")
 
     @_builtins.property
+    @pulumi.getter(name="objectLockEnabled")
+    def object_lock_enabled(self) -> _builtins.bool:
+        """
+        Whether the bucket has object lock enabled
+        """
+        return pulumi.get(self, "object_lock_enabled")
+
+    @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -88,14 +102,6 @@ class GetObjectstorageBucketResult:
         The bucket policy as a JSON string
         """
         return pulumi.get(self, "policy")
-
-    @_builtins.property
-    @pulumi.getter
-    def public(self) -> _builtins.bool:
-        """
-        Whether the bucket is publicly accessible
-        """
-        return pulumi.get(self, "public")
 
     @_builtins.property
     @pulumi.getter
@@ -113,6 +119,14 @@ class GetObjectstorageBucketResult:
         """
         return pulumi.get(self, "status")
 
+    @_builtins.property
+    @pulumi.getter
+    def versioning(self) -> _builtins.bool:
+        """
+        Whether the bucket is versioned
+        """
+        return pulumi.get(self, "versioning")
+
 
 class AwaitableGetObjectstorageBucketResult(GetObjectstorageBucketResult):
     # pylint: disable=using-constant-test
@@ -123,11 +137,12 @@ class AwaitableGetObjectstorageBucketResult(GetObjectstorageBucketResult):
             endpoint=self.endpoint,
             id=self.id,
             name=self.name,
+            object_lock_enabled=self.object_lock_enabled,
             organisation_id=self.organisation_id,
             policy=self.policy,
-            public=self.public,
             region=self.region,
-            status=self.status)
+            status=self.status,
+            versioning=self.versioning)
 
 
 def get_objectstorage_bucket(name: Optional[_builtins.str] = None,
@@ -139,6 +154,7 @@ def get_objectstorage_bucket(name: Optional[_builtins.str] = None,
 
 
     :param _builtins.str name: Name of the bucket
+    :param _builtins.str organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str region: Region of the bucket
     """
     __args__ = dict()
@@ -152,20 +168,22 @@ def get_objectstorage_bucket(name: Optional[_builtins.str] = None,
         endpoint=pulumi.get(__ret__, 'endpoint'),
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'),
+        object_lock_enabled=pulumi.get(__ret__, 'object_lock_enabled'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         policy=pulumi.get(__ret__, 'policy'),
-        public=pulumi.get(__ret__, 'public'),
         region=pulumi.get(__ret__, 'region'),
-        status=pulumi.get(__ret__, 'status'))
-def get_objectstorage_bucket_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                                    organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                    region: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+        status=pulumi.get(__ret__, 'status'),
+        versioning=pulumi.get(__ret__, 'versioning'))
+def get_objectstorage_bucket_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                                    organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                    region: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetObjectstorageBucketResult]:
     """
     Get an object storage bucket
 
 
     :param _builtins.str name: Name of the bucket
+    :param _builtins.str organisation_id: Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str region: Region of the bucket
     """
     __args__ = dict()
@@ -178,8 +196,9 @@ def get_objectstorage_bucket_output(name: Optional[pulumi.Input[_builtins.str]] 
         endpoint=pulumi.get(__response__, 'endpoint'),
         id=pulumi.get(__response__, 'id'),
         name=pulumi.get(__response__, 'name'),
+        object_lock_enabled=pulumi.get(__response__, 'object_lock_enabled'),
         organisation_id=pulumi.get(__response__, 'organisation_id'),
         policy=pulumi.get(__response__, 'policy'),
-        public=pulumi.get(__response__, 'public'),
         region=pulumi.get(__response__, 'region'),
-        status=pulumi.get(__response__, 'status')))
+        status=pulumi.get(__response__, 'status'),
+        versioning=pulumi.get(__response__, 'versioning')))

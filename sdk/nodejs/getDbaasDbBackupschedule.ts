@@ -19,6 +19,9 @@ export function getDbaasDbBackupschedule(args: GetDbaasDbBackupscheduleArgs, opt
 export interface GetDbaasDbBackupscheduleArgs {
     dbClusterId: string;
     name: string;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
 }
 
@@ -33,6 +36,9 @@ export interface GetDbaasDbBackupscheduleResult {
      */
     readonly id: string;
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     readonly retentionPolicy: string;
     readonly schedule: string;
@@ -53,5 +59,8 @@ export function getDbaasDbBackupscheduleOutput(args: GetDbaasDbBackupscheduleOut
 export interface GetDbaasDbBackupscheduleOutputArgs {
     dbClusterId: pulumi.Input<string>;
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

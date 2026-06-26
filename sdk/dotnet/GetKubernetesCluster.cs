@@ -76,6 +76,10 @@ namespace Pulumi.Thalassa
     public sealed class GetKubernetesClusterResult
     {
         /// <summary>
+        /// Advertise port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        public readonly int AdvertisePort;
+        /// <summary>
         /// Annotations for the Kubernetes Cluster
         /// </summary>
         public readonly ImmutableDictionary<string, string> Annotations;
@@ -91,6 +95,10 @@ namespace Pulumi.Thalassa
         /// Auto upgrade policy of the Kubernetes Cluster
         /// </summary>
         public readonly string AutoUpgradePolicy;
+        /// <summary>
+        /// Configuration for the cluster autoscaler
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetKubernetesClusterAutoscalerConfigResult> AutoscalerConfigs;
         /// <summary>
         /// Cluster type of the Kubernetes Cluster
         /// </summary>
@@ -112,9 +120,21 @@ namespace Pulumi.Thalassa
         /// </summary>
         public readonly string Description;
         /// <summary>
+        /// Disable public endpoint of the Kubernetes Cluster
+        /// </summary>
+        public readonly bool DisablePublicEndpoint;
+        /// <summary>
         /// The ID of this resource.
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// VPC-internal endpoint for the Kubernetes Cluster
+        /// </summary>
+        public readonly string InternalEndpoint;
+        /// <summary>
+        /// Konnectivity port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        public readonly int KonnectivityPort;
         /// <summary>
         /// Kubernetes API server CA certificate of the Kubernetes Cluster
         /// </summary>
@@ -143,6 +163,14 @@ namespace Pulumi.Thalassa
         /// CNI of the Kubernetes Cluster
         /// </summary>
         public readonly string NetworkingCni;
+        /// <summary>
+        /// Deployment mode of the kube proxy
+        /// </summary>
+        public readonly string NetworkingKubeProxyDeployment;
+        /// <summary>
+        /// Mode of the kube proxy
+        /// </summary>
+        public readonly string NetworkingKubeProxyMode;
         /// <summary>
         /// Pod CIDR of the Kubernetes Cluster
         /// </summary>
@@ -178,6 +206,8 @@ namespace Pulumi.Thalassa
 
         [OutputConstructor]
         private GetKubernetesClusterResult(
+            int advertisePort,
+
             ImmutableDictionary<string, string> annotations,
 
             ImmutableArray<Outputs.GetKubernetesClusterApiServerAclResult> apiServerAcls,
@@ -185,6 +215,8 @@ namespace Pulumi.Thalassa
             string auditLogProfile,
 
             string autoUpgradePolicy,
+
+            ImmutableArray<Outputs.GetKubernetesClusterAutoscalerConfigResult> autoscalerConfigs,
 
             string clusterType,
 
@@ -196,7 +228,13 @@ namespace Pulumi.Thalassa
 
             string description,
 
+            bool disablePublicEndpoint,
+
             string id,
+
+            string internalEndpoint,
+
+            int konnectivityPort,
 
             string kubernetesApiServerCaCertificate,
 
@@ -211,6 +249,10 @@ namespace Pulumi.Thalassa
             string name,
 
             string networkingCni,
+
+            string networkingKubeProxyDeployment,
+
+            string networkingKubeProxyMode,
 
             string networkingPodCidr,
 
@@ -228,16 +270,21 @@ namespace Pulumi.Thalassa
 
             string vpcId)
         {
+            AdvertisePort = advertisePort;
             Annotations = annotations;
             ApiServerAcls = apiServerAcls;
             AuditLogProfile = auditLogProfile;
             AutoUpgradePolicy = autoUpgradePolicy;
+            AutoscalerConfigs = autoscalerConfigs;
             ClusterType = clusterType;
             ClusterVersion = clusterVersion;
             DefaultNetworkPolicy = defaultNetworkPolicy;
             DeleteProtection = deleteProtection;
             Description = description;
+            DisablePublicEndpoint = disablePublicEndpoint;
             Id = id;
+            InternalEndpoint = internalEndpoint;
+            KonnectivityPort = konnectivityPort;
             KubernetesApiServerCaCertificate = kubernetesApiServerCaCertificate;
             KubernetesApiServerEndpoint = kubernetesApiServerEndpoint;
             Labels = labels;
@@ -245,6 +292,8 @@ namespace Pulumi.Thalassa
             MaintenanceStartAt = maintenanceStartAt;
             Name = name;
             NetworkingCni = networkingCni;
+            NetworkingKubeProxyDeployment = networkingKubeProxyDeployment;
+            NetworkingKubeProxyMode = networkingKubeProxyMode;
             NetworkingPodCidr = networkingPodCidr;
             NetworkingServiceCidr = networkingServiceCidr;
             OrganisationId = organisationId;

@@ -24,36 +24,44 @@ class TargetGroupArgs:
                  port: pulumi.Input[_builtins.int],
                  protocol: pulumi.Input[_builtins.str],
                  vpc_id: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_interval: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_path: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_port: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 healthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 unhealthy_threshold: Optional[pulumi.Input[_builtins.int]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+                 health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None):
         """
         The set of arguments for constructing a TargetGroup resource.
+
         :param pulumi.Input[_builtins.int] port: The port on which the targets receive traffic
-        :param pulumi.Input[_builtins.str] protocol: The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        :param pulumi.Input[_builtins.str] protocol: Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         :param pulumi.Input[_builtins.str] vpc_id: The VPC this target group belongs to
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
         :param pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
-        :param pulumi.Input[_builtins.int] health_check_interval: The approximate amount of time, in seconds, between health checks of an individual target
-        :param pulumi.Input[_builtins.str] health_check_path: The path to use for health checks (only for HTTP/HTTPS)
-        :param pulumi.Input[_builtins.int] health_check_port: The port to use for health checks
-        :param pulumi.Input[_builtins.str] health_check_protocol: The protocol to use for health checks. Must be one of: tcp, http.
-        :param pulumi.Input[_builtins.int] health_check_timeout: The amount of time, in seconds, during which no response means a failed health check
-        :param pulumi.Input[_builtins.int] healthy_threshold: The number of consecutive health checks successes required before considering an unhealthy target healthy
+        :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).
+        :param pulumi.Input[_builtins.str] health_check_path: HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
+        :param pulumi.Input[_builtins.int] health_check_port: Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
+        :param pulumi.Input[_builtins.str] health_check_protocol: Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
+        :param pulumi.Input[_builtins.int] health_check_timeout: Seconds to wait for a health check response before failure (timeoutSeconds).
+        :param pulumi.Input[_builtins.int] healthy_threshold: Consecutive successes required to mark a target healthy.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Target Group
+        :param pulumi.Input[_builtins.str] loadbalancing_policy: Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
         :param pulumi.Input[_builtins.str] name: Name of the Target Group
-        :param pulumi.Input[_builtins.int] unhealthy_threshold: The number of consecutive health check failures required before considering a target unhealthy
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] target_selector: Label selector for automatic target membership; when set, targets matching these labels join the group.
+        :param pulumi.Input[_builtins.int] unhealthy_threshold: Consecutive failures required to mark a target unhealthy.
         """
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "protocol", protocol)
@@ -64,6 +72,8 @@ class TargetGroupArgs:
             pulumi.set(__self__, "attachments", attachments)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if enable_proxy_protocol is not None:
+            pulumi.set(__self__, "enable_proxy_protocol", enable_proxy_protocol)
         if health_check_interval is not None:
             pulumi.set(__self__, "health_check_interval", health_check_interval)
         if health_check_path is not None:
@@ -78,10 +88,14 @@ class TargetGroupArgs:
             pulumi.set(__self__, "healthy_threshold", healthy_threshold)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if loadbalancing_policy is not None:
+            pulumi.set(__self__, "loadbalancing_policy", loadbalancing_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
+        if target_selector is not None:
+            pulumi.set(__self__, "target_selector", target_selector)
         if unhealthy_threshold is not None:
             pulumi.set(__self__, "unhealthy_threshold", unhealthy_threshold)
 
@@ -101,7 +115,7 @@ class TargetGroupArgs:
     @pulumi.getter
     def protocol(self) -> pulumi.Input[_builtins.str]:
         """
-        The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         """
         return pulumi.get(self, "protocol")
 
@@ -123,194 +137,241 @@ class TargetGroupArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Target Group
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]:
+    def attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]:
         """
         The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         """
         return pulumi.get(self, "attachments")
 
     @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]):
+    def attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]):
         pulumi.set(self, "attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the target group
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
-    @pulumi.getter(name="healthCheckInterval")
-    def health_check_interval(self) -> Optional[pulumi.Input[_builtins.int]]:
+    @pulumi.getter(name="enableProxyProtocol")
+    def enable_proxy_protocol(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        The approximate amount of time, in seconds, between health checks of an individual target
+        When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        """
+        return pulumi.get(self, "enable_proxy_protocol")
+
+    @enable_proxy_protocol.setter
+    def enable_proxy_protocol(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enable_proxy_protocol", value)
+
+    @_builtins.property
+    @pulumi.getter(name="healthCheckInterval")
+    def health_check_interval(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Seconds between health checks of each target (periodSeconds).
         """
         return pulumi.get(self, "health_check_interval")
 
     @health_check_interval.setter
-    def health_check_interval(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_interval(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_interval", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckPath")
-    def health_check_path(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def health_check_path(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The path to use for health checks (only for HTTP/HTTPS)
+        HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         """
         return pulumi.get(self, "health_check_path")
 
     @health_check_path.setter
-    def health_check_path(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def health_check_path(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "health_check_path", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckPort")
-    def health_check_port(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def health_check_port(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The port to use for health checks
+        Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         """
         return pulumi.get(self, "health_check_port")
 
     @health_check_port.setter
-    def health_check_port(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_port(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_port", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckProtocol")
-    def health_check_protocol(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def health_check_protocol(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The protocol to use for health checks. Must be one of: tcp, http.
+        Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         """
         return pulumi.get(self, "health_check_protocol")
 
     @health_check_protocol.setter
-    def health_check_protocol(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def health_check_protocol(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "health_check_protocol", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckTimeout")
-    def health_check_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def health_check_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The amount of time, in seconds, during which no response means a failed health check
+        Seconds to wait for a health check response before failure (timeoutSeconds).
         """
         return pulumi.get(self, "health_check_timeout")
 
     @health_check_timeout.setter
-    def health_check_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_timeout", value)
 
     @_builtins.property
     @pulumi.getter(name="healthyThreshold")
-    def healthy_threshold(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def healthy_threshold(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The number of consecutive health checks successes required before considering an unhealthy target healthy
+        Consecutive successes required to mark a target healthy.
         """
         return pulumi.get(self, "healthy_threshold")
 
     @healthy_threshold.setter
-    def healthy_threshold(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def healthy_threshold(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "healthy_threshold", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Target Group
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="loadbalancingPolicy")
+    def loadbalancing_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        """
+        return pulumi.get(self, "loadbalancing_policy")
+
+    @loadbalancing_policy.setter
+    def loadbalancing_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "loadbalancing_policy", value)
+
+    @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Target Group
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
-    @pulumi.getter(name="unhealthyThreshold")
-    def unhealthy_threshold(self) -> Optional[pulumi.Input[_builtins.int]]:
+    @pulumi.getter(name="targetSelector")
+    def target_selector(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        The number of consecutive health check failures required before considering a target unhealthy
+        Label selector for automatic target membership; when set, targets matching these labels join the group.
+        """
+        return pulumi.get(self, "target_selector")
+
+    @target_selector.setter
+    def target_selector(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "target_selector", value)
+
+    @_builtins.property
+    @pulumi.getter(name="unhealthyThreshold")
+    def unhealthy_threshold(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Consecutive failures required to mark a target unhealthy.
         """
         return pulumi.get(self, "unhealthy_threshold")
 
     @unhealthy_threshold.setter
-    def unhealthy_threshold(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def unhealthy_threshold(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "unhealthy_threshold", value)
 
 
 @pulumi.input_type
 class _TargetGroupState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_interval: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_path: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_port: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 healthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 port: Optional[pulumi.Input[_builtins.int]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 unhealthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+                 health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 port: pulumi.Input[Optional[_builtins.int]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering TargetGroup resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
         :param pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
-        :param pulumi.Input[_builtins.int] health_check_interval: The approximate amount of time, in seconds, between health checks of an individual target
-        :param pulumi.Input[_builtins.str] health_check_path: The path to use for health checks (only for HTTP/HTTPS)
-        :param pulumi.Input[_builtins.int] health_check_port: The port to use for health checks
-        :param pulumi.Input[_builtins.str] health_check_protocol: The protocol to use for health checks. Must be one of: tcp, http.
-        :param pulumi.Input[_builtins.int] health_check_timeout: The amount of time, in seconds, during which no response means a failed health check
-        :param pulumi.Input[_builtins.int] healthy_threshold: The number of consecutive health checks successes required before considering an unhealthy target healthy
+        :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).
+        :param pulumi.Input[_builtins.str] health_check_path: HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
+        :param pulumi.Input[_builtins.int] health_check_port: Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
+        :param pulumi.Input[_builtins.str] health_check_protocol: Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
+        :param pulumi.Input[_builtins.int] health_check_timeout: Seconds to wait for a health check response before failure (timeoutSeconds).
+        :param pulumi.Input[_builtins.int] healthy_threshold: Consecutive successes required to mark a target healthy.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Target Group
+        :param pulumi.Input[_builtins.str] loadbalancing_policy: Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
         :param pulumi.Input[_builtins.str] name: Name of the Target Group
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] port: The port on which the targets receive traffic
-        :param pulumi.Input[_builtins.str] protocol: The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
-        :param pulumi.Input[_builtins.int] unhealthy_threshold: The number of consecutive health check failures required before considering a target unhealthy
+        :param pulumi.Input[_builtins.str] protocol: Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] target_selector: Label selector for automatic target membership; when set, targets matching these labels join the group.
+        :param pulumi.Input[_builtins.int] unhealthy_threshold: Consecutive failures required to mark a target unhealthy.
         :param pulumi.Input[_builtins.str] vpc_id: The VPC this target group belongs to
         """
         if annotations is not None:
@@ -319,6 +380,8 @@ class _TargetGroupState:
             pulumi.set(__self__, "attachments", attachments)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if enable_proxy_protocol is not None:
+            pulumi.set(__self__, "enable_proxy_protocol", enable_proxy_protocol)
         if health_check_interval is not None:
             pulumi.set(__self__, "health_check_interval", health_check_interval)
         if health_check_path is not None:
@@ -333,6 +396,8 @@ class _TargetGroupState:
             pulumi.set(__self__, "healthy_threshold", healthy_threshold)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if loadbalancing_policy is not None:
+            pulumi.set(__self__, "loadbalancing_policy", loadbalancing_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -343,6 +408,8 @@ class _TargetGroupState:
             pulumi.set(__self__, "protocol", protocol)
         if slug is not None:
             pulumi.set(__self__, "slug", slug)
+        if target_selector is not None:
+            pulumi.set(__self__, "target_selector", target_selector)
         if unhealthy_threshold is not None:
             pulumi.set(__self__, "unhealthy_threshold", unhealthy_threshold)
         if vpc_id is not None:
@@ -350,200 +417,239 @@ class _TargetGroupState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Target Group
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]:
+    def attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]:
         """
         The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         """
         return pulumi.get(self, "attachments")
 
     @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]):
+    def attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['TargetGroupAttachmentArgs']]]]):
         pulumi.set(self, "attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the target group
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
-    @pulumi.getter(name="healthCheckInterval")
-    def health_check_interval(self) -> Optional[pulumi.Input[_builtins.int]]:
+    @pulumi.getter(name="enableProxyProtocol")
+    def enable_proxy_protocol(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        The approximate amount of time, in seconds, between health checks of an individual target
+        When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        """
+        return pulumi.get(self, "enable_proxy_protocol")
+
+    @enable_proxy_protocol.setter
+    def enable_proxy_protocol(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enable_proxy_protocol", value)
+
+    @_builtins.property
+    @pulumi.getter(name="healthCheckInterval")
+    def health_check_interval(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Seconds between health checks of each target (periodSeconds).
         """
         return pulumi.get(self, "health_check_interval")
 
     @health_check_interval.setter
-    def health_check_interval(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_interval(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_interval", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckPath")
-    def health_check_path(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def health_check_path(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The path to use for health checks (only for HTTP/HTTPS)
+        HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         """
         return pulumi.get(self, "health_check_path")
 
     @health_check_path.setter
-    def health_check_path(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def health_check_path(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "health_check_path", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckPort")
-    def health_check_port(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def health_check_port(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The port to use for health checks
+        Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         """
         return pulumi.get(self, "health_check_port")
 
     @health_check_port.setter
-    def health_check_port(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_port(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_port", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckProtocol")
-    def health_check_protocol(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def health_check_protocol(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The protocol to use for health checks. Must be one of: tcp, http.
+        Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         """
         return pulumi.get(self, "health_check_protocol")
 
     @health_check_protocol.setter
-    def health_check_protocol(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def health_check_protocol(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "health_check_protocol", value)
 
     @_builtins.property
     @pulumi.getter(name="healthCheckTimeout")
-    def health_check_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def health_check_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The amount of time, in seconds, during which no response means a failed health check
+        Seconds to wait for a health check response before failure (timeoutSeconds).
         """
         return pulumi.get(self, "health_check_timeout")
 
     @health_check_timeout.setter
-    def health_check_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def health_check_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "health_check_timeout", value)
 
     @_builtins.property
     @pulumi.getter(name="healthyThreshold")
-    def healthy_threshold(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def healthy_threshold(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        The number of consecutive health checks successes required before considering an unhealthy target healthy
+        Consecutive successes required to mark a target healthy.
         """
         return pulumi.get(self, "healthy_threshold")
 
     @healthy_threshold.setter
-    def healthy_threshold(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def healthy_threshold(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "healthy_threshold", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Target Group
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="loadbalancingPolicy")
+    def loadbalancing_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        """
+        return pulumi.get(self, "loadbalancing_policy")
+
+    @loadbalancing_policy.setter
+    def loadbalancing_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "loadbalancing_policy", value)
+
+    @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Target Group
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def port(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The port on which the targets receive traffic
         """
         return pulumi.get(self, "port")
 
     @port.setter
-    def port(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port", value)
 
     @_builtins.property
     @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def protocol(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         """
         return pulumi.get(self, "protocol")
 
     @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def protocol(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "protocol", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
-    @pulumi.getter(name="unhealthyThreshold")
-    def unhealthy_threshold(self) -> Optional[pulumi.Input[_builtins.int]]:
+    @pulumi.getter(name="targetSelector")
+    def target_selector(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        The number of consecutive health check failures required before considering a target unhealthy
+        Label selector for automatic target membership; when set, targets matching these labels join the group.
+        """
+        return pulumi.get(self, "target_selector")
+
+    @target_selector.setter
+    def target_selector(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "target_selector", value)
+
+    @_builtins.property
+    @pulumi.getter(name="unhealthyThreshold")
+    def unhealthy_threshold(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Consecutive failures required to mark a target unhealthy.
         """
         return pulumi.get(self, "unhealthy_threshold")
 
     @unhealthy_threshold.setter
-    def unhealthy_threshold(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def unhealthy_threshold(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "unhealthy_threshold", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
-    def vpc_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vpc_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The VPC this target group belongs to
         """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
-    def vpc_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vpc_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vpc_id", value)
 
 
@@ -553,22 +659,25 @@ class TargetGroup(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: Optional[pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_interval: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_path: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_port: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 healthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 port: Optional[pulumi.Input[_builtins.int]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 unhealthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+                 health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 port: pulumi.Input[Optional[_builtins.int]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a target group for a load balancer
@@ -607,22 +716,27 @@ class TargetGroup(pulumi.CustomResource):
         pulumi.export("targetGroupId", example_target_group.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
         :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
-        :param pulumi.Input[_builtins.int] health_check_interval: The approximate amount of time, in seconds, between health checks of an individual target
-        :param pulumi.Input[_builtins.str] health_check_path: The path to use for health checks (only for HTTP/HTTPS)
-        :param pulumi.Input[_builtins.int] health_check_port: The port to use for health checks
-        :param pulumi.Input[_builtins.str] health_check_protocol: The protocol to use for health checks. Must be one of: tcp, http.
-        :param pulumi.Input[_builtins.int] health_check_timeout: The amount of time, in seconds, during which no response means a failed health check
-        :param pulumi.Input[_builtins.int] healthy_threshold: The number of consecutive health checks successes required before considering an unhealthy target healthy
+        :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).
+        :param pulumi.Input[_builtins.str] health_check_path: HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
+        :param pulumi.Input[_builtins.int] health_check_port: Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
+        :param pulumi.Input[_builtins.str] health_check_protocol: Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
+        :param pulumi.Input[_builtins.int] health_check_timeout: Seconds to wait for a health check response before failure (timeoutSeconds).
+        :param pulumi.Input[_builtins.int] healthy_threshold: Consecutive successes required to mark a target healthy.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Target Group
+        :param pulumi.Input[_builtins.str] loadbalancing_policy: Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
         :param pulumi.Input[_builtins.str] name: Name of the Target Group
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] port: The port on which the targets receive traffic
-        :param pulumi.Input[_builtins.str] protocol: The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
-        :param pulumi.Input[_builtins.int] unhealthy_threshold: The number of consecutive health check failures required before considering a target unhealthy
+        :param pulumi.Input[_builtins.str] protocol: Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] target_selector: Label selector for automatic target membership; when set, targets matching these labels join the group.
+        :param pulumi.Input[_builtins.int] unhealthy_threshold: Consecutive failures required to mark a target unhealthy.
         :param pulumi.Input[_builtins.str] vpc_id: The VPC this target group belongs to
         """
         ...
@@ -668,6 +782,7 @@ class TargetGroup(pulumi.CustomResource):
         pulumi.export("targetGroupId", example_target_group.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param TargetGroupArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -683,22 +798,25 @@ class TargetGroup(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: Optional[pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_interval: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_path: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_port: Optional[pulumi.Input[_builtins.int]] = None,
-                 health_check_protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 health_check_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 healthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 port: Optional[pulumi.Input[_builtins.int]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 unhealthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+                 health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+                 health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 port: pulumi.Input[Optional[_builtins.int]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -711,6 +829,7 @@ class TargetGroup(pulumi.CustomResource):
             __props__.__dict__["annotations"] = annotations
             __props__.__dict__["attachments"] = attachments
             __props__.__dict__["description"] = description
+            __props__.__dict__["enable_proxy_protocol"] = enable_proxy_protocol
             __props__.__dict__["health_check_interval"] = health_check_interval
             __props__.__dict__["health_check_path"] = health_check_path
             __props__.__dict__["health_check_port"] = health_check_port
@@ -718,6 +837,7 @@ class TargetGroup(pulumi.CustomResource):
             __props__.__dict__["health_check_timeout"] = health_check_timeout
             __props__.__dict__["healthy_threshold"] = healthy_threshold
             __props__.__dict__["labels"] = labels
+            __props__.__dict__["loadbalancing_policy"] = loadbalancing_policy
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
             if port is None and not opts.urn:
@@ -726,6 +846,7 @@ class TargetGroup(pulumi.CustomResource):
             if protocol is None and not opts.urn:
                 raise TypeError("Missing required property 'protocol'")
             __props__.__dict__["protocol"] = protocol
+            __props__.__dict__["target_selector"] = target_selector
             __props__.__dict__["unhealthy_threshold"] = unhealthy_threshold
             if vpc_id is None and not opts.urn:
                 raise TypeError("Missing required property 'vpc_id'")
@@ -741,23 +862,26 @@ class TargetGroup(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            attachments: Optional[pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            health_check_interval: Optional[pulumi.Input[_builtins.int]] = None,
-            health_check_path: Optional[pulumi.Input[_builtins.str]] = None,
-            health_check_port: Optional[pulumi.Input[_builtins.int]] = None,
-            health_check_protocol: Optional[pulumi.Input[_builtins.str]] = None,
-            health_check_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-            healthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            port: Optional[pulumi.Input[_builtins.int]] = None,
-            protocol: Optional[pulumi.Input[_builtins.str]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            unhealthy_threshold: Optional[pulumi.Input[_builtins.int]] = None,
-            vpc_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'TargetGroup':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+            health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+            health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+            health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+            health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            port: pulumi.Input[Optional[_builtins.int]] = None,
+            protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'TargetGroup':
         """
         Get an existing TargetGroup resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -768,17 +892,21 @@ class TargetGroup(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
         :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
-        :param pulumi.Input[_builtins.int] health_check_interval: The approximate amount of time, in seconds, between health checks of an individual target
-        :param pulumi.Input[_builtins.str] health_check_path: The path to use for health checks (only for HTTP/HTTPS)
-        :param pulumi.Input[_builtins.int] health_check_port: The port to use for health checks
-        :param pulumi.Input[_builtins.str] health_check_protocol: The protocol to use for health checks. Must be one of: tcp, http.
-        :param pulumi.Input[_builtins.int] health_check_timeout: The amount of time, in seconds, during which no response means a failed health check
-        :param pulumi.Input[_builtins.int] healthy_threshold: The number of consecutive health checks successes required before considering an unhealthy target healthy
+        :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).
+        :param pulumi.Input[_builtins.str] health_check_path: HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
+        :param pulumi.Input[_builtins.int] health_check_port: Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
+        :param pulumi.Input[_builtins.str] health_check_protocol: Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
+        :param pulumi.Input[_builtins.int] health_check_timeout: Seconds to wait for a health check response before failure (timeoutSeconds).
+        :param pulumi.Input[_builtins.int] healthy_threshold: Consecutive successes required to mark a target healthy.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Target Group
+        :param pulumi.Input[_builtins.str] loadbalancing_policy: Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
         :param pulumi.Input[_builtins.str] name: Name of the Target Group
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] port: The port on which the targets receive traffic
-        :param pulumi.Input[_builtins.str] protocol: The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
-        :param pulumi.Input[_builtins.int] unhealthy_threshold: The number of consecutive health check failures required before considering a target unhealthy
+        :param pulumi.Input[_builtins.str] protocol: Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] target_selector: Label selector for automatic target membership; when set, targets matching these labels join the group.
+        :param pulumi.Input[_builtins.int] unhealthy_threshold: Consecutive failures required to mark a target unhealthy.
         :param pulumi.Input[_builtins.str] vpc_id: The VPC this target group belongs to
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -788,6 +916,7 @@ class TargetGroup(pulumi.CustomResource):
         __props__.__dict__["annotations"] = annotations
         __props__.__dict__["attachments"] = attachments
         __props__.__dict__["description"] = description
+        __props__.__dict__["enable_proxy_protocol"] = enable_proxy_protocol
         __props__.__dict__["health_check_interval"] = health_check_interval
         __props__.__dict__["health_check_path"] = health_check_path
         __props__.__dict__["health_check_port"] = health_check_port
@@ -795,11 +924,13 @@ class TargetGroup(pulumi.CustomResource):
         __props__.__dict__["health_check_timeout"] = health_check_timeout
         __props__.__dict__["healthy_threshold"] = healthy_threshold
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["loadbalancing_policy"] = loadbalancing_policy
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["port"] = port
         __props__.__dict__["protocol"] = protocol
         __props__.__dict__["slug"] = slug
+        __props__.__dict__["target_selector"] = target_selector
         __props__.__dict__["unhealthy_threshold"] = unhealthy_threshold
         __props__.__dict__["vpc_id"] = vpc_id
         return TargetGroup(resource_name, opts=opts, __props__=__props__)
@@ -829,10 +960,18 @@ class TargetGroup(pulumi.CustomResource):
         return pulumi.get(self, "description")
 
     @_builtins.property
+    @pulumi.getter(name="enableProxyProtocol")
+    def enable_proxy_protocol(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+        """
+        return pulumi.get(self, "enable_proxy_protocol")
+
+    @_builtins.property
     @pulumi.getter(name="healthCheckInterval")
     def health_check_interval(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        The approximate amount of time, in seconds, between health checks of an individual target
+        Seconds between health checks of each target (periodSeconds).
         """
         return pulumi.get(self, "health_check_interval")
 
@@ -840,7 +979,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter(name="healthCheckPath")
     def health_check_path(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        The path to use for health checks (only for HTTP/HTTPS)
+        HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
         """
         return pulumi.get(self, "health_check_path")
 
@@ -848,7 +987,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter(name="healthCheckPort")
     def health_check_port(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        The port to use for health checks
+        Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
         """
         return pulumi.get(self, "health_check_port")
 
@@ -856,7 +995,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter(name="healthCheckProtocol")
     def health_check_protocol(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        The protocol to use for health checks. Must be one of: tcp, http.
+        Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
         """
         return pulumi.get(self, "health_check_protocol")
 
@@ -864,7 +1003,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter(name="healthCheckTimeout")
     def health_check_timeout(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        The amount of time, in seconds, during which no response means a failed health check
+        Seconds to wait for a health check response before failure (timeoutSeconds).
         """
         return pulumi.get(self, "health_check_timeout")
 
@@ -872,7 +1011,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter(name="healthyThreshold")
     def healthy_threshold(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        The number of consecutive health checks successes required before considering an unhealthy target healthy
+        Consecutive successes required to mark a target healthy.
         """
         return pulumi.get(self, "healthy_threshold")
 
@@ -885,6 +1024,14 @@ class TargetGroup(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="loadbalancingPolicy")
+    def loadbalancing_policy(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+        """
+        return pulumi.get(self, "loadbalancing_policy")
+
+    @_builtins.property
     @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
@@ -895,6 +1042,9 @@ class TargetGroup(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -909,7 +1059,7 @@ class TargetGroup(pulumi.CustomResource):
     @pulumi.getter
     def protocol(self) -> pulumi.Output[_builtins.str]:
         """
-        The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+        Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
         """
         return pulumi.get(self, "protocol")
 
@@ -919,10 +1069,18 @@ class TargetGroup(pulumi.CustomResource):
         return pulumi.get(self, "slug")
 
     @_builtins.property
+    @pulumi.getter(name="targetSelector")
+    def target_selector(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
+        """
+        Label selector for automatic target membership; when set, targets matching these labels join the group.
+        """
+        return pulumi.get(self, "target_selector")
+
+    @_builtins.property
     @pulumi.getter(name="unhealthyThreshold")
     def unhealthy_threshold(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
-        The number of consecutive health check failures required before considering a target unhealthy
+        Consecutive failures required to mark a target unhealthy.
         """
         return pulumi.get(self, "unhealthy_threshold")
 

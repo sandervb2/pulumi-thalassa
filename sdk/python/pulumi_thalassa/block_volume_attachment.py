@@ -21,15 +21,17 @@ class BlockVolumeAttachmentArgs:
     def __init__(__self__, *,
                  vmi_id: pulumi.Input[_builtins.str],
                  volume_id: pulumi.Input[_builtins.str],
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_for_attached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_attached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 wait_for_detached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_detached_timeout: Optional[pulumi.Input[_builtins.int]] = None):
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None):
         """
         The set of arguments for constructing a BlockVolumeAttachment resource.
+
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the virtual machine to attach the volume to
         :param pulumi.Input[_builtins.str] volume_id: The ID of the volume to attach
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.bool] wait_for_attached: Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
         :param pulumi.Input[_builtins.int] wait_for_attached_timeout: The timeout in minutes to wait for the volume to be attached to the virtual machine. Only used if wait*for*attached is true. If not provided, the default timeout of 5 minutes will be used.
         :param pulumi.Input[_builtins.bool] wait_for_detached: Wait for the volume to be detached from the virtual machine. If false, the volume will be detached and the resource will be marked as deleted, but the volume may not be detached from the virtual machine yet.
@@ -74,75 +76,80 @@ class BlockVolumeAttachmentArgs:
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForAttached")
-    def wait_for_attached(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_for_attached(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
         """
         return pulumi.get(self, "wait_for_attached")
 
     @wait_for_attached.setter
-    def wait_for_attached(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_for_attached(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_for_attached", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForAttachedTimeout")
-    def wait_for_attached_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def wait_for_attached_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The timeout in minutes to wait for the volume to be attached to the virtual machine. Only used if wait*for*attached is true. If not provided, the default timeout of 5 minutes will be used.
         """
         return pulumi.get(self, "wait_for_attached_timeout")
 
     @wait_for_attached_timeout.setter
-    def wait_for_attached_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def wait_for_attached_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "wait_for_attached_timeout", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForDetached")
-    def wait_for_detached(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_for_detached(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait for the volume to be detached from the virtual machine. If false, the volume will be detached and the resource will be marked as deleted, but the volume may not be detached from the virtual machine yet.
         """
         return pulumi.get(self, "wait_for_detached")
 
     @wait_for_detached.setter
-    def wait_for_detached(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_for_detached(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_for_detached", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForDetachedTimeout")
-    def wait_for_detached_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def wait_for_detached_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The timeout in minutes to wait for the volume to be detached from the virtual machine. Only used if wait*for*detached is true. If not provided, the default timeout of 5 minutes will be used.
         """
         return pulumi.get(self, "wait_for_detached_timeout")
 
     @wait_for_detached_timeout.setter
-    def wait_for_detached_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def wait_for_detached_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "wait_for_detached_timeout", value)
 
 
 @pulumi.input_type
 class _BlockVolumeAttachmentState:
     def __init__(__self__, *,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 serial: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_for_attached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_attached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 wait_for_detached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_detached_timeout: Optional[pulumi.Input[_builtins.int]] = None):
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 serial: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering BlockVolumeAttachment resources.
+
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] serial: The device name to use for the volume attachment (e.g., /dev/sdb)
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the virtual machine to attach the volume to
         :param pulumi.Input[_builtins.str] volume_id: The ID of the volume to attach
@@ -170,95 +177,98 @@ class _BlockVolumeAttachmentState:
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def serial(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def serial(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The device name to use for the volume attachment (e.g., /dev/sdb)
         """
         return pulumi.get(self, "serial")
 
     @serial.setter
-    def serial(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def serial(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "serial", value)
 
     @_builtins.property
     @pulumi.getter(name="vmiId")
-    def vmi_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vmi_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the virtual machine to attach the volume to
         """
         return pulumi.get(self, "vmi_id")
 
     @vmi_id.setter
-    def vmi_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vmi_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vmi_id", value)
 
     @_builtins.property
     @pulumi.getter(name="volumeId")
-    def volume_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def volume_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the volume to attach
         """
         return pulumi.get(self, "volume_id")
 
     @volume_id.setter
-    def volume_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def volume_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "volume_id", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForAttached")
-    def wait_for_attached(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_for_attached(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
         """
         return pulumi.get(self, "wait_for_attached")
 
     @wait_for_attached.setter
-    def wait_for_attached(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_for_attached(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_for_attached", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForAttachedTimeout")
-    def wait_for_attached_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def wait_for_attached_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The timeout in minutes to wait for the volume to be attached to the virtual machine. Only used if wait*for*attached is true. If not provided, the default timeout of 5 minutes will be used.
         """
         return pulumi.get(self, "wait_for_attached_timeout")
 
     @wait_for_attached_timeout.setter
-    def wait_for_attached_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def wait_for_attached_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "wait_for_attached_timeout", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForDetached")
-    def wait_for_detached(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_for_detached(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait for the volume to be detached from the virtual machine. If false, the volume will be detached and the resource will be marked as deleted, but the volume may not be detached from the virtual machine yet.
         """
         return pulumi.get(self, "wait_for_detached")
 
     @wait_for_detached.setter
-    def wait_for_detached(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_for_detached(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_for_detached", value)
 
     @_builtins.property
     @pulumi.getter(name="waitForDetachedTimeout")
-    def wait_for_detached_timeout(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def wait_for_detached_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The timeout in minutes to wait for the volume to be detached from the virtual machine. Only used if wait*for*detached is true. If not provided, the default timeout of 5 minutes will be used.
         """
         return pulumi.get(self, "wait_for_detached_timeout")
 
     @wait_for_detached_timeout.setter
-    def wait_for_detached_timeout(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def wait_for_detached_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "wait_for_detached_timeout", value)
 
 
@@ -268,13 +278,13 @@ class BlockVolumeAttachment(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_for_attached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_attached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 wait_for_detached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_detached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  __props__=None):
         """
         Attach a block volume to a virtual machine. Volume must not be attached to another virtual machine.
@@ -321,8 +331,10 @@ class BlockVolumeAttachment(pulumi.CustomResource):
         pulumi.export("deviceSerial", example_block_volume_attachment.serial)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the virtual machine to attach the volume to
         :param pulumi.Input[_builtins.str] volume_id: The ID of the volume to attach
         :param pulumi.Input[_builtins.bool] wait_for_attached: Wait for the volume to be attached to the virtual machine. If false, the volume will be attached and the resource will be marked as created, but the volume may not be attached to the virtual machine yet.
@@ -381,6 +393,7 @@ class BlockVolumeAttachment(pulumi.CustomResource):
         pulumi.export("deviceSerial", example_block_volume_attachment.serial)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param BlockVolumeAttachmentArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -396,13 +409,13 @@ class BlockVolumeAttachment(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_for_attached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_attached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-                 wait_for_detached: Optional[pulumi.Input[_builtins.bool]] = None,
-                 wait_for_detached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+                 wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -434,14 +447,14 @@ class BlockVolumeAttachment(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            serial: Optional[pulumi.Input[_builtins.str]] = None,
-            vmi_id: Optional[pulumi.Input[_builtins.str]] = None,
-            volume_id: Optional[pulumi.Input[_builtins.str]] = None,
-            wait_for_attached: Optional[pulumi.Input[_builtins.bool]] = None,
-            wait_for_attached_timeout: Optional[pulumi.Input[_builtins.int]] = None,
-            wait_for_detached: Optional[pulumi.Input[_builtins.bool]] = None,
-            wait_for_detached_timeout: Optional[pulumi.Input[_builtins.int]] = None) -> 'BlockVolumeAttachment':
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            serial: pulumi.Input[Optional[_builtins.str]] = None,
+            vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> 'BlockVolumeAttachment':
         """
         Get an existing BlockVolumeAttachment resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -449,6 +462,7 @@ class BlockVolumeAttachment(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] serial: The device name to use for the volume attachment (e.g., /dev/sdb)
         :param pulumi.Input[_builtins.str] vmi_id: The ID of the virtual machine to attach the volume to
         :param pulumi.Input[_builtins.str] volume_id: The ID of the volume to attach
@@ -474,6 +488,9 @@ class BlockVolumeAttachment(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

@@ -32,6 +32,9 @@ export interface GetSecurityGroupArgs {
      * Name of the security group
      */
     name?: string;
+    /**
+     * Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Identity of the VPC that the security group belongs to. Required when searching by name.
@@ -75,6 +78,9 @@ export interface GetSecurityGroupResult {
      * Name of the security group
      */
     readonly name?: string;
+    /**
+     * Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Status of the security group
@@ -110,14 +116,17 @@ export interface GetSecurityGroupOutputArgs {
     /**
      * Identity of the security group
      */
-    identity?: pulumi.Input<string>;
+    identity?: pulumi.Input<string | undefined>;
     /**
      * Name of the security group
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Identity of the VPC that the security group belongs to. Required when searching by name.
      */
-    vpcIdentity?: pulumi.Input<string>;
+    vpcIdentity?: pulumi.Input<string | undefined>;
 }

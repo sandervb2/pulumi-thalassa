@@ -57,7 +57,8 @@ type CloudInitTemplate struct {
 	// Labels to add to the cloud init template
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// The name of the cloud init template
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The slug of the cloud init template
 	Slug pulumi.StringOutput `pulumi:"slug"`
@@ -103,7 +104,8 @@ type cloudInitTemplateState struct {
 	// Labels to add to the cloud init template
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the cloud init template
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The slug of the cloud init template
 	Slug *string `pulumi:"slug"`
@@ -117,7 +119,8 @@ type CloudInitTemplateState struct {
 	// Labels to add to the cloud init template
 	Labels pulumi.StringMapInput
 	// The name of the cloud init template
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The slug of the cloud init template
 	Slug pulumi.StringPtrInput
@@ -135,7 +138,8 @@ type cloudInitTemplateArgs struct {
 	// Labels to add to the cloud init template
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the cloud init template
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 }
 
@@ -148,7 +152,8 @@ type CloudInitTemplateArgs struct {
 	// Labels to add to the cloud init template
 	Labels pulumi.StringMapInput
 	// The name of the cloud init template
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 }
 
@@ -259,6 +264,7 @@ func (o CloudInitTemplateOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudInitTemplate) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
 func (o CloudInitTemplateOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CloudInitTemplate) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

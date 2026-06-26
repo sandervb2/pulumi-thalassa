@@ -33,14 +33,36 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &DbaasDbCluster{}
 	case "thalassa:index/dbaasPgDatabase:DbaasPgDatabase":
 		r = &DbaasPgDatabase{}
+	case "thalassa:index/dbaasPgGrant:DbaasPgGrant":
+		r = &DbaasPgGrant{}
 	case "thalassa:index/dbaasPgRoles:DbaasPgRoles":
 		r = &DbaasPgRoles{}
+	case "thalassa:index/dnsRecord:DnsRecord":
+		r = &DnsRecord{}
+	case "thalassa:index/dnsZone:DnsZone":
+		r = &DnsZone{}
+	case "thalassa:index/dnsZoneDnssec:DnsZoneDnssec":
+		r = &DnsZoneDnssec{}
 	case "thalassa:index/iamRole:IamRole":
 		r = &IamRole{}
+	case "thalassa:index/iamRoleBinding:IamRoleBinding":
+		r = &IamRoleBinding{}
+	case "thalassa:index/iamRoleRule:IamRoleRule":
+		r = &IamRoleRule{}
+	case "thalassa:index/iamServiceAccount:IamServiceAccount":
+		r = &IamServiceAccount{}
+	case "thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential":
+		r = &IamServiceAccountAccessCredential{}
 	case "thalassa:index/iamTeam:IamTeam":
 		r = &IamTeam{}
+	case "thalassa:index/kmsKey:KmsKey":
+		r = &KmsKey{}
 	case "thalassa:index/kubernetesCluster:KubernetesCluster":
 		r = &KubernetesCluster{}
+	case "thalassa:index/kubernetesClusterRole:KubernetesClusterRole":
+		r = &KubernetesClusterRole{}
+	case "thalassa:index/kubernetesClusterRoleBinding:KubernetesClusterRoleBinding":
+		r = &KubernetesClusterRoleBinding{}
 	case "thalassa:index/kubernetesNodePool:KubernetesNodePool":
 		r = &KubernetesNodePool{}
 	case "thalassa:index/loadbalancer:Loadbalancer":
@@ -51,22 +73,48 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Natgateway{}
 	case "thalassa:index/objectstorageBucket:ObjectstorageBucket":
 		r = &ObjectstorageBucket{}
+	case "thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle":
+		r = &ObjectstorageBucketLifecycle{}
+	case "thalassa:index/reservedIp:ReservedIp":
+		r = &ReservedIp{}
 	case "thalassa:index/routeTable:RouteTable":
 		r = &RouteTable{}
 	case "thalassa:index/routeTableRoute:RouteTableRoute":
 		r = &RouteTableRoute{}
+	case "thalassa:index/secret:Secret":
+		r = &Secret{}
+	case "thalassa:index/secretAccessPolicy:SecretAccessPolicy":
+		r = &SecretAccessPolicy{}
+	case "thalassa:index/secretVersion:SecretVersion":
+		r = &SecretVersion{}
 	case "thalassa:index/securityGroup:SecurityGroup":
 		r = &SecurityGroup{}
+	case "thalassa:index/securityGroupEgressRule:SecurityGroupEgressRule":
+		r = &SecurityGroupEgressRule{}
+	case "thalassa:index/securityGroupIngressRule:SecurityGroupIngressRule":
+		r = &SecurityGroupIngressRule{}
+	case "thalassa:index/snapshot:Snapshot":
+		r = &Snapshot{}
+	case "thalassa:index/snapshotPolicy:SnapshotPolicy":
+		r = &SnapshotPolicy{}
 	case "thalassa:index/subnet:Subnet":
 		r = &Subnet{}
 	case "thalassa:index/targetGroup:TargetGroup":
 		r = &TargetGroup{}
 	case "thalassa:index/targetGroupAttachment:TargetGroupAttachment":
 		r = &TargetGroupAttachment{}
+	case "thalassa:index/tfsInstance:TfsInstance":
+		r = &TfsInstance{}
 	case "thalassa:index/virtualMachineInstance:VirtualMachineInstance":
 		r = &VirtualMachineInstance{}
 	case "thalassa:index/vpc:Vpc":
 		r = &Vpc{}
+	case "thalassa:index/vpcFirewallRule:VpcFirewallRule":
+		r = &VpcFirewallRule{}
+	case "thalassa:index/vpcPeeringConnection:VpcPeeringConnection":
+		r = &VpcPeeringConnection{}
+	case "thalassa:index/vpcPeeringConnectionAcceptance:VpcPeeringConnectionAcceptance":
+		r = &VpcPeeringConnectionAcceptance{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}
@@ -130,7 +178,27 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/dbaasPgGrant",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/dbaasPgRoles",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/dnsRecord",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/dnsZone",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/dnsZoneDnssec",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -140,12 +208,47 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/iamRoleBinding",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/iamRoleRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/iamServiceAccount",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/iamServiceAccountAccessCredential",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/iamTeam",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/kmsKey",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/kubernetesCluster",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/kubernetesClusterRole",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/kubernetesClusterRoleBinding",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -175,6 +278,16 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/objectstorageBucketLifecycle",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/reservedIp",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/routeTable",
 		&module{version},
 	)
@@ -185,7 +298,42 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/secret",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/secretAccessPolicy",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/secretVersion",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/securityGroup",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/securityGroupEgressRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/securityGroupIngressRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/snapshot",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/snapshotPolicy",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -205,12 +353,32 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/tfsInstance",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/virtualMachineInstance",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
 		"index/vpc",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/vpcFirewallRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/vpcPeeringConnection",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/vpcPeeringConnectionAcceptance",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

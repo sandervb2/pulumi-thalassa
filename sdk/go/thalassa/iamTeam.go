@@ -47,6 +47,8 @@ import (
 //			ctx.Export("teamName", example.Name)
 //			ctx.Export("teamSlug", example.Slug)
 //			ctx.Export("teamDescription", example.Description)
+//			ctx.Export("teamMembers", example.Members)
+//			ctx.Export("teamMemberCount", len(example.Members))
 //			return nil
 //		})
 //	}
@@ -63,8 +65,11 @@ type IamTeam struct {
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// Labels for the Team
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
+	// List of team members
+	Members IamTeamMemberArrayOutput `pulumi:"members"`
 	// Name of the Team
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Slug of the Team
 	Slug pulumi.StringOutput `pulumi:"slug"`
@@ -110,8 +115,11 @@ type iamTeamState struct {
 	Description *string `pulumi:"description"`
 	// Labels for the Team
 	Labels map[string]string `pulumi:"labels"`
+	// List of team members
+	Members []IamTeamMember `pulumi:"members"`
 	// Name of the Team
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the Team
 	Slug *string `pulumi:"slug"`
@@ -128,8 +136,11 @@ type IamTeamState struct {
 	Description pulumi.StringPtrInput
 	// Labels for the Team
 	Labels pulumi.StringMapInput
+	// List of team members
+	Members IamTeamMemberArrayInput
 	// Name of the Team
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Slug of the Team
 	Slug pulumi.StringPtrInput
@@ -148,8 +159,11 @@ type iamTeamArgs struct {
 	Description *string `pulumi:"description"`
 	// Labels for the Team
 	Labels map[string]string `pulumi:"labels"`
+	// List of team members
+	Members []IamTeamMember `pulumi:"members"`
 	// Name of the Team
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 }
 
@@ -161,8 +175,11 @@ type IamTeamArgs struct {
 	Description pulumi.StringPtrInput
 	// Labels for the Team
 	Labels pulumi.StringMapInput
+	// List of team members
+	Members IamTeamMemberArrayInput
 	// Name of the Team
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 }
 
@@ -273,11 +290,17 @@ func (o IamTeamOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *IamTeam) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
 
+// List of team members
+func (o IamTeamOutput) Members() IamTeamMemberArrayOutput {
+	return o.ApplyT(func(v *IamTeam) IamTeamMemberArrayOutput { return v.Members }).(IamTeamMemberArrayOutput)
+}
+
 // Name of the Team
 func (o IamTeamOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *IamTeam) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 func (o IamTeamOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *IamTeam) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

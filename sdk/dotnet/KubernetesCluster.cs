@@ -11,10 +11,107 @@ namespace Pulumi.Thalassa
 {
     /// <summary>
     /// Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+    /// 
+    /// ## Cluster Types
+    /// 
+    /// ### Managed Clusters (Default)
+    /// - **Requires**: `SubnetId` - Must specify a subnet for node deployment
+    /// - **Use case**: Production workloads requiring full control
+    /// - **Features**: Complete control over node pools and configuration
+    /// 
+    /// ### Hosted Control Plane Clusters
+    /// - **Requires**: `Region` - Must specify a region for deployment
+    /// - **Use case**: Development and testing environments
+    /// - **Features**: Thalassa manages the control plane components
+    /// 
+    /// ## Important Notes
+    /// 
+    /// - **`ClusterVersion` is optional** - If not specified, the latest stable version is used
+    /// - **`NetworkingCni` defaults to "cilium"**
+    /// - **Network CIDRs cannot be changed** after creation (ForceNew)
+    /// - **Cluster type cannot be changed** after creation (ForceNew)
+    /// 
+    /// ## Security Configuration
+    /// 
+    /// - **Pod Security Standards**: `Restricted` (most secure), `Baseline` (default), `Privileged`
+    /// - **Network Policies**: `deny-all` (default), `allow-all`, or custom policies
+    /// - **API Server ACLs**: Restrict API server access to specific CIDR blocks
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Thalassa = Pulumi.Thalassa;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var config = new Config();
+    ///     // Region for the Kubernetes cluster
+    ///     var region = config.Get("region") ?? "nl-01";
+    ///     var example = new Thalassa.Vpc("example", new()
+    ///     {
+    ///         Name = "example-vpc",
+    ///         Description = "Example VPC for Kubernetes cluster",
+    ///         Region = region,
+    ///         Cidrs = new[]
+    ///         {
+    ///             "10.0.0.0/16",
+    ///         },
+    ///     });
+    /// 
+    ///     // Create a subnet for the Kubernetes cluster
+    ///     var exampleSubnet = new Thalassa.Subnet("example", new()
+    ///     {
+    ///         Name = "example-subnet",
+    ///         Description = "Example subnet for Kubernetes cluster",
+    ///         VpcId = example.Id,
+    ///         Cidr = "10.0.1.0/24",
+    ///     });
+    /// 
+    ///     // Create a Kubernetes cluster
+    ///     var exampleKubernetesCluster = new Thalassa.KubernetesCluster("example", new()
+    ///     {
+    ///         Name = "example-kubernetes-cluster",
+    ///         Description = "Example Kubernetes cluster",
+    ///         Region = region,
+    ///         SubnetId = exampleSubnet.Id,
+    ///     });
+    /// 
+    ///     // Create a Kubernetes node pool with Thalassa default values
+    ///     var exampleKubernetesNodePool = new Thalassa.KubernetesNodePool("example", new()
+    ///     {
+    ///         Name = "example-node-pool",
+    ///         ClusterId = exampleKubernetesCluster.Id,
+    ///         SubnetId = exampleSubnet.Id,
+    ///         AvailabilityZone = $"{region}a",
+    ///         MachineType = "pgp-small",
+    ///         EnableAutoscaling = true,
+    ///         MinReplicas = 1,
+    ///         MaxReplicas = 2,
+    ///     });
+    /// 
+    ///     return new Dictionary&lt;string, object?&gt;
+    ///     {
+    ///         ["kubernetesClusterId"] = exampleKubernetesCluster.Id,
+    ///         ["kubernetesClusterName"] = exampleKubernetesCluster.Name,
+    ///         ["advertiseAddress"] = exampleKubernetesCluster.InternalEndpoint,
+    ///         ["nodePoolId"] = exampleKubernetesNodePool.Id,
+    ///         ["nodePoolName"] = exampleKubernetesNodePool.Name,
+    ///     };
+    /// });
+    /// ```
     /// </summary>
     [ThalassaResourceType("thalassa:index/kubernetesCluster:KubernetesCluster")]
     public partial class KubernetesCluster : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Advertise port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        [Output("advertisePort")]
+        public Output<int> AdvertisePort { get; private set; } = null!;
+
         /// <summary>
         /// Annotations for the Kubernetes Cluster
         /// </summary>
@@ -40,16 +137,22 @@ namespace Pulumi.Thalassa
         public Output<string?> AutoUpgradePolicy { get; private set; } = null!;
 
         /// <summary>
+        /// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        /// </summary>
+        [Output("autoscalerConfig")]
+        public Output<Outputs.KubernetesClusterAutoscalerConfig> AutoscalerConfig { get; private set; } = null!;
+
+        /// <summary>
         /// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         /// </summary>
         [Output("clusterType")]
         public Output<string?> ClusterType { get; private set; } = null!;
 
         /// <summary>
-        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         /// </summary>
         [Output("clusterVersion")]
-        public Output<string> ClusterVersion { get; private set; } = null!;
+        public Output<string?> ClusterVersion { get; private set; } = null!;
 
         /// <summary>
         /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
@@ -68,6 +171,24 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
+
+        /// <summary>
+        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// </summary>
+        [Output("disablePublicEndpoint")]
+        public Output<bool?> DisablePublicEndpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// VPC-internal endpoint for the Kubernetes Cluster
+        /// </summary>
+        [Output("internalEndpoint")]
+        public Output<string> InternalEndpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// Konnectivity port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        [Output("konnectivityPort")]
+        public Output<int> KonnectivityPort { get; private set; } = null!;
 
         /// <summary>
         /// Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -106,25 +227,40 @@ namespace Pulumi.Thalassa
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// CNI of the Kubernetes Cluster
+        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
         /// </summary>
         [Output("networkingCni")]
-        public Output<string> NetworkingCni { get; private set; } = null!;
+        public Output<string?> NetworkingCni { get; private set; } = null!;
 
         /// <summary>
-        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        /// </summary>
+        [Output("networkingKubeProxyDeployment")]
+        public Output<string?> NetworkingKubeProxyDeployment { get; private set; } = null!;
+
+        /// <summary>
+        /// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        /// </summary>
+        [Output("networkingKubeProxyMode")]
+        public Output<string?> NetworkingKubeProxyMode { get; private set; } = null!;
+
+        /// <summary>
+        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Output("networkingPodCidr")]
         public Output<string?> NetworkingPodCidr { get; private set; } = null!;
 
         /// <summary>
-        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Output("networkingServiceCidr")]
         public Output<string?> NetworkingServiceCidr { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
-        public Output<string> OrganisationId { get; private set; } = null!;
+        public Output<string?> OrganisationId { get; private set; } = null!;
 
         /// <summary>
         /// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
@@ -173,7 +309,7 @@ namespace Pulumi.Thalassa
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public KubernetesCluster(string name, KubernetesClusterArgs args, CustomResourceOptions? options = null)
+        public KubernetesCluster(string name, KubernetesClusterArgs? args = null, CustomResourceOptions? options = null)
             : base("thalassa:index/kubernetesCluster:KubernetesCluster", name, args ?? new KubernetesClusterArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -249,16 +385,22 @@ namespace Pulumi.Thalassa
         public Input<string>? AutoUpgradePolicy { get; set; }
 
         /// <summary>
+        /// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        /// </summary>
+        [Input("autoscalerConfig")]
+        public Input<Inputs.KubernetesClusterAutoscalerConfigArgs>? AutoscalerConfig { get; set; }
+
+        /// <summary>
         /// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         /// </summary>
         [Input("clusterType")]
         public Input<string>? ClusterType { get; set; }
 
         /// <summary>
-        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         /// </summary>
-        [Input("clusterVersion", required: true)]
-        public Input<string> ClusterVersion { get; set; } = null!;
+        [Input("clusterVersion")]
+        public Input<string>? ClusterVersion { get; set; }
 
         /// <summary>
         /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
@@ -277,6 +419,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// </summary>
+        [Input("disablePublicEndpoint")]
+        public Input<bool>? DisablePublicEndpoint { get; set; }
 
         [Input("labels")]
         private InputMap<string>? _labels;
@@ -309,25 +457,40 @@ namespace Pulumi.Thalassa
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// CNI of the Kubernetes Cluster
+        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
         /// </summary>
-        [Input("networkingCni", required: true)]
-        public Input<string> NetworkingCni { get; set; } = null!;
+        [Input("networkingCni")]
+        public Input<string>? NetworkingCni { get; set; }
 
         /// <summary>
-        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        /// </summary>
+        [Input("networkingKubeProxyDeployment")]
+        public Input<string>? NetworkingKubeProxyDeployment { get; set; }
+
+        /// <summary>
+        /// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        /// </summary>
+        [Input("networkingKubeProxyMode")]
+        public Input<string>? NetworkingKubeProxyMode { get; set; }
+
+        /// <summary>
+        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Input("networkingPodCidr")]
         public Input<string>? NetworkingPodCidr { get; set; }
 
         /// <summary>
-        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Input("networkingServiceCidr")]
         public Input<string>? NetworkingServiceCidr { get; set; }
 
-        [Input("organisationId", required: true)]
-        public Input<string> OrganisationId { get; set; } = null!;
+        /// <summary>
+        /// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
+        [Input("organisationId")]
+        public Input<string>? OrganisationId { get; set; }
 
         /// <summary>
         /// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
@@ -367,6 +530,12 @@ namespace Pulumi.Thalassa
 
     public sealed class KubernetesClusterState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Advertise port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        [Input("advertisePort")]
+        public Input<int>? AdvertisePort { get; set; }
+
         [Input("annotations")]
         private InputMap<string>? _annotations;
 
@@ -404,13 +573,19 @@ namespace Pulumi.Thalassa
         public Input<string>? AutoUpgradePolicy { get; set; }
 
         /// <summary>
+        /// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        /// </summary>
+        [Input("autoscalerConfig")]
+        public Input<Inputs.KubernetesClusterAutoscalerConfigGetArgs>? AutoscalerConfig { get; set; }
+
+        /// <summary>
         /// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         /// </summary>
         [Input("clusterType")]
         public Input<string>? ClusterType { get; set; }
 
         /// <summary>
-        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+        /// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
         /// </summary>
         [Input("clusterVersion")]
         public Input<string>? ClusterVersion { get; set; }
@@ -432,6 +607,24 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// </summary>
+        [Input("disablePublicEndpoint")]
+        public Input<bool>? DisablePublicEndpoint { get; set; }
+
+        /// <summary>
+        /// VPC-internal endpoint for the Kubernetes Cluster
+        /// </summary>
+        [Input("internalEndpoint")]
+        public Input<string>? InternalEndpoint { get; set; }
+
+        /// <summary>
+        /// Konnectivity port for the Kubernetes Cluster within the VPC
+        /// </summary>
+        [Input("konnectivityPort")]
+        public Input<int>? KonnectivityPort { get; set; }
 
         /// <summary>
         /// Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -476,23 +669,38 @@ namespace Pulumi.Thalassa
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// CNI of the Kubernetes Cluster
+        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
         /// </summary>
         [Input("networkingCni")]
         public Input<string>? NetworkingCni { get; set; }
 
         /// <summary>
-        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+        /// </summary>
+        [Input("networkingKubeProxyDeployment")]
+        public Input<string>? NetworkingKubeProxyDeployment { get; set; }
+
+        /// <summary>
+        /// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+        /// </summary>
+        [Input("networkingKubeProxyMode")]
+        public Input<string>? NetworkingKubeProxyMode { get; set; }
+
+        /// <summary>
+        /// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Input("networkingPodCidr")]
         public Input<string>? NetworkingPodCidr { get; set; }
 
         /// <summary>
-        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+        /// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
         /// </summary>
         [Input("networkingServiceCidr")]
         public Input<string>? NetworkingServiceCidr { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

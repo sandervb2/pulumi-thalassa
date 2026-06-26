@@ -88,7 +88,7 @@ def get_regions(organisation_id: Optional[_builtins.str] = None,
         id=pulumi.get(__ret__, 'id'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         regions=pulumi.get(__ret__, 'regions'))
-def get_regions_output(organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_regions_output(organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetRegionsResult]:
     """
     Get a list of regions

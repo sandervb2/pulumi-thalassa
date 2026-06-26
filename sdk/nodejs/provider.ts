@@ -26,6 +26,10 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
+     * The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+     */
+    declare public readonly accessToken: pulumi.Output<string | undefined>;
+    /**
      * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
      */
     declare public readonly api: pulumi.Output<string | undefined>;
@@ -42,6 +46,10 @@ export class Provider extends pulumi.ProviderResource {
      */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
+     * The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+     */
+    declare public readonly projectId: pulumi.Output<string | undefined>;
+    /**
      * The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
      */
     declare public readonly token: pulumi.Output<string | undefined>;
@@ -57,14 +65,17 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
+            resourceInputs["accessToken"] = args?.accessToken ? pulumi.secret(args.accessToken) : undefined;
+            resourceInputs["allowInsecureOidc"] = pulumi.output(args?.allowInsecureOidc).apply(JSON.stringify);
             resourceInputs["api"] = args?.api;
             resourceInputs["clientId"] = args?.clientId ? pulumi.secret(args.clientId) : undefined;
             resourceInputs["clientSecret"] = args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined;
             resourceInputs["organisationId"] = args?.organisationId;
+            resourceInputs["projectId"] = args?.projectId;
             resourceInputs["token"] = args?.token ? pulumi.secret(args.token) : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["clientId", "clientSecret", "token"] };
+        const secretOpts = { additionalSecretOutputs: ["accessToken", "clientId", "clientSecret", "token"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
@@ -84,25 +95,37 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     /**
+     * The access token for authentication. Can be set via the THALASSA_ACCESS_TOKEN environment variable.
+     */
+    accessToken?: pulumi.Input<string | undefined>;
+    /**
+     * Allow insecure OIDC authentication. Can be set via the THALASSA_ALLOW_INSECURE_OIDC environment variable.
+     */
+    allowInsecureOidc?: pulumi.Input<boolean | undefined>;
+    /**
      * The API endpoint URL. Can be set via the THALASSA_API_ENDPOINT environment variable.
      */
-    api?: pulumi.Input<string>;
+    api?: pulumi.Input<string | undefined>;
     /**
      * The OIDC client ID for authentication. Can be set via the THALASSA_CLIENT_ID environment variable.
      */
-    clientId?: pulumi.Input<string>;
+    clientId?: pulumi.Input<string | undefined>;
     /**
      * The OIDC client secret for authentication. Can be set via the THALASSA_CLIENT_SECRET environment variable.
      */
-    clientSecret?: pulumi.Input<string>;
+    clientSecret?: pulumi.Input<string | undefined>;
     /**
      * The organisation ID to use. Can be set via the THALASSA_ORGANISATION environment variable.
      */
-    organisationId?: pulumi.Input<string>;
+    organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * The project ID to use. Can be set via the THALASSA_PROJECT_ID environment variable.
+     */
+    projectId?: pulumi.Input<string | undefined>;
     /**
      * The API token for authentication. Can be set via the THALASSA_API_TOKEN environment variable.
      */
-    token?: pulumi.Input<string>;
+    token?: pulumi.Input<string | undefined>;
 }
 
 export namespace Provider {

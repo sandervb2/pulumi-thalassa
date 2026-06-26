@@ -25,7 +25,8 @@ func LookupDbaasDbCluster(ctx *pulumi.Context, args *LookupDbaasDbClusterArgs, o
 // A collection of arguments for invoking getDbaasDbCluster.
 type LookupDbaasDbClusterArgs struct {
 	// Name of the DB Cluster
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the DB Cluster
 	Slug *string `pulumi:"slug"`
@@ -60,7 +61,8 @@ type LookupDbaasDbClusterResult struct {
 	// Labels of the DB Cluster
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the DB Cluster
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Map of parameter name to database engine specific parameter value
 	Parameters map[string]string `pulumi:"parameters"`
@@ -92,7 +94,8 @@ func LookupDbaasDbClusterOutput(ctx *pulumi.Context, args LookupDbaasDbClusterOu
 // A collection of arguments for invoking getDbaasDbCluster.
 type LookupDbaasDbClusterOutputArgs struct {
 	// Name of the DB Cluster
-	Name           pulumi.StringInput    `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Slug of the DB Cluster
 	Slug pulumi.StringPtrInput `pulumi:"slug"`
@@ -187,6 +190,7 @@ func (o LookupDbaasDbClusterResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDbaasDbClusterResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupDbaasDbClusterResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupDbaasDbClusterResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

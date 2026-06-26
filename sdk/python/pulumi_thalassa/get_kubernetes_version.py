@@ -150,6 +150,9 @@ class GetKubernetesVersionResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -201,6 +204,7 @@ def get_kubernetes_version(id: Optional[_builtins.str] = None,
 
     :param _builtins.str id: The ID of this resource.
     :param _builtins.str name: The name of the Kubernetes version.
+    :param _builtins.str organisation_id: Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: The slug of the Kubernetes version.
     """
     __args__ = dict()
@@ -225,10 +229,10 @@ def get_kubernetes_version(id: Optional[_builtins.str] = None,
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         runc_version=pulumi.get(__ret__, 'runc_version'),
         slug=pulumi.get(__ret__, 'slug'))
-def get_kubernetes_version_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                  name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                  organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                  slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_kubernetes_version_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                  name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                  organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                  slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                   opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetKubernetesVersionResult]:
     """
     Get an Kubernetes version
@@ -236,6 +240,7 @@ def get_kubernetes_version_output(id: Optional[pulumi.Input[Optional[_builtins.s
 
     :param _builtins.str id: The ID of this resource.
     :param _builtins.str name: The name of the Kubernetes version.
+    :param _builtins.str organisation_id: Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: The slug of the Kubernetes version.
     """
     __args__ = dict()

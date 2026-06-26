@@ -33,6 +33,9 @@ namespace Pulumi.Thalassa
 
     public sealed class GetRegionArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -47,6 +50,9 @@ namespace Pulumi.Thalassa
 
     public sealed class GetRegionInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -71,6 +77,9 @@ namespace Pulumi.Thalassa
         public readonly string Id;
         public readonly ImmutableDictionary<string, string> Labels;
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Region. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string OrganisationId;
         public readonly string? Slug;
 

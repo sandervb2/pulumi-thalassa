@@ -58,7 +58,8 @@ type BlockVolume struct {
 	// Labels for the Block Volume
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the Block Volume
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Region of the Block Volume.
 	Region pulumi.StringPtrOutput `pulumi:"region"`
@@ -118,7 +119,8 @@ type blockVolumeState struct {
 	// Labels for the Block Volume
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Block Volume
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Block Volume.
 	Region *string `pulumi:"region"`
@@ -143,7 +145,8 @@ type BlockVolumeState struct {
 	// Labels for the Block Volume
 	Labels pulumi.StringMapInput
 	// Name of the Block Volume
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Block Volume.
 	Region pulumi.StringPtrInput
@@ -172,7 +175,8 @@ type blockVolumeArgs struct {
 	// Labels for the Block Volume
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Block Volume
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Block Volume.
 	Region *string `pulumi:"region"`
@@ -195,7 +199,8 @@ type BlockVolumeArgs struct {
 	// Labels for the Block Volume
 	Labels pulumi.StringMapInput
 	// Name of the Block Volume
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Block Volume.
 	Region pulumi.StringPtrInput
@@ -319,6 +324,7 @@ func (o BlockVolumeOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *BlockVolume) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
 func (o BlockVolumeOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BlockVolume) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

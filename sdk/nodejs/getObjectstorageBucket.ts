@@ -24,6 +24,9 @@ export interface GetObjectstorageBucketArgs {
      * Name of the bucket
      */
     name: string;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Region of the bucket
@@ -47,15 +50,18 @@ export interface GetObjectstorageBucketResult {
      * Name of the bucket
      */
     readonly name: string;
+    /**
+     * Whether the bucket has object lock enabled
+     */
+    readonly objectLockEnabled: boolean;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * The bucket policy as a JSON string
      */
     readonly policy: string;
-    /**
-     * Whether the bucket is publicly accessible
-     */
-    readonly public: boolean;
     /**
      * Region of the bucket
      */
@@ -64,6 +70,10 @@ export interface GetObjectstorageBucketResult {
      * Status of the bucket
      */
     readonly status: string;
+    /**
+     * Whether the bucket is versioned
+     */
+    readonly versioning: boolean;
 }
 /**
  * Get an object storage bucket
@@ -85,9 +95,12 @@ export interface GetObjectstorageBucketOutputArgs {
      * Name of the bucket
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the bucket
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
 }

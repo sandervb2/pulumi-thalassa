@@ -27,7 +27,8 @@ type GetKubernetesVersionArgs struct {
 	// The ID of this resource.
 	Id *string `pulumi:"id"`
 	// The name of the Kubernetes version.
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The slug of the Kubernetes version.
 	Slug *string `pulumi:"slug"`
@@ -54,7 +55,8 @@ type GetKubernetesVersionResult struct {
 	// The Kubernetes version
 	KubernetesVersion string `pulumi:"kubernetesVersion"`
 	// The name of the Kubernetes version.
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The runc version.
 	RuncVersion string `pulumi:"runcVersion"`
@@ -76,7 +78,8 @@ type GetKubernetesVersionOutputArgs struct {
 	// The ID of this resource.
 	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The name of the Kubernetes version.
-	Name           pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// The slug of the Kubernetes version.
 	Slug pulumi.StringPtrInput `pulumi:"slug"`
@@ -151,6 +154,7 @@ func (o GetKubernetesVersionResultOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetKubernetesVersionResult) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
+// Reference to the Organisation of the Kubernetes Version. If not provided, the organisation of the (Terraform) provider will be used.
 func (o GetKubernetesVersionResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetKubernetesVersionResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

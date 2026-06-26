@@ -21,14 +21,15 @@ class DbaasPgRolesArgs:
     def __init__(__self__, *,
                  db_cluster_id: pulumi.Input[_builtins.str],
                  password: pulumi.Input[_builtins.str],
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 create_db: Optional[pulumi.Input[_builtins.bool]] = None,
-                 create_role: Optional[pulumi.Input[_builtins.bool]] = None,
-                 login: Optional[pulumi.Input[_builtins.bool]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 create_db: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_role: pulumi.Input[Optional[_builtins.bool]] = None,
+                 login: pulumi.Input[Optional[_builtins.bool]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a DbaasPgRoles resource.
+
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database
         :param pulumi.Input[_builtins.str] password: The password of the role
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the role
@@ -36,6 +37,7 @@ class DbaasPgRolesArgs:
         :param pulumi.Input[_builtins.bool] create_role: Whether the role can create roles
         :param pulumi.Input[_builtins.bool] login: Whether the role can login
         :param pulumi.Input[_builtins.str] name: The name of the role
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         """
         pulumi.set(__self__, "db_cluster_id", db_cluster_id)
         pulumi.set(__self__, "password", password)
@@ -78,93 +80,98 @@ class DbaasPgRolesArgs:
 
     @_builtins.property
     @pulumi.getter(name="connectionLimit")
-    def connection_limit(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def connection_limit(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The connection limit of the role
         """
         return pulumi.get(self, "connection_limit")
 
     @connection_limit.setter
-    def connection_limit(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def connection_limit(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "connection_limit", value)
 
     @_builtins.property
     @pulumi.getter(name="createDb")
-    def create_db(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def create_db(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can create databases
         """
         return pulumi.get(self, "create_db")
 
     @create_db.setter
-    def create_db(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def create_db(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "create_db", value)
 
     @_builtins.property
     @pulumi.getter(name="createRole")
-    def create_role(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def create_role(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can create roles
         """
         return pulumi.get(self, "create_role")
 
     @create_role.setter
-    def create_role(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def create_role(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "create_role", value)
 
     @_builtins.property
     @pulumi.getter
-    def login(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def login(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can login
         """
         return pulumi.get(self, "login")
 
     @login.setter
-    def login(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def login(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "login", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the role
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
 
 @pulumi.input_type
 class _DbaasPgRolesState:
     def __init__(__self__, *,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 create_db: Optional[pulumi.Input[_builtins.bool]] = None,
-                 create_role: Optional[pulumi.Input[_builtins.bool]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 login: Optional[pulumi.Input[_builtins.bool]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None):
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 create_db: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_role: pulumi.Input[Optional[_builtins.bool]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 login: pulumi.Input[Optional[_builtins.bool]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 password: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DbaasPgRoles resources.
+
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the role
         :param pulumi.Input[_builtins.bool] create_db: Whether the role can create databases
         :param pulumi.Input[_builtins.bool] create_role: Whether the role can create roles
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database
         :param pulumi.Input[_builtins.bool] login: Whether the role can login
         :param pulumi.Input[_builtins.str] name: The name of the role
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] password: The password of the role
         """
         if connection_limit is not None:
@@ -186,95 +193,98 @@ class _DbaasPgRolesState:
 
     @_builtins.property
     @pulumi.getter(name="connectionLimit")
-    def connection_limit(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def connection_limit(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         The connection limit of the role
         """
         return pulumi.get(self, "connection_limit")
 
     @connection_limit.setter
-    def connection_limit(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def connection_limit(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "connection_limit", value)
 
     @_builtins.property
     @pulumi.getter(name="createDb")
-    def create_db(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def create_db(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can create databases
         """
         return pulumi.get(self, "create_db")
 
     @create_db.setter
-    def create_db(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def create_db(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "create_db", value)
 
     @_builtins.property
     @pulumi.getter(name="createRole")
-    def create_role(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def create_role(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can create roles
         """
         return pulumi.get(self, "create_role")
 
     @create_role.setter
-    def create_role(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def create_role(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "create_role", value)
 
     @_builtins.property
     @pulumi.getter(name="dbClusterId")
-    def db_cluster_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def db_cluster_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The ID of the database
         """
         return pulumi.get(self, "db_cluster_id")
 
     @db_cluster_id.setter
-    def db_cluster_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def db_cluster_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "db_cluster_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def login(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def login(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role can login
         """
         return pulumi.get(self, "login")
 
     @login.setter
-    def login(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def login(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "login", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The name of the role
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def password(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def password(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The password of the role
         """
         return pulumi.get(self, "password")
 
     @password.setter
-    def password(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def password(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "password", value)
 
 
@@ -284,14 +294,14 @@ class DbaasPgRoles(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 create_db: Optional[pulumi.Input[_builtins.bool]] = None,
-                 create_role: Optional[pulumi.Input[_builtins.bool]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 login: Optional[pulumi.Input[_builtins.bool]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 create_db: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_role: pulumi.Input[Optional[_builtins.bool]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 login: pulumi.Input[Optional[_builtins.bool]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 password: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a PostgreSQL role
@@ -333,6 +343,7 @@ class DbaasPgRoles(pulumi.CustomResource):
         pulumi.export("pgRolesName", example_dbaas_pg_roles.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.int] connection_limit: The connection limit of the role
@@ -341,6 +352,7 @@ class DbaasPgRoles(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database
         :param pulumi.Input[_builtins.bool] login: Whether the role can login
         :param pulumi.Input[_builtins.str] name: The name of the role
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] password: The password of the role
         """
         ...
@@ -389,6 +401,7 @@ class DbaasPgRoles(pulumi.CustomResource):
         pulumi.export("pgRolesName", example_dbaas_pg_roles.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param DbaasPgRolesArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -404,14 +417,14 @@ class DbaasPgRoles(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 create_db: Optional[pulumi.Input[_builtins.bool]] = None,
-                 create_role: Optional[pulumi.Input[_builtins.bool]] = None,
-                 db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 login: Optional[pulumi.Input[_builtins.bool]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None,
+                 connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+                 create_db: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_role: pulumi.Input[Optional[_builtins.bool]] = None,
+                 db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 login: pulumi.Input[Optional[_builtins.bool]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 password: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -445,14 +458,14 @@ class DbaasPgRoles(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            connection_limit: Optional[pulumi.Input[_builtins.int]] = None,
-            create_db: Optional[pulumi.Input[_builtins.bool]] = None,
-            create_role: Optional[pulumi.Input[_builtins.bool]] = None,
-            db_cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
-            login: Optional[pulumi.Input[_builtins.bool]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            password: Optional[pulumi.Input[_builtins.str]] = None) -> 'DbaasPgRoles':
+            connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+            create_db: pulumi.Input[Optional[_builtins.bool]] = None,
+            create_role: pulumi.Input[Optional[_builtins.bool]] = None,
+            db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            login: pulumi.Input[Optional[_builtins.bool]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            password: pulumi.Input[Optional[_builtins.str]] = None) -> 'DbaasPgRoles':
         """
         Get an existing DbaasPgRoles resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -466,6 +479,7 @@ class DbaasPgRoles(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] db_cluster_id: The ID of the database
         :param pulumi.Input[_builtins.bool] login: Whether the role can login
         :param pulumi.Input[_builtins.str] name: The name of the role
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] password: The password of the role
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -533,6 +547,9 @@ class DbaasPgRoles(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

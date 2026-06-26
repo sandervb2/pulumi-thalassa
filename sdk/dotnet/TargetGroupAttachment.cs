@@ -82,6 +82,9 @@ namespace Pulumi.Thalassa
     [ThalassaResourceType("thalassa:index/targetGroupAttachment:TargetGroupAttachment")]
     public partial class TargetGroupAttachment : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -144,6 +147,9 @@ namespace Pulumi.Thalassa
 
     public sealed class TargetGroupAttachmentArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -167,6 +173,9 @@ namespace Pulumi.Thalassa
 
     public sealed class TargetGroupAttachmentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

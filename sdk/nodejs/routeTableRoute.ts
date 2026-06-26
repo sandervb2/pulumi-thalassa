@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the route table
  * const example = new thalassa.Vpc("example", {
@@ -104,6 +104,10 @@ export class RouteTableRoute extends pulumi.CustomResource {
      * Target NAT Gateway of the Route
      */
     declare public readonly targetNatgateway: pulumi.Output<string | undefined>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    declare public readonly targetVpcPeeringConnection: pulumi.Output<string | undefined>;
 
     /**
      * Create a RouteTableRoute resource with the given unique name, arguments, and options.
@@ -125,6 +129,7 @@ export class RouteTableRoute extends pulumi.CustomResource {
             resourceInputs["routeTableId"] = state?.routeTableId;
             resourceInputs["targetGateway"] = state?.targetGateway;
             resourceInputs["targetNatgateway"] = state?.targetNatgateway;
+            resourceInputs["targetVpcPeeringConnection"] = state?.targetVpcPeeringConnection;
         } else {
             const args = argsOrState as RouteTableRouteArgs | undefined;
             if (args?.destinationCidr === undefined && !opts.urn) {
@@ -140,6 +145,7 @@ export class RouteTableRoute extends pulumi.CustomResource {
             resourceInputs["routeTableId"] = args?.routeTableId;
             resourceInputs["targetGateway"] = args?.targetGateway;
             resourceInputs["targetNatgateway"] = args?.targetNatgateway;
+            resourceInputs["targetVpcPeeringConnection"] = args?.targetVpcPeeringConnection;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(RouteTableRoute.__pulumiType, name, resourceInputs, opts);
@@ -153,31 +159,35 @@ export interface RouteTableRouteState {
     /**
      * Destination CIDR of the Route
      */
-    destinationCidr?: pulumi.Input<string>;
+    destinationCidr?: pulumi.Input<string | undefined>;
     /**
      * Gateway Address of the Route
      */
-    gatewayAddress?: pulumi.Input<string>;
+    gatewayAddress?: pulumi.Input<string | undefined>;
     /**
      * Notes for the Route
      */
-    notes?: pulumi.Input<string>;
+    notes?: pulumi.Input<string | undefined>;
     /**
      * Organisation of the RouteTable
      */
-    organisationId?: pulumi.Input<string>;
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * RouteTable of the Route
      */
-    routeTableId?: pulumi.Input<string>;
+    routeTableId?: pulumi.Input<string | undefined>;
     /**
      * Target Gateway of the Route
      */
-    targetGateway?: pulumi.Input<string>;
+    targetGateway?: pulumi.Input<string | undefined>;
     /**
      * Target NAT Gateway of the Route
      */
-    targetNatgateway?: pulumi.Input<string>;
+    targetNatgateway?: pulumi.Input<string | undefined>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    targetVpcPeeringConnection?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -191,15 +201,15 @@ export interface RouteTableRouteArgs {
     /**
      * Gateway Address of the Route
      */
-    gatewayAddress?: pulumi.Input<string>;
+    gatewayAddress?: pulumi.Input<string | undefined>;
     /**
      * Notes for the Route
      */
-    notes?: pulumi.Input<string>;
+    notes?: pulumi.Input<string | undefined>;
     /**
      * Organisation of the RouteTable
      */
-    organisationId?: pulumi.Input<string>;
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * RouteTable of the Route
      */
@@ -207,9 +217,13 @@ export interface RouteTableRouteArgs {
     /**
      * Target Gateway of the Route
      */
-    targetGateway?: pulumi.Input<string>;
+    targetGateway?: pulumi.Input<string | undefined>;
     /**
      * Target NAT Gateway of the Route
      */
-    targetNatgateway?: pulumi.Input<string>;
+    targetNatgateway?: pulumi.Input<string | undefined>;
+    /**
+     * Target VPC Peering Connection ID of the Route
+     */
+    targetVpcPeeringConnection?: pulumi.Input<string | undefined>;
 }

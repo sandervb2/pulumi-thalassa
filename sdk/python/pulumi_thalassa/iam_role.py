@@ -13,22 +13,27 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['IamRoleArgs', 'IamRole']
 
 @pulumi.input_type
 class IamRoleArgs:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]] = None):
         """
         The set of arguments for constructing a IamRole resource.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the organisation role
         :param pulumi.Input[_builtins.str] description: Description of the organisation role
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
+        :param pulumi.Input[Sequence[pulumi.Input['IamRoleRuleArgs']]] rules: Permission rules for the organisation role
         """
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
@@ -38,76 +43,93 @@ class IamRoleArgs:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if rules is not None:
+            pulumi.set(__self__, "rules", rules)
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the organisation role
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the organisation role
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the organisation role
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the organisation role
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]]:
+        """
+        Permission rules for the organisation role
+        """
+        return pulumi.get(self, "rules")
+
+    @rules.setter
+    def rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]]):
+        pulumi.set(self, "rules", value)
 
 
 @pulumi.input_type
 class _IamRoleState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 role_is_read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 system: Optional[pulumi.Input[_builtins.bool]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 role_is_read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 system: pulumi.Input[Optional[_builtins.bool]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering IamRole resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the organisation role
         :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the organisation role
         :param pulumi.Input[_builtins.str] description: Description of the organisation role
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
         :param pulumi.Input[_builtins.bool] role_is_read_only: Whether the role is read-only and cannot be modified.
+        :param pulumi.Input[Sequence[pulumi.Input['IamRoleRuleArgs']]] rules: Permission rules for the organisation role
         :param pulumi.Input[_builtins.str] slug: Slug of the organisation role
         :param pulumi.Input[_builtins.bool] system: Whether the role is a system role
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the organisation role
@@ -124,6 +146,8 @@ class _IamRoleState:
             pulumi.set(__self__, "name", name)
         if role_is_read_only is not None:
             pulumi.set(__self__, "role_is_read_only", role_is_read_only)
+        if rules is not None:
+            pulumi.set(__self__, "rules", rules)
         if slug is not None:
             pulumi.set(__self__, "slug", slug)
         if system is not None:
@@ -133,110 +157,122 @@ class _IamRoleState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the organisation role
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Creation timestamp of the organisation role
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the organisation role
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the organisation role
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the organisation role
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="roleIsReadOnly")
-    def role_is_read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def role_is_read_only(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role is read-only and cannot be modified.
         """
         return pulumi.get(self, "role_is_read_only")
 
     @role_is_read_only.setter
-    def role_is_read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def role_is_read_only(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "role_is_read_only", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]]:
+        """
+        Permission rules for the organisation role
+        """
+        return pulumi.get(self, "rules")
+
+    @rules.setter
+    def rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['IamRoleRuleArgs']]]]):
+        pulumi.set(self, "rules", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Slug of the organisation role
         """
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def system(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def system(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Whether the role is a system role
         """
         return pulumi.get(self, "system")
 
     @system.setter
-    def system(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def system(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "system", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Last update timestamp of the organisation role
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -246,10 +282,11 @@ class IamRole(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
                  __props__=None):
         """
         Manage an organisation role in Thalassa Cloud
@@ -270,12 +307,39 @@ class IamRole(pulumi.CustomResource):
             },
             annotations={
                 "example.com/created-by": "terraform",
-            })
+            },
+            rules=[
+                {
+                    "resources": [
+                        "cloud_vpc",
+                        "cloud_subnet",
+                    ],
+                    "permissions": [
+                        "read",
+                        "list",
+                    ],
+                    "note": "Allow read access to VPCs and subnets",
+                },
+                {
+                    "resources": ["cloud_vpc"],
+                    "resource_identities": [
+                        "vpc-123",
+                        "vpc-456",
+                    ],
+                    "permissions": [
+                        "update",
+                        "delete",
+                    ],
+                    "note": "Allow update/delete for specific VPCs",
+                },
+            ])
         pulumi.export("roleId", example.id)
         pulumi.export("roleName", example.name)
         pulumi.export("roleSlug", example.slug)
         pulumi.export("roleDescription", example.description)
+        pulumi.export("roleRules", example.rules)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -283,6 +347,7 @@ class IamRole(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: Description of the organisation role
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]] rules: Permission rules for the organisation role
         """
         ...
     @overload
@@ -309,12 +374,39 @@ class IamRole(pulumi.CustomResource):
             },
             annotations={
                 "example.com/created-by": "terraform",
-            })
+            },
+            rules=[
+                {
+                    "resources": [
+                        "cloud_vpc",
+                        "cloud_subnet",
+                    ],
+                    "permissions": [
+                        "read",
+                        "list",
+                    ],
+                    "note": "Allow read access to VPCs and subnets",
+                },
+                {
+                    "resources": ["cloud_vpc"],
+                    "resource_identities": [
+                        "vpc-123",
+                        "vpc-456",
+                    ],
+                    "permissions": [
+                        "update",
+                        "delete",
+                    ],
+                    "note": "Allow update/delete for specific VPCs",
+                },
+            ])
         pulumi.export("roleId", example.id)
         pulumi.export("roleName", example.name)
         pulumi.export("roleSlug", example.slug)
         pulumi.export("roleDescription", example.description)
+        pulumi.export("roleRules", example.rules)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param IamRoleArgs args: The arguments to use to populate this resource's properties.
@@ -331,10 +423,11 @@ class IamRole(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -348,6 +441,7 @@ class IamRole(pulumi.CustomResource):
             __props__.__dict__["description"] = description
             __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
+            __props__.__dict__["rules"] = rules
             __props__.__dict__["created_at"] = None
             __props__.__dict__["role_is_read_only"] = None
             __props__.__dict__["slug"] = None
@@ -363,15 +457,16 @@ class IamRole(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            role_is_read_only: Optional[pulumi.Input[_builtins.bool]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            system: Optional[pulumi.Input[_builtins.bool]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'IamRole':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            role_is_read_only: pulumi.Input[Optional[_builtins.bool]] = None,
+            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            system: pulumi.Input[Optional[_builtins.bool]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'IamRole':
         """
         Get an existing IamRole resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -385,6 +480,7 @@ class IamRole(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
         :param pulumi.Input[_builtins.bool] role_is_read_only: Whether the role is read-only and cannot be modified.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]] rules: Permission rules for the organisation role
         :param pulumi.Input[_builtins.str] slug: Slug of the organisation role
         :param pulumi.Input[_builtins.bool] system: Whether the role is a system role
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the organisation role
@@ -399,6 +495,7 @@ class IamRole(pulumi.CustomResource):
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["role_is_read_only"] = role_is_read_only
+        __props__.__dict__["rules"] = rules
         __props__.__dict__["slug"] = slug
         __props__.__dict__["system"] = system
         __props__.__dict__["updated_at"] = updated_at
@@ -451,6 +548,14 @@ class IamRole(pulumi.CustomResource):
         Whether the role is read-only and cannot be modified.
         """
         return pulumi.get(self, "role_is_read_only")
+
+    @_builtins.property
+    @pulumi.getter
+    def rules(self) -> pulumi.Output[Optional[Sequence['outputs.IamRoleRule']]]:
+        """
+        Permission rules for the organisation role
+        """
+        return pulumi.get(self, "rules")
 
     @_builtins.property
     @pulumi.getter

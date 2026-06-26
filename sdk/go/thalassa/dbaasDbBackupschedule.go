@@ -84,12 +84,19 @@ import (
 type DbaasDbBackupschedule struct {
 	pulumi.CustomResourceState
 
-	// The backup target of the database backup schedule (primary, prefer-standby)
-	BackupTarget pulumi.StringPtrOutput `pulumi:"backupTarget"`
+	// The annotations of the database backup schedule
+	Annotations pulumi.StringMapOutput `pulumi:"annotations"`
 	// The ID of the database cluster
 	DbClusterId pulumi.StringOutput `pulumi:"dbClusterId"`
+	// The description of the database backup schedule
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The labels of the database backup schedule
+	Labels pulumi.StringMapOutput `pulumi:"labels"`
+	// The method of the backup schedule (barman)
+	Method pulumi.StringPtrOutput `pulumi:"method"`
 	// The name of the database backup schedule
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
 	RetentionPolicy pulumi.StringPtrOutput `pulumi:"retentionPolicy"`
@@ -132,12 +139,19 @@ func GetDbaasDbBackupschedule(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DbaasDbBackupschedule resources.
 type dbaasDbBackupscheduleState struct {
-	// The backup target of the database backup schedule (primary, prefer-standby)
-	BackupTarget *string `pulumi:"backupTarget"`
+	// The annotations of the database backup schedule
+	Annotations map[string]string `pulumi:"annotations"`
 	// The ID of the database cluster
 	DbClusterId *string `pulumi:"dbClusterId"`
+	// The description of the database backup schedule
+	Description *string `pulumi:"description"`
+	// The labels of the database backup schedule
+	Labels map[string]string `pulumi:"labels"`
+	// The method of the backup schedule (barman)
+	Method *string `pulumi:"method"`
 	// The name of the database backup schedule
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
 	RetentionPolicy *string `pulumi:"retentionPolicy"`
@@ -148,12 +162,19 @@ type dbaasDbBackupscheduleState struct {
 }
 
 type DbaasDbBackupscheduleState struct {
-	// The backup target of the database backup schedule (primary, prefer-standby)
-	BackupTarget pulumi.StringPtrInput
+	// The annotations of the database backup schedule
+	Annotations pulumi.StringMapInput
 	// The ID of the database cluster
 	DbClusterId pulumi.StringPtrInput
+	// The description of the database backup schedule
+	Description pulumi.StringPtrInput
+	// The labels of the database backup schedule
+	Labels pulumi.StringMapInput
+	// The method of the backup schedule (barman)
+	Method pulumi.StringPtrInput
 	// The name of the database backup schedule
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
 	RetentionPolicy pulumi.StringPtrInput
@@ -168,12 +189,19 @@ func (DbaasDbBackupscheduleState) ElementType() reflect.Type {
 }
 
 type dbaasDbBackupscheduleArgs struct {
-	// The backup target of the database backup schedule (primary, prefer-standby)
-	BackupTarget *string `pulumi:"backupTarget"`
+	// The annotations of the database backup schedule
+	Annotations map[string]string `pulumi:"annotations"`
 	// The ID of the database cluster
 	DbClusterId string `pulumi:"dbClusterId"`
+	// The description of the database backup schedule
+	Description *string `pulumi:"description"`
+	// The labels of the database backup schedule
+	Labels map[string]string `pulumi:"labels"`
+	// The method of the backup schedule (barman)
+	Method *string `pulumi:"method"`
 	// The name of the database backup schedule
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
 	RetentionPolicy *string `pulumi:"retentionPolicy"`
@@ -185,12 +213,19 @@ type dbaasDbBackupscheduleArgs struct {
 
 // The set of arguments for constructing a DbaasDbBackupschedule resource.
 type DbaasDbBackupscheduleArgs struct {
-	// The backup target of the database backup schedule (primary, prefer-standby)
-	BackupTarget pulumi.StringPtrInput
+	// The annotations of the database backup schedule
+	Annotations pulumi.StringMapInput
 	// The ID of the database cluster
 	DbClusterId pulumi.StringInput
+	// The description of the database backup schedule
+	Description pulumi.StringPtrInput
+	// The labels of the database backup schedule
+	Labels pulumi.StringMapInput
+	// The method of the backup schedule (barman)
+	Method pulumi.StringPtrInput
 	// The name of the database backup schedule
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The retention policy of the database backup schedule (7d, 14d, 30d, 90d, 180d, 365d, 730d)
 	RetentionPolicy pulumi.StringPtrInput
@@ -287,9 +322,9 @@ func (o DbaasDbBackupscheduleOutput) ToDbaasDbBackupscheduleOutputWithContext(ct
 	return o
 }
 
-// The backup target of the database backup schedule (primary, prefer-standby)
-func (o DbaasDbBackupscheduleOutput) BackupTarget() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringPtrOutput { return v.BackupTarget }).(pulumi.StringPtrOutput)
+// The annotations of the database backup schedule
+func (o DbaasDbBackupscheduleOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringMapOutput { return v.Annotations }).(pulumi.StringMapOutput)
 }
 
 // The ID of the database cluster
@@ -297,11 +332,27 @@ func (o DbaasDbBackupscheduleOutput) DbClusterId() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringOutput { return v.DbClusterId }).(pulumi.StringOutput)
 }
 
+// The description of the database backup schedule
+func (o DbaasDbBackupscheduleOutput) Description() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// The labels of the database backup schedule
+func (o DbaasDbBackupscheduleOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// The method of the backup schedule (barman)
+func (o DbaasDbBackupscheduleOutput) Method() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringPtrOutput { return v.Method }).(pulumi.StringPtrOutput)
+}
+
 // The name of the database backup schedule
 func (o DbaasDbBackupscheduleOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 func (o DbaasDbBackupscheduleOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasDbBackupschedule) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

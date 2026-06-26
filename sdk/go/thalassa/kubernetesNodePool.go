@@ -13,6 +13,101 @@ import (
 )
 
 // Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+//
+// ## Autoscaling Configuration
+//
+// ### When Autoscaling is Enabled (`enableAutoscaling = true`)
+// - **`replicas` must be unset** - The autoscaler manages the number of nodes
+// - **`minReplicas` is required** - Minimum number of nodes (must be ≥ 0)
+// - **`maxReplicas` is required** - Maximum number of nodes
+// - **Current replicas are computed** - Shows the current number of nodes managed by the autoscaler
+//
+// ### When Autoscaling is Disabled (`enableAutoscaling = false`)
+// - **`replicas` is required** - Fixed number of nodes for the pool
+// - **`minReplicas` and `maxReplicas` are ignored** - Not used in manual scaling mode
+//
+// ## Important Notes
+//
+// - **Only available for managed clusters** - Not supported for hosted-control-plane clusters
+// - **`kubernetesVersion` is optional** - If not specified, the cluster's version is used during initial creation of the node pool
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			// Create a VPC for the Kubernetes cluster
+//			example, err := thalassa.NewVpc(ctx, "example", &thalassa.VpcArgs{
+//				Name:        pulumi.String("example-vpc"),
+//				Description: pulumi.String("Example VPC for Kubernetes cluster"),
+//				Region:      pulumi.String("nl-01"),
+//				Cidrs: pulumi.StringArray{
+//					pulumi.String("10.0.0.0/16"),
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a subnet for the Kubernetes cluster
+//			exampleSubnet, err := thalassa.NewSubnet(ctx, "example", &thalassa.SubnetArgs{
+//				Name:        pulumi.String("example-subnet"),
+//				Description: pulumi.String("Example subnet for Kubernetes cluster"),
+//				VpcId:       example.ID(),
+//				Cidr:        pulumi.String("10.0.1.0/24"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a Kubernetes cluster
+//			exampleKubernetesCluster, err := thalassa.NewKubernetesCluster(ctx, "example", &thalassa.KubernetesClusterArgs{
+//				Name:        pulumi.String("example-kubernetes-cluster"),
+//				Description: pulumi.String("Example Kubernetes cluster"),
+//				Region:      pulumi.String("nl-01"),
+//				SubnetId:    exampleSubnet.ID(),
+//				ApiServerAcls: thalassa.KubernetesClusterApiServerAclArray{
+//					&thalassa.KubernetesClusterApiServerAclArgs{
+//						AllowedCidrs: pulumi.StringArray{
+//							pulumi.String("10.0.0.0/16"),
+//							pulumi.String("10.0.1.0/24"),
+//						},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a Kubernetes node pool with Thalassa default values
+//			exampleKubernetesNodePool, err := thalassa.NewKubernetesNodePool(ctx, "example", &thalassa.KubernetesNodePoolArgs{
+//				Name:              pulumi.String("example-node-pool"),
+//				ClusterId:         exampleKubernetesCluster.ID(),
+//				SubnetId:          exampleSubnet.ID(),
+//				AvailabilityZone:  pulumi.String("nl-01a"),
+//				MachineType:       pulumi.String("pgp-small"),
+//				EnableAutoscaling: pulumi.Bool(true),
+//				MinReplicas:       pulumi.Int(1),
+//				MaxReplicas:       pulumi.Int(2),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("kubernetesClusterId", exampleKubernetesCluster.ID())
+//			ctx.Export("kubernetesClusterName", exampleKubernetesCluster.Name)
+//			ctx.Export("nodePoolId", exampleKubernetesNodePool.ID())
+//			ctx.Export("nodePoolName", exampleKubernetesNodePool.Name)
+//			return nil
+//		})
+//	}
+//
+// ```
 type KubernetesNodePool struct {
 	pulumi.CustomResourceState
 
@@ -26,12 +121,16 @@ type KubernetesNodePool struct {
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// Enable autohealing for the Kubernetes Node Pool
 	EnableAutohealing pulumi.BoolPtrOutput `pulumi:"enableAutohealing"`
-	// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+	// Enable autoscaling for the Kubernetes Node Pool
+	EnableAutoscaling pulumi.BoolPtrOutput `pulumi:"enableAutoscaling"`
+	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrOutput `pulumi:"kubernetesVersion"`
 	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringOutput `pulumi:"machineType"`
+	// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+	ManageNodeAllocatable pulumi.BoolPtrOutput `pulumi:"manageNodeAllocatable"`
 	// Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
 	MaxReplicas pulumi.IntPtrOutput `pulumi:"maxReplicas"`
 	// Minimum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -43,8 +142,9 @@ type KubernetesNodePool struct {
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapOutput `pulumi:"nodeLabels"`
 	// Taints for the Kubernetes Node Pool
-	NodeTaints     KubernetesNodePoolNodeTaintArrayOutput `pulumi:"nodeTaints"`
-	OrganisationId pulumi.StringPtrOutput                 `pulumi:"organisationId"`
+	NodeTaints KubernetesNodePoolNodeTaintArrayOutput `pulumi:"nodeTaints"`
+	// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Number of replicas for the Kubernetes Node Pool. Do not set this when enableAutoscaling is true.
 	Replicas pulumi.IntPtrOutput `pulumi:"replicas"`
 	// List identities of security group that will be attached to the machines in the Node Pool
@@ -53,8 +153,8 @@ type KubernetesNodePool struct {
 	Slug pulumi.StringOutput `pulumi:"slug"`
 	// Status of the Kubernetes Node Pool
 	Status pulumi.StringOutput `pulumi:"status"`
-	// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
-	SubnetId pulumi.StringPtrOutput `pulumi:"subnetId"`
+	// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
+	SubnetId pulumi.StringOutput `pulumi:"subnetId"`
 	// Upgrade strategy for the Kubernetes Node Pool
 	UpgradeStrategy pulumi.StringPtrOutput `pulumi:"upgradeStrategy"`
 }
@@ -74,6 +174,9 @@ func NewKubernetesNodePool(ctx *pulumi.Context,
 	}
 	if args.MachineType == nil {
 		return nil, errors.New("invalid value for required argument 'MachineType'")
+	}
+	if args.SubnetId == nil {
+		return nil, errors.New("invalid value for required argument 'SubnetId'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource KubernetesNodePool
@@ -108,12 +211,16 @@ type kubernetesNodePoolState struct {
 	Description *string `pulumi:"description"`
 	// Enable autohealing for the Kubernetes Node Pool
 	EnableAutohealing *bool `pulumi:"enableAutohealing"`
-	// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+	// Enable autoscaling for the Kubernetes Node Pool
+	EnableAutoscaling *bool `pulumi:"enableAutoscaling"`
+	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion *string `pulumi:"kubernetesVersion"`
 	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
 	Labels map[string]string `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType *string `pulumi:"machineType"`
+	// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+	ManageNodeAllocatable *bool `pulumi:"manageNodeAllocatable"`
 	// Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
 	MaxReplicas *int `pulumi:"maxReplicas"`
 	// Minimum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -125,8 +232,9 @@ type kubernetesNodePoolState struct {
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels map[string]string `pulumi:"nodeLabels"`
 	// Taints for the Kubernetes Node Pool
-	NodeTaints     []KubernetesNodePoolNodeTaint `pulumi:"nodeTaints"`
-	OrganisationId *string                       `pulumi:"organisationId"`
+	NodeTaints []KubernetesNodePoolNodeTaint `pulumi:"nodeTaints"`
+	// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId *string `pulumi:"organisationId"`
 	// Number of replicas for the Kubernetes Node Pool. Do not set this when enableAutoscaling is true.
 	Replicas *int `pulumi:"replicas"`
 	// List identities of security group that will be attached to the machines in the Node Pool
@@ -135,7 +243,7 @@ type kubernetesNodePoolState struct {
 	Slug *string `pulumi:"slug"`
 	// Status of the Kubernetes Node Pool
 	Status *string `pulumi:"status"`
-	// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+	// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
 	SubnetId *string `pulumi:"subnetId"`
 	// Upgrade strategy for the Kubernetes Node Pool
 	UpgradeStrategy *string `pulumi:"upgradeStrategy"`
@@ -152,12 +260,16 @@ type KubernetesNodePoolState struct {
 	Description pulumi.StringPtrInput
 	// Enable autohealing for the Kubernetes Node Pool
 	EnableAutohealing pulumi.BoolPtrInput
-	// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+	// Enable autoscaling for the Kubernetes Node Pool
+	EnableAutoscaling pulumi.BoolPtrInput
+	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrInput
 	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
 	Labels pulumi.StringMapInput
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringPtrInput
+	// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+	ManageNodeAllocatable pulumi.BoolPtrInput
 	// Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
 	MaxReplicas pulumi.IntPtrInput
 	// Minimum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -169,7 +281,8 @@ type KubernetesNodePoolState struct {
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapInput
 	// Taints for the Kubernetes Node Pool
-	NodeTaints     KubernetesNodePoolNodeTaintArrayInput
+	NodeTaints KubernetesNodePoolNodeTaintArrayInput
+	// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Number of replicas for the Kubernetes Node Pool. Do not set this when enableAutoscaling is true.
 	Replicas pulumi.IntPtrInput
@@ -179,7 +292,7 @@ type KubernetesNodePoolState struct {
 	Slug pulumi.StringPtrInput
 	// Status of the Kubernetes Node Pool
 	Status pulumi.StringPtrInput
-	// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
+	// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
 	SubnetId pulumi.StringPtrInput
 	// Upgrade strategy for the Kubernetes Node Pool
 	UpgradeStrategy pulumi.StringPtrInput
@@ -200,12 +313,16 @@ type kubernetesNodePoolArgs struct {
 	Description *string `pulumi:"description"`
 	// Enable autohealing for the Kubernetes Node Pool
 	EnableAutohealing *bool `pulumi:"enableAutohealing"`
-	// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+	// Enable autoscaling for the Kubernetes Node Pool
+	EnableAutoscaling *bool `pulumi:"enableAutoscaling"`
+	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion *string `pulumi:"kubernetesVersion"`
 	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
 	Labels map[string]string `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType string `pulumi:"machineType"`
+	// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+	ManageNodeAllocatable *bool `pulumi:"manageNodeAllocatable"`
 	// Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
 	MaxReplicas *int `pulumi:"maxReplicas"`
 	// Minimum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -217,14 +334,15 @@ type kubernetesNodePoolArgs struct {
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels map[string]string `pulumi:"nodeLabels"`
 	// Taints for the Kubernetes Node Pool
-	NodeTaints     []KubernetesNodePoolNodeTaint `pulumi:"nodeTaints"`
-	OrganisationId *string                       `pulumi:"organisationId"`
+	NodeTaints []KubernetesNodePoolNodeTaint `pulumi:"nodeTaints"`
+	// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId *string `pulumi:"organisationId"`
 	// Number of replicas for the Kubernetes Node Pool. Do not set this when enableAutoscaling is true.
 	Replicas *int `pulumi:"replicas"`
 	// List identities of security group that will be attached to the machines in the Node Pool
 	SecurityGroupAttachments []string `pulumi:"securityGroupAttachments"`
-	// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
-	SubnetId *string `pulumi:"subnetId"`
+	// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
+	SubnetId string `pulumi:"subnetId"`
 	// Upgrade strategy for the Kubernetes Node Pool
 	UpgradeStrategy *string `pulumi:"upgradeStrategy"`
 }
@@ -241,12 +359,16 @@ type KubernetesNodePoolArgs struct {
 	Description pulumi.StringPtrInput
 	// Enable autohealing for the Kubernetes Node Pool
 	EnableAutohealing pulumi.BoolPtrInput
-	// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+	// Enable autoscaling for the Kubernetes Node Pool
+	EnableAutoscaling pulumi.BoolPtrInput
+	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrInput
 	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
 	Labels pulumi.StringMapInput
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringInput
+	// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+	ManageNodeAllocatable pulumi.BoolPtrInput
 	// Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
 	MaxReplicas pulumi.IntPtrInput
 	// Minimum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -258,14 +380,15 @@ type KubernetesNodePoolArgs struct {
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapInput
 	// Taints for the Kubernetes Node Pool
-	NodeTaints     KubernetesNodePoolNodeTaintArrayInput
+	NodeTaints KubernetesNodePoolNodeTaintArrayInput
+	// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Number of replicas for the Kubernetes Node Pool. Do not set this when enableAutoscaling is true.
 	Replicas pulumi.IntPtrInput
 	// List identities of security group that will be attached to the machines in the Node Pool
 	SecurityGroupAttachments pulumi.StringArrayInput
-	// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
-	SubnetId pulumi.StringPtrInput
+	// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
+	SubnetId pulumi.StringInput
 	// Upgrade strategy for the Kubernetes Node Pool
 	UpgradeStrategy pulumi.StringPtrInput
 }
@@ -382,7 +505,12 @@ func (o KubernetesNodePoolOutput) EnableAutohealing() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.BoolPtrOutput { return v.EnableAutohealing }).(pulumi.BoolPtrOutput)
 }
 
-// Kubernetes version for the Kubernetes Node Pool. Optional. Will use the Kubernetes Cluster version if not set.
+// Enable autoscaling for the Kubernetes Node Pool
+func (o KubernetesNodePoolOutput) EnableAutoscaling() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KubernetesNodePool) pulumi.BoolPtrOutput { return v.EnableAutoscaling }).(pulumi.BoolPtrOutput)
+}
+
+// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 func (o KubernetesNodePoolOutput) KubernetesVersion() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringPtrOutput { return v.KubernetesVersion }).(pulumi.StringPtrOutput)
 }
@@ -395,6 +523,11 @@ func (o KubernetesNodePoolOutput) Labels() pulumi.StringMapOutput {
 // Machine type for the Kubernetes Node Pool
 func (o KubernetesNodePoolOutput) MachineType() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringOutput { return v.MachineType }).(pulumi.StringOutput)
+}
+
+// Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
+func (o KubernetesNodePoolOutput) ManageNodeAllocatable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KubernetesNodePool) pulumi.BoolPtrOutput { return v.ManageNodeAllocatable }).(pulumi.BoolPtrOutput)
 }
 
 // Maximum number of replicas for the Kubernetes Node Pool. May only be set when enableAutoscaling is true.
@@ -427,6 +560,7 @@ func (o KubernetesNodePoolOutput) NodeTaints() KubernetesNodePoolNodeTaintArrayO
 	return o.ApplyT(func(v *KubernetesNodePool) KubernetesNodePoolNodeTaintArrayOutput { return v.NodeTaints }).(KubernetesNodePoolNodeTaintArrayOutput)
 }
 
+// Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
 func (o KubernetesNodePoolOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -451,9 +585,9 @@ func (o KubernetesNodePoolOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
-// Subnet of the Kubernetes Cluster. Required for managed Kubernetes Clusters.
-func (o KubernetesNodePoolOutput) SubnetId() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringPtrOutput { return v.SubnetId }).(pulumi.StringPtrOutput)
+// Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
+func (o KubernetesNodePoolOutput) SubnetId() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringOutput { return v.SubnetId }).(pulumi.StringOutput)
 }
 
 // Upgrade strategy for the Kubernetes Node Pool

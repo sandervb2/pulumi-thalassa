@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the loadbalancer
  * const example = new thalassa.Vpc("example", {
@@ -107,11 +107,18 @@ export class Loadbalancer extends pulumi.CustomResource {
      * Name of the Loadbalancer
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * Region of the Loadbalancer
      */
     declare public readonly region: pulumi.Output<string>;
+    /**
+     * Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+     */
+    declare public readonly reservedIpId: pulumi.Output<string>;
     /**
      * List identities of security group that will be attached to the Loadbalancer
      */
@@ -149,6 +156,7 @@ export class Loadbalancer extends pulumi.CustomResource {
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["region"] = state?.region;
+            resourceInputs["reservedIpId"] = state?.reservedIpId;
             resourceInputs["securityGroupAttachments"] = state?.securityGroupAttachments;
             resourceInputs["slug"] = state?.slug;
             resourceInputs["subnetId"] = state?.subnetId;
@@ -169,6 +177,7 @@ export class Loadbalancer extends pulumi.CustomResource {
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["region"] = args?.region;
+            resourceInputs["reservedIpId"] = args?.reservedIpId;
             resourceInputs["securityGroupAttachments"] = args?.securityGroupAttachments;
             resourceInputs["subnetId"] = args?.subnetId;
             resourceInputs["externalIpAddresses"] = undefined /*out*/;
@@ -188,53 +197,60 @@ export interface LoadbalancerState {
     /**
      * Annotations for the Loadbalancer
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Delete protection for the Loadbalancer
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the loadbalancer
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * The external IP addresses of the loadbalancer
      */
-    externalIpAddresses?: pulumi.Input<pulumi.Input<string>[]>;
+    externalIpAddresses?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Internal loadbalancer
      */
-    internal?: pulumi.Input<boolean>;
+    internal?: pulumi.Input<boolean | undefined>;
     /**
      * The IP address of the loadbalancer
      */
-    ipAddress?: pulumi.Input<string>;
+    ipAddress?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Loadbalancer
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Loadbalancer
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the Loadbalancer
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
+    /**
+     * Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+     */
+    reservedIpId?: pulumi.Input<string | undefined>;
     /**
      * List identities of security group that will be attached to the Loadbalancer
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
-    slug?: pulumi.Input<string>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Subnet of the Loadbalancer
      */
-    subnetId?: pulumi.Input<string>;
+    subnetId?: pulumi.Input<string | undefined>;
     /**
      * VPC of the Loadbalancer
      */
-    vpcId?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -244,36 +260,43 @@ export interface LoadbalancerArgs {
     /**
      * Annotations for the Loadbalancer
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Delete protection for the Loadbalancer
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the loadbalancer
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Internal loadbalancer
      */
-    internal?: pulumi.Input<boolean>;
+    internal?: pulumi.Input<boolean | undefined>;
     /**
      * Labels for the Loadbalancer
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Loadbalancer
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the Loadbalancer
      */
     region: pulumi.Input<string>;
     /**
+     * Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+     */
+    reservedIpId?: pulumi.Input<string | undefined>;
+    /**
      * List identities of security group that will be attached to the Loadbalancer
      */
-    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[]>;
+    securityGroupAttachments?: pulumi.Input<pulumi.Input<string>[] | undefined>;
     /**
      * Subnet of the Loadbalancer
      */

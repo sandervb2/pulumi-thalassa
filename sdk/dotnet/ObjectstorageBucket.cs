@@ -19,74 +19,119 @@ namespace Pulumi.Thalassa
     /// using System.Linq;
     /// using System.Text.Json;
     /// using Pulumi;
+    /// using Random = Pulumi.Random;
     /// using Thalassa = Pulumi.Thalassa;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
-    ///     // Create a basic object storage bucket
-    ///     var basic = new Thalassa.ObjectstorageBucket("basic", new()
+    ///     // Create a service account first
+    ///     var example = new Thalassa.IamServiceAccount("example", new()
     ///     {
-    ///         Name = "my-basic-bucket",
-    ///         Region = "nl-01",
+    ///         Name = "cluster-service-account",
+    ///         Description = "Service account for cluster access",
+    ///         Labels = 
+    ///         {
+    ///             { "environment", "production" },
+    ///             { "project", "cluster" },
+    ///         },
     ///     });
     /// 
-    ///     // Create a public object storage bucket
-    ///     var @public = new Thalassa.ObjectstorageBucket("public", new()
+    ///     // Create object storage access credentials
+    ///     var storageCredential = new Thalassa.IamServiceAccountAccessCredential("storage_credential", new()
     ///     {
-    ///         Name = "my-public-bucket",
-    ///         Region = "nl-01",
-    ///         Public = true,
+    ///         ServiceAccountId = example.Id,
+    ///         Scopes = new[]
+    ///         {
+    ///             "objectStorage",
+    ///         },
     ///     });
     /// 
-    ///     // Create a bucket with a custom policy
-    ///     var withPolicy = new Thalassa.ObjectstorageBucket("with_policy", new()
+    ///     // # random uuid
+    ///     var bucketName = new Random.Uuid("bucket_name");
+    /// 
+    ///     var org = Thalassa.GetOrganisation.Invoke(new()
     ///     {
-    ///         Name = "my-policy-bucket",
+    ///         Slug = organisationSlug,
+    ///     });
+    /// 
+    ///     // # Create a bucket with a custom policy
+    ///     var clusterBucket = new Thalassa.ObjectstorageBucket("cluster_bucket", new()
+    ///     {
+    ///         Name = $"cluster-bucket-{bucketName.Result}",
     ///         Region = "nl-01",
-    ///         Public = false,
-    ///         Policy = JsonSerializer.Serialize(new Dictionary&lt;string, object?&gt;
+    ///         Policy = Output.JsonSerialize(Output.Create(new Dictionary&lt;string, object?&gt;
     ///         {
     ///             ["Version"] = "2012-10-17",
     ///             ["Statement"] = new[]
     ///             {
     ///                 new Dictionary&lt;string, object?&gt;
     ///                 {
-    ///                     ["Sid"] = "AllowReadAccess",
-    ///                     ["Effect"] = "Allow",
-    ///                     ["Principal"] = new Dictionary&lt;string, object?&gt;
-    ///                     {
-    ///                         ["Thalassa"] = "*",
-    ///                     },
+    ///                     ["Sid"] = "Statement1",
     ///                     ["Action"] = new[]
     ///                     {
     ///                         "s3:GetObject",
+    ///                         "s3:GetObjectVersion",
+    ///                         "s3:PutObject",
+    ///                         "s3:GetObjectAcl",
+    ///                         "s3:GetObjectVersionAcl",
+    ///                         "s3:PutObjectAcl",
+    ///                         "s3:PutObjectVersionAcl",
+    ///                         "s3:DeleteObject",
+    ///                         "s3:DeleteObjectVersion",
+    ///                         "s3:ListMultipartUploadParts",
+    ///                         "s3:AbortMultipartUpload",
+    ///                         "s3:RestoreObject",
+    ///                         "s3:ListBucket",
+    ///                         "s3:ListBucketVersions",
+    ///                         "s3:ListBucketMultipartUploads",
+    ///                         "s3:GetBucketAcl",
+    ///                         "s3:PutBucketAcl",
+    ///                         "s3:GetBucketCORS",
+    ///                         "s3:PutBucketCORS",
+    ///                         "s3:GetBucketVersioning",
+    ///                         "s3:PutBucketVersioning",
+    ///                         "s3:GetBucketRequestPayment",
+    ///                         "s3:PutBucketRequestPayment",
+    ///                         "s3:GetLifecycleConfiguration",
+    ///                         "s3:PutLifecycleConfiguration",
+    ///                         "s3:GetObjectTagging",
+    ///                         "s3:PutObjectTagging",
+    ///                         "s3:DeleteObjectTagging",
+    ///                         "s3:GetObjectVersionTagging",
+    ///                         "s3:PutObjectVersionTagging",
+    ///                         "s3:DeleteObjectVersionTagging",
+    ///                         "s3:PutBucketObjectLockConfiguration",
+    ///                         "s3:GetBucketObjectLockConfiguration",
+    ///                         "s3:PutObjectRetention",
+    ///                         "s3:GetObjectRetention",
+    ///                         "s3:PutObjectLegalHold",
+    ///                         "s3:GetObjectLegalHold",
+    ///                         "s3:BypassGovernanceRetention",
+    ///                         "s3:GetBucketPolicyStatus",
     ///                     },
+    ///                     ["Effect"] = "Allow",
     ///                     ["Resource"] = new[]
     ///                     {
-    ///                         "arn:thalassa:s3:::my-policy-bucket/*",
+    ///                         $"arn:thalassa:s3:::cluster-bucket-{bucketName.Result}",
+    ///                         $"arn:thalassa:s3:::cluster-bucket-{bucketName.Result}/*",
     ///                     },
-    ///                     ["Condition"] = new Dictionary&lt;string, object?&gt;
+    ///                     ["Principal"] = new Dictionary&lt;string, object?&gt;
     ///                     {
-    ///                         ["StringEquals"] = new Dictionary&lt;string, object?&gt;
+    ///                         ["Thalassa"] = new[]
     ///                         {
-    ///                             ["thalassa:User"] = "u-exampleuserid",
+    ///                             Output.Tuple(org, example.Id).Apply(values =&gt;
+    ///                             {
+    ///                                 var org = values.Item1;
+    ///                                 var id = values.Item2;
+    ///                                 return $"arn:thalassa:iam:::serviceaccount/{org.Apply(getOrganisationResult =&gt; getOrganisationResult.Id)}:{id}";
+    ///                             }),
     ///                         },
     ///                     },
     ///                 },
     ///             },
-    ///         }),
+    ///         })),
     ///     });
     /// 
-    ///     return new Dictionary&lt;string, object?&gt;
-    ///     {
-    ///         ["basicBucketId"] = basic.Id,
-    ///         ["basicBucketName"] = basic.Name,
-    ///         ["basicBucketEndpoint"] = basic.Endpoint,
-    ///         ["publicBucketId"] = @public.Id,
-    ///         ["publicBucketName"] = @public.Name,
-    ///         ["policyBucketId"] = withPolicy.Id,
-    ///         ["policyBucketName"] = withPolicy.Name,
-    ///     };
     /// });
     /// ```
     /// </summary>
@@ -105,6 +150,15 @@ namespace Pulumi.Thalassa
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Whether the bucket has object lock enabled
+        /// </summary>
+        [Output("objectLockEnabled")]
+        public Output<bool?> ObjectLockEnabled { get; private set; } = null!;
+
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -114,9 +168,6 @@ namespace Pulumi.Thalassa
         [Output("policy")]
         public Output<string?> Policy { get; private set; } = null!;
 
-        /// <summary>
-        /// Whether the bucket is publicly accessible
-        /// </summary>
         [Output("public")]
         public Output<bool?> Public { get; private set; } = null!;
 
@@ -131,6 +182,36 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether the bucket is versioned
+        /// </summary>
+        [Output("versioning")]
+        public Output<bool?> Versioning { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether to wait for the bucket to be deleted
+        /// </summary>
+        [Output("waitForDeleted")]
+        public Output<bool?> WaitForDeleted { get; private set; } = null!;
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        /// </summary>
+        [Output("waitForDeletedTimeout")]
+        public Output<int?> WaitForDeletedTimeout { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether to wait for the bucket to be ready
+        /// </summary>
+        [Output("waitForReady")]
+        public Output<bool?> WaitForReady { get; private set; } = null!;
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        /// </summary>
+        [Output("waitForReadyTimeout")]
+        public Output<int?> WaitForReadyTimeout { get; private set; } = null!;
 
 
         /// <summary>
@@ -185,6 +266,15 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Whether the bucket has object lock enabled
+        /// </summary>
+        [Input("objectLockEnabled")]
+        public Input<bool>? ObjectLockEnabled { get; set; }
+
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -194,9 +284,6 @@ namespace Pulumi.Thalassa
         [Input("policy")]
         public Input<string>? Policy { get; set; }
 
-        /// <summary>
-        /// Whether the bucket is publicly accessible
-        /// </summary>
         [Input("public")]
         public Input<bool>? Public { get; set; }
 
@@ -205,6 +292,36 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
+
+        /// <summary>
+        /// Whether the bucket is versioned
+        /// </summary>
+        [Input("versioning")]
+        public Input<bool>? Versioning { get; set; }
+
+        /// <summary>
+        /// Whether to wait for the bucket to be deleted
+        /// </summary>
+        [Input("waitForDeleted")]
+        public Input<bool>? WaitForDeleted { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        /// </summary>
+        [Input("waitForDeletedTimeout")]
+        public Input<int>? WaitForDeletedTimeout { get; set; }
+
+        /// <summary>
+        /// Whether to wait for the bucket to be ready
+        /// </summary>
+        [Input("waitForReady")]
+        public Input<bool>? WaitForReady { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        /// </summary>
+        [Input("waitForReadyTimeout")]
+        public Input<int>? WaitForReadyTimeout { get; set; }
 
         public ObjectstorageBucketArgs()
         {
@@ -226,6 +343,15 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Whether the bucket has object lock enabled
+        /// </summary>
+        [Input("objectLockEnabled")]
+        public Input<bool>? ObjectLockEnabled { get; set; }
+
+        /// <summary>
+        /// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -235,9 +361,6 @@ namespace Pulumi.Thalassa
         [Input("policy")]
         public Input<string>? Policy { get; set; }
 
-        /// <summary>
-        /// Whether the bucket is publicly accessible
-        /// </summary>
         [Input("public")]
         public Input<bool>? Public { get; set; }
 
@@ -252,6 +375,36 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
+
+        /// <summary>
+        /// Whether the bucket is versioned
+        /// </summary>
+        [Input("versioning")]
+        public Input<bool>? Versioning { get; set; }
+
+        /// <summary>
+        /// Whether to wait for the bucket to be deleted
+        /// </summary>
+        [Input("waitForDeleted")]
+        public Input<bool>? WaitForDeleted { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+        /// </summary>
+        [Input("waitForDeletedTimeout")]
+        public Input<int>? WaitForDeletedTimeout { get; set; }
+
+        /// <summary>
+        /// Whether to wait for the bucket to be ready
+        /// </summary>
+        [Input("waitForReady")]
+        public Input<bool>? WaitForReady { get; set; }
+
+        /// <summary>
+        /// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+        /// </summary>
+        [Input("waitForReadyTimeout")]
+        public Input<int>? WaitForReadyTimeout { get; set; }
 
         public ObjectstorageBucketState()
         {

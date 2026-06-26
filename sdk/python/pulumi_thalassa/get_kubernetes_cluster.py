@@ -27,7 +27,10 @@ class GetKubernetesClusterResult:
     """
     A collection of values returned by getKubernetesCluster.
     """
-    def __init__(__self__, annotations=None, api_server_acls=None, audit_log_profile=None, auto_upgrade_policy=None, cluster_type=None, cluster_version=None, default_network_policy=None, delete_protection=None, description=None, id=None, kubernetes_api_server_ca_certificate=None, kubernetes_api_server_endpoint=None, labels=None, maintenance_day=None, maintenance_start_at=None, name=None, networking_cni=None, networking_pod_cidr=None, networking_service_cidr=None, organisation_id=None, pod_security_standards_profile=None, region=None, slug=None, subnet_id=None, vpc_id=None):
+    def __init__(__self__, advertise_port=None, annotations=None, api_server_acls=None, audit_log_profile=None, auto_upgrade_policy=None, autoscaler_configs=None, cluster_type=None, cluster_version=None, default_network_policy=None, delete_protection=None, description=None, disable_public_endpoint=None, id=None, internal_endpoint=None, konnectivity_port=None, kubernetes_api_server_ca_certificate=None, kubernetes_api_server_endpoint=None, labels=None, maintenance_day=None, maintenance_start_at=None, name=None, networking_cni=None, networking_kube_proxy_deployment=None, networking_kube_proxy_mode=None, networking_pod_cidr=None, networking_service_cidr=None, organisation_id=None, pod_security_standards_profile=None, region=None, slug=None, subnet_id=None, vpc_id=None):
+        if advertise_port and not isinstance(advertise_port, int):
+            raise TypeError("Expected argument 'advertise_port' to be a int")
+        pulumi.set(__self__, "advertise_port", advertise_port)
         if annotations and not isinstance(annotations, dict):
             raise TypeError("Expected argument 'annotations' to be a dict")
         pulumi.set(__self__, "annotations", annotations)
@@ -40,6 +43,9 @@ class GetKubernetesClusterResult:
         if auto_upgrade_policy and not isinstance(auto_upgrade_policy, str):
             raise TypeError("Expected argument 'auto_upgrade_policy' to be a str")
         pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
+        if autoscaler_configs and not isinstance(autoscaler_configs, list):
+            raise TypeError("Expected argument 'autoscaler_configs' to be a list")
+        pulumi.set(__self__, "autoscaler_configs", autoscaler_configs)
         if cluster_type and not isinstance(cluster_type, str):
             raise TypeError("Expected argument 'cluster_type' to be a str")
         pulumi.set(__self__, "cluster_type", cluster_type)
@@ -55,9 +61,18 @@ class GetKubernetesClusterResult:
         if description and not isinstance(description, str):
             raise TypeError("Expected argument 'description' to be a str")
         pulumi.set(__self__, "description", description)
+        if disable_public_endpoint and not isinstance(disable_public_endpoint, bool):
+            raise TypeError("Expected argument 'disable_public_endpoint' to be a bool")
+        pulumi.set(__self__, "disable_public_endpoint", disable_public_endpoint)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
+        if internal_endpoint and not isinstance(internal_endpoint, str):
+            raise TypeError("Expected argument 'internal_endpoint' to be a str")
+        pulumi.set(__self__, "internal_endpoint", internal_endpoint)
+        if konnectivity_port and not isinstance(konnectivity_port, int):
+            raise TypeError("Expected argument 'konnectivity_port' to be a int")
+        pulumi.set(__self__, "konnectivity_port", konnectivity_port)
         if kubernetes_api_server_ca_certificate and not isinstance(kubernetes_api_server_ca_certificate, str):
             raise TypeError("Expected argument 'kubernetes_api_server_ca_certificate' to be a str")
         pulumi.set(__self__, "kubernetes_api_server_ca_certificate", kubernetes_api_server_ca_certificate)
@@ -79,6 +94,12 @@ class GetKubernetesClusterResult:
         if networking_cni and not isinstance(networking_cni, str):
             raise TypeError("Expected argument 'networking_cni' to be a str")
         pulumi.set(__self__, "networking_cni", networking_cni)
+        if networking_kube_proxy_deployment and not isinstance(networking_kube_proxy_deployment, str):
+            raise TypeError("Expected argument 'networking_kube_proxy_deployment' to be a str")
+        pulumi.set(__self__, "networking_kube_proxy_deployment", networking_kube_proxy_deployment)
+        if networking_kube_proxy_mode and not isinstance(networking_kube_proxy_mode, str):
+            raise TypeError("Expected argument 'networking_kube_proxy_mode' to be a str")
+        pulumi.set(__self__, "networking_kube_proxy_mode", networking_kube_proxy_mode)
         if networking_pod_cidr and not isinstance(networking_pod_cidr, str):
             raise TypeError("Expected argument 'networking_pod_cidr' to be a str")
         pulumi.set(__self__, "networking_pod_cidr", networking_pod_cidr)
@@ -103,6 +124,14 @@ class GetKubernetesClusterResult:
         if vpc_id and not isinstance(vpc_id, str):
             raise TypeError("Expected argument 'vpc_id' to be a str")
         pulumi.set(__self__, "vpc_id", vpc_id)
+
+    @_builtins.property
+    @pulumi.getter(name="advertisePort")
+    def advertise_port(self) -> _builtins.int:
+        """
+        Advertise port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "advertise_port")
 
     @_builtins.property
     @pulumi.getter
@@ -135,6 +164,14 @@ class GetKubernetesClusterResult:
         Auto upgrade policy of the Kubernetes Cluster
         """
         return pulumi.get(self, "auto_upgrade_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="autoscalerConfigs")
+    def autoscaler_configs(self) -> Sequence['outputs.GetKubernetesClusterAutoscalerConfigResult']:
+        """
+        Configuration for the cluster autoscaler
+        """
+        return pulumi.get(self, "autoscaler_configs")
 
     @_builtins.property
     @pulumi.getter(name="clusterType")
@@ -177,12 +214,36 @@ class GetKubernetesClusterResult:
         return pulumi.get(self, "description")
 
     @_builtins.property
+    @pulumi.getter(name="disablePublicEndpoint")
+    def disable_public_endpoint(self) -> _builtins.bool:
+        """
+        Disable public endpoint of the Kubernetes Cluster
+        """
+        return pulumi.get(self, "disable_public_endpoint")
+
+    @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
         """
         The ID of this resource.
         """
         return pulumi.get(self, "id")
+
+    @_builtins.property
+    @pulumi.getter(name="internalEndpoint")
+    def internal_endpoint(self) -> _builtins.str:
+        """
+        VPC-internal endpoint for the Kubernetes Cluster
+        """
+        return pulumi.get(self, "internal_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="konnectivityPort")
+    def konnectivity_port(self) -> _builtins.int:
+        """
+        Konnectivity port for the Kubernetes Cluster within the VPC
+        """
+        return pulumi.get(self, "konnectivity_port")
 
     @_builtins.property
     @pulumi.getter(name="kubernetesApiServerCaCertificate")
@@ -239,6 +300,22 @@ class GetKubernetesClusterResult:
         CNI of the Kubernetes Cluster
         """
         return pulumi.get(self, "networking_cni")
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyDeployment")
+    def networking_kube_proxy_deployment(self) -> _builtins.str:
+        """
+        Deployment mode of the kube proxy
+        """
+        return pulumi.get(self, "networking_kube_proxy_deployment")
+
+    @_builtins.property
+    @pulumi.getter(name="networkingKubeProxyMode")
+    def networking_kube_proxy_mode(self) -> _builtins.str:
+        """
+        Mode of the kube proxy
+        """
+        return pulumi.get(self, "networking_kube_proxy_mode")
 
     @_builtins.property
     @pulumi.getter(name="networkingPodCidr")
@@ -311,16 +388,21 @@ class AwaitableGetKubernetesClusterResult(GetKubernetesClusterResult):
         if False:
             yield self
         return GetKubernetesClusterResult(
+            advertise_port=self.advertise_port,
             annotations=self.annotations,
             api_server_acls=self.api_server_acls,
             audit_log_profile=self.audit_log_profile,
             auto_upgrade_policy=self.auto_upgrade_policy,
+            autoscaler_configs=self.autoscaler_configs,
             cluster_type=self.cluster_type,
             cluster_version=self.cluster_version,
             default_network_policy=self.default_network_policy,
             delete_protection=self.delete_protection,
             description=self.description,
+            disable_public_endpoint=self.disable_public_endpoint,
             id=self.id,
+            internal_endpoint=self.internal_endpoint,
+            konnectivity_port=self.konnectivity_port,
             kubernetes_api_server_ca_certificate=self.kubernetes_api_server_ca_certificate,
             kubernetes_api_server_endpoint=self.kubernetes_api_server_endpoint,
             labels=self.labels,
@@ -328,6 +410,8 @@ class AwaitableGetKubernetesClusterResult(GetKubernetesClusterResult):
             maintenance_start_at=self.maintenance_start_at,
             name=self.name,
             networking_cni=self.networking_cni,
+            networking_kube_proxy_deployment=self.networking_kube_proxy_deployment,
+            networking_kube_proxy_mode=self.networking_kube_proxy_mode,
             networking_pod_cidr=self.networking_pod_cidr,
             networking_service_cidr=self.networking_service_cidr,
             organisation_id=self.organisation_id,
@@ -355,16 +439,21 @@ def get_kubernetes_cluster(name: Optional[_builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('thalassa:index/getKubernetesCluster:getKubernetesCluster', __args__, opts=opts, typ=GetKubernetesClusterResult).value
 
     return AwaitableGetKubernetesClusterResult(
+        advertise_port=pulumi.get(__ret__, 'advertise_port'),
         annotations=pulumi.get(__ret__, 'annotations'),
         api_server_acls=pulumi.get(__ret__, 'api_server_acls'),
         audit_log_profile=pulumi.get(__ret__, 'audit_log_profile'),
         auto_upgrade_policy=pulumi.get(__ret__, 'auto_upgrade_policy'),
+        autoscaler_configs=pulumi.get(__ret__, 'autoscaler_configs'),
         cluster_type=pulumi.get(__ret__, 'cluster_type'),
         cluster_version=pulumi.get(__ret__, 'cluster_version'),
         default_network_policy=pulumi.get(__ret__, 'default_network_policy'),
         delete_protection=pulumi.get(__ret__, 'delete_protection'),
         description=pulumi.get(__ret__, 'description'),
+        disable_public_endpoint=pulumi.get(__ret__, 'disable_public_endpoint'),
         id=pulumi.get(__ret__, 'id'),
+        internal_endpoint=pulumi.get(__ret__, 'internal_endpoint'),
+        konnectivity_port=pulumi.get(__ret__, 'konnectivity_port'),
         kubernetes_api_server_ca_certificate=pulumi.get(__ret__, 'kubernetes_api_server_ca_certificate'),
         kubernetes_api_server_endpoint=pulumi.get(__ret__, 'kubernetes_api_server_endpoint'),
         labels=pulumi.get(__ret__, 'labels'),
@@ -372,6 +461,8 @@ def get_kubernetes_cluster(name: Optional[_builtins.str] = None,
         maintenance_start_at=pulumi.get(__ret__, 'maintenance_start_at'),
         name=pulumi.get(__ret__, 'name'),
         networking_cni=pulumi.get(__ret__, 'networking_cni'),
+        networking_kube_proxy_deployment=pulumi.get(__ret__, 'networking_kube_proxy_deployment'),
+        networking_kube_proxy_mode=pulumi.get(__ret__, 'networking_kube_proxy_mode'),
         networking_pod_cidr=pulumi.get(__ret__, 'networking_pod_cidr'),
         networking_service_cidr=pulumi.get(__ret__, 'networking_service_cidr'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
@@ -380,8 +471,8 @@ def get_kubernetes_cluster(name: Optional[_builtins.str] = None,
         slug=pulumi.get(__ret__, 'slug'),
         subnet_id=pulumi.get(__ret__, 'subnet_id'),
         vpc_id=pulumi.get(__ret__, 'vpc_id'))
-def get_kubernetes_cluster_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                                  organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_kubernetes_cluster_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                                   opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetKubernetesClusterResult]:
     """
     Get an Kubernetes cluster
@@ -396,16 +487,21 @@ def get_kubernetes_cluster_output(name: Optional[pulumi.Input[_builtins.str]] = 
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('thalassa:index/getKubernetesCluster:getKubernetesCluster', __args__, opts=opts, typ=GetKubernetesClusterResult)
     return __ret__.apply(lambda __response__: GetKubernetesClusterResult(
+        advertise_port=pulumi.get(__response__, 'advertise_port'),
         annotations=pulumi.get(__response__, 'annotations'),
         api_server_acls=pulumi.get(__response__, 'api_server_acls'),
         audit_log_profile=pulumi.get(__response__, 'audit_log_profile'),
         auto_upgrade_policy=pulumi.get(__response__, 'auto_upgrade_policy'),
+        autoscaler_configs=pulumi.get(__response__, 'autoscaler_configs'),
         cluster_type=pulumi.get(__response__, 'cluster_type'),
         cluster_version=pulumi.get(__response__, 'cluster_version'),
         default_network_policy=pulumi.get(__response__, 'default_network_policy'),
         delete_protection=pulumi.get(__response__, 'delete_protection'),
         description=pulumi.get(__response__, 'description'),
+        disable_public_endpoint=pulumi.get(__response__, 'disable_public_endpoint'),
         id=pulumi.get(__response__, 'id'),
+        internal_endpoint=pulumi.get(__response__, 'internal_endpoint'),
+        konnectivity_port=pulumi.get(__response__, 'konnectivity_port'),
         kubernetes_api_server_ca_certificate=pulumi.get(__response__, 'kubernetes_api_server_ca_certificate'),
         kubernetes_api_server_endpoint=pulumi.get(__response__, 'kubernetes_api_server_endpoint'),
         labels=pulumi.get(__response__, 'labels'),
@@ -413,6 +509,8 @@ def get_kubernetes_cluster_output(name: Optional[pulumi.Input[_builtins.str]] = 
         maintenance_start_at=pulumi.get(__response__, 'maintenance_start_at'),
         name=pulumi.get(__response__, 'name'),
         networking_cni=pulumi.get(__response__, 'networking_cni'),
+        networking_kube_proxy_deployment=pulumi.get(__response__, 'networking_kube_proxy_deployment'),
+        networking_kube_proxy_mode=pulumi.get(__response__, 'networking_kube_proxy_mode'),
         networking_pod_cidr=pulumi.get(__response__, 'networking_pod_cidr'),
         networking_service_cidr=pulumi.get(__response__, 'networking_service_cidr'),
         organisation_id=pulumi.get(__response__, 'organisation_id'),

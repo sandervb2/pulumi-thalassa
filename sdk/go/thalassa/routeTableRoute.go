@@ -100,6 +100,8 @@ type RouteTableRoute struct {
 	TargetGateway pulumi.StringPtrOutput `pulumi:"targetGateway"`
 	// Target NAT Gateway of the Route
 	TargetNatgateway pulumi.StringPtrOutput `pulumi:"targetNatgateway"`
+	// Target VPC Peering Connection ID of the Route
+	TargetVpcPeeringConnection pulumi.StringPtrOutput `pulumi:"targetVpcPeeringConnection"`
 }
 
 // NewRouteTableRoute registers a new resource with the given unique name, arguments, and options.
@@ -152,6 +154,8 @@ type routeTableRouteState struct {
 	TargetGateway *string `pulumi:"targetGateway"`
 	// Target NAT Gateway of the Route
 	TargetNatgateway *string `pulumi:"targetNatgateway"`
+	// Target VPC Peering Connection ID of the Route
+	TargetVpcPeeringConnection *string `pulumi:"targetVpcPeeringConnection"`
 }
 
 type RouteTableRouteState struct {
@@ -169,6 +173,8 @@ type RouteTableRouteState struct {
 	TargetGateway pulumi.StringPtrInput
 	// Target NAT Gateway of the Route
 	TargetNatgateway pulumi.StringPtrInput
+	// Target VPC Peering Connection ID of the Route
+	TargetVpcPeeringConnection pulumi.StringPtrInput
 }
 
 func (RouteTableRouteState) ElementType() reflect.Type {
@@ -190,6 +196,8 @@ type routeTableRouteArgs struct {
 	TargetGateway *string `pulumi:"targetGateway"`
 	// Target NAT Gateway of the Route
 	TargetNatgateway *string `pulumi:"targetNatgateway"`
+	// Target VPC Peering Connection ID of the Route
+	TargetVpcPeeringConnection *string `pulumi:"targetVpcPeeringConnection"`
 }
 
 // The set of arguments for constructing a RouteTableRoute resource.
@@ -208,6 +216,8 @@ type RouteTableRouteArgs struct {
 	TargetGateway pulumi.StringPtrInput
 	// Target NAT Gateway of the Route
 	TargetNatgateway pulumi.StringPtrInput
+	// Target VPC Peering Connection ID of the Route
+	TargetVpcPeeringConnection pulumi.StringPtrInput
 }
 
 func (RouteTableRouteArgs) ElementType() reflect.Type {
@@ -330,6 +340,11 @@ func (o RouteTableRouteOutput) TargetGateway() pulumi.StringPtrOutput {
 // Target NAT Gateway of the Route
 func (o RouteTableRouteOutput) TargetNatgateway() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *RouteTableRoute) pulumi.StringPtrOutput { return v.TargetNatgateway }).(pulumi.StringPtrOutput)
+}
+
+// Target VPC Peering Connection ID of the Route
+func (o RouteTableRouteOutput) TargetVpcPeeringConnection() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RouteTableRoute) pulumi.StringPtrOutput { return v.TargetVpcPeeringConnection }).(pulumi.StringPtrOutput)
 }
 
 type RouteTableRouteArrayOutput struct{ *pulumi.OutputState }

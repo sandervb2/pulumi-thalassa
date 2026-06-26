@@ -51,5 +51,5 @@ export function getOrganisationOutput(args?: GetOrganisationOutputArgs, opts?: p
  * A collection of arguments for invoking getOrganisation.
  */
 export interface GetOrganisationOutputArgs {
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

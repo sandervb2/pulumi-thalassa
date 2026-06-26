@@ -17,7 +17,7 @@ npm install @sandervb2/pulumi-thalassa
 yarn add @sandervb2/pulumi-thalassa
 ```
 
-### Python (not yet available)
+### Python
 
 ```bash
 pip install pulumi-thalassa

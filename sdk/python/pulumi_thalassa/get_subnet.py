@@ -49,34 +49,49 @@ class GetSubnetResult:
     @_builtins.property
     @pulumi.getter
     def cidr(self) -> _builtins.str:
+        """
+        The CIDR block of the subnet
+        """
         return pulumi.get(self, "cidr")
 
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
         """
-        The ID of this resource.
+        The unique identifier of the subnet
         """
         return pulumi.get(self, "id")
 
     @_builtins.property
     @pulumi.getter
     def name(self) -> _builtins.str:
+        """
+        The name of the subnet to look up
+        """
         return pulumi.get(self, "name")
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
     @pulumi.getter
     def slug(self) -> _builtins.str:
+        """
+        The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+        """
         return pulumi.get(self, "slug")
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> _builtins.str:
+        """
+        The ID of the VPC that contains the subnet
+        """
         return pulumi.get(self, "vpc_id")
 
 
@@ -101,6 +116,12 @@ def get_subnet(name: Optional[_builtins.str] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetSubnetResult:
     """
     Get a subnet by name
+
+
+    :param _builtins.str name: The name of the subnet to look up
+    :param _builtins.str organisation_id: Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+    :param _builtins.str slug: The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+    :param _builtins.str vpc_id: The ID of the VPC that contains the subnet
     """
     __args__ = dict()
     __args__['name'] = name
@@ -117,13 +138,19 @@ def get_subnet(name: Optional[_builtins.str] = None,
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         slug=pulumi.get(__ret__, 'slug'),
         vpc_id=pulumi.get(__ret__, 'vpc_id'))
-def get_subnet_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                      organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                      slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                      vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_subnet_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                      organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                      slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                      vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetSubnetResult]:
     """
     Get a subnet by name
+
+
+    :param _builtins.str name: The name of the subnet to look up
+    :param _builtins.str organisation_id: Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+    :param _builtins.str slug: The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+    :param _builtins.str vpc_id: The ID of the VPC that contains the subnet
     """
     __args__ = dict()
     __args__['name'] = name

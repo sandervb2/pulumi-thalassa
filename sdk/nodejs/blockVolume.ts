@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a block volume with Thalassa default values
  * const example = new thalassa.BlockVolume("example", {
@@ -73,6 +73,9 @@ export class BlockVolume extends pulumi.CustomResource {
      * Name of the Block Volume
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * Region of the Block Volume.
@@ -154,45 +157,48 @@ export interface BlockVolumeState {
     /**
      * Annotations for the Block Volume
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Delete protection of the Block Volume
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the Block Volume
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Block Volume
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Block Volume
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the Block Volume.
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
     /**
      * Size of the Block Volume in GB
      */
-    sizeGb?: pulumi.Input<number>;
-    slug?: pulumi.Input<string>;
+    sizeGb?: pulumi.Input<number | undefined>;
+    slug?: pulumi.Input<string | undefined>;
     /**
      * Status of the Block Volume
      */
-    status?: pulumi.Input<string>;
+    status?: pulumi.Input<string | undefined>;
     /**
      * Volume type of the Block Volume
      */
-    volumeType?: pulumi.Input<string>;
+    volumeType?: pulumi.Input<string | undefined>;
     /**
      * Wait until the Block Volume is ready
      */
-    waitUntilReady?: pulumi.Input<boolean>;
+    waitUntilReady?: pulumi.Input<boolean | undefined>;
 }
 
 /**
@@ -202,28 +208,31 @@ export interface BlockVolumeArgs {
     /**
      * Annotations for the Block Volume
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Delete protection of the Block Volume
      */
-    deleteProtection?: pulumi.Input<boolean>;
+    deleteProtection?: pulumi.Input<boolean | undefined>;
     /**
      * A human readable description about the Block Volume
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
      * Labels for the Block Volume
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * Name of the Block Volume
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Region of the Block Volume.
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
     /**
      * Size of the Block Volume in GB
      */
@@ -235,5 +244,5 @@ export interface BlockVolumeArgs {
     /**
      * Wait until the Block Volume is ready
      */
-    waitUntilReady?: pulumi.Input<boolean>;
+    waitUntilReady?: pulumi.Input<boolean | undefined>;
 }

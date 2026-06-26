@@ -111,7 +111,7 @@ def get_organisation(slug: Optional[_builtins.str] = None,
         labels=pulumi.get(__ret__, 'labels'),
         name=pulumi.get(__ret__, 'name'),
         slug=pulumi.get(__ret__, 'slug'))
-def get_organisation_output(slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_organisation_output(slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                             opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetOrganisationResult]:
     """
     Get an organisation

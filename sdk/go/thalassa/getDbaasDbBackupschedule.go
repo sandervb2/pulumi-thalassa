@@ -23,8 +23,9 @@ func LookupDbaasDbBackupschedule(ctx *pulumi.Context, args *LookupDbaasDbBackups
 
 // A collection of arguments for invoking getDbaasDbBackupschedule.
 type LookupDbaasDbBackupscheduleArgs struct {
-	DbClusterId    string  `pulumi:"dbClusterId"`
-	Name           string  `pulumi:"name"`
+	DbClusterId string `pulumi:"dbClusterId"`
+	Name        string `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 }
 
@@ -33,8 +34,9 @@ type LookupDbaasDbBackupscheduleResult struct {
 	BackupTarget string `pulumi:"backupTarget"`
 	DbClusterId  string `pulumi:"dbClusterId"`
 	// The ID of this resource.
-	Id              string  `pulumi:"id"`
-	Name            string  `pulumi:"name"`
+	Id   string `pulumi:"id"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId  *string `pulumi:"organisationId"`
 	RetentionPolicy string  `pulumi:"retentionPolicy"`
 	Schedule        string  `pulumi:"schedule"`
@@ -52,8 +54,9 @@ func LookupDbaasDbBackupscheduleOutput(ctx *pulumi.Context, args LookupDbaasDbBa
 
 // A collection of arguments for invoking getDbaasDbBackupschedule.
 type LookupDbaasDbBackupscheduleOutputArgs struct {
-	DbClusterId    pulumi.StringInput    `pulumi:"dbClusterId"`
-	Name           pulumi.StringInput    `pulumi:"name"`
+	DbClusterId pulumi.StringInput `pulumi:"dbClusterId"`
+	Name        pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 }
 
@@ -93,6 +96,7 @@ func (o LookupDbaasDbBackupscheduleResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDbaasDbBackupscheduleResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupDbaasDbBackupscheduleResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupDbaasDbBackupscheduleResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

@@ -11,49 +11,88 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as random from "@pulumi/random";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
- * // Create a basic object storage bucket
- * const basic = new thalassa.ObjectstorageBucket("basic", {
- *     name: "my-basic-bucket",
- *     region: "nl-01",
+ * // Create a service account first
+ * const example = new thalassa.IamServiceAccount("example", {
+ *     name: "cluster-service-account",
+ *     description: "Service account for cluster access",
+ *     labels: {
+ *         environment: "production",
+ *         project: "cluster",
+ *     },
  * });
- * // Create a public object storage bucket
- * const _public = new thalassa.ObjectstorageBucket("public", {
- *     name: "my-public-bucket",
- *     region: "nl-01",
- *     "public": true,
+ * // Create object storage access credentials
+ * const storageCredential = new thalassa.IamServiceAccountAccessCredential("storage_credential", {
+ *     serviceAccountId: example.id,
+ *     scopes: ["objectStorage"],
  * });
- * // Create a bucket with a custom policy
- * const withPolicy = new thalassa.ObjectstorageBucket("with_policy", {
- *     name: "my-policy-bucket",
+ * // # random uuid
+ * const bucketName = new random.index.Uuid("bucket_name", {});
+ * const org = thalassa.getOrganisation({
+ *     slug: organisationSlug,
+ * });
+ * // # Create a bucket with a custom policy
+ * const clusterBucket = new thalassa.ObjectstorageBucket("cluster_bucket", {
+ *     name: `cluster-bucket-${bucketName.result}`,
  *     region: "nl-01",
- *     "public": false,
- *     policy: JSON.stringify({
+ *     policy: pulumi.jsonStringify({
  *         Version: "2012-10-17",
  *         Statement: [{
- *             Sid: "AllowReadAccess",
+ *             Sid: "Statement1",
+ *             Action: [
+ *                 "s3:GetObject",
+ *                 "s3:GetObjectVersion",
+ *                 "s3:PutObject",
+ *                 "s3:GetObjectAcl",
+ *                 "s3:GetObjectVersionAcl",
+ *                 "s3:PutObjectAcl",
+ *                 "s3:PutObjectVersionAcl",
+ *                 "s3:DeleteObject",
+ *                 "s3:DeleteObjectVersion",
+ *                 "s3:ListMultipartUploadParts",
+ *                 "s3:AbortMultipartUpload",
+ *                 "s3:RestoreObject",
+ *                 "s3:ListBucket",
+ *                 "s3:ListBucketVersions",
+ *                 "s3:ListBucketMultipartUploads",
+ *                 "s3:GetBucketAcl",
+ *                 "s3:PutBucketAcl",
+ *                 "s3:GetBucketCORS",
+ *                 "s3:PutBucketCORS",
+ *                 "s3:GetBucketVersioning",
+ *                 "s3:PutBucketVersioning",
+ *                 "s3:GetBucketRequestPayment",
+ *                 "s3:PutBucketRequestPayment",
+ *                 "s3:GetLifecycleConfiguration",
+ *                 "s3:PutLifecycleConfiguration",
+ *                 "s3:GetObjectTagging",
+ *                 "s3:PutObjectTagging",
+ *                 "s3:DeleteObjectTagging",
+ *                 "s3:GetObjectVersionTagging",
+ *                 "s3:PutObjectVersionTagging",
+ *                 "s3:DeleteObjectVersionTagging",
+ *                 "s3:PutBucketObjectLockConfiguration",
+ *                 "s3:GetBucketObjectLockConfiguration",
+ *                 "s3:PutObjectRetention",
+ *                 "s3:GetObjectRetention",
+ *                 "s3:PutObjectLegalHold",
+ *                 "s3:GetObjectLegalHold",
+ *                 "s3:BypassGovernanceRetention",
+ *                 "s3:GetBucketPolicyStatus",
+ *             ],
  *             Effect: "Allow",
+ *             Resource: [
+ *                 `arn:thalassa:s3:::cluster-bucket-${bucketName.result}`,
+ *                 `arn:thalassa:s3:::cluster-bucket-${bucketName.result}/*`,
+ *             ],
  *             Principal: {
- *                 Thalassa: "*",
- *             },
- *             Action: ["s3:GetObject"],
- *             Resource: ["arn:thalassa:s3:::my-policy-bucket/*"],
- *             Condition: {
- *                 StringEquals: {
- *                     "thalassa:User": "u-exampleuserid",
- *                 },
+ *                 Thalassa: [pulumi.all([org, example.id]).apply(([org, id]) => `arn:thalassa:iam:::serviceaccount/${org.id}:${id}`)],
  *             },
  *         }],
  *     }),
  * });
- * export const basicBucketId = basic.id;
- * export const basicBucketName = basic.name;
- * export const basicBucketEndpoint = basic.endpoint;
- * export const publicBucketId = _public.id;
- * export const publicBucketName = _public.name;
- * export const policyBucketId = withPolicy.id;
- * export const policyBucketName = withPolicy.name;
  * ```
  */
 export class ObjectstorageBucket extends pulumi.CustomResource {
@@ -92,13 +131,20 @@ export class ObjectstorageBucket extends pulumi.CustomResource {
      * Name of the bucket
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Whether the bucket has object lock enabled
+     */
+    declare public readonly objectLockEnabled: pulumi.Output<boolean | undefined>;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The bucket policy as a JSON string
      */
     declare public readonly policy: pulumi.Output<string | undefined>;
     /**
-     * Whether the bucket is publicly accessible
+     * @deprecated Does not have any effect. Will be removed in a future version.
      */
     declare public readonly public: pulumi.Output<boolean | undefined>;
     /**
@@ -109,6 +155,26 @@ export class ObjectstorageBucket extends pulumi.CustomResource {
      * Status of the bucket
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
+    /**
+     * Whether the bucket is versioned
+     */
+    declare public readonly versioning: pulumi.Output<boolean | undefined>;
+    /**
+     * Whether to wait for the bucket to be deleted
+     */
+    declare public readonly waitForDeleted: pulumi.Output<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+     */
+    declare public readonly waitForDeletedTimeout: pulumi.Output<number | undefined>;
+    /**
+     * Whether to wait for the bucket to be ready
+     */
+    declare public readonly waitForReady: pulumi.Output<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+     */
+    declare public readonly waitForReadyTimeout: pulumi.Output<number | undefined>;
 
     /**
      * Create a ObjectstorageBucket resource with the given unique name, arguments, and options.
@@ -125,21 +191,33 @@ export class ObjectstorageBucket extends pulumi.CustomResource {
             const state = argsOrState as ObjectstorageBucketState | undefined;
             resourceInputs["endpoint"] = state?.endpoint;
             resourceInputs["name"] = state?.name;
+            resourceInputs["objectLockEnabled"] = state?.objectLockEnabled;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["policy"] = state?.policy;
             resourceInputs["public"] = state?.public;
             resourceInputs["region"] = state?.region;
             resourceInputs["status"] = state?.status;
+            resourceInputs["versioning"] = state?.versioning;
+            resourceInputs["waitForDeleted"] = state?.waitForDeleted;
+            resourceInputs["waitForDeletedTimeout"] = state?.waitForDeletedTimeout;
+            resourceInputs["waitForReady"] = state?.waitForReady;
+            resourceInputs["waitForReadyTimeout"] = state?.waitForReadyTimeout;
         } else {
             const args = argsOrState as ObjectstorageBucketArgs | undefined;
             if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
             resourceInputs["name"] = args?.name;
+            resourceInputs["objectLockEnabled"] = args?.objectLockEnabled;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["policy"] = args?.policy;
             resourceInputs["public"] = args?.public;
             resourceInputs["region"] = args?.region;
+            resourceInputs["versioning"] = args?.versioning;
+            resourceInputs["waitForDeleted"] = args?.waitForDeleted;
+            resourceInputs["waitForDeletedTimeout"] = args?.waitForDeletedTimeout;
+            resourceInputs["waitForReady"] = args?.waitForReady;
+            resourceInputs["waitForReadyTimeout"] = args?.waitForReadyTimeout;
             resourceInputs["endpoint"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }
@@ -155,28 +233,55 @@ export interface ObjectstorageBucketState {
     /**
      * The endpoint URL for the bucket
      */
-    endpoint?: pulumi.Input<string>;
+    endpoint?: pulumi.Input<string | undefined>;
     /**
      * Name of the bucket
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Whether the bucket has object lock enabled
+     */
+    objectLockEnabled?: pulumi.Input<boolean | undefined>;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The bucket policy as a JSON string
      */
-    policy?: pulumi.Input<string>;
+    policy?: pulumi.Input<string | undefined>;
     /**
-     * Whether the bucket is publicly accessible
+     * @deprecated Does not have any effect. Will be removed in a future version.
      */
-    public?: pulumi.Input<boolean>;
+    public?: pulumi.Input<boolean | undefined>;
     /**
      * Region of the bucket
      */
-    region?: pulumi.Input<string>;
+    region?: pulumi.Input<string | undefined>;
     /**
      * Status of the bucket
      */
-    status?: pulumi.Input<string>;
+    status?: pulumi.Input<string | undefined>;
+    /**
+     * Whether the bucket is versioned
+     */
+    versioning?: pulumi.Input<boolean | undefined>;
+    /**
+     * Whether to wait for the bucket to be deleted
+     */
+    waitForDeleted?: pulumi.Input<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+     */
+    waitForDeletedTimeout?: pulumi.Input<number | undefined>;
+    /**
+     * Whether to wait for the bucket to be ready
+     */
+    waitForReady?: pulumi.Input<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+     */
+    waitForReadyTimeout?: pulumi.Input<number | undefined>;
 }
 
 /**
@@ -186,18 +291,45 @@ export interface ObjectstorageBucketArgs {
     /**
      * Name of the bucket
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Whether the bucket has object lock enabled
+     */
+    objectLockEnabled?: pulumi.Input<boolean | undefined>;
+    /**
+     * Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The bucket policy as a JSON string
      */
-    policy?: pulumi.Input<string>;
+    policy?: pulumi.Input<string | undefined>;
     /**
-     * Whether the bucket is publicly accessible
+     * @deprecated Does not have any effect. Will be removed in a future version.
      */
-    public?: pulumi.Input<boolean>;
+    public?: pulumi.Input<boolean | undefined>;
     /**
      * Region of the bucket
      */
     region: pulumi.Input<string>;
+    /**
+     * Whether the bucket is versioned
+     */
+    versioning?: pulumi.Input<boolean | undefined>;
+    /**
+     * Whether to wait for the bucket to be deleted
+     */
+    waitForDeleted?: pulumi.Input<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+     */
+    waitForDeletedTimeout?: pulumi.Input<number | undefined>;
+    /**
+     * Whether to wait for the bucket to be ready
+     */
+    waitForReady?: pulumi.Input<boolean | undefined>;
+    /**
+     * The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+     */
+    waitForReadyTimeout?: pulumi.Input<number | undefined>;
 }

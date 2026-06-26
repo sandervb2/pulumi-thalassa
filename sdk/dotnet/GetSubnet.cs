@@ -33,15 +33,27 @@ namespace Pulumi.Thalassa
 
     public sealed class GetSubnetArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the subnet to look up
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
+        /// <summary>
+        /// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+        /// </summary>
         [Input("slug")]
         public string? Slug { get; set; }
 
+        /// <summary>
+        /// The ID of the VPC that contains the subnet
+        /// </summary>
         [Input("vpcId", required: true)]
         public string VpcId { get; set; } = null!;
 
@@ -53,15 +65,27 @@ namespace Pulumi.Thalassa
 
     public sealed class GetSubnetInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the subnet to look up
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
+        /// <summary>
+        /// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+        /// </summary>
         [Input("slug")]
         public Input<string>? Slug { get; set; }
 
+        /// <summary>
+        /// The ID of the VPC that contains the subnet
+        /// </summary>
         [Input("vpcId", required: true)]
         public Input<string> VpcId { get; set; } = null!;
 
@@ -75,14 +99,29 @@ namespace Pulumi.Thalassa
     [OutputType]
     public sealed class GetSubnetResult
     {
+        /// <summary>
+        /// The CIDR block of the subnet
+        /// </summary>
         public readonly string Cidr;
         /// <summary>
-        /// The ID of this resource.
+        /// The unique identifier of the subnet
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The name of the subnet to look up
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Subnet. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
+        /// <summary>
+        /// The slug of the subnet. Required when multiple subnets exist with the same name in the VPC
+        /// </summary>
         public readonly string Slug;
+        /// <summary>
+        /// The ID of the VPC that contains the subnet
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

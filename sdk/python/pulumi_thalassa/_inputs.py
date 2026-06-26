@@ -15,33 +15,525 @@ else:
 from . import _utilities
 
 __all__ = [
+    'DbaasDbClusterRestoreRecoveryTargetArgs',
+    'DbaasDbClusterRestoreRecoveryTargetArgsDict',
+    'DnsZoneDnssecDsRecordArgs',
+    'DnsZoneDnssecDsRecordArgsDict',
+    'IamRoleRuleArgs',
+    'IamRoleRuleArgsDict',
+    'IamServiceAccountRoleBindingArgs',
+    'IamServiceAccountRoleBindingArgsDict',
+    'IamTeamMemberArgs',
+    'IamTeamMemberArgsDict',
     'KubernetesClusterApiServerAclArgs',
     'KubernetesClusterApiServerAclArgsDict',
+    'KubernetesClusterAutoscalerConfigArgs',
+    'KubernetesClusterAutoscalerConfigArgsDict',
+    'KubernetesClusterRoleRuleArgs',
+    'KubernetesClusterRoleRuleArgsDict',
     'KubernetesNodePoolNodeTaintArgs',
     'KubernetesNodePoolNodeTaintArgsDict',
+    'ObjectstorageBucketLifecycleRuleArgs',
+    'ObjectstorageBucketLifecycleRuleArgsDict',
+    'ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgs',
+    'ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgsDict',
+    'ObjectstorageBucketLifecycleRuleExpirationArgs',
+    'ObjectstorageBucketLifecycleRuleExpirationArgsDict',
+    'ObjectstorageBucketLifecycleRuleFilterArgs',
+    'ObjectstorageBucketLifecycleRuleFilterArgsDict',
+    'ObjectstorageBucketLifecycleRuleFilterAndArgs',
+    'ObjectstorageBucketLifecycleRuleFilterAndArgsDict',
+    'ObjectstorageBucketLifecycleRuleFilterAndTagArgs',
+    'ObjectstorageBucketLifecycleRuleFilterAndTagArgsDict',
+    'ObjectstorageBucketLifecycleRuleFilterTagArgs',
+    'ObjectstorageBucketLifecycleRuleFilterTagArgsDict',
+    'ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgs',
+    'ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgsDict',
+    'ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgs',
+    'ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgsDict',
+    'ObjectstorageBucketLifecycleRuleTransitionArgs',
+    'ObjectstorageBucketLifecycleRuleTransitionArgsDict',
+    'SecretAccessPolicyStatementArgs',
+    'SecretAccessPolicyStatementArgsDict',
+    'SecretGenerateSecretArgs',
+    'SecretGenerateSecretArgsDict',
+    'SecretVersionGenerateSecretArgs',
+    'SecretVersionGenerateSecretArgsDict',
     'SecurityGroupEgressRuleArgs',
     'SecurityGroupEgressRuleArgsDict',
+    'SecurityGroupEgressRuleRuleArgs',
+    'SecurityGroupEgressRuleRuleArgsDict',
     'SecurityGroupIngressRuleArgs',
     'SecurityGroupIngressRuleArgsDict',
+    'SecurityGroupIngressRuleRuleArgs',
+    'SecurityGroupIngressRuleRuleArgsDict',
+    'SnapshotPolicyTargetArgs',
+    'SnapshotPolicyTargetArgsDict',
     'TargetGroupAttachmentArgs',
     'TargetGroupAttachmentArgsDict',
+    'TfsInstanceEndpointArgs',
+    'TfsInstanceEndpointArgsDict',
+    'VpcFirewallRuleProtocolsArgs',
+    'VpcFirewallRuleProtocolsArgsDict',
+    'VpcPeeringConnectionAccepterOrganisationArgs',
+    'VpcPeeringConnectionAccepterOrganisationArgsDict',
+    'VpcPeeringConnectionAccepterVpcArgs',
+    'VpcPeeringConnectionAccepterVpcArgsDict',
+    'VpcPeeringConnectionRequesterOrganisationArgs',
+    'VpcPeeringConnectionRequesterOrganisationArgsDict',
+    'VpcPeeringConnectionRequesterVpcArgs',
+    'VpcPeeringConnectionRequesterVpcArgsDict',
 ]
 
-MYPY = False
+class DbaasDbClusterRestoreRecoveryTargetArgsDict(TypedDict):
+    target_lsn: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Log Sequence Number to restore to. Example: '0/1234567'
+    """
+    target_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+    """
 
-if not MYPY:
-    class KubernetesClusterApiServerAclArgsDict(TypedDict):
-        allowed_cidrs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+@pulumi.input_type
+class DbaasDbClusterRestoreRecoveryTargetArgs:
+    def __init__(__self__, *,
+                 target_lsn: pulumi.Input[Optional[_builtins.str]] = None,
+                 target_time: pulumi.Input[Optional[_builtins.str]] = None):
         """
-        List of allowed CIDRs for API server access
+        :param pulumi.Input[_builtins.str] target_lsn: Log Sequence Number to restore to. Example: '0/1234567'
+        :param pulumi.Input[_builtins.str] target_time: Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
         """
-elif False:
-    KubernetesClusterApiServerAclArgsDict: TypeAlias = Mapping[str, Any]
+        if target_lsn is not None:
+            pulumi.set(__self__, "target_lsn", target_lsn)
+        if target_time is not None:
+            pulumi.set(__self__, "target_time", target_time)
+
+    @_builtins.property
+    @pulumi.getter(name="targetLsn")
+    def target_lsn(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Log Sequence Number to restore to. Example: '0/1234567'
+        """
+        return pulumi.get(self, "target_lsn")
+
+    @target_lsn.setter
+    def target_lsn(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "target_lsn", value)
+
+    @_builtins.property
+    @pulumi.getter(name="targetTime")
+    def target_time(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+        """
+        return pulumi.get(self, "target_time")
+
+    @target_time.setter
+    def target_time(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "target_time", value)
+
+
+class DnsZoneDnssecDsRecordArgsDict(TypedDict):
+    algorithm: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    digest_type_name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    key_role: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    key_tag: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    public_key: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    record: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+
+@pulumi.input_type
+class DnsZoneDnssecDsRecordArgs:
+    def __init__(__self__, *,
+                 algorithm: pulumi.Input[Optional[_builtins.int]] = None,
+                 digest_type_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 key_role: pulumi.Input[Optional[_builtins.str]] = None,
+                 key_tag: pulumi.Input[Optional[_builtins.int]] = None,
+                 public_key: pulumi.Input[Optional[_builtins.str]] = None,
+                 record: pulumi.Input[Optional[_builtins.str]] = None):
+        if algorithm is not None:
+            pulumi.set(__self__, "algorithm", algorithm)
+        if digest_type_name is not None:
+            pulumi.set(__self__, "digest_type_name", digest_type_name)
+        if key_role is not None:
+            pulumi.set(__self__, "key_role", key_role)
+        if key_tag is not None:
+            pulumi.set(__self__, "key_tag", key_tag)
+        if public_key is not None:
+            pulumi.set(__self__, "public_key", public_key)
+        if record is not None:
+            pulumi.set(__self__, "record", record)
+
+    @_builtins.property
+    @pulumi.getter
+    def algorithm(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "algorithm")
+
+    @algorithm.setter
+    def algorithm(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "algorithm", value)
+
+    @_builtins.property
+    @pulumi.getter(name="digestTypeName")
+    def digest_type_name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "digest_type_name")
+
+    @digest_type_name.setter
+    def digest_type_name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "digest_type_name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="keyRole")
+    def key_role(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "key_role")
+
+    @key_role.setter
+    def key_role(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "key_role", value)
+
+    @_builtins.property
+    @pulumi.getter(name="keyTag")
+    def key_tag(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "key_tag")
+
+    @key_tag.setter
+    def key_tag(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "key_tag", value)
+
+    @_builtins.property
+    @pulumi.getter(name="publicKey")
+    def public_key(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "public_key")
+
+    @public_key.setter
+    def public_key(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "public_key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def record(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "record")
+
+    @record.setter
+    def record(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "record", value)
+
+
+class IamRoleRuleArgsDict(TypedDict):
+    permissions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    List of permissions (create, read, update, delete, list, *)
+    """
+    resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    List of resources this rule applies to
+    """
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the permission rule
+    """
+    note: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Human-readable note for the permission rule
+    """
+    resource_identities: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of specific resource identities this rule applies to
+    """
+
+@pulumi.input_type
+class IamRoleRuleArgs:
+    def __init__(__self__, *,
+                 permissions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 note: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_identities: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] permissions: List of permissions (create, read, update, delete, list, *)
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] resources: List of resources this rule applies to
+        :param pulumi.Input[_builtins.str] identity: Identity of the permission rule
+        :param pulumi.Input[_builtins.str] note: Human-readable note for the permission rule
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] resource_identities: List of specific resource identities this rule applies to
+        """
+        pulumi.set(__self__, "permissions", permissions)
+        pulumi.set(__self__, "resources", resources)
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if note is not None:
+            pulumi.set(__self__, "note", note)
+        if resource_identities is not None:
+            pulumi.set(__self__, "resource_identities", resource_identities)
+
+    @_builtins.property
+    @pulumi.getter
+    def permissions(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        List of permissions (create, read, update, delete, list, *)
+        """
+        return pulumi.get(self, "permissions")
+
+    @permissions.setter
+    def permissions(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "permissions", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def resources(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        List of resources this rule applies to
+        """
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "resources", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the permission rule
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def note(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Human-readable note for the permission rule
+        """
+        return pulumi.get(self, "note")
+
+    @note.setter
+    def note(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "note", value)
+
+    @_builtins.property
+    @pulumi.getter(name="resourceIdentities")
+    def resource_identities(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of specific resource identities this rule applies to
+        """
+        return pulumi.get(self, "resource_identities")
+
+    @resource_identities.setter
+    def resource_identities(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "resource_identities", value)
+
+
+class IamServiceAccountRoleBindingArgsDict(TypedDict):
+    created_at: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Creation timestamp of the role binding
+    """
+    description: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Description of the role binding
+    """
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the role binding
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the role binding
+    """
+    role_id: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the role binding
+    """
+    updated_at: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Last update timestamp of the role binding
+    """
+
+@pulumi.input_type
+class IamServiceAccountRoleBindingArgs:
+    def __init__(__self__, *,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 role_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the role binding
+        :param pulumi.Input[_builtins.str] description: Description of the role binding
+        :param pulumi.Input[_builtins.str] identity: Identity of the role binding
+        :param pulumi.Input[_builtins.str] name: Name of the role binding
+        :param pulumi.Input[_builtins.str] role_id: Identity of the role binding
+        :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the role binding
+        """
+        if created_at is not None:
+            pulumi.set(__self__, "created_at", created_at)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if role_id is not None:
+            pulumi.set(__self__, "role_id", role_id)
+        if updated_at is not None:
+            pulumi.set(__self__, "updated_at", updated_at)
+
+    @_builtins.property
+    @pulumi.getter(name="createdAt")
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Creation timestamp of the role binding
+        """
+        return pulumi.get(self, "created_at")
+
+    @created_at.setter
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "created_at", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Description of the role binding
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the role binding
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the role binding
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="roleId")
+    def role_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the role binding
+        """
+        return pulumi.get(self, "role_id")
+
+    @role_id.setter
+    def role_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "role_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="updatedAt")
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Last update timestamp of the role binding
+        """
+        return pulumi.get(self, "updated_at")
+
+    @updated_at.setter
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "updated_at", value)
+
+
+class IamTeamMemberArgsDict(TypedDict):
+    email: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Email address of the user to add to the team. If provided, user_identity will be resolved automatically.
+    """
+    role: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Role of the team member. Optional. Default: MEMBER.
+    """
+    user_identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the user to add to the team
+    """
+
+@pulumi.input_type
+class IamTeamMemberArgs:
+    def __init__(__self__, *,
+                 email: pulumi.Input[Optional[_builtins.str]] = None,
+                 role: pulumi.Input[Optional[_builtins.str]] = None,
+                 user_identity: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] email: Email address of the user to add to the team. If provided, user_identity will be resolved automatically.
+        :param pulumi.Input[_builtins.str] role: Role of the team member. Optional. Default: MEMBER.
+        :param pulumi.Input[_builtins.str] user_identity: Identity of the user to add to the team
+        """
+        if email is not None:
+            pulumi.set(__self__, "email", email)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if user_identity is not None:
+            pulumi.set(__self__, "user_identity", user_identity)
+
+    @_builtins.property
+    @pulumi.getter
+    def email(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Email address of the user to add to the team. If provided, user_identity will be resolved automatically.
+        """
+        return pulumi.get(self, "email")
+
+    @email.setter
+    def email(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "email", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def role(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Role of the team member. Optional. Default: MEMBER.
+        """
+        return pulumi.get(self, "role")
+
+    @role.setter
+    def role(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "role", value)
+
+    @_builtins.property
+    @pulumi.getter(name="userIdentity")
+    def user_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the user to add to the team
+        """
+        return pulumi.get(self, "user_identity")
+
+    @user_identity.setter
+    def user_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "user_identity", value)
+
+
+class KubernetesClusterApiServerAclArgsDict(TypedDict):
+    allowed_cidrs: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of allowed CIDRs for API server access
+    """
 
 @pulumi.input_type
 class KubernetesClusterApiServerAclArgs:
     def __init__(__self__, *,
-                 allowed_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 allowed_cidrs: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] allowed_cidrs: List of allowed CIDRs for API server access
         """
@@ -50,45 +542,418 @@ class KubernetesClusterApiServerAclArgs:
 
     @_builtins.property
     @pulumi.getter(name="allowedCidrs")
-    def allowed_cidrs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def allowed_cidrs(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List of allowed CIDRs for API server access
         """
         return pulumi.get(self, "allowed_cidrs")
 
     @allowed_cidrs.setter
-    def allowed_cidrs(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def allowed_cidrs(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "allowed_cidrs", value)
 
 
-if not MYPY:
-    class KubernetesNodePoolNodeTaintArgsDict(TypedDict):
-        effect: NotRequired[pulumi.Input[_builtins.str]]
+class KubernetesClusterAutoscalerConfigArgsDict(TypedDict):
+    balance_similar_node_groups: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Flag to balance the utilization of similar node groups by the cluster autoscaler
+    """
+    enable_proactive_scale_up: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Flag to enable the proactive scale up of the cluster autoscaler. Whether to enable/disable proactive scale-ups, defaults to false
+    """
+    estimator: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Estimator to use for the cluster autoscaler. Available values: binpacking
+    """
+    expander: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Expander to use for the cluster autoscaler
+    """
+    expendable_pods_priority_cutoff: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Priority cutoff for the expendable pods by the cluster autoscaler
+    """
+    ignore_daemonsets_utilization: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Flag to ignore the utilization of daemonsets by the cluster autoscaler
+    """
+    max_graceful_termination_sec: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Maximum graceful termination time for the cluster autoscaler. If the pod is not stopped within this time then the node is terminated anyway.
+    """
+    scale_down_delay_after_add: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Delay after adding a node to the node pool by the cluster autoscaler
+    """
+    scale_down_disabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Flag to disable the scale down of node pools by the cluster autoscaler
+    """
+    scale_down_unneeded_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Time after which a node can be scaled down by the cluster autoscaler
+    """
+    scale_down_utilization_threshold: NotRequired[pulumi.Input[Optional[_builtins.float]]]
+    """
+    Utilization threshold for the cluster autoscaler. The autoscaler might scale down non-empty nodes with utilization below a threshold. To prevent this behavior, set the utilization threshold to 0
+    """
+
+@pulumi.input_type
+class KubernetesClusterAutoscalerConfigArgs:
+    def __init__(__self__, *,
+                 balance_similar_node_groups: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enable_proactive_scale_up: pulumi.Input[Optional[_builtins.bool]] = None,
+                 estimator: pulumi.Input[Optional[_builtins.str]] = None,
+                 expander: pulumi.Input[Optional[_builtins.str]] = None,
+                 expendable_pods_priority_cutoff: pulumi.Input[Optional[_builtins.int]] = None,
+                 ignore_daemonsets_utilization: pulumi.Input[Optional[_builtins.bool]] = None,
+                 max_graceful_termination_sec: pulumi.Input[Optional[_builtins.int]] = None,
+                 scale_down_delay_after_add: pulumi.Input[Optional[_builtins.str]] = None,
+                 scale_down_disabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 scale_down_unneeded_time: pulumi.Input[Optional[_builtins.str]] = None,
+                 scale_down_utilization_threshold: pulumi.Input[Optional[_builtins.float]] = None):
         """
-        Effect of the taint
+        :param pulumi.Input[_builtins.bool] balance_similar_node_groups: Flag to balance the utilization of similar node groups by the cluster autoscaler
+        :param pulumi.Input[_builtins.bool] enable_proactive_scale_up: Flag to enable the proactive scale up of the cluster autoscaler. Whether to enable/disable proactive scale-ups, defaults to false
+        :param pulumi.Input[_builtins.str] estimator: Estimator to use for the cluster autoscaler. Available values: binpacking
+        :param pulumi.Input[_builtins.str] expander: Expander to use for the cluster autoscaler
+        :param pulumi.Input[_builtins.int] expendable_pods_priority_cutoff: Priority cutoff for the expendable pods by the cluster autoscaler
+        :param pulumi.Input[_builtins.bool] ignore_daemonsets_utilization: Flag to ignore the utilization of daemonsets by the cluster autoscaler
+        :param pulumi.Input[_builtins.int] max_graceful_termination_sec: Maximum graceful termination time for the cluster autoscaler. If the pod is not stopped within this time then the node is terminated anyway.
+        :param pulumi.Input[_builtins.str] scale_down_delay_after_add: Delay after adding a node to the node pool by the cluster autoscaler
+        :param pulumi.Input[_builtins.bool] scale_down_disabled: Flag to disable the scale down of node pools by the cluster autoscaler
+        :param pulumi.Input[_builtins.str] scale_down_unneeded_time: Time after which a node can be scaled down by the cluster autoscaler
+        :param pulumi.Input[_builtins.float] scale_down_utilization_threshold: Utilization threshold for the cluster autoscaler. The autoscaler might scale down non-empty nodes with utilization below a threshold. To prevent this behavior, set the utilization threshold to 0
         """
-        key: NotRequired[pulumi.Input[_builtins.str]]
+        if balance_similar_node_groups is not None:
+            pulumi.set(__self__, "balance_similar_node_groups", balance_similar_node_groups)
+        if enable_proactive_scale_up is not None:
+            pulumi.set(__self__, "enable_proactive_scale_up", enable_proactive_scale_up)
+        if estimator is not None:
+            pulumi.set(__self__, "estimator", estimator)
+        if expander is not None:
+            pulumi.set(__self__, "expander", expander)
+        if expendable_pods_priority_cutoff is not None:
+            pulumi.set(__self__, "expendable_pods_priority_cutoff", expendable_pods_priority_cutoff)
+        if ignore_daemonsets_utilization is not None:
+            pulumi.set(__self__, "ignore_daemonsets_utilization", ignore_daemonsets_utilization)
+        if max_graceful_termination_sec is not None:
+            pulumi.set(__self__, "max_graceful_termination_sec", max_graceful_termination_sec)
+        if scale_down_delay_after_add is not None:
+            pulumi.set(__self__, "scale_down_delay_after_add", scale_down_delay_after_add)
+        if scale_down_disabled is not None:
+            pulumi.set(__self__, "scale_down_disabled", scale_down_disabled)
+        if scale_down_unneeded_time is not None:
+            pulumi.set(__self__, "scale_down_unneeded_time", scale_down_unneeded_time)
+        if scale_down_utilization_threshold is not None:
+            pulumi.set(__self__, "scale_down_utilization_threshold", scale_down_utilization_threshold)
+
+    @_builtins.property
+    @pulumi.getter(name="balanceSimilarNodeGroups")
+    def balance_similar_node_groups(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Key of the taint
+        Flag to balance the utilization of similar node groups by the cluster autoscaler
         """
-        operator: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "balance_similar_node_groups")
+
+    @balance_similar_node_groups.setter
+    def balance_similar_node_groups(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "balance_similar_node_groups", value)
+
+    @_builtins.property
+    @pulumi.getter(name="enableProactiveScaleUp")
+    def enable_proactive_scale_up(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Operator of the taint
+        Flag to enable the proactive scale up of the cluster autoscaler. Whether to enable/disable proactive scale-ups, defaults to false
         """
-        value: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "enable_proactive_scale_up")
+
+    @enable_proactive_scale_up.setter
+    def enable_proactive_scale_up(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enable_proactive_scale_up", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def estimator(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Value of the taint. Optional.
+        Estimator to use for the cluster autoscaler. Available values: binpacking
         """
-elif False:
-    KubernetesNodePoolNodeTaintArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "estimator")
+
+    @estimator.setter
+    def estimator(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "estimator", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def expander(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Expander to use for the cluster autoscaler
+        """
+        return pulumi.get(self, "expander")
+
+    @expander.setter
+    def expander(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "expander", value)
+
+    @_builtins.property
+    @pulumi.getter(name="expendablePodsPriorityCutoff")
+    def expendable_pods_priority_cutoff(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Priority cutoff for the expendable pods by the cluster autoscaler
+        """
+        return pulumi.get(self, "expendable_pods_priority_cutoff")
+
+    @expendable_pods_priority_cutoff.setter
+    def expendable_pods_priority_cutoff(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "expendable_pods_priority_cutoff", value)
+
+    @_builtins.property
+    @pulumi.getter(name="ignoreDaemonsetsUtilization")
+    def ignore_daemonsets_utilization(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Flag to ignore the utilization of daemonsets by the cluster autoscaler
+        """
+        return pulumi.get(self, "ignore_daemonsets_utilization")
+
+    @ignore_daemonsets_utilization.setter
+    def ignore_daemonsets_utilization(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "ignore_daemonsets_utilization", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maxGracefulTerminationSec")
+    def max_graceful_termination_sec(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Maximum graceful termination time for the cluster autoscaler. If the pod is not stopped within this time then the node is terminated anyway.
+        """
+        return pulumi.get(self, "max_graceful_termination_sec")
+
+    @max_graceful_termination_sec.setter
+    def max_graceful_termination_sec(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "max_graceful_termination_sec", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDownDelayAfterAdd")
+    def scale_down_delay_after_add(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Delay after adding a node to the node pool by the cluster autoscaler
+        """
+        return pulumi.get(self, "scale_down_delay_after_add")
+
+    @scale_down_delay_after_add.setter
+    def scale_down_delay_after_add(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "scale_down_delay_after_add", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDownDisabled")
+    def scale_down_disabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Flag to disable the scale down of node pools by the cluster autoscaler
+        """
+        return pulumi.get(self, "scale_down_disabled")
+
+    @scale_down_disabled.setter
+    def scale_down_disabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "scale_down_disabled", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDownUnneededTime")
+    def scale_down_unneeded_time(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Time after which a node can be scaled down by the cluster autoscaler
+        """
+        return pulumi.get(self, "scale_down_unneeded_time")
+
+    @scale_down_unneeded_time.setter
+    def scale_down_unneeded_time(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "scale_down_unneeded_time", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDownUtilizationThreshold")
+    def scale_down_utilization_threshold(self) -> pulumi.Input[Optional[_builtins.float]]:
+        """
+        Utilization threshold for the cluster autoscaler. The autoscaler might scale down non-empty nodes with utilization below a threshold. To prevent this behavior, set the utilization threshold to 0
+        """
+        return pulumi.get(self, "scale_down_utilization_threshold")
+
+    @scale_down_utilization_threshold.setter
+    def scale_down_utilization_threshold(self, value: pulumi.Input[Optional[_builtins.float]]):
+        pulumi.set(self, "scale_down_utilization_threshold", value)
+
+
+class KubernetesClusterRoleRuleArgsDict(TypedDict):
+    resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    List of resources that the rule applies to
+    """
+    verbs: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    List of verbs that the rule applies to
+    """
+    api_groups: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of API groups that the rule applies to
+    """
+    id: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    The unique identifier of the permission rule
+    """
+    non_resource_urls: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of non-resource URLs that the rule applies to
+    """
+    note: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    A human-readable note for the permission rule
+    """
+    resource_names: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of resource names that the rule applies to
+    """
+
+@pulumi.input_type
+class KubernetesClusterRoleRuleArgs:
+    def __init__(__self__, *,
+                 resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 verbs: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 api_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 id: pulumi.Input[Optional[_builtins.str]] = None,
+                 non_resource_urls: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 note: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_names: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] resources: List of resources that the rule applies to
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] verbs: List of verbs that the rule applies to
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] api_groups: List of API groups that the rule applies to
+        :param pulumi.Input[_builtins.str] id: The unique identifier of the permission rule
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] non_resource_urls: List of non-resource URLs that the rule applies to
+        :param pulumi.Input[_builtins.str] note: A human-readable note for the permission rule
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] resource_names: List of resource names that the rule applies to
+        """
+        pulumi.set(__self__, "resources", resources)
+        pulumi.set(__self__, "verbs", verbs)
+        if api_groups is not None:
+            pulumi.set(__self__, "api_groups", api_groups)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
+        if non_resource_urls is not None:
+            pulumi.set(__self__, "non_resource_urls", non_resource_urls)
+        if note is not None:
+            pulumi.set(__self__, "note", note)
+        if resource_names is not None:
+            pulumi.set(__self__, "resource_names", resource_names)
+
+    @_builtins.property
+    @pulumi.getter
+    def resources(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        List of resources that the rule applies to
+        """
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "resources", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def verbs(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        List of verbs that the rule applies to
+        """
+        return pulumi.get(self, "verbs")
+
+    @verbs.setter
+    def verbs(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "verbs", value)
+
+    @_builtins.property
+    @pulumi.getter(name="apiGroups")
+    def api_groups(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of API groups that the rule applies to
+        """
+        return pulumi.get(self, "api_groups")
+
+    @api_groups.setter
+    def api_groups(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "api_groups", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        The unique identifier of the permission rule
+        """
+        return pulumi.get(self, "id")
+
+    @id.setter
+    def id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="nonResourceUrls")
+    def non_resource_urls(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of non-resource URLs that the rule applies to
+        """
+        return pulumi.get(self, "non_resource_urls")
+
+    @non_resource_urls.setter
+    def non_resource_urls(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "non_resource_urls", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def note(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        A human-readable note for the permission rule
+        """
+        return pulumi.get(self, "note")
+
+    @note.setter
+    def note(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "note", value)
+
+    @_builtins.property
+    @pulumi.getter(name="resourceNames")
+    def resource_names(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of resource names that the rule applies to
+        """
+        return pulumi.get(self, "resource_names")
+
+    @resource_names.setter
+    def resource_names(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "resource_names", value)
+
+
+class KubernetesNodePoolNodeTaintArgsDict(TypedDict):
+    effect: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Effect of the taint
+    """
+    key: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Key of the taint
+    """
+    operator: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Operator of the taint
+    """
+    value: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Value of the taint. Optional.
+    """
 
 @pulumi.input_type
 class KubernetesNodePoolNodeTaintArgs:
     def __init__(__self__, *,
-                 effect: Optional[pulumi.Input[_builtins.str]] = None,
-                 key: Optional[pulumi.Input[_builtins.str]] = None,
-                 operator: Optional[pulumi.Input[_builtins.str]] = None,
-                 value: Optional[pulumi.Input[_builtins.str]] = None):
+                 effect: pulumi.Input[Optional[_builtins.str]] = None,
+                 key: pulumi.Input[Optional[_builtins.str]] = None,
+                 operator: pulumi.Input[Optional[_builtins.str]] = None,
+                 value: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] effect: Effect of the taint
         :param pulumi.Input[_builtins.str] key: Key of the taint
@@ -106,97 +971,680 @@ class KubernetesNodePoolNodeTaintArgs:
 
     @_builtins.property
     @pulumi.getter
-    def effect(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def effect(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Effect of the taint
         """
         return pulumi.get(self, "effect")
 
     @effect.setter
-    def effect(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def effect(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "effect", value)
 
     @_builtins.property
     @pulumi.getter
-    def key(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def key(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Key of the taint
         """
         return pulumi.get(self, "key")
 
     @key.setter
-    def key(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def key(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "key", value)
 
     @_builtins.property
     @pulumi.getter
-    def operator(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def operator(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Operator of the taint
         """
         return pulumi.get(self, "operator")
 
     @operator.setter
-    def operator(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def operator(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "operator", value)
 
     @_builtins.property
     @pulumi.getter
-    def value(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def value(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Value of the taint. Optional.
         """
         return pulumi.get(self, "value")
 
     @value.setter
-    def value(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def value(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "value", value)
 
 
-if not MYPY:
-    class SecurityGroupEgressRuleArgsDict(TypedDict):
-        ip_version: pulumi.Input[_builtins.str]
+class ObjectstorageBucketLifecycleRuleArgsDict(TypedDict):
+    id: pulumi.Input[_builtins.str]
+    abort_incomplete_multipart_upload: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgsDict']]]
+    expiration: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleExpirationArgsDict']]]
+    filter: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterArgsDict']]]
+    noncurrent_version_expiration: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgsDict']]]
+    noncurrent_version_transitions: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgsDict']]]]]
+    prefix: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    status: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    transitions: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleTransitionArgsDict']]]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleArgs:
+    def __init__(__self__, *,
+                 id: pulumi.Input[_builtins.str],
+                 abort_incomplete_multipart_upload: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgs']] = None,
+                 expiration: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleExpirationArgs']] = None,
+                 filter: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterArgs']] = None,
+                 noncurrent_version_expiration: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgs']] = None,
+                 noncurrent_version_transitions: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgs']]]] = None,
+                 prefix: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 transitions: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleTransitionArgs']]]] = None):
+        pulumi.set(__self__, "id", id)
+        if abort_incomplete_multipart_upload is not None:
+            pulumi.set(__self__, "abort_incomplete_multipart_upload", abort_incomplete_multipart_upload)
+        if expiration is not None:
+            pulumi.set(__self__, "expiration", expiration)
+        if filter is not None:
+            pulumi.set(__self__, "filter", filter)
+        if noncurrent_version_expiration is not None:
+            pulumi.set(__self__, "noncurrent_version_expiration", noncurrent_version_expiration)
+        if noncurrent_version_transitions is not None:
+            pulumi.set(__self__, "noncurrent_version_transitions", noncurrent_version_transitions)
+        if prefix is not None:
+            pulumi.set(__self__, "prefix", prefix)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+        if transitions is not None:
+            pulumi.set(__self__, "transitions", transitions)
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "id")
+
+    @id.setter
+    def id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="abortIncompleteMultipartUpload")
+    def abort_incomplete_multipart_upload(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgs']]:
+        return pulumi.get(self, "abort_incomplete_multipart_upload")
+
+    @abort_incomplete_multipart_upload.setter
+    def abort_incomplete_multipart_upload(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgs']]):
+        pulumi.set(self, "abort_incomplete_multipart_upload", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def expiration(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleExpirationArgs']]:
+        return pulumi.get(self, "expiration")
+
+    @expiration.setter
+    def expiration(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleExpirationArgs']]):
+        pulumi.set(self, "expiration", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def filter(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterArgs']]:
+        return pulumi.get(self, "filter")
+
+    @filter.setter
+    def filter(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterArgs']]):
+        pulumi.set(self, "filter", value)
+
+    @_builtins.property
+    @pulumi.getter(name="noncurrentVersionExpiration")
+    def noncurrent_version_expiration(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgs']]:
+        return pulumi.get(self, "noncurrent_version_expiration")
+
+    @noncurrent_version_expiration.setter
+    def noncurrent_version_expiration(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgs']]):
+        pulumi.set(self, "noncurrent_version_expiration", value)
+
+    @_builtins.property
+    @pulumi.getter(name="noncurrentVersionTransitions")
+    def noncurrent_version_transitions(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgs']]]]:
+        return pulumi.get(self, "noncurrent_version_transitions")
+
+    @noncurrent_version_transitions.setter
+    def noncurrent_version_transitions(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgs']]]]):
+        pulumi.set(self, "noncurrent_version_transitions", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def prefix(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "prefix", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "status", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def transitions(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleTransitionArgs']]]]:
+        return pulumi.get(self, "transitions")
+
+    @transitions.setter
+    def transitions(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleTransitionArgs']]]]):
+        pulumi.set(self, "transitions", value)
+
+
+class ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgsDict(TypedDict):
+    days_after_initiation: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleAbortIncompleteMultipartUploadArgs:
+    def __init__(__self__, *,
+                 days_after_initiation: pulumi.Input[Optional[_builtins.int]] = None):
+        if days_after_initiation is not None:
+            pulumi.set(__self__, "days_after_initiation", days_after_initiation)
+
+    @_builtins.property
+    @pulumi.getter(name="daysAfterInitiation")
+    def days_after_initiation(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "days_after_initiation")
+
+    @days_after_initiation.setter
+    def days_after_initiation(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days_after_initiation", value)
+
+
+class ObjectstorageBucketLifecycleRuleExpirationArgsDict(TypedDict):
+    date: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    days: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    expired_object_delete_marker: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleExpirationArgs:
+    def __init__(__self__, *,
+                 date: pulumi.Input[Optional[_builtins.str]] = None,
+                 days: pulumi.Input[Optional[_builtins.int]] = None,
+                 expired_object_delete_marker: pulumi.Input[Optional[_builtins.bool]] = None):
+        if date is not None:
+            pulumi.set(__self__, "date", date)
+        if days is not None:
+            pulumi.set(__self__, "days", days)
+        if expired_object_delete_marker is not None:
+            pulumi.set(__self__, "expired_object_delete_marker", expired_object_delete_marker)
+
+    @_builtins.property
+    @pulumi.getter
+    def date(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "date")
+
+    @date.setter
+    def date(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "date", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def days(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "days")
+
+    @days.setter
+    def days(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days", value)
+
+    @_builtins.property
+    @pulumi.getter(name="expiredObjectDeleteMarker")
+    def expired_object_delete_marker(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        return pulumi.get(self, "expired_object_delete_marker")
+
+    @expired_object_delete_marker.setter
+    def expired_object_delete_marker(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "expired_object_delete_marker", value)
+
+
+class ObjectstorageBucketLifecycleRuleFilterArgsDict(TypedDict):
+    and_: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterAndArgsDict']]]
+    object_size_greater_than: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    object_size_less_than: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    prefix: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    tag: NotRequired[pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterTagArgsDict']]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleFilterArgs:
+    def __init__(__self__, *,
+                 and_: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterAndArgs']] = None,
+                 object_size_greater_than: pulumi.Input[Optional[_builtins.int]] = None,
+                 object_size_less_than: pulumi.Input[Optional[_builtins.int]] = None,
+                 prefix: pulumi.Input[Optional[_builtins.str]] = None,
+                 tag: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterTagArgs']] = None):
+        if and_ is not None:
+            pulumi.set(__self__, "and_", and_)
+        if object_size_greater_than is not None:
+            pulumi.set(__self__, "object_size_greater_than", object_size_greater_than)
+        if object_size_less_than is not None:
+            pulumi.set(__self__, "object_size_less_than", object_size_less_than)
+        if prefix is not None:
+            pulumi.set(__self__, "prefix", prefix)
+        if tag is not None:
+            pulumi.set(__self__, "tag", tag)
+
+    @_builtins.property
+    @pulumi.getter(name="and")
+    def and_(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterAndArgs']]:
+        return pulumi.get(self, "and_")
+
+    @and_.setter
+    def and_(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterAndArgs']]):
+        pulumi.set(self, "and_", value)
+
+    @_builtins.property
+    @pulumi.getter(name="objectSizeGreaterThan")
+    def object_size_greater_than(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "object_size_greater_than")
+
+    @object_size_greater_than.setter
+    def object_size_greater_than(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "object_size_greater_than", value)
+
+    @_builtins.property
+    @pulumi.getter(name="objectSizeLessThan")
+    def object_size_less_than(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "object_size_less_than")
+
+    @object_size_less_than.setter
+    def object_size_less_than(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "object_size_less_than", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def prefix(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "prefix", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def tag(self) -> pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterTagArgs']]:
+        return pulumi.get(self, "tag")
+
+    @tag.setter
+    def tag(self, value: pulumi.Input[Optional['ObjectstorageBucketLifecycleRuleFilterTagArgs']]):
+        pulumi.set(self, "tag", value)
+
+
+class ObjectstorageBucketLifecycleRuleFilterAndArgsDict(TypedDict):
+    object_size_greater_than: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    object_size_less_than: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    prefix: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    tags: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleFilterAndTagArgsDict']]]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleFilterAndArgs:
+    def __init__(__self__, *,
+                 object_size_greater_than: pulumi.Input[Optional[_builtins.int]] = None,
+                 object_size_less_than: pulumi.Input[Optional[_builtins.int]] = None,
+                 prefix: pulumi.Input[Optional[_builtins.str]] = None,
+                 tags: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleFilterAndTagArgs']]]] = None):
+        if object_size_greater_than is not None:
+            pulumi.set(__self__, "object_size_greater_than", object_size_greater_than)
+        if object_size_less_than is not None:
+            pulumi.set(__self__, "object_size_less_than", object_size_less_than)
+        if prefix is not None:
+            pulumi.set(__self__, "prefix", prefix)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
+
+    @_builtins.property
+    @pulumi.getter(name="objectSizeGreaterThan")
+    def object_size_greater_than(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "object_size_greater_than")
+
+    @object_size_greater_than.setter
+    def object_size_greater_than(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "object_size_greater_than", value)
+
+    @_builtins.property
+    @pulumi.getter(name="objectSizeLessThan")
+    def object_size_less_than(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "object_size_less_than")
+
+    @object_size_less_than.setter
+    def object_size_less_than(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "object_size_less_than", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def prefix(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "prefix", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def tags(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleFilterAndTagArgs']]]]:
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['ObjectstorageBucketLifecycleRuleFilterAndTagArgs']]]]):
+        pulumi.set(self, "tags", value)
+
+
+class ObjectstorageBucketLifecycleRuleFilterAndTagArgsDict(TypedDict):
+    key: pulumi.Input[_builtins.str]
+    value: pulumi.Input[_builtins.str]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleFilterAndTagArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[_builtins.str],
+                 value: pulumi.Input[_builtins.str]):
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "value", value)
+
+
+class ObjectstorageBucketLifecycleRuleFilterTagArgsDict(TypedDict):
+    key: pulumi.Input[_builtins.str]
+    value: pulumi.Input[_builtins.str]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleFilterTagArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[_builtins.str],
+                 value: pulumi.Input[_builtins.str]):
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "value", value)
+
+
+class ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgsDict(TypedDict):
+    noncurrent_days: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleNoncurrentVersionExpirationArgs:
+    def __init__(__self__, *,
+                 noncurrent_days: pulumi.Input[Optional[_builtins.int]] = None):
+        if noncurrent_days is not None:
+            pulumi.set(__self__, "noncurrent_days", noncurrent_days)
+
+    @_builtins.property
+    @pulumi.getter(name="noncurrentDays")
+    def noncurrent_days(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "noncurrent_days")
+
+    @noncurrent_days.setter
+    def noncurrent_days(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "noncurrent_days", value)
+
+
+class ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgsDict(TypedDict):
+    storage_class: pulumi.Input[_builtins.str]
+    noncurrent_days: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleNoncurrentVersionTransitionArgs:
+    def __init__(__self__, *,
+                 storage_class: pulumi.Input[_builtins.str],
+                 noncurrent_days: pulumi.Input[Optional[_builtins.int]] = None):
+        pulumi.set(__self__, "storage_class", storage_class)
+        if noncurrent_days is not None:
+            pulumi.set(__self__, "noncurrent_days", noncurrent_days)
+
+    @_builtins.property
+    @pulumi.getter(name="storageClass")
+    def storage_class(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "storage_class")
+
+    @storage_class.setter
+    def storage_class(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "storage_class", value)
+
+    @_builtins.property
+    @pulumi.getter(name="noncurrentDays")
+    def noncurrent_days(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "noncurrent_days")
+
+    @noncurrent_days.setter
+    def noncurrent_days(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "noncurrent_days", value)
+
+
+class ObjectstorageBucketLifecycleRuleTransitionArgsDict(TypedDict):
+    storage_class: pulumi.Input[_builtins.str]
+    date: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    days: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class ObjectstorageBucketLifecycleRuleTransitionArgs:
+    def __init__(__self__, *,
+                 storage_class: pulumi.Input[_builtins.str],
+                 date: pulumi.Input[Optional[_builtins.str]] = None,
+                 days: pulumi.Input[Optional[_builtins.int]] = None):
+        pulumi.set(__self__, "storage_class", storage_class)
+        if date is not None:
+            pulumi.set(__self__, "date", date)
+        if days is not None:
+            pulumi.set(__self__, "days", days)
+
+    @_builtins.property
+    @pulumi.getter(name="storageClass")
+    def storage_class(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "storage_class")
+
+    @storage_class.setter
+    def storage_class(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "storage_class", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def date(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "date")
+
+    @date.setter
+    def date(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "date", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def days(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "days")
+
+    @days.setter
+    def days(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days", value)
+
+
+class SecretAccessPolicyStatementArgsDict(TypedDict):
+    effect: pulumi.Input[_builtins.str]
+    actions: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    principals: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+
+@pulumi.input_type
+class SecretAccessPolicyStatementArgs:
+    def __init__(__self__, *,
+                 effect: pulumi.Input[_builtins.str],
+                 actions: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 principals: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
+        pulumi.set(__self__, "effect", effect)
+        if actions is not None:
+            pulumi.set(__self__, "actions", actions)
+        if principals is not None:
+            pulumi.set(__self__, "principals", principals)
+
+    @_builtins.property
+    @pulumi.getter
+    def effect(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "effect")
+
+    @effect.setter
+    def effect(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "effect", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def actions(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "actions")
+
+    @actions.setter
+    def actions(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "actions", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def principals(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "principals")
+
+    @principals.setter
+    def principals(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "principals", value)
+
+
+class SecretGenerateSecretArgsDict(TypedDict):
+    byte_length: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Byte length of the generated secret.
+    """
+
+@pulumi.input_type
+class SecretGenerateSecretArgs:
+    def __init__(__self__, *,
+                 byte_length: pulumi.Input[Optional[_builtins.int]] = None):
         """
-        IP version of the rule (ipv4 or ipv6)
+        :param pulumi.Input[_builtins.int] byte_length: Byte length of the generated secret.
         """
-        name: pulumi.Input[_builtins.str]
+        if byte_length is not None:
+            pulumi.set(__self__, "byte_length", byte_length)
+
+    @_builtins.property
+    @pulumi.getter(name="byteLength")
+    def byte_length(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
-        Name of the rule
+        Byte length of the generated secret.
         """
-        policy: pulumi.Input[_builtins.str]
-        """
-        Policy of the rule (allow or drop)
-        """
-        priority: pulumi.Input[_builtins.int]
-        """
-        Priority of the rule. Must be greater than 0 and less than 200.
-        """
-        protocol: pulumi.Input[_builtins.str]
-        """
-        Protocol of the rule (all, tcp, udp, icmp)
-        """
-        remote_type: pulumi.Input[_builtins.str]
-        """
-        Type of the remote address (address or securityGroup)
-        """
-        port_range_max: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Maximum port of the rule. Must be greater than 0 and less than 65535.
-        """
-        port_range_min: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Minimum port of the rule. Must be greater than 0 and less than 65535.
-        """
-        remote_address: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        IP address or CIDR block that the rule applies to
-        """
-        remote_security_group_identity: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Identity of the security group that the rule applies to
-        """
-elif False:
-    SecurityGroupEgressRuleArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "byte_length")
+
+    @byte_length.setter
+    def byte_length(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "byte_length", value)
+
+
+class SecretVersionGenerateSecretArgsDict(TypedDict):
+    character_set: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    length: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+
+@pulumi.input_type
+class SecretVersionGenerateSecretArgs:
+    def __init__(__self__, *,
+                 character_set: pulumi.Input[Optional[_builtins.str]] = None,
+                 length: pulumi.Input[Optional[_builtins.int]] = None):
+        if character_set is not None:
+            pulumi.set(__self__, "character_set", character_set)
+        if length is not None:
+            pulumi.set(__self__, "length", length)
+
+    @_builtins.property
+    @pulumi.getter(name="characterSet")
+    def character_set(self) -> pulumi.Input[Optional[_builtins.str]]:
+        return pulumi.get(self, "character_set")
+
+    @character_set.setter
+    def character_set(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "character_set", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def length(self) -> pulumi.Input[Optional[_builtins.int]]:
+        return pulumi.get(self, "length")
+
+    @length.setter
+    def length(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "length", value)
+
+
+class SecurityGroupEgressRuleArgsDict(TypedDict):
+    ip_version: pulumi.Input[_builtins.str]
+    """
+    IP version of the rule (ipv4 or ipv6)
+    """
+    name: pulumi.Input[_builtins.str]
+    """
+    Name of the rule
+    """
+    policy: pulumi.Input[_builtins.str]
+    """
+    Policy of the rule (allow or drop)
+    """
+    priority: pulumi.Input[_builtins.int]
+    """
+    Priority of the rule. Must be greater than 0 and less than 200.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol of the rule (all, tcp, udp, icmp)
+    """
+    remote_type: pulumi.Input[_builtins.str]
+    """
+    Type of the remote address (address or securityGroup)
+    """
+    port_range_max: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Maximum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    port_range_min: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Minimum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    remote_address: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    IP address or CIDR block that the rule applies to
+    """
+    remote_security_group_identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the Security Group that the rule applies to
+    """
 
 @pulumi.input_type
 class SecurityGroupEgressRuleArgs:
@@ -207,10 +1655,10 @@ class SecurityGroupEgressRuleArgs:
                  priority: pulumi.Input[_builtins.int],
                  protocol: pulumi.Input[_builtins.str],
                  remote_type: pulumi.Input[_builtins.str],
-                 port_range_max: Optional[pulumi.Input[_builtins.int]] = None,
-                 port_range_min: Optional[pulumi.Input[_builtins.int]] = None,
-                 remote_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 remote_security_group_identity: Optional[pulumi.Input[_builtins.str]] = None):
+                 port_range_max: pulumi.Input[Optional[_builtins.int]] = None,
+                 port_range_min: pulumi.Input[Optional[_builtins.int]] = None,
+                 remote_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 remote_security_group_identity: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] ip_version: IP version of the rule (ipv4 or ipv6)
         :param pulumi.Input[_builtins.str] name: Name of the rule
@@ -221,7 +1669,7 @@ class SecurityGroupEgressRuleArgs:
         :param pulumi.Input[_builtins.int] port_range_max: Maximum port of the rule. Must be greater than 0 and less than 65535.
         :param pulumi.Input[_builtins.int] port_range_min: Minimum port of the rule. Must be greater than 0 and less than 65535.
         :param pulumi.Input[_builtins.str] remote_address: IP address or CIDR block that the rule applies to
-        :param pulumi.Input[_builtins.str] remote_security_group_identity: Identity of the security group that the rule applies to
+        :param pulumi.Input[_builtins.str] remote_security_group_identity: ID of the Security Group that the rule applies to
         """
         pulumi.set(__self__, "ip_version", ip_version)
         pulumi.set(__self__, "name", name)
@@ -312,97 +1760,297 @@ class SecurityGroupEgressRuleArgs:
 
     @_builtins.property
     @pulumi.getter(name="portRangeMax")
-    def port_range_max(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port_range_max(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Maximum port of the rule. Must be greater than 0 and less than 65535.
         """
         return pulumi.get(self, "port_range_max")
 
     @port_range_max.setter
-    def port_range_max(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port_range_max(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port_range_max", value)
 
     @_builtins.property
     @pulumi.getter(name="portRangeMin")
-    def port_range_min(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port_range_min(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Minimum port of the rule. Must be greater than 0 and less than 65535.
         """
         return pulumi.get(self, "port_range_min")
 
     @port_range_min.setter
-    def port_range_min(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port_range_min(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port_range_min", value)
 
     @_builtins.property
     @pulumi.getter(name="remoteAddress")
-    def remote_address(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def remote_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IP address or CIDR block that the rule applies to
         """
         return pulumi.get(self, "remote_address")
 
     @remote_address.setter
-    def remote_address(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def remote_address(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "remote_address", value)
 
     @_builtins.property
     @pulumi.getter(name="remoteSecurityGroupIdentity")
-    def remote_security_group_identity(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def remote_security_group_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the security group that the rule applies to
+        ID of the Security Group that the rule applies to
         """
         return pulumi.get(self, "remote_security_group_identity")
 
     @remote_security_group_identity.setter
-    def remote_security_group_identity(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def remote_security_group_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "remote_security_group_identity", value)
 
 
-if not MYPY:
-    class SecurityGroupIngressRuleArgsDict(TypedDict):
-        ip_version: pulumi.Input[_builtins.str]
+class SecurityGroupEgressRuleRuleArgsDict(TypedDict):
+    ip_version: pulumi.Input[_builtins.str]
+    """
+    IP version of the rule (ipv4 or ipv6)
+    """
+    name: pulumi.Input[_builtins.str]
+    """
+    Name of the rule
+    """
+    policy: pulumi.Input[_builtins.str]
+    """
+    Policy of the rule (allow or drop)
+    """
+    priority: pulumi.Input[_builtins.int]
+    """
+    Priority of the rule. Must be greater than 0 and less than 200.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol of the rule (all, tcp, udp, icmp)
+    """
+    remote_type: pulumi.Input[_builtins.str]
+    """
+    Type of the remote address (address or securityGroup)
+    """
+    port_range_max: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Maximum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    port_range_min: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Minimum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    remote_address: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    IP address or CIDR block that the rule applies to
+    """
+    remote_security_group_identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the Security Group that the rule applies to
+    """
+
+@pulumi.input_type
+class SecurityGroupEgressRuleRuleArgs:
+    def __init__(__self__, *,
+                 ip_version: pulumi.Input[_builtins.str],
+                 name: pulumi.Input[_builtins.str],
+                 policy: pulumi.Input[_builtins.str],
+                 priority: pulumi.Input[_builtins.int],
+                 protocol: pulumi.Input[_builtins.str],
+                 remote_type: pulumi.Input[_builtins.str],
+                 port_range_max: pulumi.Input[Optional[_builtins.int]] = None,
+                 port_range_min: pulumi.Input[Optional[_builtins.int]] = None,
+                 remote_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 remote_security_group_identity: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] ip_version: IP version of the rule (ipv4 or ipv6)
+        :param pulumi.Input[_builtins.str] name: Name of the rule
+        :param pulumi.Input[_builtins.str] policy: Policy of the rule (allow or drop)
+        :param pulumi.Input[_builtins.int] priority: Priority of the rule. Must be greater than 0 and less than 200.
+        :param pulumi.Input[_builtins.str] protocol: Protocol of the rule (all, tcp, udp, icmp)
+        :param pulumi.Input[_builtins.str] remote_type: Type of the remote address (address or securityGroup)
+        :param pulumi.Input[_builtins.int] port_range_max: Maximum port of the rule. Must be greater than 0 and less than 65535.
+        :param pulumi.Input[_builtins.int] port_range_min: Minimum port of the rule. Must be greater than 0 and less than 65535.
+        :param pulumi.Input[_builtins.str] remote_address: IP address or CIDR block that the rule applies to
+        :param pulumi.Input[_builtins.str] remote_security_group_identity: ID of the Security Group that the rule applies to
+        """
+        pulumi.set(__self__, "ip_version", ip_version)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "policy", policy)
+        pulumi.set(__self__, "priority", priority)
+        pulumi.set(__self__, "protocol", protocol)
+        pulumi.set(__self__, "remote_type", remote_type)
+        if port_range_max is not None:
+            pulumi.set(__self__, "port_range_max", port_range_max)
+        if port_range_min is not None:
+            pulumi.set(__self__, "port_range_min", port_range_min)
+        if remote_address is not None:
+            pulumi.set(__self__, "remote_address", remote_address)
+        if remote_security_group_identity is not None:
+            pulumi.set(__self__, "remote_security_group_identity", remote_security_group_identity)
+
+    @_builtins.property
+    @pulumi.getter(name="ipVersion")
+    def ip_version(self) -> pulumi.Input[_builtins.str]:
         """
         IP version of the rule (ipv4 or ipv6)
         """
-        name: pulumi.Input[_builtins.str]
+        return pulumi.get(self, "ip_version")
+
+    @ip_version.setter
+    def ip_version(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "ip_version", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[_builtins.str]:
         """
         Name of the rule
         """
-        policy: pulumi.Input[_builtins.str]
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def policy(self) -> pulumi.Input[_builtins.str]:
         """
         Policy of the rule (allow or drop)
         """
-        priority: pulumi.Input[_builtins.int]
+        return pulumi.get(self, "policy")
+
+    @policy.setter
+    def policy(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "policy", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def priority(self) -> pulumi.Input[_builtins.int]:
         """
         Priority of the rule. Must be greater than 0 and less than 200.
         """
-        protocol: pulumi.Input[_builtins.str]
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: pulumi.Input[_builtins.int]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[_builtins.str]:
         """
         Protocol of the rule (all, tcp, udp, icmp)
         """
-        remote_type: pulumi.Input[_builtins.str]
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "protocol", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteType")
+    def remote_type(self) -> pulumi.Input[_builtins.str]:
         """
         Type of the remote address (address or securityGroup)
         """
-        port_range_max: NotRequired[pulumi.Input[_builtins.int]]
+        return pulumi.get(self, "remote_type")
+
+    @remote_type.setter
+    def remote_type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "remote_type", value)
+
+    @_builtins.property
+    @pulumi.getter(name="portRangeMax")
+    def port_range_max(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Maximum port of the rule. Must be greater than 0 and less than 65535.
         """
-        port_range_min: NotRequired[pulumi.Input[_builtins.int]]
+        return pulumi.get(self, "port_range_max")
+
+    @port_range_max.setter
+    def port_range_max(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "port_range_max", value)
+
+    @_builtins.property
+    @pulumi.getter(name="portRangeMin")
+    def port_range_min(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Minimum port of the rule. Must be greater than 0 and less than 65535.
         """
-        remote_address: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "port_range_min")
+
+    @port_range_min.setter
+    def port_range_min(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "port_range_min", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteAddress")
+    def remote_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IP address or CIDR block that the rule applies to
         """
-        remote_security_group_identity: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "remote_address")
+
+    @remote_address.setter
+    def remote_address(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "remote_address", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteSecurityGroupIdentity")
+    def remote_security_group_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the security group that the rule applies to
+        ID of the Security Group that the rule applies to
         """
-elif False:
-    SecurityGroupIngressRuleArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "remote_security_group_identity")
+
+    @remote_security_group_identity.setter
+    def remote_security_group_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "remote_security_group_identity", value)
+
+
+class SecurityGroupIngressRuleArgsDict(TypedDict):
+    ip_version: pulumi.Input[_builtins.str]
+    """
+    IP version of the rule (ipv4 or ipv6)
+    """
+    name: pulumi.Input[_builtins.str]
+    """
+    Name of the rule
+    """
+    policy: pulumi.Input[_builtins.str]
+    """
+    Policy of the rule (allow or drop)
+    """
+    priority: pulumi.Input[_builtins.int]
+    """
+    Priority of the rule. Must be greater than 0 and less than 200.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol of the rule (all, tcp, udp, icmp)
+    """
+    remote_type: pulumi.Input[_builtins.str]
+    """
+    Type of the remote address (address or securityGroup)
+    """
+    port_range_max: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Maximum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    port_range_min: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Minimum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    remote_address: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    IP address or CIDR block that the rule applies to
+    """
+    remote_security_group_identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the security group that the rule applies to
+    """
 
 @pulumi.input_type
 class SecurityGroupIngressRuleArgs:
@@ -413,10 +2061,10 @@ class SecurityGroupIngressRuleArgs:
                  priority: pulumi.Input[_builtins.int],
                  protocol: pulumi.Input[_builtins.str],
                  remote_type: pulumi.Input[_builtins.str],
-                 port_range_max: Optional[pulumi.Input[_builtins.int]] = None,
-                 port_range_min: Optional[pulumi.Input[_builtins.int]] = None,
-                 remote_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 remote_security_group_identity: Optional[pulumi.Input[_builtins.str]] = None):
+                 port_range_max: pulumi.Input[Optional[_builtins.int]] = None,
+                 port_range_min: pulumi.Input[Optional[_builtins.int]] = None,
+                 remote_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 remote_security_group_identity: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] ip_version: IP version of the rule (ipv4 or ipv6)
         :param pulumi.Input[_builtins.str] name: Name of the rule
@@ -518,61 +2166,329 @@ class SecurityGroupIngressRuleArgs:
 
     @_builtins.property
     @pulumi.getter(name="portRangeMax")
-    def port_range_max(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port_range_max(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Maximum port of the rule. Must be greater than 0 and less than 65535.
         """
         return pulumi.get(self, "port_range_max")
 
     @port_range_max.setter
-    def port_range_max(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port_range_max(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port_range_max", value)
 
     @_builtins.property
     @pulumi.getter(name="portRangeMin")
-    def port_range_min(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port_range_min(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Minimum port of the rule. Must be greater than 0 and less than 65535.
         """
         return pulumi.get(self, "port_range_min")
 
     @port_range_min.setter
-    def port_range_min(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port_range_min(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port_range_min", value)
 
     @_builtins.property
     @pulumi.getter(name="remoteAddress")
-    def remote_address(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def remote_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IP address or CIDR block that the rule applies to
         """
         return pulumi.get(self, "remote_address")
 
     @remote_address.setter
-    def remote_address(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def remote_address(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "remote_address", value)
 
     @_builtins.property
     @pulumi.getter(name="remoteSecurityGroupIdentity")
-    def remote_security_group_identity(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def remote_security_group_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identity of the security group that the rule applies to
         """
         return pulumi.get(self, "remote_security_group_identity")
 
     @remote_security_group_identity.setter
-    def remote_security_group_identity(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def remote_security_group_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "remote_security_group_identity", value)
 
 
-if not MYPY:
-    class TargetGroupAttachmentArgsDict(TypedDict):
-        id: pulumi.Input[_builtins.str]
+class SecurityGroupIngressRuleRuleArgsDict(TypedDict):
+    ip_version: pulumi.Input[_builtins.str]
+    """
+    IP version of the rule (ipv4 or ipv6)
+    """
+    name: pulumi.Input[_builtins.str]
+    """
+    Name of the rule
+    """
+    policy: pulumi.Input[_builtins.str]
+    """
+    Policy of the rule (allow or drop)
+    """
+    priority: pulumi.Input[_builtins.int]
+    """
+    Priority of the rule. Must be greater than 0 and less than 200.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol of the rule (all, tcp, udp, icmp)
+    """
+    remote_type: pulumi.Input[_builtins.str]
+    """
+    Type of the remote address (address or securityGroup)
+    """
+    port_range_max: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Maximum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    port_range_min: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Minimum port of the rule. Must be greater than 0 and less than 65535.
+    """
+    remote_address: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    IP address or CIDR block that the rule applies to
+    """
+    remote_security_group_identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the Security Group that the rule applies to
+    """
+
+@pulumi.input_type
+class SecurityGroupIngressRuleRuleArgs:
+    def __init__(__self__, *,
+                 ip_version: pulumi.Input[_builtins.str],
+                 name: pulumi.Input[_builtins.str],
+                 policy: pulumi.Input[_builtins.str],
+                 priority: pulumi.Input[_builtins.int],
+                 protocol: pulumi.Input[_builtins.str],
+                 remote_type: pulumi.Input[_builtins.str],
+                 port_range_max: pulumi.Input[Optional[_builtins.int]] = None,
+                 port_range_min: pulumi.Input[Optional[_builtins.int]] = None,
+                 remote_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 remote_security_group_identity: pulumi.Input[Optional[_builtins.str]] = None):
         """
-        The ID of the target (e.g. instance ID)
+        :param pulumi.Input[_builtins.str] ip_version: IP version of the rule (ipv4 or ipv6)
+        :param pulumi.Input[_builtins.str] name: Name of the rule
+        :param pulumi.Input[_builtins.str] policy: Policy of the rule (allow or drop)
+        :param pulumi.Input[_builtins.int] priority: Priority of the rule. Must be greater than 0 and less than 200.
+        :param pulumi.Input[_builtins.str] protocol: Protocol of the rule (all, tcp, udp, icmp)
+        :param pulumi.Input[_builtins.str] remote_type: Type of the remote address (address or securityGroup)
+        :param pulumi.Input[_builtins.int] port_range_max: Maximum port of the rule. Must be greater than 0 and less than 65535.
+        :param pulumi.Input[_builtins.int] port_range_min: Minimum port of the rule. Must be greater than 0 and less than 65535.
+        :param pulumi.Input[_builtins.str] remote_address: IP address or CIDR block that the rule applies to
+        :param pulumi.Input[_builtins.str] remote_security_group_identity: ID of the Security Group that the rule applies to
         """
-elif False:
-    TargetGroupAttachmentArgsDict: TypeAlias = Mapping[str, Any]
+        pulumi.set(__self__, "ip_version", ip_version)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "policy", policy)
+        pulumi.set(__self__, "priority", priority)
+        pulumi.set(__self__, "protocol", protocol)
+        pulumi.set(__self__, "remote_type", remote_type)
+        if port_range_max is not None:
+            pulumi.set(__self__, "port_range_max", port_range_max)
+        if port_range_min is not None:
+            pulumi.set(__self__, "port_range_min", port_range_min)
+        if remote_address is not None:
+            pulumi.set(__self__, "remote_address", remote_address)
+        if remote_security_group_identity is not None:
+            pulumi.set(__self__, "remote_security_group_identity", remote_security_group_identity)
+
+    @_builtins.property
+    @pulumi.getter(name="ipVersion")
+    def ip_version(self) -> pulumi.Input[_builtins.str]:
+        """
+        IP version of the rule (ipv4 or ipv6)
+        """
+        return pulumi.get(self, "ip_version")
+
+    @ip_version.setter
+    def ip_version(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "ip_version", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[_builtins.str]:
+        """
+        Name of the rule
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def policy(self) -> pulumi.Input[_builtins.str]:
+        """
+        Policy of the rule (allow or drop)
+        """
+        return pulumi.get(self, "policy")
+
+    @policy.setter
+    def policy(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "policy", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def priority(self) -> pulumi.Input[_builtins.int]:
+        """
+        Priority of the rule. Must be greater than 0 and less than 200.
+        """
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: pulumi.Input[_builtins.int]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[_builtins.str]:
+        """
+        Protocol of the rule (all, tcp, udp, icmp)
+        """
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "protocol", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteType")
+    def remote_type(self) -> pulumi.Input[_builtins.str]:
+        """
+        Type of the remote address (address or securityGroup)
+        """
+        return pulumi.get(self, "remote_type")
+
+    @remote_type.setter
+    def remote_type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "remote_type", value)
+
+    @_builtins.property
+    @pulumi.getter(name="portRangeMax")
+    def port_range_max(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Maximum port of the rule. Must be greater than 0 and less than 65535.
+        """
+        return pulumi.get(self, "port_range_max")
+
+    @port_range_max.setter
+    def port_range_max(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "port_range_max", value)
+
+    @_builtins.property
+    @pulumi.getter(name="portRangeMin")
+    def port_range_min(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Minimum port of the rule. Must be greater than 0 and less than 65535.
+        """
+        return pulumi.get(self, "port_range_min")
+
+    @port_range_min.setter
+    def port_range_min(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "port_range_min", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteAddress")
+    def remote_address(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        IP address or CIDR block that the rule applies to
+        """
+        return pulumi.get(self, "remote_address")
+
+    @remote_address.setter
+    def remote_address(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "remote_address", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteSecurityGroupIdentity")
+    def remote_security_group_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of the Security Group that the rule applies to
+        """
+        return pulumi.get(self, "remote_security_group_identity")
+
+    @remote_security_group_identity.setter
+    def remote_security_group_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "remote_security_group_identity", value)
+
+
+class SnapshotPolicyTargetArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    Type of target: 'selector' to target volumes based on labels, or 'explicit' to target specific volumes
+    """
+    selector: NotRequired[pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]]
+    """
+    Label selector for volumes (required when type is 'selector')
+    """
+    volume_identities: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    List of volume identities (required when type is 'explicit')
+    """
+
+@pulumi.input_type
+class SnapshotPolicyTargetArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[_builtins.str],
+                 selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 volume_identities: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
+        """
+        :param pulumi.Input[_builtins.str] type: Type of target: 'selector' to target volumes based on labels, or 'explicit' to target specific volumes
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] selector: Label selector for volumes (required when type is 'selector')
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] volume_identities: List of volume identities (required when type is 'explicit')
+        """
+        pulumi.set(__self__, "type", type)
+        if selector is not None:
+            pulumi.set(__self__, "selector", selector)
+        if volume_identities is not None:
+            pulumi.set(__self__, "volume_identities", volume_identities)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[_builtins.str]:
+        """
+        Type of target: 'selector' to target volumes based on labels, or 'explicit' to target specific volumes
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def selector(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Label selector for volumes (required when type is 'selector')
+        """
+        return pulumi.get(self, "selector")
+
+    @selector.setter
+    def selector(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "selector", value)
+
+    @_builtins.property
+    @pulumi.getter(name="volumeIdentities")
+    def volume_identities(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of volume identities (required when type is 'explicit')
+        """
+        return pulumi.get(self, "volume_identities")
+
+    @volume_identities.setter
+    def volume_identities(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "volume_identities", value)
+
+
+class TargetGroupAttachmentArgsDict(TypedDict):
+    id: pulumi.Input[_builtins.str]
+    """
+    The ID of the target (e.g. instance ID)
+    """
 
 @pulumi.input_type
 class TargetGroupAttachmentArgs:
@@ -594,5 +2510,379 @@ class TargetGroupAttachmentArgs:
     @id.setter
     def id(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "id", value)
+
+
+class TfsInstanceEndpointArgsDict(TypedDict):
+    address: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    IP address of the endpoint
+    """
+    hostname: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Hostname of the endpoint
+    """
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the endpoint
+    """
+    port: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Port of the endpoint (defaults to 2049 for NFS)
+    """
+
+@pulumi.input_type
+class TfsInstanceEndpointArgs:
+    def __init__(__self__, *,
+                 address: pulumi.Input[Optional[_builtins.str]] = None,
+                 hostname: pulumi.Input[Optional[_builtins.str]] = None,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 port: pulumi.Input[Optional[_builtins.int]] = None):
+        """
+        :param pulumi.Input[_builtins.str] address: IP address of the endpoint
+        :param pulumi.Input[_builtins.str] hostname: Hostname of the endpoint
+        :param pulumi.Input[_builtins.str] identity: Identity of the endpoint
+        :param pulumi.Input[_builtins.int] port: Port of the endpoint (defaults to 2049 for NFS)
+        """
+        if address is not None:
+            pulumi.set(__self__, "address", address)
+        if hostname is not None:
+            pulumi.set(__self__, "hostname", hostname)
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+
+    @_builtins.property
+    @pulumi.getter
+    def address(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        IP address of the endpoint
+        """
+        return pulumi.get(self, "address")
+
+    @address.setter
+    def address(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "address", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def hostname(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Hostname of the endpoint
+        """
+        return pulumi.get(self, "hostname")
+
+    @hostname.setter
+    def hostname(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "hostname", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the endpoint
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Port of the endpoint (defaults to 2049 for NFS)
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "port", value)
+
+
+class VpcFirewallRuleProtocolsArgsDict(TypedDict):
+    any: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the rule applies to any protocol
+    """
+    icmp: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the rule applies to ICMP protocol
+    """
+    tcp: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the rule applies to TCP protocol
+    """
+    udp: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the rule applies to UDP protocol
+    """
+
+@pulumi.input_type
+class VpcFirewallRuleProtocolsArgs:
+    def __init__(__self__, *,
+                 any: pulumi.Input[Optional[_builtins.bool]] = None,
+                 icmp: pulumi.Input[Optional[_builtins.bool]] = None,
+                 tcp: pulumi.Input[Optional[_builtins.bool]] = None,
+                 udp: pulumi.Input[Optional[_builtins.bool]] = None):
+        """
+        :param pulumi.Input[_builtins.bool] any: Whether the rule applies to any protocol
+        :param pulumi.Input[_builtins.bool] icmp: Whether the rule applies to ICMP protocol
+        :param pulumi.Input[_builtins.bool] tcp: Whether the rule applies to TCP protocol
+        :param pulumi.Input[_builtins.bool] udp: Whether the rule applies to UDP protocol
+        """
+        if any is not None:
+            pulumi.set(__self__, "any", any)
+        if icmp is not None:
+            pulumi.set(__self__, "icmp", icmp)
+        if tcp is not None:
+            pulumi.set(__self__, "tcp", tcp)
+        if udp is not None:
+            pulumi.set(__self__, "udp", udp)
+
+    @_builtins.property
+    @pulumi.getter
+    def any(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the rule applies to any protocol
+        """
+        return pulumi.get(self, "any")
+
+    @any.setter
+    def any(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "any", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def icmp(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the rule applies to ICMP protocol
+        """
+        return pulumi.get(self, "icmp")
+
+    @icmp.setter
+    def icmp(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "icmp", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def tcp(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the rule applies to TCP protocol
+        """
+        return pulumi.get(self, "tcp")
+
+    @tcp.setter
+    def tcp(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "tcp", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def udp(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the rule applies to UDP protocol
+        """
+        return pulumi.get(self, "udp")
+
+    @udp.setter
+    def udp(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "udp", value)
+
+
+class VpcPeeringConnectionAccepterOrganisationArgsDict(TypedDict):
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Identity of the organisation
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the organisation
+    """
+
+@pulumi.input_type
+class VpcPeeringConnectionAccepterOrganisationArgs:
+    def __init__(__self__, *,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] identity: Identity of the organisation
+        :param pulumi.Input[_builtins.str] name: Name of the organisation
+        """
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the organisation
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the organisation
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+
+class VpcPeeringConnectionAccepterVpcArgsDict(TypedDict):
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the VPC
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the VPC
+    """
+
+@pulumi.input_type
+class VpcPeeringConnectionAccepterVpcArgs:
+    def __init__(__self__, *,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] identity: ID of the VPC
+        :param pulumi.Input[_builtins.str] name: Name of the VPC
+        """
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of the VPC
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the VPC
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+
+class VpcPeeringConnectionRequesterOrganisationArgsDict(TypedDict):
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the organisation
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the organisation
+    """
+
+@pulumi.input_type
+class VpcPeeringConnectionRequesterOrganisationArgs:
+    def __init__(__self__, *,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] identity: ID of the organisation
+        :param pulumi.Input[_builtins.str] name: Name of the organisation
+        """
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of the organisation
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the organisation
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+
+class VpcPeeringConnectionRequesterVpcArgsDict(TypedDict):
+    identity: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    ID of the VPC
+    """
+    name: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Name of the VPC
+    """
+
+@pulumi.input_type
+class VpcPeeringConnectionRequesterVpcArgs:
+    def __init__(__self__, *,
+                 identity: pulumi.Input[Optional[_builtins.str]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] identity: ID of the VPC
+        :param pulumi.Input[_builtins.str] name: Name of the VPC
+        """
+        if identity is not None:
+            pulumi.set(__self__, "identity", identity)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of the VPC
+        """
+        return pulumi.get(self, "identity")
+
+    @identity.setter
+    def identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "identity", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Name of the VPC
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "name", value)
 
 

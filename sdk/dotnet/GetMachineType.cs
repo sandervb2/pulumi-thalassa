@@ -33,9 +33,15 @@ namespace Pulumi.Thalassa
 
     public sealed class GetMachineTypeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
+        /// <summary>
+        /// The slug of the machine type to look up
+        /// </summary>
         [Input("slug")]
         public string? Slug { get; set; }
 
@@ -47,9 +53,15 @@ namespace Pulumi.Thalassa
 
     public sealed class GetMachineTypeInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
+        /// <summary>
+        /// The slug of the machine type to look up
+        /// </summary>
         [Input("slug")]
         public Input<string>? Slug { get; set; }
 
@@ -63,15 +75,33 @@ namespace Pulumi.Thalassa
     [OutputType]
     public sealed class GetMachineTypeResult
     {
+        /// <summary>
+        /// The number of CPU cores available in this machine type
+        /// </summary>
         public readonly int CpuCores;
+        /// <summary>
+        /// A description of the machine type and its specifications
+        /// </summary>
         public readonly string Description;
         /// <summary>
-        /// The ID of this resource.
+        /// The unique identifier of the machine type
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The name of the machine type
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
+        /// <summary>
+        /// The amount of RAM in megabytes available in this machine type
+        /// </summary>
         public readonly int RamMb;
+        /// <summary>
+        /// The slug of the machine type to look up
+        /// </summary>
         public readonly string? Slug;
 
         [OutputConstructor]

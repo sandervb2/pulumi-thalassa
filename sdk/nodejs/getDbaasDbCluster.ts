@@ -24,6 +24,9 @@ export interface GetDbaasDbClusterArgs {
      * Name of the DB Cluster
      */
     name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     organisationId?: string;
     /**
      * Slug of the DB Cluster
@@ -91,6 +94,9 @@ export interface GetDbaasDbClusterResult {
      * Name of the DB Cluster
      */
     readonly name: string;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     readonly organisationId?: string;
     /**
      * Map of parameter name to database engine specific parameter value
@@ -145,9 +151,12 @@ export interface GetDbaasDbClusterOutputArgs {
      * Name of the DB Cluster
      */
     name: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * Slug of the DB Cluster
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }

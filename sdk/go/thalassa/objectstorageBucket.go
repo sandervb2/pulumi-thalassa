@@ -22,7 +22,9 @@ import (
 // import (
 //
 //	"encoding/json"
+//	"fmt"
 //
+//	"github.com/pulumi/pulumi-random/sdk/go/random"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
 //
@@ -30,67 +32,114 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			// Create a basic object storage bucket
-//			basic, err := thalassa.NewObjectstorageBucket(ctx, "basic", &thalassa.ObjectstorageBucketArgs{
-//				Name:   pulumi.String("my-basic-bucket"),
-//				Region: pulumi.String("nl-01"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			// Create a public object storage bucket
-//			public, err := thalassa.NewObjectstorageBucket(ctx, "public", &thalassa.ObjectstorageBucketArgs{
-//				Name:   pulumi.String("my-public-bucket"),
-//				Region: pulumi.String("nl-01"),
-//				Public: pulumi.Bool(true),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			tmpJSON0, err := json.Marshal(map[string]interface{}{
-//				"Version": "2012-10-17",
-//				"Statement": []map[string]interface{}{
-//					map[string]interface{}{
-//						"Sid":    "AllowReadAccess",
-//						"Effect": "Allow",
-//						"Principal": map[string]interface{}{
-//							"Thalassa": "*",
-//						},
-//						"Action": []string{
-//							"s3:GetObject",
-//						},
-//						"Resource": []string{
-//							"arn:thalassa:s3:::my-policy-bucket/*",
-//						},
-//						"Condition": map[string]interface{}{
-//							"StringEquals": map[string]interface{}{
-//								"thalassa:User": "u-exampleuserid",
-//							},
-//						},
-//					},
+//			// Create a service account first
+//			example, err := thalassa.NewIamServiceAccount(ctx, "example", &thalassa.IamServiceAccountArgs{
+//				Name:        pulumi.String("cluster-service-account"),
+//				Description: pulumi.String("Service account for cluster access"),
+//				Labels: pulumi.StringMap{
+//					"environment": pulumi.String("production"),
+//					"project":     pulumi.String("cluster"),
 //				},
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			json0 := string(tmpJSON0)
-//			// Create a bucket with a custom policy
-//			withPolicy, err := thalassa.NewObjectstorageBucket(ctx, "with_policy", &thalassa.ObjectstorageBucketArgs{
-//				Name:   pulumi.String("my-policy-bucket"),
-//				Region: pulumi.String("nl-01"),
-//				Public: pulumi.Bool(false),
-//				Policy: pulumi.String(json0),
+//			// Create object storage access credentials
+//			_, err = thalassa.NewIamServiceAccountAccessCredential(ctx, "storage_credential", &thalassa.IamServiceAccountAccessCredentialArgs{
+//				ServiceAccountId: example.ID(),
+//				Scopes: pulumi.StringArray{
+//					pulumi.String("objectStorage"),
+//				},
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			ctx.Export("basicBucketId", basic.ID())
-//			ctx.Export("basicBucketName", basic.Name)
-//			ctx.Export("basicBucketEndpoint", basic.Endpoint)
-//			ctx.Export("publicBucketId", public.ID())
-//			ctx.Export("publicBucketName", public.Name)
-//			ctx.Export("policyBucketId", withPolicy.ID())
-//			ctx.Export("policyBucketName", withPolicy.Name)
+//			// # random uuid
+//			bucketName, err := random.NewUuid(ctx, "bucket_name", nil)
+//			if err != nil {
+//				return err
+//			}
+//			org, err := thalassa.GetOrganisation(ctx, &thalassa.GetOrganisationArgs{
+//				Slug: pulumi.StringRef(organisationSlug),
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			// # Create a bucket with a custom policy
+//			_, err = thalassa.NewObjectstorageBucket(ctx, "cluster_bucket", &thalassa.ObjectstorageBucketArgs{
+//				Name:   pulumi.Sprintf("cluster-bucket-%v", bucketName.Result),
+//				Region: pulumi.String("nl-01"),
+//				Policy: example.ID().ApplyT(func(id string) (pulumi.String, error) {
+//					var _zero pulumi.String
+//					tmpJSON0, err := json.Marshal(map[string]interface{}{
+//						"Version": "2012-10-17",
+//						"Statement": []map[string]interface{}{
+//							map[string]interface{}{
+//								"Sid": "Statement1",
+//								"Action": []string{
+//									"s3:GetObject",
+//									"s3:GetObjectVersion",
+//									"s3:PutObject",
+//									"s3:GetObjectAcl",
+//									"s3:GetObjectVersionAcl",
+//									"s3:PutObjectAcl",
+//									"s3:PutObjectVersionAcl",
+//									"s3:DeleteObject",
+//									"s3:DeleteObjectVersion",
+//									"s3:ListMultipartUploadParts",
+//									"s3:AbortMultipartUpload",
+//									"s3:RestoreObject",
+//									"s3:ListBucket",
+//									"s3:ListBucketVersions",
+//									"s3:ListBucketMultipartUploads",
+//									"s3:GetBucketAcl",
+//									"s3:PutBucketAcl",
+//									"s3:GetBucketCORS",
+//									"s3:PutBucketCORS",
+//									"s3:GetBucketVersioning",
+//									"s3:PutBucketVersioning",
+//									"s3:GetBucketRequestPayment",
+//									"s3:PutBucketRequestPayment",
+//									"s3:GetLifecycleConfiguration",
+//									"s3:PutLifecycleConfiguration",
+//									"s3:GetObjectTagging",
+//									"s3:PutObjectTagging",
+//									"s3:DeleteObjectTagging",
+//									"s3:GetObjectVersionTagging",
+//									"s3:PutObjectVersionTagging",
+//									"s3:DeleteObjectVersionTagging",
+//									"s3:PutBucketObjectLockConfiguration",
+//									"s3:GetBucketObjectLockConfiguration",
+//									"s3:PutObjectRetention",
+//									"s3:GetObjectRetention",
+//									"s3:PutObjectLegalHold",
+//									"s3:GetObjectLegalHold",
+//									"s3:BypassGovernanceRetention",
+//									"s3:GetBucketPolicyStatus",
+//								},
+//								"Effect": "Allow",
+//								"Resource": []string{
+//									fmt.Sprintf("arn:thalassa:s3:::cluster-bucket-%v", bucketName.Result),
+//									fmt.Sprintf("arn:thalassa:s3:::cluster-bucket-%v/*", bucketName.Result),
+//								},
+//								"Principal": map[string]interface{}{
+//									"Thalassa": []string{
+//										fmt.Sprintf("arn:thalassa:iam:::serviceaccount/%v:%v", org.Id, id),
+//									},
+//								},
+//							},
+//						},
+//					})
+//					if err != nil {
+//						return _zero, err
+//					}
+//					json0 := string(tmpJSON0)
+//					return pulumi.String(json0), nil
+//				}).(pulumi.StringOutput),
+//			})
+//			if err != nil {
+//				return err
+//			}
 //			return nil
 //		})
 //	}
@@ -102,16 +151,29 @@ type ObjectstorageBucket struct {
 	// The endpoint URL for the bucket
 	Endpoint pulumi.StringOutput `pulumi:"endpoint"`
 	// Name of the bucket
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled pulumi.BoolPtrOutput `pulumi:"objectLockEnabled"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The bucket policy as a JSON string
 	Policy pulumi.StringPtrOutput `pulumi:"policy"`
-	// Whether the bucket is publicly accessible
+	// Deprecated: Does not have any effect. Will be removed in a future version.
 	Public pulumi.BoolPtrOutput `pulumi:"public"`
 	// Region of the bucket
 	Region pulumi.StringOutput `pulumi:"region"`
 	// Status of the bucket
 	Status pulumi.StringOutput `pulumi:"status"`
+	// Whether the bucket is versioned
+	Versioning pulumi.BoolPtrOutput `pulumi:"versioning"`
+	// Whether to wait for the bucket to be deleted
+	WaitForDeleted pulumi.BoolPtrOutput `pulumi:"waitForDeleted"`
+	// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+	WaitForDeletedTimeout pulumi.IntPtrOutput `pulumi:"waitForDeletedTimeout"`
+	// Whether to wait for the bucket to be ready
+	WaitForReady pulumi.BoolPtrOutput `pulumi:"waitForReady"`
+	// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+	WaitForReadyTimeout pulumi.IntPtrOutput `pulumi:"waitForReadyTimeout"`
 }
 
 // NewObjectstorageBucket registers a new resource with the given unique name, arguments, and options.
@@ -150,32 +212,58 @@ type objectstorageBucketState struct {
 	// The endpoint URL for the bucket
 	Endpoint *string `pulumi:"endpoint"`
 	// Name of the bucket
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled *bool `pulumi:"objectLockEnabled"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The bucket policy as a JSON string
 	Policy *string `pulumi:"policy"`
-	// Whether the bucket is publicly accessible
+	// Deprecated: Does not have any effect. Will be removed in a future version.
 	Public *bool `pulumi:"public"`
 	// Region of the bucket
 	Region *string `pulumi:"region"`
 	// Status of the bucket
 	Status *string `pulumi:"status"`
+	// Whether the bucket is versioned
+	Versioning *bool `pulumi:"versioning"`
+	// Whether to wait for the bucket to be deleted
+	WaitForDeleted *bool `pulumi:"waitForDeleted"`
+	// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+	WaitForDeletedTimeout *int `pulumi:"waitForDeletedTimeout"`
+	// Whether to wait for the bucket to be ready
+	WaitForReady *bool `pulumi:"waitForReady"`
+	// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+	WaitForReadyTimeout *int `pulumi:"waitForReadyTimeout"`
 }
 
 type ObjectstorageBucketState struct {
 	// The endpoint URL for the bucket
 	Endpoint pulumi.StringPtrInput
 	// Name of the bucket
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled pulumi.BoolPtrInput
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The bucket policy as a JSON string
 	Policy pulumi.StringPtrInput
-	// Whether the bucket is publicly accessible
+	// Deprecated: Does not have any effect. Will be removed in a future version.
 	Public pulumi.BoolPtrInput
 	// Region of the bucket
 	Region pulumi.StringPtrInput
 	// Status of the bucket
 	Status pulumi.StringPtrInput
+	// Whether the bucket is versioned
+	Versioning pulumi.BoolPtrInput
+	// Whether to wait for the bucket to be deleted
+	WaitForDeleted pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+	WaitForDeletedTimeout pulumi.IntPtrInput
+	// Whether to wait for the bucket to be ready
+	WaitForReady pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+	WaitForReadyTimeout pulumi.IntPtrInput
 }
 
 func (ObjectstorageBucketState) ElementType() reflect.Type {
@@ -184,27 +272,53 @@ func (ObjectstorageBucketState) ElementType() reflect.Type {
 
 type objectstorageBucketArgs struct {
 	// Name of the bucket
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled *bool `pulumi:"objectLockEnabled"`
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The bucket policy as a JSON string
 	Policy *string `pulumi:"policy"`
-	// Whether the bucket is publicly accessible
+	// Deprecated: Does not have any effect. Will be removed in a future version.
 	Public *bool `pulumi:"public"`
 	// Region of the bucket
 	Region string `pulumi:"region"`
+	// Whether the bucket is versioned
+	Versioning *bool `pulumi:"versioning"`
+	// Whether to wait for the bucket to be deleted
+	WaitForDeleted *bool `pulumi:"waitForDeleted"`
+	// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+	WaitForDeletedTimeout *int `pulumi:"waitForDeletedTimeout"`
+	// Whether to wait for the bucket to be ready
+	WaitForReady *bool `pulumi:"waitForReady"`
+	// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+	WaitForReadyTimeout *int `pulumi:"waitForReadyTimeout"`
 }
 
 // The set of arguments for constructing a ObjectstorageBucket resource.
 type ObjectstorageBucketArgs struct {
 	// Name of the bucket
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Whether the bucket has object lock enabled
+	ObjectLockEnabled pulumi.BoolPtrInput
+	// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The bucket policy as a JSON string
 	Policy pulumi.StringPtrInput
-	// Whether the bucket is publicly accessible
+	// Deprecated: Does not have any effect. Will be removed in a future version.
 	Public pulumi.BoolPtrInput
 	// Region of the bucket
 	Region pulumi.StringInput
+	// Whether the bucket is versioned
+	Versioning pulumi.BoolPtrInput
+	// Whether to wait for the bucket to be deleted
+	WaitForDeleted pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+	WaitForDeletedTimeout pulumi.IntPtrInput
+	// Whether to wait for the bucket to be ready
+	WaitForReady pulumi.BoolPtrInput
+	// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+	WaitForReadyTimeout pulumi.IntPtrInput
 }
 
 func (ObjectstorageBucketArgs) ElementType() reflect.Type {
@@ -304,6 +418,12 @@ func (o ObjectstorageBucketOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Whether the bucket has object lock enabled
+func (o ObjectstorageBucketOutput) ObjectLockEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.BoolPtrOutput { return v.ObjectLockEnabled }).(pulumi.BoolPtrOutput)
+}
+
+// Reference to the Organisation of the bucket. If not provided, the organisation of the (Terraform) provider will be used.
 func (o ObjectstorageBucketOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -313,7 +433,7 @@ func (o ObjectstorageBucketOutput) Policy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.StringPtrOutput { return v.Policy }).(pulumi.StringPtrOutput)
 }
 
-// Whether the bucket is publicly accessible
+// Deprecated: Does not have any effect. Will be removed in a future version.
 func (o ObjectstorageBucketOutput) Public() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.BoolPtrOutput { return v.Public }).(pulumi.BoolPtrOutput)
 }
@@ -326,6 +446,31 @@ func (o ObjectstorageBucketOutput) Region() pulumi.StringOutput {
 // Status of the bucket
 func (o ObjectstorageBucketOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
+}
+
+// Whether the bucket is versioned
+func (o ObjectstorageBucketOutput) Versioning() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.BoolPtrOutput { return v.Versioning }).(pulumi.BoolPtrOutput)
+}
+
+// Whether to wait for the bucket to be deleted
+func (o ObjectstorageBucketOutput) WaitForDeleted() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.BoolPtrOutput { return v.WaitForDeleted }).(pulumi.BoolPtrOutput)
+}
+
+// The timeout in minutes to wait for the bucket to be deleted. Only used if wait*for*deleted is true
+func (o ObjectstorageBucketOutput) WaitForDeletedTimeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.IntPtrOutput { return v.WaitForDeletedTimeout }).(pulumi.IntPtrOutput)
+}
+
+// Whether to wait for the bucket to be ready
+func (o ObjectstorageBucketOutput) WaitForReady() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.BoolPtrOutput { return v.WaitForReady }).(pulumi.BoolPtrOutput)
+}
+
+// The timeout in minutes to wait for the bucket to be ready. Only used if wait*for*ready is true
+func (o ObjectstorageBucketOutput) WaitForReadyTimeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ObjectstorageBucket) pulumi.IntPtrOutput { return v.WaitForReadyTimeout }).(pulumi.IntPtrOutput)
 }
 
 type ObjectstorageBucketArrayOutput struct{ *pulumi.OutputState }

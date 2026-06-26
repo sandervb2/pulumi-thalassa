@@ -13,6 +13,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
 
 __all__ = [
     'GetIamTeamResult',
@@ -26,7 +27,7 @@ class GetIamTeamResult:
     """
     A collection of values returned by getIamTeam.
     """
-    def __init__(__self__, annotations=None, created_at=None, description=None, id=None, labels=None, name=None, organisation_id=None, slug=None, updated_at=None):
+    def __init__(__self__, annotations=None, created_at=None, description=None, id=None, labels=None, members=None, name=None, organisation_id=None, slug=None, updated_at=None):
         if annotations and not isinstance(annotations, dict):
             raise TypeError("Expected argument 'annotations' to be a dict")
         pulumi.set(__self__, "annotations", annotations)
@@ -42,6 +43,9 @@ class GetIamTeamResult:
         if labels and not isinstance(labels, dict):
             raise TypeError("Expected argument 'labels' to be a dict")
         pulumi.set(__self__, "labels", labels)
+        if members and not isinstance(members, list):
+            raise TypeError("Expected argument 'members' to be a list")
+        pulumi.set(__self__, "members", members)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
@@ -97,6 +101,14 @@ class GetIamTeamResult:
 
     @_builtins.property
     @pulumi.getter
+    def members(self) -> Sequence['outputs.GetIamTeamMemberResult']:
+        """
+        List of team members
+        """
+        return pulumi.get(self, "members")
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> Optional[_builtins.str]:
         """
         Name of the Team
@@ -106,6 +118,9 @@ class GetIamTeamResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -136,6 +151,7 @@ class AwaitableGetIamTeamResult(GetIamTeamResult):
             description=self.description,
             id=self.id,
             labels=self.labels,
+            members=self.members,
             name=self.name,
             organisation_id=self.organisation_id,
             slug=self.slug,
@@ -153,6 +169,7 @@ def get_iam_team(description: Optional[_builtins.str] = None,
 
     :param _builtins.str description: A human readable description about the team
     :param _builtins.str name: Name of the Team
+    :param _builtins.str organisation_id: Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the Team
     """
     __args__ = dict()
@@ -169,14 +186,15 @@ def get_iam_team(description: Optional[_builtins.str] = None,
         description=pulumi.get(__ret__, 'description'),
         id=pulumi.get(__ret__, 'id'),
         labels=pulumi.get(__ret__, 'labels'),
+        members=pulumi.get(__ret__, 'members'),
         name=pulumi.get(__ret__, 'name'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         slug=pulumi.get(__ret__, 'slug'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_iam_team_output(description: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_iam_team_output(description: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                         opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetIamTeamResult]:
     """
     Get a team
@@ -184,6 +202,7 @@ def get_iam_team_output(description: Optional[pulumi.Input[Optional[_builtins.st
 
     :param _builtins.str description: A human readable description about the team
     :param _builtins.str name: Name of the Team
+    :param _builtins.str organisation_id: Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the Team
     """
     __args__ = dict()
@@ -199,6 +218,7 @@ def get_iam_team_output(description: Optional[pulumi.Input[Optional[_builtins.st
         description=pulumi.get(__response__, 'description'),
         id=pulumi.get(__response__, 'id'),
         labels=pulumi.get(__response__, 'labels'),
+        members=pulumi.get(__response__, 'members'),
         name=pulumi.get(__response__, 'name'),
         organisation_id=pulumi.get(__response__, 'organisation_id'),
         slug=pulumi.get(__response__, 'slug'),

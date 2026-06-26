@@ -94,10 +94,13 @@ type Loadbalancer struct {
 	// Labels for the Loadbalancer
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Name of the Loadbalancer
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Region of the Loadbalancer
 	Region pulumi.StringOutput `pulumi:"region"`
+	// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+	ReservedIpId pulumi.StringOutput `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the Loadbalancer
 	SecurityGroupAttachments pulumi.StringArrayOutput `pulumi:"securityGroupAttachments"`
 	Slug                     pulumi.StringOutput      `pulumi:"slug"`
@@ -158,10 +161,13 @@ type loadbalancerState struct {
 	// Labels for the Loadbalancer
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Loadbalancer
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Loadbalancer
 	Region *string `pulumi:"region"`
+	// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+	ReservedIpId *string `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the Loadbalancer
 	SecurityGroupAttachments []string `pulumi:"securityGroupAttachments"`
 	Slug                     *string  `pulumi:"slug"`
@@ -187,10 +193,13 @@ type LoadbalancerState struct {
 	// Labels for the Loadbalancer
 	Labels pulumi.StringMapInput
 	// Name of the Loadbalancer
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Loadbalancer
 	Region pulumi.StringPtrInput
+	// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+	ReservedIpId pulumi.StringPtrInput
 	// List identities of security group that will be attached to the Loadbalancer
 	SecurityGroupAttachments pulumi.StringArrayInput
 	Slug                     pulumi.StringPtrInput
@@ -216,10 +225,13 @@ type loadbalancerArgs struct {
 	// Labels for the Loadbalancer
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Loadbalancer
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Loadbalancer
 	Region string `pulumi:"region"`
+	// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+	ReservedIpId *string `pulumi:"reservedIpId"`
 	// List identities of security group that will be attached to the Loadbalancer
 	SecurityGroupAttachments []string `pulumi:"securityGroupAttachments"`
 	// Subnet of the Loadbalancer
@@ -239,10 +251,13 @@ type LoadbalancerArgs struct {
 	// Labels for the Loadbalancer
 	Labels pulumi.StringMapInput
 	// Name of the Loadbalancer
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// Region of the Loadbalancer
 	Region pulumi.StringInput
+	// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+	ReservedIpId pulumi.StringPtrInput
 	// List identities of security group that will be attached to the Loadbalancer
 	SecurityGroupAttachments pulumi.StringArrayInput
 	// Subnet of the Loadbalancer
@@ -376,6 +391,7 @@ func (o LoadbalancerOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Loadbalancer) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LoadbalancerOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Loadbalancer) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
@@ -383,6 +399,11 @@ func (o LoadbalancerOutput) OrganisationId() pulumi.StringPtrOutput {
 // Region of the Loadbalancer
 func (o LoadbalancerOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Loadbalancer) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
+}
+
+// Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+func (o LoadbalancerOutput) ReservedIpId() pulumi.StringOutput {
+	return o.ApplyT(func(v *Loadbalancer) pulumi.StringOutput { return v.ReservedIpId }).(pulumi.StringOutput)
 }
 
 // List identities of security group that will be attached to the Loadbalancer

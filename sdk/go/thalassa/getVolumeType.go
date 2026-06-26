@@ -25,7 +25,8 @@ func GetVolumeType(ctx *pulumi.Context, args *GetVolumeTypeArgs, opts ...pulumi.
 // A collection of arguments for invoking getVolumeType.
 type GetVolumeTypeArgs struct {
 	// The name of the volume type.
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 }
 
@@ -38,7 +39,8 @@ type GetVolumeTypeResult struct {
 	// The ID of this resource.
 	Id string `pulumi:"id"`
 	// The name of the volume type.
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The storage type of the volume type. For example: 'block'.
 	StorageType string `pulumi:"storageType"`
@@ -56,7 +58,8 @@ func GetVolumeTypeOutput(ctx *pulumi.Context, args GetVolumeTypeOutputArgs, opts
 // A collection of arguments for invoking getVolumeType.
 type GetVolumeTypeOutputArgs struct {
 	// The name of the volume type.
-	Name           pulumi.StringInput    `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 }
 
@@ -99,6 +102,7 @@ func (o GetVolumeTypeResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetVolumeTypeResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
 func (o GetVolumeTypeResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetVolumeTypeResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

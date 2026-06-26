@@ -22,12 +22,14 @@ namespace Pulumi.Thalassa
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
+    ///     var config = new Config();
+    ///     var region = config.Get("region") ?? "nl-01";
     ///     // Create a VPC for the virtual machine instance
     ///     var example = new Thalassa.Vpc("example", new()
     ///     {
     ///         Name = "example-vpc",
     ///         Description = "Example VPC for virtual machine instance",
-    ///         Region = "nl-01",
+    ///         Region = region,
     ///         Cidrs = new[]
     ///         {
     ///             "10.0.0.0/16",
@@ -74,9 +76,10 @@ namespace Pulumi.Thalassa
     /// 
     ///     var ubuntu = Thalassa.GetMachineImage.Invoke(new()
     ///     {
-    ///         Name = "ubuntu-22-04-01",
+    ///         Name = "ubuntu-22.04-8f08afc54644",
     ///     });
     /// 
+    ///     var availabilityZone = config.Get("availabilityZone") ?? "nl-01a";
     ///     // Create a virtual machine instance with Thalassa default values
     ///     var exampleVirtualMachineInstance = new Thalassa.VirtualMachineInstance("example", new()
     ///     {
@@ -84,7 +87,7 @@ namespace Pulumi.Thalassa
     ///         SubnetId = exampleSubnet.Id,
     ///         MachineType = "pgp-small",
     ///         MachineImage = ubuntu.Apply(getMachineImageResult =&gt; getMachineImageResult.Name),
-    ///         AvailabilityZone = "nl-01a",
+    ///         AvailabilityZone = availabilityZone,
     ///         RootVolumeSizeGb = 20,
     ///         RootVolumeType = block.Apply(getVolumeTypeResult =&gt; getVolumeTypeResult.Id),
     ///         CloudInitTemplateId = exampleCloudInitTemplate.Id,
@@ -94,7 +97,7 @@ namespace Pulumi.Thalassa
     ///     var exampleLoadbalancer = new Thalassa.Loadbalancer("example", new()
     ///     {
     ///         Name = "example-lb",
-    ///         Region = "nl-01",
+    ///         Region = region,
     ///         Description = "Example load balancer for virtual machine instance",
     ///         SubnetId = exampleSubnet.Id,
     ///     });
@@ -155,7 +158,7 @@ namespace Pulumi.Thalassa
         /// Availability zone of the virtual machine instance
         /// </summary>
         [Output("availabilityZone")]
-        public Output<string?> AvailabilityZone { get; private set; } = null!;
+        public Output<string> AvailabilityZone { get; private set; } = null!;
 
         /// <summary>
         /// Cloud init of the virtual machine instance
@@ -194,7 +197,7 @@ namespace Pulumi.Thalassa
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
         /// <summary>
-        /// Machine image of the virtual machine instance
+        /// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         /// </summary>
         [Output("machineImage")]
         public Output<string> MachineImage { get; private set; } = null!;
@@ -211,6 +214,9 @@ namespace Pulumi.Thalassa
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Output("organisationId")]
         public Output<string?> OrganisationId { get; private set; } = null!;
 
@@ -364,7 +370,7 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
-        /// Machine image of the virtual machine instance
+        /// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         /// </summary>
         [Input("machineImage", required: true)]
         public Input<string> MachineImage { get; set; } = null!;
@@ -381,6 +387,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -507,7 +516,7 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
-        /// Machine image of the virtual machine instance
+        /// Machine image for the virtual machine instance. You may pass the image identity, slug, or name (name match is case-insensitive)
         /// </summary>
         [Input("machineImage")]
         public Input<string>? MachineImage { get; set; }
@@ -524,6 +533,9 @@ namespace Pulumi.Thalassa
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 

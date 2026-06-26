@@ -26,7 +26,8 @@ type LookupDbaasPgDatabaseArgs struct {
 	// The ID of the database cluster
 	DbClusterId string `pulumi:"dbClusterId"`
 	// The name of the database
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 }
 
@@ -39,7 +40,8 @@ type LookupDbaasPgDatabaseResult struct {
 	// The ID of this resource.
 	Id string `pulumi:"id"`
 	// The name of the database
-	Name           string  `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The ID of the owner role
 	OwnerRoleId string `pulumi:"ownerRoleId"`
@@ -59,7 +61,8 @@ type LookupDbaasPgDatabaseOutputArgs struct {
 	// The ID of the database cluster
 	DbClusterId pulumi.StringInput `pulumi:"dbClusterId"`
 	// The name of the database
-	Name           pulumi.StringInput    `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 }
 
@@ -102,6 +105,7 @@ func (o LookupDbaasPgDatabaseResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDbaasPgDatabaseResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupDbaasPgDatabaseResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupDbaasPgDatabaseResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

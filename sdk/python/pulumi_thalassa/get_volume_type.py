@@ -81,6 +81,9 @@ class GetVolumeTypeResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -114,6 +117,7 @@ def get_volume_type(name: Optional[_builtins.str] = None,
 
 
     :param _builtins.str name: The name of the volume type.
+    :param _builtins.str organisation_id: Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['name'] = name
@@ -128,14 +132,15 @@ def get_volume_type(name: Optional[_builtins.str] = None,
         name=pulumi.get(__ret__, 'name'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         storage_type=pulumi.get(__ret__, 'storage_type'))
-def get_volume_type_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                           organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_volume_type_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                           organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                            opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetVolumeTypeResult]:
     """
     Get an volume type by name. Volume Types are used to create block volumes. The matching name is case insensitive.
 
 
     :param _builtins.str name: The name of the volume type.
+    :param _builtins.str organisation_id: Reference to the Organisation of the Volume Type. If not provided, the organisation of the (Terraform) provider will be used.
     """
     __args__ = dict()
     __args__['name'] = name

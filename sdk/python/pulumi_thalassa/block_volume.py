@@ -21,16 +21,17 @@ class BlockVolumeArgs:
     def __init__(__self__, *,
                  size_gb: pulumi.Input[_builtins.int],
                  volume_type: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_until_ready: Optional[pulumi.Input[_builtins.bool]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_until_ready: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         The set of arguments for constructing a BlockVolume resource.
+
         :param pulumi.Input[_builtins.int] size_gb: Size of the Block Volume in GB
         :param pulumi.Input[_builtins.str] volume_type: Volume type of the Block Volume
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Block Volume
@@ -38,6 +39,7 @@ class BlockVolumeArgs:
         :param pulumi.Input[_builtins.str] description: A human readable description about the Block Volume
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Block Volume
         :param pulumi.Input[_builtins.str] name: Name of the Block Volume
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Block Volume.
         :param pulumi.Input[_builtins.bool] wait_until_ready: Wait until the Block Volume is ready
         """
@@ -86,120 +88,125 @@ class BlockVolumeArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Block Volume
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection of the Block Volume
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the Block Volume
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Block Volume
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Block Volume
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Region of the Block Volume.
         """
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="waitUntilReady")
-    def wait_until_ready(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_until_ready(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait until the Block Volume is ready
         """
         return pulumi.get(self, "wait_until_ready")
 
     @wait_until_ready.setter
-    def wait_until_ready(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_until_ready(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_until_ready", value)
 
 
 @pulumi.input_type
 class _BlockVolumeState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_until_ready: Optional[pulumi.Input[_builtins.bool]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_until_ready: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering BlockVolume resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Block Volume
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Block Volume
         :param pulumi.Input[_builtins.str] description: A human readable description about the Block Volume
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Block Volume
         :param pulumi.Input[_builtins.str] name: Name of the Block Volume
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Block Volume.
         :param pulumi.Input[_builtins.int] size_gb: Size of the Block Volume in GB
         :param pulumi.Input[_builtins.str] status: Status of the Block Volume
@@ -233,140 +240,143 @@ class _BlockVolumeState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Block Volume
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection of the Block Volume
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the Block Volume
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Block Volume
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Block Volume
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Region of the Block Volume.
         """
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeGb")
-    def size_gb(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def size_gb(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Size of the Block Volume in GB
         """
         return pulumi.get(self, "size_gb")
 
     @size_gb.setter
-    def size_gb(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def size_gb(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "size_gb", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the Block Volume
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="volumeType")
-    def volume_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def volume_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Volume type of the Block Volume
         """
         return pulumi.get(self, "volume_type")
 
     @volume_type.setter
-    def volume_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def volume_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "volume_type", value)
 
     @_builtins.property
     @pulumi.getter(name="waitUntilReady")
-    def wait_until_ready(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def wait_until_ready(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Wait until the Block Volume is ready
         """
         return pulumi.get(self, "wait_until_ready")
 
     @wait_until_ready.setter
-    def wait_until_ready(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def wait_until_ready(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "wait_until_ready", value)
 
 
@@ -376,16 +386,16 @@ class BlockVolume(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_until_ready: Optional[pulumi.Input[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_until_ready: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         """
         Provides a Thalassa Cloud Block Volume resource. This can be used to create, manage, and attach a detachable storage device to a virtual machine instance.
@@ -407,6 +417,7 @@ class BlockVolume(pulumi.CustomResource):
         pulumi.export("blockVolumeName", example.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Block Volume
@@ -414,6 +425,7 @@ class BlockVolume(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: A human readable description about the Block Volume
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Block Volume
         :param pulumi.Input[_builtins.str] name: Name of the Block Volume
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Block Volume.
         :param pulumi.Input[_builtins.int] size_gb: Size of the Block Volume in GB
         :param pulumi.Input[_builtins.str] volume_type: Volume type of the Block Volume
@@ -445,6 +457,7 @@ class BlockVolume(pulumi.CustomResource):
         pulumi.export("blockVolumeName", example.name)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param BlockVolumeArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -460,16 +473,16 @@ class BlockVolume(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-                 volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 wait_until_ready: Optional[pulumi.Input[_builtins.bool]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+                 volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 wait_until_ready: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -505,18 +518,18 @@ class BlockVolume(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            region: Optional[pulumi.Input[_builtins.str]] = None,
-            size_gb: Optional[pulumi.Input[_builtins.int]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            volume_type: Optional[pulumi.Input[_builtins.str]] = None,
-            wait_until_ready: Optional[pulumi.Input[_builtins.bool]] = None) -> 'BlockVolume':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_until_ready: pulumi.Input[Optional[_builtins.bool]] = None) -> 'BlockVolume':
         """
         Get an existing BlockVolume resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -529,6 +542,7 @@ class BlockVolume(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: A human readable description about the Block Volume
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Block Volume
         :param pulumi.Input[_builtins.str] name: Name of the Block Volume
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Block Volume.
         :param pulumi.Input[_builtins.int] size_gb: Size of the Block Volume in GB
         :param pulumi.Input[_builtins.str] status: Status of the Block Volume
@@ -596,6 +610,9 @@ class BlockVolume(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Block Volume. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property

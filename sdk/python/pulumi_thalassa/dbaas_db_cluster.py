@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['DbaasDbClusterArgs', 'DbaasDbCluster']
 
@@ -25,20 +27,28 @@ class DbaasDbClusterArgs:
                  engine_version: pulumi.Input[_builtins.str],
                  subnet_id: pulumi.Input[_builtins.str],
                  volume_type_class: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 auto_minor_version_upgrade: Optional[pulumi.Input[_builtins.bool]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 restore_from_backup_identity: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 restore_recovery_target: pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']] = None,
+                 security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a DbaasDbCluster resource.
+
         :param pulumi.Input[_builtins.int] allocated_storage: Amount of storage allocated to the cluster in GB
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
         :param pulumi.Input[_builtins.str] engine: Database engine of the cluster
@@ -47,14 +57,22 @@ class DbaasDbClusterArgs:
         :param pulumi.Input[_builtins.str] volume_type_class: Storage type used to determine the size of the cluster storage
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the DB Cluster
         :param pulumi.Input[_builtins.bool] auto_minor_version_upgrade: Flag indicating if the cluster should automatically upgrade to the latest minor version
+        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] init_db: Map of init db parameters
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the DB Cluster
+        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        :param pulumi.Input[_builtins.int] maintenance_start_at: Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_identity: Identity of the backup to restore from
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input['DbaasDbClusterRestoreRecoveryTargetArgs'] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         """
         pulumi.set(__self__, "allocated_storage", allocated_storage)
@@ -67,6 +85,12 @@ class DbaasDbClusterArgs:
             pulumi.set(__self__, "annotations", annotations)
         if auto_minor_version_upgrade is not None:
             pulumi.set(__self__, "auto_minor_version_upgrade", auto_minor_version_upgrade)
+        if auto_upgrade_policy is not None:
+            pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
+        if create_backup_before_destroy is not None:
+            pulumi.set(__self__, "create_backup_before_destroy", create_backup_before_destroy)
+        if create_backup_before_destroy_timeout is not None:
+            pulumi.set(__self__, "create_backup_before_destroy_timeout", create_backup_before_destroy_timeout)
         if delete_protection is not None:
             pulumi.set(__self__, "delete_protection", delete_protection)
         if description is not None:
@@ -75,16 +99,24 @@ class DbaasDbClusterArgs:
             pulumi.set(__self__, "init_db", init_db)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if maintenance_day is not None:
+            pulumi.set(__self__, "maintenance_day", maintenance_day)
+        if maintenance_start_at is not None:
+            pulumi.set(__self__, "maintenance_start_at", maintenance_start_at)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
         if parameters is not None:
             pulumi.set(__self__, "parameters", parameters)
+        if provision_db_object_store is not None:
+            pulumi.set(__self__, "provision_db_object_store", provision_db_object_store)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
-        if restore_from_backup_identity is not None:
-            pulumi.set(__self__, "restore_from_backup_identity", restore_from_backup_identity)
+        if restore_from_backup_id is not None:
+            pulumi.set(__self__, "restore_from_backup_id", restore_from_backup_id)
+        if restore_recovery_target is not None:
+            pulumi.set(__self__, "restore_recovery_target", restore_recovery_target)
         if security_groups is not None:
             pulumi.set(__self__, "security_groups", security_groups)
 
@@ -162,176 +194,274 @@ class DbaasDbClusterArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations of the DB Cluster
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="autoMinorVersionUpgrade")
-    def auto_minor_version_upgrade(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def auto_minor_version_upgrade(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag indicating if the cluster should automatically upgrade to the latest minor version
         """
         return pulumi.get(self, "auto_minor_version_upgrade")
 
     @auto_minor_version_upgrade.setter
-    def auto_minor_version_upgrade(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def auto_minor_version_upgrade(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "auto_minor_version_upgrade", value)
 
     @_builtins.property
+    @pulumi.getter(name="autoUpgradePolicy")
+    def auto_upgrade_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        """
+        return pulumi.get(self, "auto_upgrade_policy")
+
+    @auto_upgrade_policy.setter
+    def auto_upgrade_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "auto_upgrade_policy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroy")
+    def create_backup_before_destroy(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        """
+        return pulumi.get(self, "create_backup_before_destroy")
+
+    @create_backup_before_destroy.setter
+    def create_backup_before_destroy(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "create_backup_before_destroy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroyTimeout")
+    def create_backup_before_destroy_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        """
+        return pulumi.get(self, "create_backup_before_destroy_timeout")
+
+    @create_backup_before_destroy_timeout.setter
+    def create_backup_before_destroy_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "create_backup_before_destroy_timeout", value)
+
+    @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag indicating if the cluster should be protected from deletion
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the DB Cluster
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="initDb")
-    def init_db(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def init_db(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Map of init db parameters
         """
         return pulumi.get(self, "init_db")
 
     @init_db.setter
-    def init_db(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def init_db(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "init_db", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels of the DB Cluster
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="maintenanceDay")
+    def maintenance_day(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        """
+        return pulumi.get(self, "maintenance_day")
+
+    @maintenance_day.setter
+    def maintenance_day(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_day", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maintenanceStartAt")
+    def maintenance_start_at(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        """
+        return pulumi.get(self, "maintenance_start_at")
+
+    @maintenance_start_at.setter
+    def maintenance_start_at(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_start_at", value)
+
+    @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the DB Cluster
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def parameters(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def parameters(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Map of parameter name to database engine specific parameter value
         """
         return pulumi.get(self, "parameters")
 
     @parameters.setter
-    def parameters(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def parameters(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "parameters", value)
 
     @_builtins.property
+    @pulumi.getter(name="provisionDbObjectStore")
+    def provision_db_object_store(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        """
+        return pulumi.get(self, "provision_db_object_store")
+
+    @provision_db_object_store.setter
+    def provision_db_object_store(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "provision_db_object_store", value)
+
+    @_builtins.property
     @pulumi.getter
-    def replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of instances in the cluster
         """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
-    def replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "replicas", value)
 
     @_builtins.property
-    @pulumi.getter(name="restoreFromBackupIdentity")
-    def restore_from_backup_identity(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter(name="restoreFromBackupId")
+    def restore_from_backup_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the backup to restore from
+        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         """
-        return pulumi.get(self, "restore_from_backup_identity")
+        return pulumi.get(self, "restore_from_backup_id")
 
-    @restore_from_backup_identity.setter
-    def restore_from_backup_identity(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "restore_from_backup_identity", value)
+    @restore_from_backup_id.setter
+    def restore_from_backup_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "restore_from_backup_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="restoreRecoveryTarget")
+    def restore_recovery_target(self) -> pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']]:
+        """
+        Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        """
+        return pulumi.get(self, "restore_recovery_target")
+
+    @restore_recovery_target.setter
+    def restore_recovery_target(self, value: pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']]):
+        pulumi.set(self, "restore_recovery_target", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroups")
-    def security_groups(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_groups(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List of security groups associated with the cluster
         """
         return pulumi.get(self, "security_groups")
 
     @security_groups.setter
-    def security_groups(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_groups(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_groups", value)
 
 
 @pulumi.input_type
 class _DbaasDbClusterState:
     def __init__(__self__, *,
-                 allocated_storage: Optional[pulumi.Input[_builtins.int]] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 auto_minor_version_upgrade: Optional[pulumi.Input[_builtins.bool]] = None,
-                 database_instance_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 endpoint_ipv4: Optional[pulumi.Input[_builtins.str]] = None,
-                 endpoint_ipv6: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 port: Optional[pulumi.Input[_builtins.int]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 restore_from_backup_identity: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 status: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_type_class: Optional[pulumi.Input[_builtins.str]] = None):
+                 allocated_storage: pulumi.Input[Optional[_builtins.int]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 endpoint_ipv4: pulumi.Input[Optional[_builtins.str]] = None,
+                 endpoint_ipv6: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 port: pulumi.Input[Optional[_builtins.int]] = None,
+                 provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 restore_recovery_target: pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']] = None,
+                 security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 status: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_type_class: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DbaasDbCluster resources.
+
         :param pulumi.Input[_builtins.int] allocated_storage: Amount of storage allocated to the cluster in GB
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the DB Cluster
         :param pulumi.Input[_builtins.bool] auto_minor_version_upgrade: Flag indicating if the cluster should automatically upgrade to the latest minor version
+        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
@@ -341,11 +471,16 @@ class _DbaasDbClusterState:
         :param pulumi.Input[_builtins.str] engine_version: Version of the database engine
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] init_db: Map of init db parameters
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the DB Cluster
+        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        :param pulumi.Input[_builtins.int] maintenance_start_at: Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
         :param pulumi.Input[_builtins.int] port: Port of the cluster endpoint
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_identity: Identity of the backup to restore from
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input['DbaasDbClusterRestoreRecoveryTargetArgs'] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] status: Status of the cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the DB Cluster
@@ -357,6 +492,12 @@ class _DbaasDbClusterState:
             pulumi.set(__self__, "annotations", annotations)
         if auto_minor_version_upgrade is not None:
             pulumi.set(__self__, "auto_minor_version_upgrade", auto_minor_version_upgrade)
+        if auto_upgrade_policy is not None:
+            pulumi.set(__self__, "auto_upgrade_policy", auto_upgrade_policy)
+        if create_backup_before_destroy is not None:
+            pulumi.set(__self__, "create_backup_before_destroy", create_backup_before_destroy)
+        if create_backup_before_destroy_timeout is not None:
+            pulumi.set(__self__, "create_backup_before_destroy_timeout", create_backup_before_destroy_timeout)
         if database_instance_type is not None:
             pulumi.set(__self__, "database_instance_type", database_instance_type)
         if delete_protection is not None:
@@ -375,6 +516,10 @@ class _DbaasDbClusterState:
             pulumi.set(__self__, "init_db", init_db)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if maintenance_day is not None:
+            pulumi.set(__self__, "maintenance_day", maintenance_day)
+        if maintenance_start_at is not None:
+            pulumi.set(__self__, "maintenance_start_at", maintenance_start_at)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
@@ -383,10 +528,14 @@ class _DbaasDbClusterState:
             pulumi.set(__self__, "parameters", parameters)
         if port is not None:
             pulumi.set(__self__, "port", port)
+        if provision_db_object_store is not None:
+            pulumi.set(__self__, "provision_db_object_store", provision_db_object_store)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
-        if restore_from_backup_identity is not None:
-            pulumi.set(__self__, "restore_from_backup_identity", restore_from_backup_identity)
+        if restore_from_backup_id is not None:
+            pulumi.set(__self__, "restore_from_backup_id", restore_from_backup_id)
+        if restore_recovery_target is not None:
+            pulumi.set(__self__, "restore_recovery_target", restore_recovery_target)
         if security_groups is not None:
             pulumi.set(__self__, "security_groups", security_groups)
         if status is not None:
@@ -398,263 +547,350 @@ class _DbaasDbClusterState:
 
     @_builtins.property
     @pulumi.getter(name="allocatedStorage")
-    def allocated_storage(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def allocated_storage(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Amount of storage allocated to the cluster in GB
         """
         return pulumi.get(self, "allocated_storage")
 
     @allocated_storage.setter
-    def allocated_storage(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def allocated_storage(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "allocated_storage", value)
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations of the DB Cluster
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="autoMinorVersionUpgrade")
-    def auto_minor_version_upgrade(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def auto_minor_version_upgrade(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag indicating if the cluster should automatically upgrade to the latest minor version
         """
         return pulumi.get(self, "auto_minor_version_upgrade")
 
     @auto_minor_version_upgrade.setter
-    def auto_minor_version_upgrade(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def auto_minor_version_upgrade(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "auto_minor_version_upgrade", value)
 
     @_builtins.property
+    @pulumi.getter(name="autoUpgradePolicy")
+    def auto_upgrade_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        """
+        return pulumi.get(self, "auto_upgrade_policy")
+
+    @auto_upgrade_policy.setter
+    def auto_upgrade_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "auto_upgrade_policy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroy")
+    def create_backup_before_destroy(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        """
+        return pulumi.get(self, "create_backup_before_destroy")
+
+    @create_backup_before_destroy.setter
+    def create_backup_before_destroy(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "create_backup_before_destroy", value)
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroyTimeout")
+    def create_backup_before_destroy_timeout(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        """
+        return pulumi.get(self, "create_backup_before_destroy_timeout")
+
+    @create_backup_before_destroy_timeout.setter
+    def create_backup_before_destroy_timeout(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "create_backup_before_destroy_timeout", value)
+
+    @_builtins.property
     @pulumi.getter(name="databaseInstanceType")
-    def database_instance_type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def database_instance_type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Database instance type of the DB Cluster
         """
         return pulumi.get(self, "database_instance_type")
 
     @database_instance_type.setter
-    def database_instance_type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def database_instance_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "database_instance_type", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag indicating if the cluster should be protected from deletion
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the DB Cluster
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="endpointIpv4")
-    def endpoint_ipv4(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def endpoint_ipv4(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IPv4 address of the cluster endpoint
         """
         return pulumi.get(self, "endpoint_ipv4")
 
     @endpoint_ipv4.setter
-    def endpoint_ipv4(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def endpoint_ipv4(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "endpoint_ipv4", value)
 
     @_builtins.property
     @pulumi.getter(name="endpointIpv6")
-    def endpoint_ipv6(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def endpoint_ipv6(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IPv6 address of the cluster endpoint
         """
         return pulumi.get(self, "endpoint_ipv6")
 
     @endpoint_ipv6.setter
-    def endpoint_ipv6(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def endpoint_ipv6(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "endpoint_ipv6", value)
 
     @_builtins.property
     @pulumi.getter
-    def engine(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def engine(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Database engine of the cluster
         """
         return pulumi.get(self, "engine")
 
     @engine.setter
-    def engine(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def engine(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "engine", value)
 
     @_builtins.property
     @pulumi.getter(name="engineVersion")
-    def engine_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def engine_version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Version of the database engine
         """
         return pulumi.get(self, "engine_version")
 
     @engine_version.setter
-    def engine_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def engine_version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "engine_version", value)
 
     @_builtins.property
     @pulumi.getter(name="initDb")
-    def init_db(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def init_db(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Map of init db parameters
         """
         return pulumi.get(self, "init_db")
 
     @init_db.setter
-    def init_db(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def init_db(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "init_db", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels of the DB Cluster
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="maintenanceDay")
+    def maintenance_day(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        """
+        return pulumi.get(self, "maintenance_day")
+
+    @maintenance_day.setter
+    def maintenance_day(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_day", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maintenanceStartAt")
+    def maintenance_start_at(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        """
+        return pulumi.get(self, "maintenance_start_at")
+
+    @maintenance_start_at.setter
+    def maintenance_start_at(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "maintenance_start_at", value)
+
+    @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the DB Cluster
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def parameters(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def parameters(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Map of parameter name to database engine specific parameter value
         """
         return pulumi.get(self, "parameters")
 
     @parameters.setter
-    def parameters(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def parameters(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "parameters", value)
 
     @_builtins.property
     @pulumi.getter
-    def port(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def port(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Port of the cluster endpoint
         """
         return pulumi.get(self, "port")
 
     @port.setter
-    def port(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def port(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "port", value)
 
     @_builtins.property
+    @pulumi.getter(name="provisionDbObjectStore")
+    def provision_db_object_store(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        """
+        return pulumi.get(self, "provision_db_object_store")
+
+    @provision_db_object_store.setter
+    def provision_db_object_store(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "provision_db_object_store", value)
+
+    @_builtins.property
     @pulumi.getter
-    def replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+    def replicas(self) -> pulumi.Input[Optional[_builtins.int]]:
         """
         Number of instances in the cluster
         """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
-    def replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+    def replicas(self, value: pulumi.Input[Optional[_builtins.int]]):
         pulumi.set(self, "replicas", value)
 
     @_builtins.property
-    @pulumi.getter(name="restoreFromBackupIdentity")
-    def restore_from_backup_identity(self) -> Optional[pulumi.Input[_builtins.str]]:
+    @pulumi.getter(name="restoreFromBackupId")
+    def restore_from_backup_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the backup to restore from
+        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         """
-        return pulumi.get(self, "restore_from_backup_identity")
+        return pulumi.get(self, "restore_from_backup_id")
 
-    @restore_from_backup_identity.setter
-    def restore_from_backup_identity(self, value: Optional[pulumi.Input[_builtins.str]]):
-        pulumi.set(self, "restore_from_backup_identity", value)
+    @restore_from_backup_id.setter
+    def restore_from_backup_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "restore_from_backup_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="restoreRecoveryTarget")
+    def restore_recovery_target(self) -> pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']]:
+        """
+        Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        """
+        return pulumi.get(self, "restore_recovery_target")
+
+    @restore_recovery_target.setter
+    def restore_recovery_target(self, value: pulumi.Input[Optional['DbaasDbClusterRestoreRecoveryTargetArgs']]):
+        pulumi.set(self, "restore_recovery_target", value)
 
     @_builtins.property
     @pulumi.getter(name="securityGroups")
-    def security_groups(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_groups(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List of security groups associated with the cluster
         """
         return pulumi.get(self, "security_groups")
 
     @security_groups.setter
-    def security_groups(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_groups(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_groups", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def status(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Status of the cluster
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def status(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Subnet of the DB Cluster
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
     @_builtins.property
     @pulumi.getter(name="volumeTypeClass")
-    def volume_type_class(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def volume_type_class(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Storage type used to determine the size of the cluster storage
         """
         return pulumi.get(self, "volume_type_class")
 
     @volume_type_class.setter
-    def volume_type_class(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def volume_type_class(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "volume_type_class", value)
 
 
@@ -664,33 +900,86 @@ class DbaasDbCluster(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allocated_storage: Optional[pulumi.Input[_builtins.int]] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 auto_minor_version_upgrade: Optional[pulumi.Input[_builtins.bool]] = None,
-                 database_instance_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 restore_from_backup_identity: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_type_class: Optional[pulumi.Input[_builtins.str]] = None,
+                 allocated_storage: pulumi.Input[Optional[_builtins.int]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+                 security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_type_class: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an DB Cluster
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        # Create a VPC for the database cluster
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for database cluster",
+            region="nl-01",
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the database cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for database cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a security group for the DB cluster
+        example_security_group = thalassa.SecurityGroup("example",
+            name="example-db-security-group",
+            description="Example security group for DB cluster",
+            vpc_identity=example.id)
+        # Create a database cluster with Thalassa default values
+        example_dbaas_db_cluster = thalassa.DbaasDbCluster("example",
+            name="example-db-cluster",
+            description="Example database cluster for documentation",
+            subnet_id=example_subnet.id,
+            database_instance_type="db-pgp-small",
+            engine="postgres",
+            engine_version="15.13",
+            allocated_storage=100,
+            volume_type_class="block",
+            provision_db_object_store=True,
+            create_backup_before_destroy=True,
+            create_backup_before_destroy_timeout=30)
+        pulumi.export("dbClusterId", example_dbaas_db_cluster.id)
+        pulumi.export("dbClusterName", example_dbaas_db_cluster.name)
+        pulumi.export("dbClusterEndpoint", example_dbaas_db_cluster.endpoint_ipv4)
+        pulumi.export("dbClusterPort", example_dbaas_db_cluster.port)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.int] allocated_storage: Amount of storage allocated to the cluster in GB
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the DB Cluster
         :param pulumi.Input[_builtins.bool] auto_minor_version_upgrade: Flag indicating if the cluster should automatically upgrade to the latest minor version
+        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
@@ -698,10 +987,15 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] engine_version: Version of the database engine
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] init_db: Map of init db parameters
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the DB Cluster
+        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        :param pulumi.Input[_builtins.int] maintenance_start_at: Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_identity: Identity of the backup to restore from
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the DB Cluster
         :param pulumi.Input[_builtins.str] volume_type_class: Storage type used to determine the size of the cluster storage
@@ -714,6 +1008,49 @@ class DbaasDbCluster(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an DB Cluster
+
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_thalassa as thalassa
+
+        # Create a VPC for the database cluster
+        example = thalassa.Vpc("example",
+            name="example-vpc",
+            description="Example VPC for database cluster",
+            region="nl-01",
+            cidrs=["10.0.0.0/16"])
+        # Create a subnet for the database cluster
+        example_subnet = thalassa.Subnet("example",
+            name="example-subnet",
+            description="Example subnet for database cluster",
+            vpc_id=example.id,
+            cidr="10.0.1.0/24")
+        # Create a security group for the DB cluster
+        example_security_group = thalassa.SecurityGroup("example",
+            name="example-db-security-group",
+            description="Example security group for DB cluster",
+            vpc_identity=example.id)
+        # Create a database cluster with Thalassa default values
+        example_dbaas_db_cluster = thalassa.DbaasDbCluster("example",
+            name="example-db-cluster",
+            description="Example database cluster for documentation",
+            subnet_id=example_subnet.id,
+            database_instance_type="db-pgp-small",
+            engine="postgres",
+            engine_version="15.13",
+            allocated_storage=100,
+            volume_type_class="block",
+            provision_db_object_store=True,
+            create_backup_before_destroy=True,
+            create_backup_before_destroy_timeout=30)
+        pulumi.export("dbClusterId", example_dbaas_db_cluster.id)
+        pulumi.export("dbClusterName", example_dbaas_db_cluster.name)
+        pulumi.export("dbClusterEndpoint", example_dbaas_db_cluster.endpoint_ipv4)
+        pulumi.export("dbClusterPort", example_dbaas_db_cluster.port)
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param DbaasDbClusterArgs args: The arguments to use to populate this resource's properties.
@@ -730,24 +1067,31 @@ class DbaasDbCluster(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allocated_storage: Optional[pulumi.Input[_builtins.int]] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 auto_minor_version_upgrade: Optional[pulumi.Input[_builtins.bool]] = None,
-                 database_instance_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine: Optional[pulumi.Input[_builtins.str]] = None,
-                 engine_version: Optional[pulumi.Input[_builtins.str]] = None,
-                 init_db: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 replicas: Optional[pulumi.Input[_builtins.int]] = None,
-                 restore_from_backup_identity: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 volume_type_class: Optional[pulumi.Input[_builtins.str]] = None,
+                 allocated_storage: pulumi.Input[Optional[_builtins.int]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+                 auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+                 create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+                 create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine: pulumi.Input[Optional[_builtins.str]] = None,
+                 engine_version: pulumi.Input[Optional[_builtins.str]] = None,
+                 init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+                 maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+                 replicas: pulumi.Input[Optional[_builtins.int]] = None,
+                 restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+                 security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_type_class: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -762,6 +1106,9 @@ class DbaasDbCluster(pulumi.CustomResource):
             __props__.__dict__["allocated_storage"] = allocated_storage
             __props__.__dict__["annotations"] = annotations
             __props__.__dict__["auto_minor_version_upgrade"] = auto_minor_version_upgrade
+            __props__.__dict__["auto_upgrade_policy"] = auto_upgrade_policy
+            __props__.__dict__["create_backup_before_destroy"] = create_backup_before_destroy
+            __props__.__dict__["create_backup_before_destroy_timeout"] = create_backup_before_destroy_timeout
             if database_instance_type is None and not opts.urn:
                 raise TypeError("Missing required property 'database_instance_type'")
             __props__.__dict__["database_instance_type"] = database_instance_type
@@ -775,11 +1122,15 @@ class DbaasDbCluster(pulumi.CustomResource):
             __props__.__dict__["engine_version"] = engine_version
             __props__.__dict__["init_db"] = init_db
             __props__.__dict__["labels"] = labels
+            __props__.__dict__["maintenance_day"] = maintenance_day
+            __props__.__dict__["maintenance_start_at"] = maintenance_start_at
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
             __props__.__dict__["parameters"] = parameters
+            __props__.__dict__["provision_db_object_store"] = provision_db_object_store
             __props__.__dict__["replicas"] = replicas
-            __props__.__dict__["restore_from_backup_identity"] = restore_from_backup_identity
+            __props__.__dict__["restore_from_backup_id"] = restore_from_backup_id
+            __props__.__dict__["restore_recovery_target"] = restore_recovery_target
             __props__.__dict__["security_groups"] = security_groups
             if subnet_id is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet_id'")
@@ -801,28 +1152,35 @@ class DbaasDbCluster(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            allocated_storage: Optional[pulumi.Input[_builtins.int]] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            auto_minor_version_upgrade: Optional[pulumi.Input[_builtins.bool]] = None,
-            database_instance_type: Optional[pulumi.Input[_builtins.str]] = None,
-            delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            endpoint_ipv4: Optional[pulumi.Input[_builtins.str]] = None,
-            endpoint_ipv6: Optional[pulumi.Input[_builtins.str]] = None,
-            engine: Optional[pulumi.Input[_builtins.str]] = None,
-            engine_version: Optional[pulumi.Input[_builtins.str]] = None,
-            init_db: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            port: Optional[pulumi.Input[_builtins.int]] = None,
-            replicas: Optional[pulumi.Input[_builtins.int]] = None,
-            restore_from_backup_identity: Optional[pulumi.Input[_builtins.str]] = None,
-            security_groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            status: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-            volume_type_class: Optional[pulumi.Input[_builtins.str]] = None) -> 'DbaasDbCluster':
+            allocated_storage: pulumi.Input[Optional[_builtins.int]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+            auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+            create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoint_ipv4: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoint_ipv6: pulumi.Input[Optional[_builtins.str]] = None,
+            engine: pulumi.Input[Optional[_builtins.str]] = None,
+            engine_version: pulumi.Input[Optional[_builtins.str]] = None,
+            init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+            maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            port: pulumi.Input[Optional[_builtins.int]] = None,
+            provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+            replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+            restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+            security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_type_class: pulumi.Input[Optional[_builtins.str]] = None) -> 'DbaasDbCluster':
         """
         Get an existing DbaasDbCluster resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -833,6 +1191,9 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.int] allocated_storage: Amount of storage allocated to the cluster in GB
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the DB Cluster
         :param pulumi.Input[_builtins.bool] auto_minor_version_upgrade: Flag indicating if the cluster should automatically upgrade to the latest minor version
+        :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
@@ -842,11 +1203,16 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] engine_version: Version of the database engine
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] init_db: Map of init db parameters
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the DB Cluster
+        :param pulumi.Input[_builtins.int] maintenance_day: Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        :param pulumi.Input[_builtins.int] maintenance_start_at: Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
         :param pulumi.Input[_builtins.int] port: Port of the cluster endpoint
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_identity: Identity of the backup to restore from
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] status: Status of the cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the DB Cluster
@@ -859,6 +1225,9 @@ class DbaasDbCluster(pulumi.CustomResource):
         __props__.__dict__["allocated_storage"] = allocated_storage
         __props__.__dict__["annotations"] = annotations
         __props__.__dict__["auto_minor_version_upgrade"] = auto_minor_version_upgrade
+        __props__.__dict__["auto_upgrade_policy"] = auto_upgrade_policy
+        __props__.__dict__["create_backup_before_destroy"] = create_backup_before_destroy
+        __props__.__dict__["create_backup_before_destroy_timeout"] = create_backup_before_destroy_timeout
         __props__.__dict__["database_instance_type"] = database_instance_type
         __props__.__dict__["delete_protection"] = delete_protection
         __props__.__dict__["description"] = description
@@ -868,12 +1237,16 @@ class DbaasDbCluster(pulumi.CustomResource):
         __props__.__dict__["engine_version"] = engine_version
         __props__.__dict__["init_db"] = init_db
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["maintenance_day"] = maintenance_day
+        __props__.__dict__["maintenance_start_at"] = maintenance_start_at
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["parameters"] = parameters
         __props__.__dict__["port"] = port
+        __props__.__dict__["provision_db_object_store"] = provision_db_object_store
         __props__.__dict__["replicas"] = replicas
-        __props__.__dict__["restore_from_backup_identity"] = restore_from_backup_identity
+        __props__.__dict__["restore_from_backup_id"] = restore_from_backup_id
+        __props__.__dict__["restore_recovery_target"] = restore_recovery_target
         __props__.__dict__["security_groups"] = security_groups
         __props__.__dict__["status"] = status
         __props__.__dict__["subnet_id"] = subnet_id
@@ -903,6 +1276,30 @@ class DbaasDbCluster(pulumi.CustomResource):
         Flag indicating if the cluster should automatically upgrade to the latest minor version
         """
         return pulumi.get(self, "auto_minor_version_upgrade")
+
+    @_builtins.property
+    @pulumi.getter(name="autoUpgradePolicy")
+    def auto_upgrade_policy(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
+        """
+        return pulumi.get(self, "auto_upgrade_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroy")
+    def create_backup_before_destroy(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
+        """
+        return pulumi.get(self, "create_backup_before_destroy")
+
+    @_builtins.property
+    @pulumi.getter(name="createBackupBeforeDestroyTimeout")
+    def create_backup_before_destroy_timeout(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        """
+        return pulumi.get(self, "create_backup_before_destroy_timeout")
 
     @_builtins.property
     @pulumi.getter(name="databaseInstanceType")
@@ -977,6 +1374,22 @@ class DbaasDbCluster(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="maintenanceDay")
+    def maintenance_day(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        Day of the week for the maintenance window. 0 is Sunday, 6 is Saturday
+        """
+        return pulumi.get(self, "maintenance_day")
+
+    @_builtins.property
+    @pulumi.getter(name="maintenanceStartAt")
+    def maintenance_start_at(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        Start time of the maintenance window on the maintenance day in UTC. 0 is 00:00, 23 is 23:00
+        """
+        return pulumi.get(self, "maintenance_start_at")
+
+    @_builtins.property
     @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
@@ -987,6 +1400,9 @@ class DbaasDbCluster(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -1006,6 +1422,14 @@ class DbaasDbCluster(pulumi.CustomResource):
         return pulumi.get(self, "port")
 
     @_builtins.property
+    @pulumi.getter(name="provisionDbObjectStore")
+    def provision_db_object_store(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        """
+        return pulumi.get(self, "provision_db_object_store")
+
+    @_builtins.property
     @pulumi.getter
     def replicas(self) -> pulumi.Output[Optional[_builtins.int]]:
         """
@@ -1014,12 +1438,20 @@ class DbaasDbCluster(pulumi.CustomResource):
         return pulumi.get(self, "replicas")
 
     @_builtins.property
-    @pulumi.getter(name="restoreFromBackupIdentity")
-    def restore_from_backup_identity(self) -> pulumi.Output[Optional[_builtins.str]]:
+    @pulumi.getter(name="restoreFromBackupId")
+    def restore_from_backup_id(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Identity of the backup to restore from
+        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
         """
-        return pulumi.get(self, "restore_from_backup_identity")
+        return pulumi.get(self, "restore_from_backup_id")
+
+    @_builtins.property
+    @pulumi.getter(name="restoreRecoveryTarget")
+    def restore_recovery_target(self) -> pulumi.Output[Optional['outputs.DbaasDbClusterRestoreRecoveryTarget']]:
+        """
+        Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        """
+        return pulumi.get(self, "restore_recovery_target")
 
     @_builtins.property
     @pulumi.getter(name="securityGroups")

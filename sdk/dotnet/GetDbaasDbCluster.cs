@@ -39,6 +39,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -62,6 +65,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -137,6 +143,9 @@ namespace Pulumi.Thalassa
         /// Name of the DB Cluster
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         /// <summary>
         /// Map of parameter name to database engine specific parameter value

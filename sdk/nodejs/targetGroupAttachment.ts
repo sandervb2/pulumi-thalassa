@@ -11,7 +11,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the resources
  * const example = new thalassa.Vpc("example", {
@@ -81,6 +81,9 @@ export class TargetGroupAttachment extends pulumi.CustomResource {
         return obj['__pulumiType'] === TargetGroupAttachment.__pulumiType;
     }
 
+    /**
+     * Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The ID of the target group to attach to
@@ -128,22 +131,28 @@ export class TargetGroupAttachment extends pulumi.CustomResource {
  * Input properties used for looking up and filtering TargetGroupAttachment resources.
  */
 export interface TargetGroupAttachmentState {
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the target group to attach to
      */
-    targetGroupId?: pulumi.Input<string>;
+    targetGroupId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the Virtual Machine Instance to attach
      */
-    vmiId?: pulumi.Input<string>;
+    vmiId?: pulumi.Input<string | undefined>;
 }
 
 /**
  * The set of arguments for constructing a TargetGroupAttachment resource.
  */
 export interface TargetGroupAttachmentArgs {
-    organisationId?: pulumi.Input<string>;
+    /**
+     * Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The ID of the target group to attach to
      */

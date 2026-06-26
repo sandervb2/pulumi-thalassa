@@ -27,7 +27,8 @@ type LookupVpcArgs struct {
 	// A human readable description about the vpc
 	Description *string `pulumi:"description"`
 	// Name of the Vpc
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region *string `pulumi:"region"`
@@ -48,7 +49,8 @@ type LookupVpcResult struct {
 	// Labels for the Vpc
 	Labels map[string]string `pulumi:"labels"`
 	// Name of the Vpc
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region *string `pulumi:"region"`
@@ -72,7 +74,8 @@ type LookupVpcOutputArgs struct {
 	// A human readable description about the vpc
 	Description pulumi.StringPtrInput `pulumi:"description"`
 	// Name of the Vpc
-	Name           pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Region of the Vpc. Provide the identity of the region. Can only be set on creation.
 	Region pulumi.StringPtrInput `pulumi:"region"`
@@ -129,6 +132,7 @@ func (o LookupVpcResultOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupVpcResult) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
+// Reference to the Organisation of the Vpc. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupVpcResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupVpcResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

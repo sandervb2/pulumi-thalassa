@@ -21,16 +21,18 @@ class LoadbalancerArgs:
     def __init__(__self__, *,
                  region: pulumi.Input[_builtins.str],
                  subnet_id: pulumi.Input[_builtins.str],
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 internal: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 internal: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Loadbalancer resource.
+
         :param pulumi.Input[_builtins.str] region: Region of the Loadbalancer
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Loadbalancer
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Loadbalancer
@@ -39,6 +41,8 @@ class LoadbalancerArgs:
         :param pulumi.Input[_builtins.bool] internal: Internal loadbalancer
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Loadbalancer
         :param pulumi.Input[_builtins.str] name: Name of the Loadbalancer
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this load balancer. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Loadbalancer
         """
         pulumi.set(__self__, "region", region)
@@ -57,6 +61,8 @@ class LoadbalancerArgs:
             pulumi.set(__self__, "name", name)
         if organisation_id is not None:
             pulumi.set(__self__, "organisation_id", organisation_id)
+        if reserved_ip_id is not None:
+            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
         if security_group_attachments is not None:
             pulumi.set(__self__, "security_group_attachments", security_group_attachments)
 
@@ -86,117 +92,134 @@ class LoadbalancerArgs:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Loadbalancer
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection for the Loadbalancer
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the loadbalancer
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def internal(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def internal(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Internal loadbalancer
         """
         return pulumi.get(self, "internal")
 
     @internal.setter
-    def internal(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def internal(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "internal", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Loadbalancer
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Loadbalancer
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
+
+    @reserved_ip_id.setter
+    def reserved_ip_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "reserved_ip_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the Loadbalancer
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
 
 @pulumi.input_type
 class _LoadbalancerState:
     def __init__(__self__, *,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 external_ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 internal: Optional[pulumi.Input[_builtins.bool]] = None,
-                 ip_address: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 slug: Optional[pulumi.Input[_builtins.str]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 external_ip_addresses: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 internal: pulumi.Input[Optional[_builtins.bool]] = None,
+                 ip_address: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 slug: pulumi.Input[Optional[_builtins.str]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 vpc_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Loadbalancer resources.
+
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Loadbalancer
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection for the Loadbalancer
         :param pulumi.Input[_builtins.str] description: A human readable description about the loadbalancer
@@ -205,7 +228,9 @@ class _LoadbalancerState:
         :param pulumi.Input[_builtins.str] ip_address: The IP address of the loadbalancer
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Loadbalancer
         :param pulumi.Input[_builtins.str] name: Name of the Loadbalancer
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Loadbalancer
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this load balancer. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Loadbalancer
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Loadbalancer
         :param pulumi.Input[_builtins.str] vpc_id: VPC of the Loadbalancer
@@ -230,6 +255,8 @@ class _LoadbalancerState:
             pulumi.set(__self__, "organisation_id", organisation_id)
         if region is not None:
             pulumi.set(__self__, "region", region)
+        if reserved_ip_id is not None:
+            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
         if security_group_attachments is not None:
             pulumi.set(__self__, "security_group_attachments", security_group_attachments)
         if slug is not None:
@@ -241,164 +268,179 @@ class _LoadbalancerState:
 
     @_builtins.property
     @pulumi.getter
-    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Annotations for the Loadbalancer
         """
         return pulumi.get(self, "annotations")
 
     @annotations.setter
-    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def annotations(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "annotations", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
-    def delete_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Delete protection for the Loadbalancer
         """
         return pulumi.get(self, "delete_protection")
 
     @delete_protection.setter
-    def delete_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def delete_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "delete_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         A human readable description about the loadbalancer
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="externalIpAddresses")
-    def external_ip_addresses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def external_ip_addresses(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         The external IP addresses of the loadbalancer
         """
         return pulumi.get(self, "external_ip_addresses")
 
     @external_ip_addresses.setter
-    def external_ip_addresses(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def external_ip_addresses(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "external_ip_addresses", value)
 
     @_builtins.property
     @pulumi.getter
-    def internal(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def internal(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Internal loadbalancer
         """
         return pulumi.get(self, "internal")
 
     @internal.setter
-    def internal(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def internal(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "internal", value)
 
     @_builtins.property
     @pulumi.getter(name="ipAddress")
-    def ip_address(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def ip_address(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         The IP address of the loadbalancer
         """
         return pulumi.get(self, "ip_address")
 
     @ip_address.setter
-    def ip_address(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def ip_address(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "ip_address", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels for the Loadbalancer
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Name of the Loadbalancer
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
-    def organisation_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def organisation_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @organisation_id.setter
-    def organisation_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def organisation_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "organisation_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Region of the Loadbalancer
         """
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
+
+    @reserved_ip_id.setter
+    def reserved_ip_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "reserved_ip_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")
-    def security_group_attachments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+    def security_group_attachments(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
         """
         List identities of security group that will be attached to the Loadbalancer
         """
         return pulumi.get(self, "security_group_attachments")
 
     @security_group_attachments.setter
-    def security_group_attachments(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+    def security_group_attachments(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "security_group_attachments", value)
 
     @_builtins.property
     @pulumi.getter
-    def slug(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def slug(self) -> pulumi.Input[Optional[_builtins.str]]:
         return pulumi.get(self, "slug")
 
     @slug.setter
-    def slug(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def slug(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "slug", value)
 
     @_builtins.property
     @pulumi.getter(name="subnetId")
-    def subnet_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subnet_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Subnet of the Loadbalancer
         """
         return pulumi.get(self, "subnet_id")
 
     @subnet_id.setter
-    def subnet_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subnet_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subnet_id", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
-    def vpc_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def vpc_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         VPC of the Loadbalancer
         """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
-    def vpc_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def vpc_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "vpc_id", value)
 
 
@@ -408,16 +450,17 @@ class Loadbalancer(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 internal: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 internal: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an loadbalancer within a VPC
@@ -459,6 +502,7 @@ class Loadbalancer(pulumi.CustomResource):
         pulumi.export("loadbalancerId", example_loadbalancer.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Loadbalancer
@@ -467,7 +511,9 @@ class Loadbalancer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] internal: Internal loadbalancer
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Loadbalancer
         :param pulumi.Input[_builtins.str] name: Name of the Loadbalancer
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Loadbalancer
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this load balancer. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Loadbalancer
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Loadbalancer
         """
@@ -517,6 +563,7 @@ class Loadbalancer(pulumi.CustomResource):
         pulumi.export("loadbalancerId", example_loadbalancer.id)
         ```
 
+
         :param str resource_name: The name of the resource.
         :param LoadbalancerArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -532,16 +579,17 @@ class Loadbalancer(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 internal: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 internal: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -561,6 +609,7 @@ class Loadbalancer(pulumi.CustomResource):
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
+            __props__.__dict__["reserved_ip_id"] = reserved_ip_id
             __props__.__dict__["security_group_attachments"] = security_group_attachments
             if subnet_id is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet_id'")
@@ -579,20 +628,21 @@ class Loadbalancer(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            delete_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            external_ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            internal: Optional[pulumi.Input[_builtins.bool]] = None,
-            ip_address: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            organisation_id: Optional[pulumi.Input[_builtins.str]] = None,
-            region: Optional[pulumi.Input[_builtins.str]] = None,
-            security_group_attachments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-            slug: Optional[pulumi.Input[_builtins.str]] = None,
-            subnet_id: Optional[pulumi.Input[_builtins.str]] = None,
-            vpc_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'Loadbalancer':
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            external_ip_addresses: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            internal: pulumi.Input[Optional[_builtins.bool]] = None,
+            ip_address: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            reserved_ip_id: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'Loadbalancer':
         """
         Get an existing Loadbalancer resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -608,7 +658,9 @@ class Loadbalancer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] ip_address: The IP address of the loadbalancer
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Loadbalancer
         :param pulumi.Input[_builtins.str] name: Name of the Loadbalancer
+        :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the Loadbalancer
+        :param pulumi.Input[_builtins.str] reserved_ip_id: Reserved IP ID to attach to this load balancer. Set to empty string to detach.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the Loadbalancer
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the Loadbalancer
         :param pulumi.Input[_builtins.str] vpc_id: VPC of the Loadbalancer
@@ -627,6 +679,7 @@ class Loadbalancer(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["organisation_id"] = organisation_id
         __props__.__dict__["region"] = region
+        __props__.__dict__["reserved_ip_id"] = reserved_ip_id
         __props__.__dict__["security_group_attachments"] = security_group_attachments
         __props__.__dict__["slug"] = slug
         __props__.__dict__["subnet_id"] = subnet_id
@@ -700,6 +753,9 @@ class Loadbalancer(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Reference to the Organisation of the Loadbalancer. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -709,6 +765,14 @@ class Loadbalancer(pulumi.CustomResource):
         Region of the Loadbalancer
         """
         return pulumi.get(self, "region")
+
+    @_builtins.property
+    @pulumi.getter(name="reservedIpId")
+    def reserved_ip_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        Reserved IP ID to attach to this load balancer. Set to empty string to detach.
+        """
+        return pulumi.get(self, "reserved_ip_id")
 
     @_builtins.property
     @pulumi.getter(name="securityGroupAttachments")

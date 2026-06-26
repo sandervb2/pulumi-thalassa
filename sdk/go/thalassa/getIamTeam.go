@@ -27,7 +27,8 @@ type LookupIamTeamArgs struct {
 	// A human readable description about the team
 	Description *string `pulumi:"description"`
 	// Name of the Team
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the Team
 	Slug *string `pulumi:"slug"`
@@ -45,8 +46,11 @@ type LookupIamTeamResult struct {
 	Id string `pulumi:"id"`
 	// Labels for the Team
 	Labels map[string]string `pulumi:"labels"`
+	// List of team members
+	Members []GetIamTeamMember `pulumi:"members"`
 	// Name of the Team
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// Slug of the Team
 	Slug *string `pulumi:"slug"`
@@ -68,7 +72,8 @@ type LookupIamTeamOutputArgs struct {
 	// A human readable description about the team
 	Description pulumi.StringPtrInput `pulumi:"description"`
 	// Name of the Team
-	Name           pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput `pulumi:"organisationId"`
 	// Slug of the Team
 	Slug pulumi.StringPtrInput `pulumi:"slug"`
@@ -118,11 +123,17 @@ func (o LookupIamTeamResultOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v LookupIamTeamResult) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
 }
 
+// List of team members
+func (o LookupIamTeamResultOutput) Members() GetIamTeamMemberArrayOutput {
+	return o.ApplyT(func(v LookupIamTeamResult) []GetIamTeamMember { return v.Members }).(GetIamTeamMemberArrayOutput)
+}
+
 // Name of the Team
 func (o LookupIamTeamResultOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupIamTeamResult) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
+// Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
 func (o LookupIamTeamResultOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupIamTeamResult) *string { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

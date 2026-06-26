@@ -13,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a VPC for the target group
  * const example = new thalassa.Vpc("example", {
@@ -86,27 +86,31 @@ export class TargetGroup extends pulumi.CustomResource {
      */
     declare public readonly description: pulumi.Output<string | undefined>;
     /**
-     * The approximate amount of time, in seconds, between health checks of an individual target
+     * When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
+     */
+    declare public readonly enableProxyProtocol: pulumi.Output<boolean | undefined>;
+    /**
+     * Seconds between health checks of each target (periodSeconds).
      */
     declare public readonly healthCheckInterval: pulumi.Output<number | undefined>;
     /**
-     * The path to use for health checks (only for HTTP/HTTPS)
+     * HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
      */
     declare public readonly healthCheckPath: pulumi.Output<string | undefined>;
     /**
-     * The port to use for health checks
+     * Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
      */
     declare public readonly healthCheckPort: pulumi.Output<number | undefined>;
     /**
-     * The protocol to use for health checks. Must be one of: tcp, http.
+     * Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
      */
     declare public readonly healthCheckProtocol: pulumi.Output<string | undefined>;
     /**
-     * The amount of time, in seconds, during which no response means a failed health check
+     * Seconds to wait for a health check response before failure (timeoutSeconds).
      */
     declare public readonly healthCheckTimeout: pulumi.Output<number | undefined>;
     /**
-     * The number of consecutive health checks successes required before considering an unhealthy target healthy
+     * Consecutive successes required to mark a target healthy.
      */
     declare public readonly healthyThreshold: pulumi.Output<number | undefined>;
     /**
@@ -114,21 +118,32 @@ export class TargetGroup extends pulumi.CustomResource {
      */
     declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
+     * Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+     */
+    declare public readonly loadbalancingPolicy: pulumi.Output<string | undefined>;
+    /**
      * Name of the Target Group
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The port on which the targets receive traffic
      */
     declare public readonly port: pulumi.Output<number>;
     /**
-     * The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+     * Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
      */
     declare public readonly protocol: pulumi.Output<string>;
     declare public /*out*/ readonly slug: pulumi.Output<string>;
     /**
-     * The number of consecutive health check failures required before considering a target unhealthy
+     * Label selector for automatic target membership; when set, targets matching these labels join the group.
+     */
+    declare public readonly targetSelector: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Consecutive failures required to mark a target unhealthy.
      */
     declare public readonly unhealthyThreshold: pulumi.Output<number | undefined>;
     /**
@@ -152,6 +167,7 @@ export class TargetGroup extends pulumi.CustomResource {
             resourceInputs["annotations"] = state?.annotations;
             resourceInputs["attachments"] = state?.attachments;
             resourceInputs["description"] = state?.description;
+            resourceInputs["enableProxyProtocol"] = state?.enableProxyProtocol;
             resourceInputs["healthCheckInterval"] = state?.healthCheckInterval;
             resourceInputs["healthCheckPath"] = state?.healthCheckPath;
             resourceInputs["healthCheckPort"] = state?.healthCheckPort;
@@ -159,11 +175,13 @@ export class TargetGroup extends pulumi.CustomResource {
             resourceInputs["healthCheckTimeout"] = state?.healthCheckTimeout;
             resourceInputs["healthyThreshold"] = state?.healthyThreshold;
             resourceInputs["labels"] = state?.labels;
+            resourceInputs["loadbalancingPolicy"] = state?.loadbalancingPolicy;
             resourceInputs["name"] = state?.name;
             resourceInputs["organisationId"] = state?.organisationId;
             resourceInputs["port"] = state?.port;
             resourceInputs["protocol"] = state?.protocol;
             resourceInputs["slug"] = state?.slug;
+            resourceInputs["targetSelector"] = state?.targetSelector;
             resourceInputs["unhealthyThreshold"] = state?.unhealthyThreshold;
             resourceInputs["vpcId"] = state?.vpcId;
         } else {
@@ -180,6 +198,7 @@ export class TargetGroup extends pulumi.CustomResource {
             resourceInputs["annotations"] = args?.annotations;
             resourceInputs["attachments"] = args?.attachments;
             resourceInputs["description"] = args?.description;
+            resourceInputs["enableProxyProtocol"] = args?.enableProxyProtocol;
             resourceInputs["healthCheckInterval"] = args?.healthCheckInterval;
             resourceInputs["healthCheckPath"] = args?.healthCheckPath;
             resourceInputs["healthCheckPort"] = args?.healthCheckPort;
@@ -187,10 +206,12 @@ export class TargetGroup extends pulumi.CustomResource {
             resourceInputs["healthCheckTimeout"] = args?.healthCheckTimeout;
             resourceInputs["healthyThreshold"] = args?.healthyThreshold;
             resourceInputs["labels"] = args?.labels;
+            resourceInputs["loadbalancingPolicy"] = args?.loadbalancingPolicy;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
             resourceInputs["port"] = args?.port;
             resourceInputs["protocol"] = args?.protocol;
+            resourceInputs["targetSelector"] = args?.targetSelector;
             resourceInputs["unhealthyThreshold"] = args?.unhealthyThreshold;
             resourceInputs["vpcId"] = args?.vpcId;
             resourceInputs["slug"] = undefined /*out*/;
@@ -207,65 +228,80 @@ export interface TargetGroupState {
     /**
      * Annotations for the Target Group
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
      */
-    attachments?: pulumi.Input<pulumi.Input<inputs.TargetGroupAttachment>[]>;
+    attachments?: pulumi.Input<pulumi.Input<inputs.TargetGroupAttachment>[] | undefined>;
     /**
      * A human readable description about the target group
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
-     * The approximate amount of time, in seconds, between health checks of an individual target
+     * When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
      */
-    healthCheckInterval?: pulumi.Input<number>;
+    enableProxyProtocol?: pulumi.Input<boolean | undefined>;
     /**
-     * The path to use for health checks (only for HTTP/HTTPS)
+     * Seconds between health checks of each target (periodSeconds).
      */
-    healthCheckPath?: pulumi.Input<string>;
+    healthCheckInterval?: pulumi.Input<number | undefined>;
     /**
-     * The port to use for health checks
+     * HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
      */
-    healthCheckPort?: pulumi.Input<number>;
+    healthCheckPath?: pulumi.Input<string | undefined>;
     /**
-     * The protocol to use for health checks. Must be one of: tcp, http.
+     * Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
      */
-    healthCheckProtocol?: pulumi.Input<string>;
+    healthCheckPort?: pulumi.Input<number | undefined>;
     /**
-     * The amount of time, in seconds, during which no response means a failed health check
+     * Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
      */
-    healthCheckTimeout?: pulumi.Input<number>;
+    healthCheckProtocol?: pulumi.Input<string | undefined>;
     /**
-     * The number of consecutive health checks successes required before considering an unhealthy target healthy
+     * Seconds to wait for a health check response before failure (timeoutSeconds).
      */
-    healthyThreshold?: pulumi.Input<number>;
+    healthCheckTimeout?: pulumi.Input<number | undefined>;
+    /**
+     * Consecutive successes required to mark a target healthy.
+     */
+    healthyThreshold?: pulumi.Input<number | undefined>;
     /**
      * Labels for the Target Group
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+     */
+    loadbalancingPolicy?: pulumi.Input<string | undefined>;
     /**
      * Name of the Target Group
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The port on which the targets receive traffic
      */
-    port?: pulumi.Input<number>;
+    port?: pulumi.Input<number | undefined>;
     /**
-     * The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+     * Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
      */
-    protocol?: pulumi.Input<string>;
-    slug?: pulumi.Input<string>;
+    protocol?: pulumi.Input<string | undefined>;
+    slug?: pulumi.Input<string | undefined>;
     /**
-     * The number of consecutive health check failures required before considering a target unhealthy
+     * Label selector for automatic target membership; when set, targets matching these labels join the group.
      */
-    unhealthyThreshold?: pulumi.Input<number>;
+    targetSelector?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * Consecutive failures required to mark a target unhealthy.
+     */
+    unhealthyThreshold?: pulumi.Input<number | undefined>;
     /**
      * The VPC this target group belongs to
      */
-    vpcId?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -275,60 +311,75 @@ export interface TargetGroupArgs {
     /**
      * Annotations for the Target Group
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
      */
-    attachments?: pulumi.Input<pulumi.Input<inputs.TargetGroupAttachment>[]>;
+    attachments?: pulumi.Input<pulumi.Input<inputs.TargetGroupAttachment>[] | undefined>;
     /**
      * A human readable description about the target group
      */
-    description?: pulumi.Input<string>;
+    description?: pulumi.Input<string | undefined>;
     /**
-     * The approximate amount of time, in seconds, between health checks of an individual target
+     * When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
      */
-    healthCheckInterval?: pulumi.Input<number>;
+    enableProxyProtocol?: pulumi.Input<boolean | undefined>;
     /**
-     * The path to use for health checks (only for HTTP/HTTPS)
+     * Seconds between health checks of each target (periodSeconds).
      */
-    healthCheckPath?: pulumi.Input<string>;
+    healthCheckInterval?: pulumi.Input<number | undefined>;
     /**
-     * The port to use for health checks
+     * HTTP(S) health check path; leave empty for TCP/UDP checks or when not using HTTP health checks.
      */
-    healthCheckPort?: pulumi.Input<number>;
+    healthCheckPath?: pulumi.Input<string | undefined>;
     /**
-     * The protocol to use for health checks. Must be one of: tcp, http.
+     * Port for health checks; if omitted but other health check settings are set, defaults to the target group port.
      */
-    healthCheckProtocol?: pulumi.Input<string>;
+    healthCheckPort?: pulumi.Input<number | undefined>;
     /**
-     * The amount of time, in seconds, during which no response means a failed health check
+     * Health check protocol (tcp, udp, http, https). If omitted when configuring a health check, defaults to tcp.
      */
-    healthCheckTimeout?: pulumi.Input<number>;
+    healthCheckProtocol?: pulumi.Input<string | undefined>;
     /**
-     * The number of consecutive health checks successes required before considering an unhealthy target healthy
+     * Seconds to wait for a health check response before failure (timeoutSeconds).
      */
-    healthyThreshold?: pulumi.Input<number>;
+    healthCheckTimeout?: pulumi.Input<number | undefined>;
+    /**
+     * Consecutive successes required to mark a target healthy.
+     */
+    healthyThreshold?: pulumi.Input<number | undefined>;
     /**
      * Labels for the Target Group
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * Load balancing algorithm: ROUND_ROBIN (default), RANDOM, or MAGLEV.
+     */
+    loadbalancingPolicy?: pulumi.Input<string | undefined>;
     /**
      * Name of the Target Group
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Target Group. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The port on which the targets receive traffic
      */
     port: pulumi.Input<number>;
     /**
-     * The protocol to use for routing traffic to the targets. Must be one of: tcp, udp.
+     * Protocol for routing traffic to targets (tcp, udp, http, https, grpc, quic).
      */
     protocol: pulumi.Input<string>;
     /**
-     * The number of consecutive health check failures required before considering a target unhealthy
+     * Label selector for automatic target membership; when set, targets matching these labels join the group.
      */
-    unhealthyThreshold?: pulumi.Input<number>;
+    targetSelector?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
+    /**
+     * Consecutive failures required to mark a target unhealthy.
+     */
+    unhealthyThreshold?: pulumi.Input<number | undefined>;
     /**
      * The VPC this target group belongs to
      */

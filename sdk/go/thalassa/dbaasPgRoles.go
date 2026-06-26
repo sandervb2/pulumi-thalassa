@@ -94,7 +94,8 @@ type DbaasPgRoles struct {
 	// Whether the role can login
 	Login pulumi.BoolPtrOutput `pulumi:"login"`
 	// The name of the role
-	Name           pulumi.StringOutput    `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// The password of the role
 	Password pulumi.StringOutput `pulumi:"password"`
@@ -154,7 +155,8 @@ type dbaasPgRolesState struct {
 	// Whether the role can login
 	Login *bool `pulumi:"login"`
 	// The name of the role
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The password of the role
 	Password *string `pulumi:"password"`
@@ -172,7 +174,8 @@ type DbaasPgRolesState struct {
 	// Whether the role can login
 	Login pulumi.BoolPtrInput
 	// The name of the role
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The password of the role
 	Password pulumi.StringPtrInput
@@ -194,7 +197,8 @@ type dbaasPgRolesArgs struct {
 	// Whether the role can login
 	Login *bool `pulumi:"login"`
 	// The name of the role
-	Name           *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
 	// The password of the role
 	Password string `pulumi:"password"`
@@ -213,7 +217,8 @@ type DbaasPgRolesArgs struct {
 	// Whether the role can login
 	Login pulumi.BoolPtrInput
 	// The name of the role
-	Name           pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
 	// The password of the role
 	Password pulumi.StringInput
@@ -336,6 +341,7 @@ func (o DbaasPgRolesOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasPgRoles) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
 func (o DbaasPgRolesOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasPgRoles) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }

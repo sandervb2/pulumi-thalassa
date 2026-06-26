@@ -52,39 +52,57 @@ class GetMachineTypeResult:
     @_builtins.property
     @pulumi.getter(name="cpuCores")
     def cpu_cores(self) -> _builtins.int:
+        """
+        The number of CPU cores available in this machine type
+        """
         return pulumi.get(self, "cpu_cores")
 
     @_builtins.property
     @pulumi.getter
     def description(self) -> _builtins.str:
+        """
+        A description of the machine type and its specifications
+        """
         return pulumi.get(self, "description")
 
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
         """
-        The ID of this resource.
+        The unique identifier of the machine type
         """
         return pulumi.get(self, "id")
 
     @_builtins.property
     @pulumi.getter
     def name(self) -> _builtins.str:
+        """
+        The name of the machine type
+        """
         return pulumi.get(self, "name")
 
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
     @pulumi.getter(name="ramMb")
     def ram_mb(self) -> _builtins.int:
+        """
+        The amount of RAM in megabytes available in this machine type
+        """
         return pulumi.get(self, "ram_mb")
 
     @_builtins.property
     @pulumi.getter
     def slug(self) -> Optional[_builtins.str]:
+        """
+        The slug of the machine type to look up
+        """
         return pulumi.get(self, "slug")
 
 
@@ -108,6 +126,10 @@ def get_machine_type(organisation_id: Optional[_builtins.str] = None,
                      opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMachineTypeResult:
     """
     Get an machine type
+
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+    :param _builtins.str slug: The slug of the machine type to look up
     """
     __args__ = dict()
     __args__['organisationId'] = organisation_id
@@ -123,11 +145,15 @@ def get_machine_type(organisation_id: Optional[_builtins.str] = None,
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         ram_mb=pulumi.get(__ret__, 'ram_mb'),
         slug=pulumi.get(__ret__, 'slug'))
-def get_machine_type_output(organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                            slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_machine_type_output(organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                            slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                             opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMachineTypeResult]:
     """
     Get an machine type
+
+
+    :param _builtins.str organisation_id: Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+    :param _builtins.str slug: The slug of the machine type to look up
     """
     __args__ = dict()
     __args__['organisationId'] = organisation_id

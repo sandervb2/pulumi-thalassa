@@ -7,15 +7,118 @@ import (
 	"context"
 	"reflect"
 
-	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
 // Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+//
+// ## Cluster Types
+//
+// ### Managed Clusters (Default)
+// - **Requires**: `subnetId` - Must specify a subnet for node deployment
+// - **Use case**: Production workloads requiring full control
+// - **Features**: Complete control over node pools and configuration
+//
+// ### Hosted Control Plane Clusters
+// - **Requires**: `region` - Must specify a region for deployment
+// - **Use case**: Development and testing environments
+// - **Features**: Thalassa manages the control plane components
+//
+// ## Important Notes
+//
+// - **`clusterVersion` is optional** - If not specified, the latest stable version is used
+// - **`networkingCni` defaults to "cilium"**
+// - **Network CIDRs cannot be changed** after creation (ForceNew)
+// - **Cluster type cannot be changed** after creation (ForceNew)
+//
+// ## Security Configuration
+//
+// - **Pod Security Standards**: `restricted` (most secure), `baseline` (default), `privileged`
+// - **Network Policies**: `deny-all` (default), `allow-all`, or custom policies
+// - **API Server ACLs**: Restrict API server access to specific CIDR blocks
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			// Region for the Kubernetes cluster
+//			region := "nl-01"
+//			if param := cfg.Get("region"); param != "" {
+//				region = param
+//			}
+//			example, err := thalassa.NewVpc(ctx, "example", &thalassa.VpcArgs{
+//				Name:        pulumi.String("example-vpc"),
+//				Description: pulumi.String("Example VPC for Kubernetes cluster"),
+//				Region:      pulumi.String(region),
+//				Cidrs: pulumi.StringArray{
+//					pulumi.String("10.0.0.0/16"),
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a subnet for the Kubernetes cluster
+//			exampleSubnet, err := thalassa.NewSubnet(ctx, "example", &thalassa.SubnetArgs{
+//				Name:        pulumi.String("example-subnet"),
+//				Description: pulumi.String("Example subnet for Kubernetes cluster"),
+//				VpcId:       example.ID(),
+//				Cidr:        pulumi.String("10.0.1.0/24"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a Kubernetes cluster
+//			exampleKubernetesCluster, err := thalassa.NewKubernetesCluster(ctx, "example", &thalassa.KubernetesClusterArgs{
+//				Name:        pulumi.String("example-kubernetes-cluster"),
+//				Description: pulumi.String("Example Kubernetes cluster"),
+//				Region:      pulumi.String(region),
+//				SubnetId:    exampleSubnet.ID(),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			// Create a Kubernetes node pool with Thalassa default values
+//			exampleKubernetesNodePool, err := thalassa.NewKubernetesNodePool(ctx, "example", &thalassa.KubernetesNodePoolArgs{
+//				Name:              pulumi.String("example-node-pool"),
+//				ClusterId:         exampleKubernetesCluster.ID(),
+//				SubnetId:          exampleSubnet.ID(),
+//				AvailabilityZone:  pulumi.Sprintf("%va", region),
+//				MachineType:       pulumi.String("pgp-small"),
+//				EnableAutoscaling: pulumi.Bool(true),
+//				MinReplicas:       pulumi.Int(1),
+//				MaxReplicas:       pulumi.Int(2),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("kubernetesClusterId", exampleKubernetesCluster.ID())
+//			ctx.Export("kubernetesClusterName", exampleKubernetesCluster.Name)
+//			ctx.Export("advertiseAddress", exampleKubernetesCluster.InternalEndpoint)
+//			ctx.Export("nodePoolId", exampleKubernetesNodePool.ID())
+//			ctx.Export("nodePoolName", exampleKubernetesNodePool.Name)
+//			return nil
+//		})
+//	}
+//
+// ```
 type KubernetesCluster struct {
 	pulumi.CustomResourceState
 
+	// Advertise port for the Kubernetes Cluster within the VPC
+	AdvertisePort pulumi.IntOutput `pulumi:"advertisePort"`
 	// Annotations for the Kubernetes Cluster
 	Annotations pulumi.StringMapOutput `pulumi:"annotations"`
 	// API server ACLs for the Kubernetes Cluster
@@ -24,16 +127,24 @@ type KubernetesCluster struct {
 	AuditLogProfile pulumi.StringPtrOutput `pulumi:"auditLogProfile"`
 	// Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
 	AutoUpgradePolicy pulumi.StringPtrOutput `pulumi:"autoUpgradePolicy"`
+	// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+	AutoscalerConfig KubernetesClusterAutoscalerConfigOutput `pulumi:"autoscalerConfig"`
 	// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 	ClusterType pulumi.StringPtrOutput `pulumi:"clusterType"`
-	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-	ClusterVersion pulumi.StringOutput `pulumi:"clusterVersion"`
+	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+	ClusterVersion pulumi.StringPtrOutput `pulumi:"clusterVersion"`
 	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
 	DefaultNetworkPolicy pulumi.StringPtrOutput `pulumi:"defaultNetworkPolicy"`
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection pulumi.BoolPtrOutput `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	DisablePublicEndpoint pulumi.BoolPtrOutput `pulumi:"disablePublicEndpoint"`
+	// VPC-internal endpoint for the Kubernetes Cluster
+	InternalEndpoint pulumi.StringOutput `pulumi:"internalEndpoint"`
+	// Konnectivity port for the Kubernetes Cluster within the VPC
+	KonnectivityPort pulumi.IntOutput `pulumi:"konnectivityPort"`
 	// Kubernetes API server CA certificate of the Kubernetes Cluster
 	KubernetesApiServerCaCertificate pulumi.StringOutput `pulumi:"kubernetesApiServerCaCertificate"`
 	// Kubernetes API server endpoint of the Kubernetes Cluster
@@ -46,13 +157,18 @@ type KubernetesCluster struct {
 	MaintenanceStartAt pulumi.IntPtrOutput `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringOutput `pulumi:"name"`
-	// CNI of the Kubernetes Cluster
-	NetworkingCni pulumi.StringOutput `pulumi:"networkingCni"`
-	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	NetworkingCni pulumi.StringPtrOutput `pulumi:"networkingCni"`
+	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+	NetworkingKubeProxyDeployment pulumi.StringPtrOutput `pulumi:"networkingKubeProxyDeployment"`
+	// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+	NetworkingKubeProxyMode pulumi.StringPtrOutput `pulumi:"networkingKubeProxyMode"`
+	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingPodCidr pulumi.StringPtrOutput `pulumi:"networkingPodCidr"`
-	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingServiceCidr pulumi.StringPtrOutput `pulumi:"networkingServiceCidr"`
-	OrganisationId        pulumi.StringOutput    `pulumi:"organisationId"`
+	// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
 	// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
 	PodSecurityStandardsProfile pulumi.StringPtrOutput `pulumi:"podSecurityStandardsProfile"`
 	// Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
@@ -72,18 +188,9 @@ type KubernetesCluster struct {
 func NewKubernetesCluster(ctx *pulumi.Context,
 	name string, args *KubernetesClusterArgs, opts ...pulumi.ResourceOption) (*KubernetesCluster, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &KubernetesClusterArgs{}
 	}
 
-	if args.ClusterVersion == nil {
-		return nil, errors.New("invalid value for required argument 'ClusterVersion'")
-	}
-	if args.NetworkingCni == nil {
-		return nil, errors.New("invalid value for required argument 'NetworkingCni'")
-	}
-	if args.OrganisationId == nil {
-		return nil, errors.New("invalid value for required argument 'OrganisationId'")
-	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource KubernetesCluster
 	err := ctx.RegisterResource("thalassa:index/kubernetesCluster:KubernetesCluster", name, args, &resource, opts...)
@@ -107,6 +214,8 @@ func GetKubernetesCluster(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering KubernetesCluster resources.
 type kubernetesClusterState struct {
+	// Advertise port for the Kubernetes Cluster within the VPC
+	AdvertisePort *int `pulumi:"advertisePort"`
 	// Annotations for the Kubernetes Cluster
 	Annotations map[string]string `pulumi:"annotations"`
 	// API server ACLs for the Kubernetes Cluster
@@ -115,9 +224,11 @@ type kubernetesClusterState struct {
 	AuditLogProfile *string `pulumi:"auditLogProfile"`
 	// Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
 	AutoUpgradePolicy *string `pulumi:"autoUpgradePolicy"`
+	// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+	AutoscalerConfig *KubernetesClusterAutoscalerConfig `pulumi:"autoscalerConfig"`
 	// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 	ClusterType *string `pulumi:"clusterType"`
-	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion *string `pulumi:"clusterVersion"`
 	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
 	DefaultNetworkPolicy *string `pulumi:"defaultNetworkPolicy"`
@@ -125,6 +236,12 @@ type kubernetesClusterState struct {
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description *string `pulumi:"description"`
+	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	DisablePublicEndpoint *bool `pulumi:"disablePublicEndpoint"`
+	// VPC-internal endpoint for the Kubernetes Cluster
+	InternalEndpoint *string `pulumi:"internalEndpoint"`
+	// Konnectivity port for the Kubernetes Cluster within the VPC
+	KonnectivityPort *int `pulumi:"konnectivityPort"`
 	// Kubernetes API server CA certificate of the Kubernetes Cluster
 	KubernetesApiServerCaCertificate *string `pulumi:"kubernetesApiServerCaCertificate"`
 	// Kubernetes API server endpoint of the Kubernetes Cluster
@@ -137,13 +254,18 @@ type kubernetesClusterState struct {
 	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name *string `pulumi:"name"`
-	// CNI of the Kubernetes Cluster
+	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
 	NetworkingCni *string `pulumi:"networkingCni"`
-	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+	NetworkingKubeProxyDeployment *string `pulumi:"networkingKubeProxyDeployment"`
+	// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+	NetworkingKubeProxyMode *string `pulumi:"networkingKubeProxyMode"`
+	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingPodCidr *string `pulumi:"networkingPodCidr"`
-	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingServiceCidr *string `pulumi:"networkingServiceCidr"`
-	OrganisationId        *string `pulumi:"organisationId"`
+	// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId *string `pulumi:"organisationId"`
 	// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
 	PodSecurityStandardsProfile *string `pulumi:"podSecurityStandardsProfile"`
 	// Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
@@ -160,6 +282,8 @@ type kubernetesClusterState struct {
 }
 
 type KubernetesClusterState struct {
+	// Advertise port for the Kubernetes Cluster within the VPC
+	AdvertisePort pulumi.IntPtrInput
 	// Annotations for the Kubernetes Cluster
 	Annotations pulumi.StringMapInput
 	// API server ACLs for the Kubernetes Cluster
@@ -168,9 +292,11 @@ type KubernetesClusterState struct {
 	AuditLogProfile pulumi.StringPtrInput
 	// Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
 	AutoUpgradePolicy pulumi.StringPtrInput
+	// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+	AutoscalerConfig KubernetesClusterAutoscalerConfigPtrInput
 	// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 	ClusterType pulumi.StringPtrInput
-	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
+	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion pulumi.StringPtrInput
 	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
 	DefaultNetworkPolicy pulumi.StringPtrInput
@@ -178,6 +304,12 @@ type KubernetesClusterState struct {
 	DeleteProtection pulumi.BoolPtrInput
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrInput
+	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	DisablePublicEndpoint pulumi.BoolPtrInput
+	// VPC-internal endpoint for the Kubernetes Cluster
+	InternalEndpoint pulumi.StringPtrInput
+	// Konnectivity port for the Kubernetes Cluster within the VPC
+	KonnectivityPort pulumi.IntPtrInput
 	// Kubernetes API server CA certificate of the Kubernetes Cluster
 	KubernetesApiServerCaCertificate pulumi.StringPtrInput
 	// Kubernetes API server endpoint of the Kubernetes Cluster
@@ -190,13 +322,18 @@ type KubernetesClusterState struct {
 	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringPtrInput
-	// CNI of the Kubernetes Cluster
+	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
 	NetworkingCni pulumi.StringPtrInput
-	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+	NetworkingKubeProxyDeployment pulumi.StringPtrInput
+	// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+	NetworkingKubeProxyMode pulumi.StringPtrInput
+	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingPodCidr pulumi.StringPtrInput
-	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingServiceCidr pulumi.StringPtrInput
-	OrganisationId        pulumi.StringPtrInput
+	// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId pulumi.StringPtrInput
 	// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
 	PodSecurityStandardsProfile pulumi.StringPtrInput
 	// Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
@@ -225,16 +362,20 @@ type kubernetesClusterArgs struct {
 	AuditLogProfile *string `pulumi:"auditLogProfile"`
 	// Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
 	AutoUpgradePolicy *string `pulumi:"autoUpgradePolicy"`
+	// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+	AutoscalerConfig *KubernetesClusterAutoscalerConfig `pulumi:"autoscalerConfig"`
 	// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 	ClusterType *string `pulumi:"clusterType"`
-	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-	ClusterVersion string `pulumi:"clusterVersion"`
+	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+	ClusterVersion *string `pulumi:"clusterVersion"`
 	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
 	DefaultNetworkPolicy *string `pulumi:"defaultNetworkPolicy"`
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description *string `pulumi:"description"`
+	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	DisablePublicEndpoint *bool `pulumi:"disablePublicEndpoint"`
 	// Labels for the Kubernetes Cluster
 	Labels map[string]string `pulumi:"labels"`
 	// Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
@@ -243,13 +384,18 @@ type kubernetesClusterArgs struct {
 	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name *string `pulumi:"name"`
-	// CNI of the Kubernetes Cluster
-	NetworkingCni string `pulumi:"networkingCni"`
-	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	NetworkingCni *string `pulumi:"networkingCni"`
+	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+	NetworkingKubeProxyDeployment *string `pulumi:"networkingKubeProxyDeployment"`
+	// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+	NetworkingKubeProxyMode *string `pulumi:"networkingKubeProxyMode"`
+	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingPodCidr *string `pulumi:"networkingPodCidr"`
-	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingServiceCidr *string `pulumi:"networkingServiceCidr"`
-	OrganisationId        string  `pulumi:"organisationId"`
+	// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId *string `pulumi:"organisationId"`
 	// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
 	PodSecurityStandardsProfile *string `pulumi:"podSecurityStandardsProfile"`
 	// Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
@@ -270,16 +416,20 @@ type KubernetesClusterArgs struct {
 	AuditLogProfile pulumi.StringPtrInput
 	// Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
 	AutoUpgradePolicy pulumi.StringPtrInput
+	// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+	AutoscalerConfig KubernetesClusterAutoscalerConfigPtrInput
 	// Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 	ClusterType pulumi.StringPtrInput
-	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-	ClusterVersion pulumi.StringInput
+	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+	ClusterVersion pulumi.StringPtrInput
 	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
 	DefaultNetworkPolicy pulumi.StringPtrInput
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection pulumi.BoolPtrInput
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrInput
+	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	DisablePublicEndpoint pulumi.BoolPtrInput
 	// Labels for the Kubernetes Cluster
 	Labels pulumi.StringMapInput
 	// Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
@@ -288,13 +438,18 @@ type KubernetesClusterArgs struct {
 	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringPtrInput
-	// CNI of the Kubernetes Cluster
-	NetworkingCni pulumi.StringInput
-	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	NetworkingCni pulumi.StringPtrInput
+	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+	NetworkingKubeProxyDeployment pulumi.StringPtrInput
+	// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+	NetworkingKubeProxyMode pulumi.StringPtrInput
+	// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingPodCidr pulumi.StringPtrInput
-	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+	// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 	NetworkingServiceCidr pulumi.StringPtrInput
-	OrganisationId        pulumi.StringInput
+	// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+	OrganisationId pulumi.StringPtrInput
 	// Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.
 	PodSecurityStandardsProfile pulumi.StringPtrInput
 	// Region of the Kubernetes Cluster. Required for hosted-control-plane clusters.
@@ -392,6 +547,11 @@ func (o KubernetesClusterOutput) ToKubernetesClusterOutputWithContext(ctx contex
 	return o
 }
 
+// Advertise port for the Kubernetes Cluster within the VPC
+func (o KubernetesClusterOutput) AdvertisePort() pulumi.IntOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.IntOutput { return v.AdvertisePort }).(pulumi.IntOutput)
+}
+
 // Annotations for the Kubernetes Cluster
 func (o KubernetesClusterOutput) Annotations() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringMapOutput { return v.Annotations }).(pulumi.StringMapOutput)
@@ -412,14 +572,19 @@ func (o KubernetesClusterOutput) AutoUpgradePolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.AutoUpgradePolicy }).(pulumi.StringPtrOutput)
 }
 
+// Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+func (o KubernetesClusterOutput) AutoscalerConfig() KubernetesClusterAutoscalerConfigOutput {
+	return o.ApplyT(func(v *KubernetesCluster) KubernetesClusterAutoscalerConfigOutput { return v.AutoscalerConfig }).(KubernetesClusterAutoscalerConfigOutput)
+}
+
 // Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
 func (o KubernetesClusterOutput) ClusterType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.ClusterType }).(pulumi.StringPtrOutput)
 }
 
-// Cluster version of the Kubernetes Cluster, can be a name, slug or identity
-func (o KubernetesClusterOutput) ClusterVersion() pulumi.StringOutput {
-	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.ClusterVersion }).(pulumi.StringOutput)
+// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
+func (o KubernetesClusterOutput) ClusterVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.ClusterVersion }).(pulumi.StringPtrOutput)
 }
 
 // Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
@@ -435,6 +600,21 @@ func (o KubernetesClusterOutput) DeleteProtection() pulumi.BoolPtrOutput {
 // A human readable description about the Kubernetes Cluster
 func (o KubernetesClusterOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+func (o KubernetesClusterOutput) DisablePublicEndpoint() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.BoolPtrOutput { return v.DisablePublicEndpoint }).(pulumi.BoolPtrOutput)
+}
+
+// VPC-internal endpoint for the Kubernetes Cluster
+func (o KubernetesClusterOutput) InternalEndpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.InternalEndpoint }).(pulumi.StringOutput)
+}
+
+// Konnectivity port for the Kubernetes Cluster within the VPC
+func (o KubernetesClusterOutput) KonnectivityPort() pulumi.IntOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.IntOutput { return v.KonnectivityPort }).(pulumi.IntOutput)
 }
 
 // Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -467,23 +647,34 @@ func (o KubernetesClusterOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// CNI of the Kubernetes Cluster
-func (o KubernetesClusterOutput) NetworkingCni() pulumi.StringOutput {
-	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.NetworkingCni }).(pulumi.StringOutput)
+// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+func (o KubernetesClusterOutput) NetworkingCni() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingCni }).(pulumi.StringPtrOutput)
 }
 
-// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
+func (o KubernetesClusterOutput) NetworkingKubeProxyDeployment() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingKubeProxyDeployment }).(pulumi.StringPtrOutput)
+}
+
+// Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
+func (o KubernetesClusterOutput) NetworkingKubeProxyMode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingKubeProxyMode }).(pulumi.StringPtrOutput)
+}
+
+// Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 func (o KubernetesClusterOutput) NetworkingPodCidr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingPodCidr }).(pulumi.StringPtrOutput)
 }
 
-// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block.
+// Service CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
 func (o KubernetesClusterOutput) NetworkingServiceCidr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingServiceCidr }).(pulumi.StringPtrOutput)
 }
 
-func (o KubernetesClusterOutput) OrganisationId() pulumi.StringOutput {
-	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.OrganisationId }).(pulumi.StringOutput)
+// Reference to the Organisation of the Kubernetes Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+func (o KubernetesClusterOutput) OrganisationId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
 
 // Pod security standards profile of the Kubernetes Cluster. Must be one of: restricted, baseline, privileged. Default: baseline.

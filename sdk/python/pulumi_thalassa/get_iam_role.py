@@ -13,6 +13,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
 
 __all__ = [
     'GetIamRoleResult',
@@ -26,7 +27,7 @@ class GetIamRoleResult:
     """
     A collection of values returned by getIamRole.
     """
-    def __init__(__self__, annotations=None, created_at=None, description=None, id=None, labels=None, name=None, organisation_id=None, role_is_read_only=None, slug=None, system=None, updated_at=None):
+    def __init__(__self__, annotations=None, created_at=None, description=None, id=None, labels=None, name=None, organisation_id=None, role_is_read_only=None, rules=None, slug=None, system=None, updated_at=None):
         if annotations and not isinstance(annotations, dict):
             raise TypeError("Expected argument 'annotations' to be a dict")
         pulumi.set(__self__, "annotations", annotations)
@@ -51,6 +52,9 @@ class GetIamRoleResult:
         if role_is_read_only and not isinstance(role_is_read_only, bool):
             raise TypeError("Expected argument 'role_is_read_only' to be a bool")
         pulumi.set(__self__, "role_is_read_only", role_is_read_only)
+        if rules and not isinstance(rules, list):
+            raise TypeError("Expected argument 'rules' to be a list")
+        pulumi.set(__self__, "rules", rules)
         if slug and not isinstance(slug, str):
             raise TypeError("Expected argument 'slug' to be a str")
         pulumi.set(__self__, "slug", slug)
@@ -112,6 +116,9 @@ class GetIamRoleResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -121,6 +128,14 @@ class GetIamRoleResult:
         Whether the role is read-only and cannot be modified.
         """
         return pulumi.get(self, "role_is_read_only")
+
+    @_builtins.property
+    @pulumi.getter
+    def rules(self) -> Sequence['outputs.GetIamRoleRuleResult']:
+        """
+        Permission rules for the organisation role
+        """
+        return pulumi.get(self, "rules")
 
     @_builtins.property
     @pulumi.getter
@@ -161,6 +176,7 @@ class AwaitableGetIamRoleResult(GetIamRoleResult):
             name=self.name,
             organisation_id=self.organisation_id,
             role_is_read_only=self.role_is_read_only,
+            rules=self.rules,
             slug=self.slug,
             system=self.system,
             updated_at=self.updated_at)
@@ -177,6 +193,7 @@ def get_iam_role(description: Optional[_builtins.str] = None,
 
     :param _builtins.str description: A human readable description about the role
     :param _builtins.str name: Name of the Organisation Role
+    :param _builtins.str organisation_id: Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the Organisation Role
     """
     __args__ = dict()
@@ -196,13 +213,14 @@ def get_iam_role(description: Optional[_builtins.str] = None,
         name=pulumi.get(__ret__, 'name'),
         organisation_id=pulumi.get(__ret__, 'organisation_id'),
         role_is_read_only=pulumi.get(__ret__, 'role_is_read_only'),
+        rules=pulumi.get(__ret__, 'rules'),
         slug=pulumi.get(__ret__, 'slug'),
         system=pulumi.get(__ret__, 'system'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_iam_role_output(description: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                        slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_iam_role_output(description: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                        slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                         opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetIamRoleResult]:
     """
     Get an organisation role
@@ -210,6 +228,7 @@ def get_iam_role_output(description: Optional[pulumi.Input[Optional[_builtins.st
 
     :param _builtins.str description: A human readable description about the role
     :param _builtins.str name: Name of the Organisation Role
+    :param _builtins.str organisation_id: Reference to the Organisation of the Role. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the Organisation Role
     """
     __args__ = dict()
@@ -228,6 +247,7 @@ def get_iam_role_output(description: Optional[pulumi.Input[Optional[_builtins.st
         name=pulumi.get(__response__, 'name'),
         organisation_id=pulumi.get(__response__, 'organisation_id'),
         role_is_read_only=pulumi.get(__response__, 'role_is_read_only'),
+        rules=pulumi.get(__response__, 'rules'),
         slug=pulumi.get(__response__, 'slug'),
         system=pulumi.get(__response__, 'system'),
         updated_at=pulumi.get(__response__, 'updated_at')))

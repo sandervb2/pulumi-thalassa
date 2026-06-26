@@ -212,6 +212,9 @@ class GetDbaasDbClusterResult:
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> Optional[_builtins.str]:
+        """
+        Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
+        """
         return pulumi.get(self, "organisation_id")
 
     @_builtins.property
@@ -319,6 +322,7 @@ def get_dbaas_db_cluster(name: Optional[_builtins.str] = None,
 
 
     :param _builtins.str name: Name of the DB Cluster
+    :param _builtins.str organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the DB Cluster
     """
     __args__ = dict()
@@ -352,15 +356,16 @@ def get_dbaas_db_cluster(name: Optional[_builtins.str] = None,
         status=pulumi.get(__ret__, 'status'),
         subnet_id=pulumi.get(__ret__, 'subnet_id'),
         volume_type_class=pulumi.get(__ret__, 'volume_type_class'))
-def get_dbaas_db_cluster_output(name: Optional[pulumi.Input[_builtins.str]] = None,
-                                organisation_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                slug: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_dbaas_db_cluster_output(name: pulumi.Input[Optional[_builtins.str]] = None,
+                                organisation_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                slug: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                 opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetDbaasDbClusterResult]:
     """
     Get an DB Cluster
 
 
     :param _builtins.str name: Name of the DB Cluster
+    :param _builtins.str organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
     :param _builtins.str slug: Slug of the DB Cluster
     """
     __args__ = dict()

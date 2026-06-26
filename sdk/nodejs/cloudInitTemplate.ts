@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as thalassa from "@pulumi/thalassa";
+ * import * as thalassa from "@sandervb2/pulumi-thalassa";
  *
  * // Create a cloud init template with Thalassa default values
  * const example = new thalassa.CloudInitTemplate("example", {
@@ -69,6 +69,9 @@ export class CloudInitTemplate extends pulumi.CustomResource {
      * The name of the cloud init template
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
      * The slug of the cloud init template
@@ -118,24 +121,27 @@ export interface CloudInitTemplateState {
     /**
      * Annotations to add to the cloud init template
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The content of the cloud init template
      */
-    content?: pulumi.Input<string>;
+    content?: pulumi.Input<string | undefined>;
     /**
      * Labels to add to the cloud init template
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The name of the cloud init template
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
     /**
      * The slug of the cloud init template
      */
-    slug?: pulumi.Input<string>;
+    slug?: pulumi.Input<string | undefined>;
 }
 
 /**
@@ -145,7 +151,7 @@ export interface CloudInitTemplateArgs {
     /**
      * Annotations to add to the cloud init template
      */
-    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The content of the cloud init template
      */
@@ -153,10 +159,13 @@ export interface CloudInitTemplateArgs {
     /**
      * Labels to add to the cloud init template
      */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
      * The name of the cloud init template
      */
-    name?: pulumi.Input<string>;
-    organisationId?: pulumi.Input<string>;
+    name?: pulumi.Input<string | undefined>;
+    /**
+     * Reference to the Organisation of the Machine Type. If not provided, the organisation of the (Terraform) provider will be used.
+     */
+    organisationId?: pulumi.Input<string | undefined>;
 }

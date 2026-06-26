@@ -30,6 +30,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public string? OrganisationId { get; set; }
 
@@ -47,6 +50,9 @@ namespace Pulumi.Thalassa
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
 
@@ -67,6 +73,9 @@ namespace Pulumi.Thalassa
         /// </summary>
         public readonly string Id;
         public readonly string Name;
+        /// <summary>
+        /// Reference to the Organisation of the Db Backup Schedule. If not provided, the organisation of the (Terraform) provider will be used.
+        /// </summary>
         public readonly string? OrganisationId;
         public readonly string RetentionPolicy;
         public readonly string Schedule;
