@@ -3888,8 +3888,9 @@ github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/f
 github.com/rogpeppe/go-internal v1.10.0/go.mod h1:UQnix2H7Ngw/k4C5ijL5+65zddjncjaFoBhdsK/akog=
 github.com/rogpeppe/go-internal v1.12.0/go.mod h1:E+RYuTGaKKdloAfM02xzb0FW3Paa99yedzYV+kq4uf4=
 github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=
-github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
 github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7so1lCWt35ZSgc=
+github.com/rogpeppe/go-internal v1.15.0 h1:D0RCU5rMAp+SpgkiNdrjfJ+LX4J1M32V2NeCY7EJ6hc=
+github.com/rogpeppe/go-internal v1.15.0/go.mod h1:DrUVZyrJU+txYW5/1kwtXQSMFio52ZOxX7yM1VHvnxs=
 github.com/rs/xid v1.2.1/go.mod h1:+uKXf+4Djp6Md1KODXJxgGQPKngRmWyn10oCKFzNHOQ=
 github.com/rs/zerolog v1.21.0/go.mod h1:ZPhntP/xmq1nnND05hhpAh2QMhSsA4UN3MGZ6O2J3hM=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
@@ -3988,10 +3989,10 @@ github.com/teekennedy/goldmark-markdown v0.3.0 h1:ik9/biVGCwGWFg8dQ3KVm2pQ/wiiG0
 github.com/teekennedy/goldmark-markdown v0.3.0/go.mod h1:kMhDz8La77A9UHvJGsxejd0QUflN9sS+QXCqnhmxmNo=
 github.com/texttheater/golang-levenshtein v1.0.1 h1:+cRNoVrfiwufQPhoMzB6N0Yf/Mqajr6t1lOv8GyGE2U=
 github.com/texttheater/golang-levenshtein v1.0.1/go.mod h1:PYAKrbF5sAiq9wd+H82hs7gNaen0CplQ9uvm6+enD/8=
-github.com/thalassa-cloud/client-go v0.33.1 h1:aIGWlIumbzDPaa/J2UP9u5wskY1ar+Pu433+UufoeE4=
-github.com/thalassa-cloud/client-go v0.33.1/go.mod h1:jV7lYCvUJcm6FKHSbZDUmBeREgICSThFaPQylDLka6c=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.26.0 h1:e1Og+LJZ8NyxziVy2WM8R0fVUF5W/vBu5TTtyXOATz4=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.26.0/go.mod h1:8psLHaL4++y0PuQ7wBQ/qQfyZcSo6+7+Ct/A/YxVcYk=
+github.com/thalassa-cloud/client-go v0.35.1 h1:1ShdYmp0hgtW1Zq6byzIwPsOp2C/tEJ7lFo4+L2FR78=
+github.com/thalassa-cloud/client-go v0.35.1/go.mod h1:fKtWPWd8fzA/HvNEO1b/5CJ3de4f99RJuZmAgsZaEzc=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.26.1 h1:aPTA4mdcdeIa8+4fuioviMpg9iOZ+Oln8UFPuMlGZig=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.26.1/go.mod h1:QuxKlx1fKLnTb2CLGvfWhivfvISSToGGLqeFANQ84KU=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.1.1/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
