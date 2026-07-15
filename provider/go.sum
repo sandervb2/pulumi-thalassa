@@ -3989,10 +3989,10 @@ github.com/teekennedy/goldmark-markdown v0.3.0 h1:ik9/biVGCwGWFg8dQ3KVm2pQ/wiiG0
 github.com/teekennedy/goldmark-markdown v0.3.0/go.mod h1:kMhDz8La77A9UHvJGsxejd0QUflN9sS+QXCqnhmxmNo=
 github.com/texttheater/golang-levenshtein v1.0.1 h1:+cRNoVrfiwufQPhoMzB6N0Yf/Mqajr6t1lOv8GyGE2U=
 github.com/texttheater/golang-levenshtein v1.0.1/go.mod h1:PYAKrbF5sAiq9wd+H82hs7gNaen0CplQ9uvm6+enD/8=
-github.com/thalassa-cloud/client-go v0.35.1 h1:1ShdYmp0hgtW1Zq6byzIwPsOp2C/tEJ7lFo4+L2FR78=
-github.com/thalassa-cloud/client-go v0.35.1/go.mod h1:fKtWPWd8fzA/HvNEO1b/5CJ3de4f99RJuZmAgsZaEzc=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.26.1 h1:aPTA4mdcdeIa8+4fuioviMpg9iOZ+Oln8UFPuMlGZig=
-github.com/thalassa-cloud/terraform-provider-thalassa v0.26.1/go.mod h1:QuxKlx1fKLnTb2CLGvfWhivfvISSToGGLqeFANQ84KU=
+github.com/thalassa-cloud/client-go v0.35.3 h1:H6yn/ma+DhLCCaWcSUEqUyJDfKX3r90Al5R7mGYkVgw=
+github.com/thalassa-cloud/client-go v0.35.3/go.mod h1:fKtWPWd8fzA/HvNEO1b/5CJ3de4f99RJuZmAgsZaEzc=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.26.2 h1:XWNuz9fueLuF2eUWSSuldLNrod1tkZPtwEWC/YpzZ+g=
+github.com/thalassa-cloud/terraform-provider-thalassa v0.26.2/go.mod h1:bKN7QVAc9W1tIipTRckUDtG8UV95s0gcjQLvmOup0M4=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.1.1/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
