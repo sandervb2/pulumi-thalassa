@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "v*.*.*"
+  # Dispatched by release-please.yml with --ref <tag>
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,6 +18,7 @@ env:
 jobs:
   publish_provider:
     name: Publish Provider to GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
