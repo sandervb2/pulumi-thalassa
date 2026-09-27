@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.0...v0.5.1) (2026-09-27)
+
+
+### Bug Fixes
+
+* **ci:** set placeholder npm auth token for sdk build ([#282](https://github.com/sandervb2/pulumi-thalassa/issues/282)) ([de043fb](https://github.com/sandervb2/pulumi-thalassa/commit/de043fb91972bb6c7be71633780e9e891b5b254c))
+
 ## [0.5.0](https://github.com/sandervb2/pulumi-thalassa/compare/v0.4.0...v0.5.0) (2026-09-26)
 
 
