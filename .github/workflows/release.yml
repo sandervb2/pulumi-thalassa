@@ -81,9 +81,13 @@ jobs:
         run: npm version "$PROVIDER_VERSION" --no-git-tag-version
 
       - name: Generate and build NodeJS SDK
+        env:
+          # setup-node's .npmrc references ${NODE_AUTH_TOKEN}; yarn v1 errors if it is unset.
+          # Publishing uses OIDC trusted publishing, so a placeholder is enough here.
+          NODE_AUTH_TOKEN: placeholder
         run: |
           make generate_nodejs PROVIDER_VERSION="$PROVIDER_VERSION"
-          make build_nodejs 
+          make build_nodejs
 
       - name: Publish to npm
         working-directory: sdk/nodejs/bin
