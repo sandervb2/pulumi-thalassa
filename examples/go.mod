@@ -2,7 +2,7 @@ module github.com/sandervb2/pulumi-thalassa/examples
 
 go 1.26.6
 
-toolchain go1.27.1
+toolchain go1.27.2
 
 require (
 	github.com/pulumi/pulumi/pkg/v3 v3.265.0
