@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.5.3](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.2...v0.5.3) (2026-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.271.0 ([#304](https://github.com/sandervb2/pulumi-thalassa/issues/304)) ([c165f4a](https://github.com/sandervb2/pulumi-thalassa/commit/c165f4ab72f005996badb6bee67110f830f856b0))
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.272.0 ([#306](https://github.com/sandervb2/pulumi-thalassa/issues/306)) ([cdd6b97](https://github.com/sandervb2/pulumi-thalassa/commit/cdd6b97e6c7da00b8f8f519cbeca8547a304df1a))
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/setup-python action to v7.1.0 ([#305](https://github.com/sandervb2/pulumi-thalassa/issues/305)) ([8bec1b1](https://github.com/sandervb2/pulumi-thalassa/commit/8bec1b135a4e2e46cc5220a4edf4982ff09a491c))
+* **deps:** update github/codeql-action action to v4.39.1 ([#302](https://github.com/sandervb2/pulumi-thalassa/issues/302)) ([47196a4](https://github.com/sandervb2/pulumi-thalassa/commit/47196a4ec05e5d4d74e631f7c2a493071ea34a02))
+* **deps:** update go toolchain directive to v1.27.3 ([#300](https://github.com/sandervb2/pulumi-thalassa/issues/300)) ([3b3f662](https://github.com/sandervb2/pulumi-thalassa/commit/3b3f6621c10d1225ab00539abc0d2cf14cb04774))
+* **deps:** update pulumi core libs ([#284](https://github.com/sandervb2/pulumi-thalassa/issues/284)) ([4ef143d](https://github.com/sandervb2/pulumi-thalassa/commit/4ef143d1be2dd0f8973b7693f7b2b2dfba46335a))
+* **deps:** update step-security/harden-runner action to v2.22.2 ([#301](https://github.com/sandervb2/pulumi-thalassa/issues/301)) ([ce7624c](https://github.com/sandervb2/pulumi-thalassa/commit/ce7624c51a430164d8ad02e5eefd511195dacc5d))
+
 ## [0.5.2](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.1...v0.5.2) (2026-10-17)
 
 
