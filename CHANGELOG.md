@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.5.3](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.2...v0.5.3) (2026-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.271.0 ([#304](https://github.com/sandervb2/pulumi-thalassa/issues/304)) ([c165f4a](https://github.com/sandervb2/pulumi-thalassa/commit/c165f4ab72f005996badb6bee67110f830f856b0))
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.272.0 ([#306](https://github.com/sandervb2/pulumi-thalassa/issues/306)) ([cdd6b97](https://github.com/sandervb2/pulumi-thalassa/commit/cdd6b97e6c7da00b8f8f519cbeca8547a304df1a))
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.273.0 ([#309](https://github.com/sandervb2/pulumi-thalassa/issues/309)) ([fd3084c](https://github.com/sandervb2/pulumi-thalassa/commit/fd3084c2366884631802bc8bf1191b944ee18408))
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.274.0 ([#315](https://github.com/sandervb2/pulumi-thalassa/issues/315)) ([245107b](https://github.com/sandervb2/pulumi-thalassa/commit/245107ba9085cb7e2cf6dbcf5c6b6baa41c4a61c))
+* **deps:** update module github.com/pulumi/pulumi/sdk/v3 to v3.274.1 ([#317](https://github.com/sandervb2/pulumi-thalassa/issues/317)) ([8299552](https://github.com/sandervb2/pulumi-thalassa/commit/8299552952efe13dc87e48dd4066be91d21f0bb0))
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/setup-dotnet action to v6.1.0 ([#312](https://github.com/sandervb2/pulumi-thalassa/issues/312)) ([e64d3e0](https://github.com/sandervb2/pulumi-thalassa/commit/e64d3e0158ef6506b661b7c57e84e3c72757a9e5))
+* **deps:** update actions/setup-python action to v7.1.0 ([#305](https://github.com/sandervb2/pulumi-thalassa/issues/305)) ([8bec1b1](https://github.com/sandervb2/pulumi-thalassa/commit/8bec1b135a4e2e46cc5220a4edf4982ff09a491c))
+* **deps:** update dependency node to v26 ([#308](https://github.com/sandervb2/pulumi-thalassa/issues/308)) ([fc0358c](https://github.com/sandervb2/pulumi-thalassa/commit/fc0358cabe20273a970ad6aa8504947dfb85ce9b))
+* **deps:** update github/codeql-action action to v4.39.1 ([#302](https://github.com/sandervb2/pulumi-thalassa/issues/302)) ([47196a4](https://github.com/sandervb2/pulumi-thalassa/commit/47196a4ec05e5d4d74e631f7c2a493071ea34a02))
+* **deps:** update github/codeql-action action to v4.39.2 ([#314](https://github.com/sandervb2/pulumi-thalassa/issues/314)) ([36499d5](https://github.com/sandervb2/pulumi-thalassa/commit/36499d5b283ccb43c7cda491c6fa5e776cca2287))
+* **deps:** update github/codeql-action action to v4.39.3 ([#316](https://github.com/sandervb2/pulumi-thalassa/issues/316)) ([ad081e7](https://github.com/sandervb2/pulumi-thalassa/commit/ad081e778888dac6da57edcefc81337472374e31))
+* **deps:** update go toolchain directive to v1.27.3 ([#300](https://github.com/sandervb2/pulumi-thalassa/issues/300)) ([3b3f662](https://github.com/sandervb2/pulumi-thalassa/commit/3b3f6621c10d1225ab00539abc0d2cf14cb04774))
+* **deps:** update jaxxstorm/action-install-gh-release action to v4 ([#311](https://github.com/sandervb2/pulumi-thalassa/issues/311)) ([59ad955](https://github.com/sandervb2/pulumi-thalassa/commit/59ad9553951f62ba38f392c8c0bd1fba72fd76c2))
+* **deps:** update pulumi core libs ([#284](https://github.com/sandervb2/pulumi-thalassa/issues/284)) ([4ef143d](https://github.com/sandervb2/pulumi-thalassa/commit/4ef143d1be2dd0f8973b7693f7b2b2dfba46335a))
+* **deps:** update pulumi/actions digest to 96c7761 ([#313](https://github.com/sandervb2/pulumi-thalassa/issues/313)) ([c67d81f](https://github.com/sandervb2/pulumi-thalassa/commit/c67d81f2e7930be3ada83a485fcf14d6cda3e5db))
+* **deps:** update step-security/harden-runner action to v2.22.2 ([#301](https://github.com/sandervb2/pulumi-thalassa/issues/301)) ([ce7624c](https://github.com/sandervb2/pulumi-thalassa/commit/ce7624c51a430164d8ad02e5eefd511195dacc5d))
+* **deps:** update step-security/harden-runner action to v2.22.3 ([#307](https://github.com/sandervb2/pulumi-thalassa/issues/307)) ([3f6cde3](https://github.com/sandervb2/pulumi-thalassa/commit/3f6cde3080bba441e9a9eb581f2e80783c4911c9))
+* **deps:** update step-security/harden-runner action to v2.22.4 ([#318](https://github.com/sandervb2/pulumi-thalassa/issues/318)) ([5e0d14d](https://github.com/sandervb2/pulumi-thalassa/commit/5e0d14d02901e590af66a3255df450f23cb9b8fb))
+
 ## [0.5.2](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.1...v0.5.2) (2026-10-17)
 
 
