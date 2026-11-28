@@ -7,6 +7,8 @@ import * as utilities from "./utilities";
 /**
  * Provides a Thalassa Cloud Snapshot resource. This can be used to create, manage, and delete snapshots of block volumes.
  *
+ * See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
+ *
  * ## Example Usage
  *
  * ```typescript
@@ -25,6 +27,7 @@ import * as utilities from "./utilities";
  * const exampleSnapshot = new thalassa.Snapshot("example", {
  *     name: "example-snapshot",
  *     description: "Example snapshot created from block volume",
+ *     volumeIdentity: example.id,
  *     deleteProtection: false,
  *     waitUntilAvailable: true,
  *     labels: {
@@ -118,6 +121,10 @@ export class Snapshot extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
+     * Identity of the volume to create a snapshot from
+     */
+    declare public readonly volumeIdentity: pulumi.Output<string>;
+    /**
      * Wait until the snapshot is available
      */
     declare public readonly waitUntilAvailable: pulumi.Output<boolean | undefined>;
@@ -129,7 +136,7 @@ export class Snapshot extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: SnapshotArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args: SnapshotArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: SnapshotArgs | SnapshotState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -147,15 +154,20 @@ export class Snapshot extends pulumi.CustomResource {
             resourceInputs["snapshotPolicyId"] = state?.snapshotPolicyId;
             resourceInputs["sourceVolumeId"] = state?.sourceVolumeId;
             resourceInputs["status"] = state?.status;
+            resourceInputs["volumeIdentity"] = state?.volumeIdentity;
             resourceInputs["waitUntilAvailable"] = state?.waitUntilAvailable;
         } else {
             const args = argsOrState as SnapshotArgs | undefined;
+            if (args?.volumeIdentity === undefined && !opts.urn) {
+                throw new Error("Missing required property 'volumeIdentity'");
+            }
             resourceInputs["annotations"] = args?.annotations;
             resourceInputs["deleteProtection"] = args?.deleteProtection;
             resourceInputs["description"] = args?.description;
             resourceInputs["labels"] = args?.labels;
             resourceInputs["name"] = args?.name;
             resourceInputs["organisationId"] = args?.organisationId;
+            resourceInputs["volumeIdentity"] = args?.volumeIdentity;
             resourceInputs["waitUntilAvailable"] = args?.waitUntilAvailable;
             resourceInputs["region"] = undefined /*out*/;
             resourceInputs["sizeGb"] = undefined /*out*/;
@@ -219,6 +231,10 @@ export interface SnapshotState {
      */
     status?: pulumi.Input<string | undefined>;
     /**
+     * Identity of the volume to create a snapshot from
+     */
+    volumeIdentity?: pulumi.Input<string | undefined>;
+    /**
      * Wait until the snapshot is available
      */
     waitUntilAvailable?: pulumi.Input<boolean | undefined>;
@@ -252,6 +268,10 @@ export interface SnapshotArgs {
      * Reference to the Organisation of the Snapshot. If not provided, the organisation of the (Terraform) provider will be used.
      */
     organisationId?: pulumi.Input<string | undefined>;
+    /**
+     * Identity of the volume to create a snapshot from
+     */
+    volumeIdentity: pulumi.Input<string>;
     /**
      * Wait until the snapshot is available
      */

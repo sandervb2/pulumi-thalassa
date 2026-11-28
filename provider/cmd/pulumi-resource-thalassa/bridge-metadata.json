@@ -10,6 +10,34 @@
             "thalassa_cloud_init_template": {
                 "current": "thalassa:index/cloudInitTemplate:CloudInitTemplate"
             },
+            "thalassa_containerregistry_namespace": {
+                "current": "thalassa:index/containerregistryNamespace:ContainerregistryNamespace"
+            },
+            "thalassa_containerregistry_namespace_configuration": {
+                "current": "thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration",
+                "fields": {
+                    "retention_policy": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "rules": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "repository_patterns": {
+                                                "maxItemsOne": false
+                                            },
+                                            "tag_patterns": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "thalassa_dbaas_db_backupschedule": {
                 "current": "thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule"
             },
@@ -51,6 +79,20 @@
                         "maxItemsOne": false
                     }
                 }
+            },
+            "thalassa_iam_federated_identity": {
+                "current": "thalassa:index/iamFederatedIdentity:IamFederatedIdentity",
+                "fields": {
+                    "allowed_scopes": {
+                        "maxItemsOne": false
+                    },
+                    "trusted_audiences": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_iam_federated_identity_provider": {
+                "current": "thalassa:index/iamFederatedIdentityProvider:IamFederatedIdentityProvider"
             },
             "thalassa_iam_role": {
                 "current": "thalassa:index/iamRole:IamRole",
@@ -256,6 +298,12 @@
                     }
                 }
             },
+            "thalassa_observability_workspace": {
+                "current": "thalassa:index/observabilityWorkspace:ObservabilityWorkspace"
+            },
+            "thalassa_project": {
+                "current": "thalassa:index/project:Project"
+            },
             "thalassa_reserved_ip": {
                 "current": "thalassa:index/reservedIp:ReservedIp"
             },
@@ -427,6 +475,37 @@
             }
         },
         "datasources": {
+            "thalassa_cloud_init_template": {
+                "current": "thalassa:index/getCloudInitTemplate:getCloudInitTemplate"
+            },
+            "thalassa_containerregistry_namespace": {
+                "current": "thalassa:index/getContainerregistryNamespace:getContainerregistryNamespace"
+            },
+            "thalassa_containerregistry_namespace_configuration": {
+                "current": "thalassa:index/getContainerregistryNamespaceConfiguration:getContainerregistryNamespaceConfiguration",
+                "fields": {
+                    "retention_policy": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "rules": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "repository_patterns": {
+                                                "maxItemsOne": false
+                                            },
+                                            "tag_patterns": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "thalassa_dbaas_db_backup": {
                 "current": "thalassa:index/getDbaasDbBackup:getDbaasDbBackup"
             },
@@ -446,6 +525,20 @@
             },
             "thalassa_dbaas_pg_roles": {
                 "current": "thalassa:index/getDbaasPgRoles:getDbaasPgRoles"
+            },
+            "thalassa_iam_federated_identity": {
+                "current": "thalassa:index/getIamFederatedIdentity:getIamFederatedIdentity",
+                "fields": {
+                    "allowed_scopes": {
+                        "maxItemsOne": false
+                    },
+                    "trusted_audiences": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "thalassa_iam_federated_identity_provider": {
+                "current": "thalassa:index/getIamFederatedIdentityProvider:getIamFederatedIdentityProvider"
             },
             "thalassa_iam_organisation_members": {
                 "current": "thalassa:index/getIamOrganisationMembers:getIamOrganisationMembers",
@@ -584,8 +677,14 @@
             "thalassa_objectstorage_bucket": {
                 "current": "thalassa:index/getObjectstorageBucket:getObjectstorageBucket"
             },
+            "thalassa_observability_workspace": {
+                "current": "thalassa:index/getObservabilityWorkspace:getObservabilityWorkspace"
+            },
             "thalassa_organisation": {
                 "current": "thalassa:index/getOrganisation:getOrganisation"
+            },
+            "thalassa_project": {
+                "current": "thalassa:index/getProject:getProject"
             },
             "thalassa_region": {
                 "current": "thalassa:index/getRegion:getRegion"

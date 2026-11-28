@@ -222,6 +222,10 @@ class CloudInitTemplate(pulumi.CustomResource):
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
+        See [Compute documentation](https://docs.thalassa.cloud/docs/iaas/compute/).
+
+        Reference templates from `VirtualMachineInstance` using `cloud_init_template_id`.
+
         ## Example Usage
 
         ```python
@@ -257,6 +261,10 @@ class CloudInitTemplate(pulumi.CustomResource):
                  args: CloudInitTemplateArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
+        See [Compute documentation](https://docs.thalassa.cloud/docs/iaas/compute/).
+
+        Reference templates from `VirtualMachineInstance` using `cloud_init_template_id`.
+
         ## Example Usage
 
         ```python

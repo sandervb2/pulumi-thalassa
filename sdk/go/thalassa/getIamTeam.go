@@ -59,12 +59,8 @@ type LookupIamTeamResult struct {
 }
 
 func LookupIamTeamOutput(ctx *pulumi.Context, args LookupIamTeamOutputArgs, opts ...pulumi.InvokeOption) LookupIamTeamResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupIamTeamResultOutput, error) {
-			args := v.(LookupIamTeamArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getIamTeam:getIamTeam", args, LookupIamTeamResultOutput{}, options).(LookupIamTeamResultOutput), nil
-		}).(LookupIamTeamResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getIamTeam:getIamTeam", args, LookupIamTeamResultOutput{}, options).(LookupIamTeamResultOutput)
 }
 
 // A collection of arguments for invoking getIamTeam.

@@ -14,7 +14,7 @@ import (
 
 // Create and manage a secret in Thalassa Secrets Manager
 //
-// > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+// > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 //
 // See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 //
@@ -54,7 +54,7 @@ import (
 //				Region: pulumi.String("nl-01"),
 //				Path:   dbPassword.Path,
 //				GenerateSecret: &thalassa.SecretVersionGenerateSecretArgs{
-//					ByteLength: 32,
+//					ByteLength: pulumi.Int(32),
 //				},
 //			})
 //			if err != nil {
@@ -97,9 +97,9 @@ type Secret struct {
 	Path pulumi.StringOutput `pulumi:"path"`
 	// Region slug where the secret is stored.
 	Region pulumi.StringOutput `pulumi:"region"`
-	// Initial key-value secret payload (create only; not returned on read).
+	// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 	SecretKeyValues pulumi.StringMapOutput `pulumi:"secretKeyValues"`
-	// Initial secret string value (create only; not returned on read).
+	// Initial secret string value as plaintext. The provider base64-encodes the value.
 	SecretString pulumi.StringPtrOutput `pulumi:"secretString"`
 	UpdatedAt    pulumi.StringOutput    `pulumi:"updatedAt"`
 }
@@ -172,9 +172,9 @@ type secretState struct {
 	Path *string `pulumi:"path"`
 	// Region slug where the secret is stored.
 	Region *string `pulumi:"region"`
-	// Initial key-value secret payload (create only; not returned on read).
+	// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 	SecretKeyValues map[string]string `pulumi:"secretKeyValues"`
-	// Initial secret string value (create only; not returned on read).
+	// Initial secret string value as plaintext. The provider base64-encodes the value.
 	SecretString *string `pulumi:"secretString"`
 	UpdatedAt    *string `pulumi:"updatedAt"`
 }
@@ -198,9 +198,9 @@ type SecretState struct {
 	Path pulumi.StringPtrInput
 	// Region slug where the secret is stored.
 	Region pulumi.StringPtrInput
-	// Initial key-value secret payload (create only; not returned on read).
+	// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 	SecretKeyValues pulumi.StringMapInput
-	// Initial secret string value (create only; not returned on read).
+	// Initial secret string value as plaintext. The provider base64-encodes the value.
 	SecretString pulumi.StringPtrInput
 	UpdatedAt    pulumi.StringPtrInput
 }
@@ -224,9 +224,9 @@ type secretArgs struct {
 	Path string `pulumi:"path"`
 	// Region slug where the secret is stored.
 	Region string `pulumi:"region"`
-	// Initial key-value secret payload (create only; not returned on read).
+	// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 	SecretKeyValues map[string]string `pulumi:"secretKeyValues"`
-	// Initial secret string value (create only; not returned on read).
+	// Initial secret string value as plaintext. The provider base64-encodes the value.
 	SecretString *string `pulumi:"secretString"`
 }
 
@@ -246,9 +246,9 @@ type SecretArgs struct {
 	Path pulumi.StringInput
 	// Region slug where the secret is stored.
 	Region pulumi.StringInput
-	// Initial key-value secret payload (create only; not returned on read).
+	// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 	SecretKeyValues pulumi.StringMapInput
-	// Initial secret string value (create only; not returned on read).
+	// Initial secret string value as plaintext. The provider base64-encodes the value.
 	SecretString pulumi.StringPtrInput
 }
 
@@ -390,12 +390,12 @@ func (o SecretOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
-// Initial key-value secret payload (create only; not returned on read).
+// Initial key-value secret payload as plaintext. The provider base64-encodes each value.
 func (o SecretOutput) SecretKeyValues() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringMapOutput { return v.SecretKeyValues }).(pulumi.StringMapOutput)
 }
 
-// Initial secret string value (create only; not returned on read).
+// Initial secret string value as plaintext. The provider base64-encodes the value.
 func (o SecretOutput) SecretString() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringPtrOutput { return v.SecretString }).(pulumi.StringPtrOutput)
 }

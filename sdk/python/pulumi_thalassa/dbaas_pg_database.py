@@ -240,6 +240,8 @@ class DbaasPgDatabase(pulumi.CustomResource):
         """
         Create a PostgreSQL database
 
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+
         ## Example Usage
 
         ```python
@@ -300,6 +302,8 @@ class DbaasPgDatabase(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a PostgreSQL database
+
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
 
         ## Example Usage
 

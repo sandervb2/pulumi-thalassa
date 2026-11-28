@@ -253,6 +253,8 @@ class RouteTable(pulumi.CustomResource):
         """
         Create an routeTable
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -301,6 +303,8 @@ class RouteTable(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an routeTable
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

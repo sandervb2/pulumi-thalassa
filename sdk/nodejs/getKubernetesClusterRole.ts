@@ -66,8 +66,8 @@ import * as utilities from "./utilities";
  *     });
  *     // Only create binding if role is not a system role
  *     const conditionalBinding: thalassa.KubernetesClusterRoleBinding[] = [];
- *     for (const range = {value: 0}; range.value < (role.system ? 0 : 1); range.value++) {
- *         conditionalBinding.push(new thalassa.KubernetesClusterRoleBinding(`conditional_binding-${range.value}`, {
+ *     for (let range = 0; range < (role.system ? 0 : 1); range++) {
+ *         conditionalBinding.push(new thalassa.KubernetesClusterRoleBinding(`conditional_binding-${range}`, {
  *             name: "conditional-binding",
  *             clusterRoleId: role.id,
  *             teamId: "team-456",
@@ -86,7 +86,7 @@ import * as utilities from "./utilities";
  * });
  * export const rolePermissions = {
  *     roleName: role.then(role => role.name),
- *     rulesCount: role.then(role => role.rules).length,
+ *     rulesCount: role.then(role => role.rules.length),
  *     resources: role.then(role => .map(rule => (rule.resources))),
  *     verbs: role.then(role => .map(rule => (rule.verbs))),
  * };
@@ -229,8 +229,8 @@ export interface GetKubernetesClusterRoleResult {
  *     });
  *     // Only create binding if role is not a system role
  *     const conditionalBinding: thalassa.KubernetesClusterRoleBinding[] = [];
- *     for (const range = {value: 0}; range.value < (role.system ? 0 : 1); range.value++) {
- *         conditionalBinding.push(new thalassa.KubernetesClusterRoleBinding(`conditional_binding-${range.value}`, {
+ *     for (let range = 0; range < (role.system ? 0 : 1); range++) {
+ *         conditionalBinding.push(new thalassa.KubernetesClusterRoleBinding(`conditional_binding-${range}`, {
  *             name: "conditional-binding",
  *             clusterRoleId: role.id,
  *             teamId: "team-456",
@@ -249,7 +249,7 @@ export interface GetKubernetesClusterRoleResult {
  * });
  * export const rolePermissions = {
  *     roleName: role.then(role => role.name),
- *     rulesCount: role.then(role => role.rules).length,
+ *     rulesCount: role.then(role => role.rules.length),
  *     resources: role.then(role => .map(rule => (rule.resources))),
  *     verbs: role.then(role => .map(rule => (rule.verbs))),
  * };

@@ -400,6 +400,8 @@ class BlockVolume(pulumi.CustomResource):
         """
         Provides a Thalassa Cloud Block Volume resource. This can be used to create, manage, and attach a detachable storage device to a virtual machine instance.
 
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
+
         ## Example Usage
 
         ```python
@@ -439,6 +441,8 @@ class BlockVolume(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Provides a Thalassa Cloud Block Volume resource. This can be used to create, manage, and attach a detachable storage device to a virtual machine instance.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 

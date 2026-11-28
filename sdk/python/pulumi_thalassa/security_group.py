@@ -396,8 +396,8 @@ class SecurityGroup(pulumi.CustomResource):
                  allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
-                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
-                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict', 'outputs.SecurityGroupEgressRule']]]]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict', 'outputs.SecurityGroupIngressRule']]]]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -405,6 +405,8 @@ class SecurityGroup(pulumi.CustomResource):
                  __props__=None):
         """
         A security group is a collection of rules that control the traffic to and from a virtual machine instance or other cloud resource within a VPC.
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -527,8 +529,8 @@ class SecurityGroup(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] allow_same_group_traffic: Flag that indicates if the security group allows traffic between instances in the same security group
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict', 'outputs.SecurityGroupEgressRule']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict', 'outputs.SecurityGroupIngressRule']]]] ingress_rules: List of ingress rules for the security group
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.
@@ -542,6 +544,8 @@ class SecurityGroup(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         A security group is a collection of rules that control the traffic to and from a virtual machine instance or other cloud resource within a VPC.
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -677,8 +681,8 @@ class SecurityGroup(pulumi.CustomResource):
                  allow_same_group_traffic: pulumi.Input[Optional[_builtins.bool]] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
-                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
-                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+                 egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict', 'outputs.SecurityGroupEgressRule']]]]] = None,
+                 ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict', 'outputs.SecurityGroupIngressRule']]]]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -721,9 +725,9 @@ class SecurityGroup(pulumi.CustomResource):
             annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             created_at: pulumi.Input[Optional[_builtins.str]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
-            egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]]] = None,
+            egress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict', 'outputs.SecurityGroupEgressRule']]]]] = None,
             identity: pulumi.Input[Optional[_builtins.str]] = None,
-            ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]]] = None,
+            ingress_rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict', 'outputs.SecurityGroupIngressRule']]]]] = None,
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -741,9 +745,9 @@ class SecurityGroup(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations of the security group
         :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the security group
         :param pulumi.Input[_builtins.str] description: Description of the security group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleArgs', 'SecurityGroupEgressRuleArgsDict', 'outputs.SecurityGroupEgressRule']]]] egress_rules: List of egress rules for the security group. Alternatively, you can use the thalassa*security*group*egress*rule resource for more flexibility.
         :param pulumi.Input[_builtins.str] identity: Identity of the security group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict']]]] ingress_rules: List of ingress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupIngressRuleArgs', 'SecurityGroupIngressRuleArgsDict', 'outputs.SecurityGroupIngressRule']]]] ingress_rules: List of ingress rules for the security group
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels of the security group
         :param pulumi.Input[_builtins.str] name: Name of the security group. Must be between 1 and 16 characters and contain only ASCII characters.
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Security Group. If not provided, the organisation of the (Terraform) provider will be used.

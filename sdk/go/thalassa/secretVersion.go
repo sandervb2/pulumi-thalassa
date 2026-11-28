@@ -14,7 +14,7 @@ import (
 
 // Manage a secret version in Thalassa Secrets Manager
 //
-// > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+// > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 //
 // See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 //
@@ -61,12 +61,13 @@ import (
 type SecretVersion struct {
 	pulumi.CustomResourceState
 
-	GenerateSecret  SecretVersionGenerateSecretPtrOutput `pulumi:"generateSecret"`
-	OrganisationId  pulumi.StringPtrOutput               `pulumi:"organisationId"`
-	Path            pulumi.StringOutput                  `pulumi:"path"`
-	Region          pulumi.StringOutput                  `pulumi:"region"`
-	SecretKeyValues pulumi.StringMapOutput               `pulumi:"secretKeyValues"`
-	// Secret string value (not returned on read).
+	GenerateSecret SecretVersionGenerateSecretPtrOutput `pulumi:"generateSecret"`
+	OrganisationId pulumi.StringPtrOutput               `pulumi:"organisationId"`
+	Path           pulumi.StringOutput                  `pulumi:"path"`
+	Region         pulumi.StringOutput                  `pulumi:"region"`
+	// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+	SecretKeyValues pulumi.StringMapOutput `pulumi:"secretKeyValues"`
+	// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 	SecretString pulumi.StringPtrOutput `pulumi:"secretString"`
 	// Version number assigned by the platform.
 	Version pulumi.IntOutput `pulumi:"version"`
@@ -119,24 +120,26 @@ func GetSecretVersion(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering SecretVersion resources.
 type secretVersionState struct {
-	GenerateSecret  *SecretVersionGenerateSecret `pulumi:"generateSecret"`
-	OrganisationId  *string                      `pulumi:"organisationId"`
-	Path            *string                      `pulumi:"path"`
-	Region          *string                      `pulumi:"region"`
-	SecretKeyValues map[string]string            `pulumi:"secretKeyValues"`
-	// Secret string value (not returned on read).
+	GenerateSecret *SecretVersionGenerateSecret `pulumi:"generateSecret"`
+	OrganisationId *string                      `pulumi:"organisationId"`
+	Path           *string                      `pulumi:"path"`
+	Region         *string                      `pulumi:"region"`
+	// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+	SecretKeyValues map[string]string `pulumi:"secretKeyValues"`
+	// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 	SecretString *string `pulumi:"secretString"`
 	// Version number assigned by the platform.
 	Version *int `pulumi:"version"`
 }
 
 type SecretVersionState struct {
-	GenerateSecret  SecretVersionGenerateSecretPtrInput
-	OrganisationId  pulumi.StringPtrInput
-	Path            pulumi.StringPtrInput
-	Region          pulumi.StringPtrInput
+	GenerateSecret SecretVersionGenerateSecretPtrInput
+	OrganisationId pulumi.StringPtrInput
+	Path           pulumi.StringPtrInput
+	Region         pulumi.StringPtrInput
+	// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
 	SecretKeyValues pulumi.StringMapInput
-	// Secret string value (not returned on read).
+	// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 	SecretString pulumi.StringPtrInput
 	// Version number assigned by the platform.
 	Version pulumi.IntPtrInput
@@ -147,23 +150,25 @@ func (SecretVersionState) ElementType() reflect.Type {
 }
 
 type secretVersionArgs struct {
-	GenerateSecret  *SecretVersionGenerateSecret `pulumi:"generateSecret"`
-	OrganisationId  *string                      `pulumi:"organisationId"`
-	Path            string                       `pulumi:"path"`
-	Region          string                       `pulumi:"region"`
-	SecretKeyValues map[string]string            `pulumi:"secretKeyValues"`
-	// Secret string value (not returned on read).
+	GenerateSecret *SecretVersionGenerateSecret `pulumi:"generateSecret"`
+	OrganisationId *string                      `pulumi:"organisationId"`
+	Path           string                       `pulumi:"path"`
+	Region         string                       `pulumi:"region"`
+	// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+	SecretKeyValues map[string]string `pulumi:"secretKeyValues"`
+	// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 	SecretString *string `pulumi:"secretString"`
 }
 
 // The set of arguments for constructing a SecretVersion resource.
 type SecretVersionArgs struct {
-	GenerateSecret  SecretVersionGenerateSecretPtrInput
-	OrganisationId  pulumi.StringPtrInput
-	Path            pulumi.StringInput
-	Region          pulumi.StringInput
+	GenerateSecret SecretVersionGenerateSecretPtrInput
+	OrganisationId pulumi.StringPtrInput
+	Path           pulumi.StringInput
+	Region         pulumi.StringInput
+	// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
 	SecretKeyValues pulumi.StringMapInput
-	// Secret string value (not returned on read).
+	// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 	SecretString pulumi.StringPtrInput
 }
 
@@ -270,11 +275,12 @@ func (o SecretVersionOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *SecretVersion) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
+// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
 func (o SecretVersionOutput) SecretKeyValues() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *SecretVersion) pulumi.StringMapOutput { return v.SecretKeyValues }).(pulumi.StringMapOutput)
 }
 
-// Secret string value (not returned on read).
+// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
 func (o SecretVersionOutput) SecretString() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecretVersion) pulumi.StringPtrOutput { return v.SecretString }).(pulumi.StringPtrOutput)
 }

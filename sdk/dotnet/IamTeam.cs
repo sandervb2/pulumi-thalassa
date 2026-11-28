@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create a team in the Thalassa Cloud platform
     /// 
+    /// See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp
@@ -46,7 +48,7 @@ namespace Pulumi.Thalassa
     ///         ["teamSlug"] = example.Slug,
     ///         ["teamDescription"] = example.Description,
     ///         ["teamMembers"] = example.Members,
-    ///         ["teamMemberCount"] = example.Members.Length(),
+    ///         ["teamMemberCount"] = example.Members.Apply(members =&gt; members.Length),
     ///     };
     /// });
     /// ```

@@ -113,7 +113,7 @@ export class ReservedIp extends pulumi.CustomResource {
      */
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     /**
-     * Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+     * Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
      */
     declare public readonly region: pulumi.Output<string>;
     /**
@@ -214,7 +214,7 @@ export interface ReservedIpState {
      */
     organisationId?: pulumi.Input<string | undefined>;
     /**
-     * Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+     * Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
      */
     region?: pulumi.Input<string | undefined>;
     /**
@@ -252,7 +252,7 @@ export interface ReservedIpArgs {
      */
     organisationId?: pulumi.Input<string | undefined>;
     /**
-     * Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+     * Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
      */
     region: pulumi.Input<string>;
 }

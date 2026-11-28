@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Manage a service account in Thalassa Cloud
     /// 
+    /// See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

@@ -7,6 +7,8 @@ import * as utilities from "./utilities";
 /**
  * Create an vpc
  *
+ * See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+ *
  * ## Example Usage
  *
  * ```typescript

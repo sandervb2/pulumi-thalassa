@@ -83,12 +83,8 @@ type LookupDbaasDbClusterResult struct {
 }
 
 func LookupDbaasDbClusterOutput(ctx *pulumi.Context, args LookupDbaasDbClusterOutputArgs, opts ...pulumi.InvokeOption) LookupDbaasDbClusterResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupDbaasDbClusterResultOutput, error) {
-			args := v.(LookupDbaasDbClusterArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getDbaasDbCluster:getDbaasDbCluster", args, LookupDbaasDbClusterResultOutput{}, options).(LookupDbaasDbClusterResultOutput), nil
-		}).(LookupDbaasDbClusterResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getDbaasDbCluster:getDbaasDbCluster", args, LookupDbaasDbClusterResultOutput{}, options).(LookupDbaasDbClusterResultOutput)
 }
 
 // A collection of arguments for invoking getDbaasDbCluster.

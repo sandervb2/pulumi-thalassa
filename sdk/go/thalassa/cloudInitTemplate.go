@@ -12,6 +12,10 @@ import (
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
+// See [Compute documentation](https://docs.thalassa.cloud/docs/iaas/compute/).
+//
+// Reference templates from `VirtualMachineInstance` using `cloudInitTemplateId`.
+//
 // ## Example Usage
 //
 // ```go

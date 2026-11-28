@@ -484,6 +484,8 @@ class TfsInstance(pulumi.CustomResource):
         		TFS provides a high-availability, multi-availability zone Network File System (NFS) service
         		for shared storage across your infrastructure. TFS supports NFSv4 and NFSv4.1 protocols.
 
+        See [TFS documentation](https://docs.thalassa.cloud/docs/iaas/storage/tfs/).
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -510,6 +512,8 @@ class TfsInstance(pulumi.CustomResource):
         Provides a Thalassa Cloud TFS (Thalassa Filesystem Service) instance resource.
         		TFS provides a high-availability, multi-availability zone Network File System (NFS) service
         		for shared storage across your infrastructure. TFS supports NFSv4 and NFSv4.1 protocols.
+
+        See [TFS documentation](https://docs.thalassa.cloud/docs/iaas/storage/tfs/).
 
 
         :param str resource_name: The name of the resource.
@@ -584,7 +588,7 @@ class TfsInstance(pulumi.CustomResource):
             annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
-            endpoints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TfsInstanceEndpointArgs', 'TfsInstanceEndpointArgsDict']]]]] = None,
+            endpoints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TfsInstanceEndpointArgs', 'TfsInstanceEndpointArgsDict', 'outputs.TfsInstanceEndpoint']]]]] = None,
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -606,7 +610,7 @@ class TfsInstance(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the TFS instance
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the TFS instance
         :param pulumi.Input[_builtins.str] description: A human readable description about the TFS instance
-        :param pulumi.Input[Sequence[pulumi.Input[Union['TfsInstanceEndpointArgs', 'TfsInstanceEndpointArgsDict']]]] endpoints: List of endpoints for the TFS instance
+        :param pulumi.Input[Sequence[pulumi.Input[Union['TfsInstanceEndpointArgs', 'TfsInstanceEndpointArgsDict', 'outputs.TfsInstanceEndpoint']]]] endpoints: List of endpoints for the TFS instance
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the TFS instance
         :param pulumi.Input[_builtins.str] name: Name of the TFS instance
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the TFS Instance. If not provided, the organisation of the (Terraform) provider will be used.

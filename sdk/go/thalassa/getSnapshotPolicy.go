@@ -71,12 +71,8 @@ type LookupSnapshotPolicyResult struct {
 }
 
 func LookupSnapshotPolicyOutput(ctx *pulumi.Context, args LookupSnapshotPolicyOutputArgs, opts ...pulumi.InvokeOption) LookupSnapshotPolicyResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupSnapshotPolicyResultOutput, error) {
-			args := v.(LookupSnapshotPolicyArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getSnapshotPolicy:getSnapshotPolicy", args, LookupSnapshotPolicyResultOutput{}, options).(LookupSnapshotPolicyResultOutput), nil
-		}).(LookupSnapshotPolicyResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getSnapshotPolicy:getSnapshotPolicy", args, LookupSnapshotPolicyResultOutput{}, options).(LookupSnapshotPolicyResultOutput)
 }
 
 // A collection of arguments for invoking getSnapshotPolicy.

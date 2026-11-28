@@ -28,7 +28,7 @@ class ReservedIpArgs:
         """
         The set of arguments for constructing a ReservedIp resource.
 
-        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the reserved IP.
         :param pulumi.Input[_builtins.str] description: Human-readable description of the reserved IP.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the reserved IP.
@@ -51,7 +51,7 @@ class ReservedIpArgs:
     @pulumi.getter
     def region(self) -> pulumi.Input[_builtins.str]:
         """
-        Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         """
         return pulumi.get(self, "region")
 
@@ -147,7 +147,7 @@ class _ReservedIpState:
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the reserved IP.
         :param pulumi.Input[_builtins.str] name: Display name of the reserved IP.
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
-        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         :param pulumi.Input[_builtins.str] slug: Slug of the reserved IP.
         :param pulumi.Input[_builtins.str] status: Provisioning and attachment status of the reserved IP.
         """
@@ -288,7 +288,7 @@ class _ReservedIpState:
     @pulumi.getter
     def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         """
         return pulumi.get(self, "region")
 
@@ -382,7 +382,7 @@ class ReservedIp(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the reserved IP.
         :param pulumi.Input[_builtins.str] name: Display name of the reserved IP.
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
-        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         """
         ...
     @overload
@@ -513,7 +513,7 @@ class ReservedIp(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the reserved IP.
         :param pulumi.Input[_builtins.str] name: Display name of the reserved IP.
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
-        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        :param pulumi.Input[_builtins.str] region: Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         :param pulumi.Input[_builtins.str] slug: Slug of the reserved IP.
         :param pulumi.Input[_builtins.str] status: Provisioning and attachment status of the reserved IP.
         """
@@ -611,7 +611,7 @@ class ReservedIp(pulumi.CustomResource):
     @pulumi.getter
     def region(self) -> pulumi.Output[_builtins.str]:
         """
-        Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         """
         return pulumi.get(self, "region")
 

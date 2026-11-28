@@ -14,6 +14,8 @@ import (
 
 // Create a PostgreSQL database
 //
+// See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+//
 // ## Example Usage
 //
 // ```go

@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Manages a Kubernetes cluster role binding for IAM access control. This resource allows you to bind users, teams, or service accounts to Kubernetes cluster roles.
     /// 
+    /// See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
+    /// 
     /// ## Important Notes
     /// 
     /// - **Single Binding**: Each binding can only bind one entity (user, team, or service account) to one cluster role

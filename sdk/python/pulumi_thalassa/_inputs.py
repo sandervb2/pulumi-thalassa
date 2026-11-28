@@ -15,6 +15,10 @@ else:
 from . import _utilities
 
 __all__ = [
+    'ContainerregistryNamespaceConfigurationRetentionPolicyArgs',
+    'ContainerregistryNamespaceConfigurationRetentionPolicyArgsDict',
+    'ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs',
+    'ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgsDict',
     'DbaasDbClusterRestoreRecoveryTargetArgs',
     'DbaasDbClusterRestoreRecoveryTargetArgsDict',
     'DnsZoneDnssecDsRecordArgs',
@@ -85,6 +89,224 @@ __all__ = [
     'VpcPeeringConnectionRequesterVpcArgsDict',
 ]
 
+class ContainerregistryNamespaceConfigurationRetentionPolicyArgsDict(TypedDict):
+    delete_untagged_images: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether to delete untagged images
+    """
+    enabled: NotRequired[pulumi.Input[Optional[_builtins.bool]]]
+    """
+    Whether the retention policy is active
+    """
+    rules: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input['ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgsDict']]]]]
+    """
+    List of retention rules
+    """
+
+@pulumi.input_type
+class ContainerregistryNamespaceConfigurationRetentionPolicyArgs:
+    def __init__(__self__, *,
+                 delete_untagged_images: pulumi.Input[Optional[_builtins.bool]] = None,
+                 enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input['ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs']]]] = None):
+        """
+        :param pulumi.Input[_builtins.bool] delete_untagged_images: Whether to delete untagged images
+        :param pulumi.Input[_builtins.bool] enabled: Whether the retention policy is active
+        :param pulumi.Input[Sequence[pulumi.Input['ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs']]] rules: List of retention rules
+        """
+        if delete_untagged_images is not None:
+            pulumi.set(__self__, "delete_untagged_images", delete_untagged_images)
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if rules is not None:
+            pulumi.set(__self__, "rules", rules)
+
+    @_builtins.property
+    @pulumi.getter(name="deleteUntaggedImages")
+    def delete_untagged_images(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether to delete untagged images
+        """
+        return pulumi.get(self, "delete_untagged_images")
+
+    @delete_untagged_images.setter
+    def delete_untagged_images(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "delete_untagged_images", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[Optional[_builtins.bool]]:
+        """
+        Whether the retention policy is active
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[Optional[_builtins.bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def rules(self) -> pulumi.Input[Optional[Sequence[pulumi.Input['ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs']]]]:
+        """
+        List of retention rules
+        """
+        return pulumi.get(self, "rules")
+
+    @rules.setter
+    def rules(self, value: pulumi.Input[Optional[Sequence[pulumi.Input['ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs']]]]):
+        pulumi.set(self, "rules", value)
+
+
+class ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgsDict(TypedDict):
+    count: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Number of most recent versions/tags to keep
+    """
+    days: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Retain tags based on tag creation age in days
+    """
+    days_since_created: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Retain artifacts based on creation/push age in days
+    """
+    days_since_pulled: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Retain artifacts based on last pull age in days
+    """
+    repository_patterns: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Repository name patterns this rule applies to
+    """
+    scope: NotRequired[pulumi.Input[Optional[_builtins.str]]]
+    """
+    Scope of the retention rule (currently only tags)
+    """
+    tag_patterns: NotRequired[pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]]
+    """
+    Tag patterns this rule applies to
+    """
+
+@pulumi.input_type
+class ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs:
+    def __init__(__self__, *,
+                 count: pulumi.Input[Optional[_builtins.int]] = None,
+                 days: pulumi.Input[Optional[_builtins.int]] = None,
+                 days_since_created: pulumi.Input[Optional[_builtins.int]] = None,
+                 days_since_pulled: pulumi.Input[Optional[_builtins.int]] = None,
+                 repository_patterns: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 scope: pulumi.Input[Optional[_builtins.str]] = None,
+                 tag_patterns: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None):
+        """
+        :param pulumi.Input[_builtins.int] count: Number of most recent versions/tags to keep
+        :param pulumi.Input[_builtins.int] days: Retain tags based on tag creation age in days
+        :param pulumi.Input[_builtins.int] days_since_created: Retain artifacts based on creation/push age in days
+        :param pulumi.Input[_builtins.int] days_since_pulled: Retain artifacts based on last pull age in days
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] repository_patterns: Repository name patterns this rule applies to
+        :param pulumi.Input[_builtins.str] scope: Scope of the retention rule (currently only tags)
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] tag_patterns: Tag patterns this rule applies to
+        """
+        if count is not None:
+            pulumi.set(__self__, "count", count)
+        if days is not None:
+            pulumi.set(__self__, "days", days)
+        if days_since_created is not None:
+            pulumi.set(__self__, "days_since_created", days_since_created)
+        if days_since_pulled is not None:
+            pulumi.set(__self__, "days_since_pulled", days_since_pulled)
+        if repository_patterns is not None:
+            pulumi.set(__self__, "repository_patterns", repository_patterns)
+        if scope is not None:
+            pulumi.set(__self__, "scope", scope)
+        if tag_patterns is not None:
+            pulumi.set(__self__, "tag_patterns", tag_patterns)
+
+    @_builtins.property
+    @pulumi.getter
+    def count(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Number of most recent versions/tags to keep
+        """
+        return pulumi.get(self, "count")
+
+    @count.setter
+    def count(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "count", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def days(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Retain tags based on tag creation age in days
+        """
+        return pulumi.get(self, "days")
+
+    @days.setter
+    def days(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days", value)
+
+    @_builtins.property
+    @pulumi.getter(name="daysSinceCreated")
+    def days_since_created(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Retain artifacts based on creation/push age in days
+        """
+        return pulumi.get(self, "days_since_created")
+
+    @days_since_created.setter
+    def days_since_created(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days_since_created", value)
+
+    @_builtins.property
+    @pulumi.getter(name="daysSincePulled")
+    def days_since_pulled(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Retain artifacts based on last pull age in days
+        """
+        return pulumi.get(self, "days_since_pulled")
+
+    @days_since_pulled.setter
+    def days_since_pulled(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "days_since_pulled", value)
+
+    @_builtins.property
+    @pulumi.getter(name="repositoryPatterns")
+    def repository_patterns(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        Repository name patterns this rule applies to
+        """
+        return pulumi.get(self, "repository_patterns")
+
+    @repository_patterns.setter
+    def repository_patterns(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "repository_patterns", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def scope(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Scope of the retention rule (currently only tags)
+        """
+        return pulumi.get(self, "scope")
+
+    @scope.setter
+    def scope(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "scope", value)
+
+    @_builtins.property
+    @pulumi.getter(name="tagPatterns")
+    def tag_patterns(self) -> pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        Tag patterns this rule applies to
+        """
+        return pulumi.get(self, "tag_patterns")
+
+    @tag_patterns.setter
+    def tag_patterns(self, value: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "tag_patterns", value)
+
+
 class DbaasDbClusterRestoreRecoveryTargetArgsDict(TypedDict):
     target_lsn: NotRequired[pulumi.Input[Optional[_builtins.str]]]
     """
@@ -92,7 +314,7 @@ class DbaasDbClusterRestoreRecoveryTargetArgsDict(TypedDict):
     """
     target_time: NotRequired[pulumi.Input[Optional[_builtins.str]]]
     """
-    Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+    Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
     """
 
 @pulumi.input_type
@@ -102,7 +324,7 @@ class DbaasDbClusterRestoreRecoveryTargetArgs:
                  target_time: pulumi.Input[Optional[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] target_lsn: Log Sequence Number to restore to. Example: '0/1234567'
-        :param pulumi.Input[_builtins.str] target_time: Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+        :param pulumi.Input[_builtins.str] target_time: Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
         """
         if target_lsn is not None:
             pulumi.set(__self__, "target_lsn", target_lsn)
@@ -125,7 +347,7 @@ class DbaasDbClusterRestoreRecoveryTargetArgs:
     @pulumi.getter(name="targetTime")
     def target_time(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+        Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
         """
         return pulumi.get(self, "target_time")
 
@@ -1572,36 +1794,32 @@ class SecretGenerateSecretArgs:
 
 
 class SecretVersionGenerateSecretArgsDict(TypedDict):
-    character_set: NotRequired[pulumi.Input[Optional[_builtins.str]]]
-    length: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    byte_length: NotRequired[pulumi.Input[Optional[_builtins.int]]]
+    """
+    Byte length of the generated secret.
+    """
 
 @pulumi.input_type
 class SecretVersionGenerateSecretArgs:
     def __init__(__self__, *,
-                 character_set: pulumi.Input[Optional[_builtins.str]] = None,
-                 length: pulumi.Input[Optional[_builtins.int]] = None):
-        if character_set is not None:
-            pulumi.set(__self__, "character_set", character_set)
-        if length is not None:
-            pulumi.set(__self__, "length", length)
+                 byte_length: pulumi.Input[Optional[_builtins.int]] = None):
+        """
+        :param pulumi.Input[_builtins.int] byte_length: Byte length of the generated secret.
+        """
+        if byte_length is not None:
+            pulumi.set(__self__, "byte_length", byte_length)
 
     @_builtins.property
-    @pulumi.getter(name="characterSet")
-    def character_set(self) -> pulumi.Input[Optional[_builtins.str]]:
-        return pulumi.get(self, "character_set")
+    @pulumi.getter(name="byteLength")
+    def byte_length(self) -> pulumi.Input[Optional[_builtins.int]]:
+        """
+        Byte length of the generated secret.
+        """
+        return pulumi.get(self, "byte_length")
 
-    @character_set.setter
-    def character_set(self, value: pulumi.Input[Optional[_builtins.str]]):
-        pulumi.set(self, "character_set", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def length(self) -> pulumi.Input[Optional[_builtins.int]]:
-        return pulumi.get(self, "length")
-
-    @length.setter
-    def length(self, value: pulumi.Input[Optional[_builtins.int]]):
-        pulumi.set(self, "length", value)
+    @byte_length.setter
+    def byte_length(self, value: pulumi.Input[Optional[_builtins.int]]):
+        pulumi.set(self, "byte_length", value)
 
 
 class SecurityGroupEgressRuleArgsDict(TypedDict):

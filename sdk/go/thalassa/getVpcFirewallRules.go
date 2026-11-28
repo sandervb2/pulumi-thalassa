@@ -39,12 +39,8 @@ type GetVpcFirewallRulesResult struct {
 }
 
 func GetVpcFirewallRulesOutput(ctx *pulumi.Context, args GetVpcFirewallRulesOutputArgs, opts ...pulumi.InvokeOption) GetVpcFirewallRulesResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetVpcFirewallRulesResultOutput, error) {
-			args := v.(GetVpcFirewallRulesArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getVpcFirewallRules:getVpcFirewallRules", args, GetVpcFirewallRulesResultOutput{}, options).(GetVpcFirewallRulesResultOutput), nil
-		}).(GetVpcFirewallRulesResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getVpcFirewallRules:getVpcFirewallRules", args, GetVpcFirewallRulesResultOutput{}, options).(GetVpcFirewallRulesResultOutput)
 }
 
 // A collection of arguments for invoking getVpcFirewallRules.

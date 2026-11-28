@@ -583,6 +583,10 @@ class VpcPeeringConnection(pulumi.CustomResource):
         """
         Create and manage a VPC peering connection
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
+        The peer VPC owner must accept the request with `VpcPeeringConnectionAcceptance`.
+
         ## Example Usage
 
         ```python
@@ -648,6 +652,10 @@ class VpcPeeringConnection(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create and manage a VPC peering connection
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
+        The peer VPC owner must accept the request with `VpcPeeringConnectionAcceptance`.
 
         ## Example Usage
 
@@ -765,9 +773,9 @@ class VpcPeeringConnection(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             accepter_next_hop_ip: pulumi.Input[Optional[_builtins.str]] = None,
             accepter_organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-            accepter_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterOrganisationArgs', 'VpcPeeringConnectionAccepterOrganisationArgsDict']]]]] = None,
+            accepter_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterOrganisationArgs', 'VpcPeeringConnectionAccepterOrganisationArgsDict', 'outputs.VpcPeeringConnectionAccepterOrganisation']]]]] = None,
             accepter_vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
-            accepter_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterVpcArgs', 'VpcPeeringConnectionAccepterVpcArgsDict']]]]] = None,
+            accepter_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterVpcArgs', 'VpcPeeringConnectionAccepterVpcArgsDict', 'outputs.VpcPeeringConnectionAccepterVpc']]]]] = None,
             annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             auto_accept: pulumi.Input[Optional[_builtins.bool]] = None,
             created_at: pulumi.Input[Optional[_builtins.str]] = None,
@@ -776,9 +784,9 @@ class VpcPeeringConnection(pulumi.CustomResource):
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             requester_next_hop_ip: pulumi.Input[Optional[_builtins.str]] = None,
-            requester_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterOrganisationArgs', 'VpcPeeringConnectionRequesterOrganisationArgsDict']]]]] = None,
+            requester_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterOrganisationArgs', 'VpcPeeringConnectionRequesterOrganisationArgsDict', 'outputs.VpcPeeringConnectionRequesterOrganisation']]]]] = None,
             requester_vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
-            requester_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterVpcArgs', 'VpcPeeringConnectionRequesterVpcArgsDict']]]]] = None,
+            requester_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterVpcArgs', 'VpcPeeringConnectionRequesterVpcArgsDict', 'outputs.VpcPeeringConnectionRequesterVpc']]]]] = None,
             status: pulumi.Input[Optional[_builtins.str]] = None,
             status_message: pulumi.Input[Optional[_builtins.str]] = None,
             updated_at: pulumi.Input[Optional[_builtins.str]] = None,
@@ -794,9 +802,9 @@ class VpcPeeringConnection(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] accepter_next_hop_ip: Next hop IP address for the accepter VPC
         :param pulumi.Input[_builtins.str] accepter_organisation_id: ID of the organisation that owns the accepter VPC
-        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterOrganisationArgs', 'VpcPeeringConnectionAccepterOrganisationArgsDict']]]] accepter_organisations: Information about the accepter organisation
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterOrganisationArgs', 'VpcPeeringConnectionAccepterOrganisationArgsDict', 'outputs.VpcPeeringConnectionAccepterOrganisation']]]] accepter_organisations: Information about the accepter organisation
         :param pulumi.Input[_builtins.str] accepter_vpc_id: ID of the VPC that will accept or deny the peering request
-        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterVpcArgs', 'VpcPeeringConnectionAccepterVpcArgsDict']]]] accepter_vpcs: Information about the accepter VPC
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterVpcArgs', 'VpcPeeringConnectionAccepterVpcArgsDict', 'outputs.VpcPeeringConnectionAccepterVpc']]]] accepter_vpcs: Information about the accepter VPC
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the VPC peering connection
         :param pulumi.Input[_builtins.bool] auto_accept: Whether the peering connection should be automatically accepted. Only allowed if requester and accepter VPCs are in the same region and owned by the same organisation.
         :param pulumi.Input[_builtins.str] created_at: Time when the VPC peering connection was created
@@ -805,9 +813,9 @@ class VpcPeeringConnection(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the VPC peering connection
         :param pulumi.Input[_builtins.str] name: Name of the VPC peering connection. Must be between 1 and 63 characters and contain only ASCII characters.
         :param pulumi.Input[_builtins.str] requester_next_hop_ip: Next hop IP address for the requester VPC
-        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterOrganisationArgs', 'VpcPeeringConnectionRequesterOrganisationArgsDict']]]] requester_organisations: Information about the requester organisation
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterOrganisationArgs', 'VpcPeeringConnectionRequesterOrganisationArgsDict', 'outputs.VpcPeeringConnectionRequesterOrganisation']]]] requester_organisations: Information about the requester organisation
         :param pulumi.Input[_builtins.str] requester_vpc_id: ID of the VPC that will initiate the peering request
-        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterVpcArgs', 'VpcPeeringConnectionRequesterVpcArgsDict']]]] requester_vpcs: Information about the requester VPC
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterVpcArgs', 'VpcPeeringConnectionRequesterVpcArgsDict', 'outputs.VpcPeeringConnectionRequesterVpc']]]] requester_vpcs: Information about the requester VPC
         :param pulumi.Input[_builtins.str] status: Current status of the VPC peering connection
         :param pulumi.Input[_builtins.str] status_message: Additional information about the current status
         :param pulumi.Input[_builtins.str] updated_at: Time when the VPC peering connection was last updated

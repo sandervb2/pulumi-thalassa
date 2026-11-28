@@ -305,6 +305,8 @@ class Vpc(pulumi.CustomResource):
         """
         Create an vpc
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -355,6 +357,8 @@ class Vpc(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an vpc
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

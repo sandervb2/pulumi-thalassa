@@ -448,6 +448,8 @@ class LoadbalancerListener(pulumi.CustomResource):
         """
         Create a listener for a loadbalancer
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -514,6 +516,8 @@ class LoadbalancerListener(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a listener for a loadbalancer
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

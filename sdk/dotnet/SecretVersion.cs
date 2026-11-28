@@ -12,7 +12,7 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Manage a secret version in Thalassa Secrets Manager
     /// 
-    /// &gt; **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+    /// &gt; **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
     /// 
     /// See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
     /// 
@@ -64,11 +64,14 @@ namespace Pulumi.Thalassa
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        /// </summary>
         [Output("secretKeyValues")]
         public Output<ImmutableDictionary<string, string>?> SecretKeyValues { get; private set; } = null!;
 
         /// <summary>
-        /// Secret string value (not returned on read).
+        /// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         /// </summary>
         [Output("secretString")]
         public Output<string?> SecretString { get; private set; } = null!;
@@ -145,6 +148,10 @@ namespace Pulumi.Thalassa
 
         [Input("secretKeyValues")]
         private InputMap<string>? _secretKeyValues;
+
+        /// <summary>
+        /// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        /// </summary>
         public InputMap<string> SecretKeyValues
         {
             get => _secretKeyValues ?? (_secretKeyValues = new InputMap<string>());
@@ -159,7 +166,7 @@ namespace Pulumi.Thalassa
         private Input<string>? _secretString;
 
         /// <summary>
-        /// Secret string value (not returned on read).
+        /// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         /// </summary>
         public Input<string>? SecretString
         {
@@ -193,6 +200,10 @@ namespace Pulumi.Thalassa
 
         [Input("secretKeyValues")]
         private InputMap<string>? _secretKeyValues;
+
+        /// <summary>
+        /// Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        /// </summary>
         public InputMap<string> SecretKeyValues
         {
             get => _secretKeyValues ?? (_secretKeyValues = new InputMap<string>());
@@ -207,7 +218,7 @@ namespace Pulumi.Thalassa
         private Input<string>? _secretString;
 
         /// <summary>
-        /// Secret string value (not returned on read).
+        /// Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         /// </summary>
         public Input<string>? SecretString
         {

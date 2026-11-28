@@ -14,11 +14,11 @@ import (
 
 // Create and manage a KMS key in Thalassa Cloud
 //
-// > **Early access:** KMS is in early access. The API and Terraform resource schema may change in future provider releases.
+// > **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 //
 // See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
 //
-// KMS must be enabled for your organisation. Use the `thalassaKmsSummary` data source to verify regional availability before creating keys.
+// Use the `thalassaKmsSummary` data source to verify regional availability before creating keys.
 //
 // ## Deletion behaviour
 //

@@ -465,6 +465,8 @@ class Loadbalancer(pulumi.CustomResource):
         """
         Create an loadbalancer within a VPC
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -525,6 +527,8 @@ class Loadbalancer(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an loadbalancer within a VPC
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

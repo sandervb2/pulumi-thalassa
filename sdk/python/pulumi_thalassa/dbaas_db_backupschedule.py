@@ -373,6 +373,8 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         """
         Create a database backup schedule
 
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+
         ## Example Usage
 
         ```python
@@ -433,6 +435,8 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a database backup schedule
+
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
 
         ## Example Usage
 

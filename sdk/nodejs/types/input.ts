@@ -5,13 +5,59 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface ContainerregistryNamespaceConfigurationRetentionPolicy {
+    /**
+     * Whether to delete untagged images
+     */
+    deleteUntaggedImages?: pulumi.Input<boolean | undefined>;
+    /**
+     * Whether the retention policy is active
+     */
+    enabled?: pulumi.Input<boolean | undefined>;
+    /**
+     * List of retention rules
+     */
+    rules?: pulumi.Input<pulumi.Input<inputs.ContainerregistryNamespaceConfigurationRetentionPolicyRule>[] | undefined>;
+}
+
+export interface ContainerregistryNamespaceConfigurationRetentionPolicyRule {
+    /**
+     * Number of most recent versions/tags to keep
+     */
+    count?: pulumi.Input<number | undefined>;
+    /**
+     * Retain tags based on tag creation age in days
+     */
+    days?: pulumi.Input<number | undefined>;
+    /**
+     * Retain artifacts based on creation/push age in days
+     */
+    daysSinceCreated?: pulumi.Input<number | undefined>;
+    /**
+     * Retain artifacts based on last pull age in days
+     */
+    daysSincePulled?: pulumi.Input<number | undefined>;
+    /**
+     * Repository name patterns this rule applies to
+     */
+    repositoryPatterns?: pulumi.Input<pulumi.Input<string>[] | undefined>;
+    /**
+     * Scope of the retention rule (currently only tags)
+     */
+    scope?: pulumi.Input<string | undefined>;
+    /**
+     * Tag patterns this rule applies to
+     */
+    tagPatterns?: pulumi.Input<pulumi.Input<string>[] | undefined>;
+}
+
 export interface DbaasDbClusterRestoreRecoveryTarget {
     /**
      * Log Sequence Number to restore to. Example: '0/1234567'
      */
     targetLsn?: pulumi.Input<string | undefined>;
     /**
-     * Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+     * Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
      */
     targetTime?: pulumi.Input<string | undefined>;
 }
@@ -270,8 +316,10 @@ export interface SecretGenerateSecret {
 }
 
 export interface SecretVersionGenerateSecret {
-    characterSet?: pulumi.Input<string | undefined>;
-    length?: pulumi.Input<number | undefined>;
+    /**
+     * Byte length of the generated secret.
+     */
+    byteLength?: pulumi.Input<number | undefined>;
 }
 
 export interface SecurityGroupEgressRule {

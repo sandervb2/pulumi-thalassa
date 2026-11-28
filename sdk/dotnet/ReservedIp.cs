@@ -131,7 +131,7 @@ namespace Pulumi.Thalassa
         public Output<string?> OrganisationId { get; private set; } = null!;
 
         /// <summary>
-        /// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        /// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
@@ -238,7 +238,7 @@ namespace Pulumi.Thalassa
         public Input<string>? OrganisationId { get; set; }
 
         /// <summary>
-        /// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        /// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
@@ -318,7 +318,7 @@ namespace Pulumi.Thalassa
         public Input<string>? OrganisationId { get; set; }
 
         /// <summary>
-        /// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+        /// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }

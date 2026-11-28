@@ -13,10 +13,340 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+type ContainerregistryNamespaceConfigurationRetentionPolicy struct {
+	// Whether to delete untagged images
+	DeleteUntaggedImages *bool `pulumi:"deleteUntaggedImages"`
+	// Whether the retention policy is active
+	Enabled *bool `pulumi:"enabled"`
+	// List of retention rules
+	Rules []ContainerregistryNamespaceConfigurationRetentionPolicyRule `pulumi:"rules"`
+}
+
+// ContainerregistryNamespaceConfigurationRetentionPolicyInput is an input type that accepts ContainerregistryNamespaceConfigurationRetentionPolicyArgs and ContainerregistryNamespaceConfigurationRetentionPolicyOutput values.
+// You can construct a concrete instance of `ContainerregistryNamespaceConfigurationRetentionPolicyInput` via:
+//
+//	ContainerregistryNamespaceConfigurationRetentionPolicyArgs{...}
+type ContainerregistryNamespaceConfigurationRetentionPolicyInput interface {
+	pulumi.Input
+
+	ToContainerregistryNamespaceConfigurationRetentionPolicyOutput() ContainerregistryNamespaceConfigurationRetentionPolicyOutput
+	ToContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyOutput
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyArgs struct {
+	// Whether to delete untagged images
+	DeleteUntaggedImages pulumi.BoolPtrInput `pulumi:"deleteUntaggedImages"`
+	// Whether the retention policy is active
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// List of retention rules
+	Rules ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput `pulumi:"rules"`
+}
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyOutput() ContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return i.ToContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(context.Background())
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerregistryNamespaceConfigurationRetentionPolicyOutput)
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput() ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return i.ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(context.Background())
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerregistryNamespaceConfigurationRetentionPolicyOutput).ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(ctx)
+}
+
+// ContainerregistryNamespaceConfigurationRetentionPolicyPtrInput is an input type that accepts ContainerregistryNamespaceConfigurationRetentionPolicyArgs, ContainerregistryNamespaceConfigurationRetentionPolicyPtr and ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput values.
+// You can construct a concrete instance of `ContainerregistryNamespaceConfigurationRetentionPolicyPtrInput` via:
+//
+//	        ContainerregistryNamespaceConfigurationRetentionPolicyArgs{...}
+//
+//	or:
+//
+//	        nil
+type ContainerregistryNamespaceConfigurationRetentionPolicyPtrInput interface {
+	pulumi.Input
+
+	ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput() ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput
+	ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput
+}
+
+type containerregistryNamespaceConfigurationRetentionPolicyPtrType ContainerregistryNamespaceConfigurationRetentionPolicyArgs
+
+func ContainerregistryNamespaceConfigurationRetentionPolicyPtr(v *ContainerregistryNamespaceConfigurationRetentionPolicyArgs) ContainerregistryNamespaceConfigurationRetentionPolicyPtrInput {
+	return (*containerregistryNamespaceConfigurationRetentionPolicyPtrType)(v)
+}
+
+func (*containerregistryNamespaceConfigurationRetentionPolicyPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (i *containerregistryNamespaceConfigurationRetentionPolicyPtrType) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput() ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return i.ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(context.Background())
+}
+
+func (i *containerregistryNamespaceConfigurationRetentionPolicyPtrType) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput)
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyOutput struct{ *pulumi.OutputState }
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyOutput() ContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput() ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return o.ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(context.Background())
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContainerregistryNamespaceConfigurationRetentionPolicy) *ContainerregistryNamespaceConfigurationRetentionPolicy {
+		return &v
+	}).(ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput)
+}
+
+// Whether to delete untagged images
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) DeleteUntaggedImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicy) *bool { return v.DeleteUntaggedImages }).(pulumi.BoolPtrOutput)
+}
+
+// Whether the retention policy is active
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicy) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// List of retention rules
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyOutput) Rules() ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicy) []ContainerregistryNamespaceConfigurationRetentionPolicyRule {
+		return v.Rules
+	}).(ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput)
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput struct{ *pulumi.OutputState }
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput() ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyPtrOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) Elem() ContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return o.ApplyT(func(v *ContainerregistryNamespaceConfigurationRetentionPolicy) ContainerregistryNamespaceConfigurationRetentionPolicy {
+		if v != nil {
+			return *v
+		}
+		var ret ContainerregistryNamespaceConfigurationRetentionPolicy
+		return ret
+	}).(ContainerregistryNamespaceConfigurationRetentionPolicyOutput)
+}
+
+// Whether to delete untagged images
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) DeleteUntaggedImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ContainerregistryNamespaceConfigurationRetentionPolicy) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.DeleteUntaggedImages
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Whether the retention policy is active
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ContainerregistryNamespaceConfigurationRetentionPolicy) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// List of retention rules
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput) Rules() ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o.ApplyT(func(v *ContainerregistryNamespaceConfigurationRetentionPolicy) []ContainerregistryNamespaceConfigurationRetentionPolicyRule {
+		if v == nil {
+			return nil
+		}
+		return v.Rules
+	}).(ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput)
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyRule struct {
+	// Number of most recent versions/tags to keep
+	Count *int `pulumi:"count"`
+	// Retain tags based on tag creation age in days
+	Days *int `pulumi:"days"`
+	// Retain artifacts based on creation/push age in days
+	DaysSinceCreated *int `pulumi:"daysSinceCreated"`
+	// Retain artifacts based on last pull age in days
+	DaysSincePulled *int `pulumi:"daysSincePulled"`
+	// Repository name patterns this rule applies to
+	RepositoryPatterns []string `pulumi:"repositoryPatterns"`
+	// Scope of the retention rule (currently only tags)
+	Scope *string `pulumi:"scope"`
+	// Tag patterns this rule applies to
+	TagPatterns []string `pulumi:"tagPatterns"`
+}
+
+// ContainerregistryNamespaceConfigurationRetentionPolicyRuleInput is an input type that accepts ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs and ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput values.
+// You can construct a concrete instance of `ContainerregistryNamespaceConfigurationRetentionPolicyRuleInput` via:
+//
+//	ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{...}
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleInput interface {
+	pulumi.Input
+
+	ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput
+	ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs struct {
+	// Number of most recent versions/tags to keep
+	Count pulumi.IntPtrInput `pulumi:"count"`
+	// Retain tags based on tag creation age in days
+	Days pulumi.IntPtrInput `pulumi:"days"`
+	// Retain artifacts based on creation/push age in days
+	DaysSinceCreated pulumi.IntPtrInput `pulumi:"daysSinceCreated"`
+	// Retain artifacts based on last pull age in days
+	DaysSincePulled pulumi.IntPtrInput `pulumi:"daysSincePulled"`
+	// Repository name patterns this rule applies to
+	RepositoryPatterns pulumi.StringArrayInput `pulumi:"repositoryPatterns"`
+	// Scope of the retention rule (currently only tags)
+	Scope pulumi.StringPtrInput `pulumi:"scope"`
+	// Tag patterns this rule applies to
+	TagPatterns pulumi.StringArrayInput `pulumi:"tagPatterns"`
+}
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return i.ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(context.Background())
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput)
+}
+
+// ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput is an input type that accepts ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray and ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput values.
+// You can construct a concrete instance of `ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput` via:
+//
+//	ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray{ ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{...} }
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput interface {
+	pulumi.Input
+
+	ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput
+	ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray []ContainerregistryNamespaceConfigurationRetentionPolicyRuleInput
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return i.ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(context.Background())
+}
+
+func (i ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput)
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput struct{ *pulumi.OutputState }
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return o
+}
+
+// Number of most recent versions/tags to keep
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Count() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) *int { return v.Count }).(pulumi.IntPtrOutput)
+}
+
+// Retain tags based on tag creation age in days
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Days() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) *int { return v.Days }).(pulumi.IntPtrOutput)
+}
+
+// Retain artifacts based on creation/push age in days
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) DaysSinceCreated() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) *int { return v.DaysSinceCreated }).(pulumi.IntPtrOutput)
+}
+
+// Retain artifacts based on last pull age in days
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) DaysSincePulled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) *int { return v.DaysSincePulled }).(pulumi.IntPtrOutput)
+}
+
+// Repository name patterns this rule applies to
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) RepositoryPatterns() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) []string {
+		return v.RepositoryPatterns
+	}).(pulumi.StringArrayOutput)
+}
+
+// Scope of the retention rule (currently only tags)
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Scope() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) *string { return v.Scope }).(pulumi.StringPtrOutput)
+}
+
+// Tag patterns this rule applies to
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) TagPatterns() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ContainerregistryNamespaceConfigurationRetentionPolicyRule) []string { return v.TagPatterns }).(pulumi.StringArrayOutput)
+}
+
+type ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput struct{ *pulumi.OutputState }
+
+func (ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ToContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(ctx context.Context) ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o
+}
+
+func (o ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) Index(i pulumi.IntInput) ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) ContainerregistryNamespaceConfigurationRetentionPolicyRule {
+		return vs[0].([]ContainerregistryNamespaceConfigurationRetentionPolicyRule)[vs[1].(int)]
+	}).(ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput)
+}
+
 type DbaasDbClusterRestoreRecoveryTarget struct {
 	// Log Sequence Number to restore to. Example: '0/1234567'
 	TargetLsn *string `pulumi:"targetLsn"`
-	// Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+	// Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
 	TargetTime *string `pulumi:"targetTime"`
 }
 
@@ -34,7 +364,7 @@ type DbaasDbClusterRestoreRecoveryTargetInput interface {
 type DbaasDbClusterRestoreRecoveryTargetArgs struct {
 	// Log Sequence Number to restore to. Example: '0/1234567'
 	TargetLsn pulumi.StringPtrInput `pulumi:"targetLsn"`
-	// Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+	// Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
 	TargetTime pulumi.StringPtrInput `pulumi:"targetTime"`
 }
 
@@ -120,7 +450,7 @@ func (o DbaasDbClusterRestoreRecoveryTargetOutput) TargetLsn() pulumi.StringPtrO
 	return o.ApplyT(func(v DbaasDbClusterRestoreRecoveryTarget) *string { return v.TargetLsn }).(pulumi.StringPtrOutput)
 }
 
-// Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+// Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
 func (o DbaasDbClusterRestoreRecoveryTargetOutput) TargetTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DbaasDbClusterRestoreRecoveryTarget) *string { return v.TargetTime }).(pulumi.StringPtrOutput)
 }
@@ -159,7 +489,7 @@ func (o DbaasDbClusterRestoreRecoveryTargetPtrOutput) TargetLsn() pulumi.StringP
 	}).(pulumi.StringPtrOutput)
 }
 
-// Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+// Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
 func (o DbaasDbClusterRestoreRecoveryTargetPtrOutput) TargetTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasDbClusterRestoreRecoveryTarget) *string {
 		if v == nil {
@@ -3040,8 +3370,8 @@ func (o SecretGenerateSecretPtrOutput) ByteLength() pulumi.IntPtrOutput {
 }
 
 type SecretVersionGenerateSecret struct {
-	CharacterSet *string `pulumi:"characterSet"`
-	Length       *int    `pulumi:"length"`
+	// Byte length of the generated secret.
+	ByteLength *int `pulumi:"byteLength"`
 }
 
 // SecretVersionGenerateSecretInput is an input type that accepts SecretVersionGenerateSecretArgs and SecretVersionGenerateSecretOutput values.
@@ -3056,8 +3386,8 @@ type SecretVersionGenerateSecretInput interface {
 }
 
 type SecretVersionGenerateSecretArgs struct {
-	CharacterSet pulumi.StringPtrInput `pulumi:"characterSet"`
-	Length       pulumi.IntPtrInput    `pulumi:"length"`
+	// Byte length of the generated secret.
+	ByteLength pulumi.IntPtrInput `pulumi:"byteLength"`
 }
 
 func (SecretVersionGenerateSecretArgs) ElementType() reflect.Type {
@@ -3137,12 +3467,9 @@ func (o SecretVersionGenerateSecretOutput) ToSecretVersionGenerateSecretPtrOutpu
 	}).(SecretVersionGenerateSecretPtrOutput)
 }
 
-func (o SecretVersionGenerateSecretOutput) CharacterSet() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SecretVersionGenerateSecret) *string { return v.CharacterSet }).(pulumi.StringPtrOutput)
-}
-
-func (o SecretVersionGenerateSecretOutput) Length() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SecretVersionGenerateSecret) *int { return v.Length }).(pulumi.IntPtrOutput)
+// Byte length of the generated secret.
+func (o SecretVersionGenerateSecretOutput) ByteLength() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SecretVersionGenerateSecret) *int { return v.ByteLength }).(pulumi.IntPtrOutput)
 }
 
 type SecretVersionGenerateSecretPtrOutput struct{ *pulumi.OutputState }
@@ -3169,21 +3496,13 @@ func (o SecretVersionGenerateSecretPtrOutput) Elem() SecretVersionGenerateSecret
 	}).(SecretVersionGenerateSecretOutput)
 }
 
-func (o SecretVersionGenerateSecretPtrOutput) CharacterSet() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *SecretVersionGenerateSecret) *string {
-		if v == nil {
-			return nil
-		}
-		return v.CharacterSet
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o SecretVersionGenerateSecretPtrOutput) Length() pulumi.IntPtrOutput {
+// Byte length of the generated secret.
+func (o SecretVersionGenerateSecretPtrOutput) ByteLength() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *SecretVersionGenerateSecret) *int {
 		if v == nil {
 			return nil
 		}
-		return v.Length
+		return v.ByteLength
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -4911,6 +5230,276 @@ func (o VpcPeeringConnectionRequesterVpcArrayOutput) Index(i pulumi.IntInput) Vp
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) VpcPeeringConnectionRequesterVpc {
 		return vs[0].([]VpcPeeringConnectionRequesterVpc)[vs[1].(int)]
 	}).(VpcPeeringConnectionRequesterVpcOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicy struct {
+	// Whether to delete untagged images
+	DeleteUntaggedImages bool `pulumi:"deleteUntaggedImages"`
+	// Whether the retention policy is active
+	Enabled bool `pulumi:"enabled"`
+	// List of retention rules
+	Rules []GetContainerregistryNamespaceConfigurationRetentionPolicyRule `pulumi:"rules"`
+}
+
+// GetContainerregistryNamespaceConfigurationRetentionPolicyInput is an input type that accepts GetContainerregistryNamespaceConfigurationRetentionPolicyArgs and GetContainerregistryNamespaceConfigurationRetentionPolicyOutput values.
+// You can construct a concrete instance of `GetContainerregistryNamespaceConfigurationRetentionPolicyInput` via:
+//
+//	GetContainerregistryNamespaceConfigurationRetentionPolicyArgs{...}
+type GetContainerregistryNamespaceConfigurationRetentionPolicyInput interface {
+	pulumi.Input
+
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyOutput
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyOutput
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyArgs struct {
+	// Whether to delete untagged images
+	DeleteUntaggedImages pulumi.BoolInput `pulumi:"deleteUntaggedImages"`
+	// Whether the retention policy is active
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+	// List of retention rules
+	Rules GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput `pulumi:"rules"`
+}
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return i.ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(context.Background())
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyArgs) ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerregistryNamespaceConfigurationRetentionPolicyOutput)
+}
+
+// GetContainerregistryNamespaceConfigurationRetentionPolicyArrayInput is an input type that accepts GetContainerregistryNamespaceConfigurationRetentionPolicyArray and GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput values.
+// You can construct a concrete instance of `GetContainerregistryNamespaceConfigurationRetentionPolicyArrayInput` via:
+//
+//	GetContainerregistryNamespaceConfigurationRetentionPolicyArray{ GetContainerregistryNamespaceConfigurationRetentionPolicyArgs{...} }
+type GetContainerregistryNamespaceConfigurationRetentionPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutputWithContext(context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyArray []GetContainerregistryNamespaceConfigurationRetentionPolicyInput
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyArray) ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput {
+	return i.ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyArray) ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return o
+}
+
+// Whether to delete untagged images
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) DeleteUntaggedImages() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicy) bool { return v.DeleteUntaggedImages }).(pulumi.BoolOutput)
+}
+
+// Whether the retention policy is active
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicy) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+// List of retention rules
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyOutput) Rules() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicy) []GetContainerregistryNamespaceConfigurationRetentionPolicyRule {
+		return v.Rules
+	}).(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerregistryNamespaceConfigurationRetentionPolicy)(nil)).Elem()
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput) Index(i pulumi.IntInput) GetContainerregistryNamespaceConfigurationRetentionPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetContainerregistryNamespaceConfigurationRetentionPolicy {
+		return vs[0].([]GetContainerregistryNamespaceConfigurationRetentionPolicy)[vs[1].(int)]
+	}).(GetContainerregistryNamespaceConfigurationRetentionPolicyOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRule struct {
+	// Number of most recent versions/tags to keep
+	Count int `pulumi:"count"`
+	// Retain tags based on tag creation age in days
+	Days int `pulumi:"days"`
+	// Retain artifacts based on creation/push age in days
+	DaysSinceCreated int `pulumi:"daysSinceCreated"`
+	// Retain artifacts based on last pull age in days
+	DaysSincePulled int `pulumi:"daysSincePulled"`
+	// Repository name patterns this rule applies to
+	RepositoryPatterns []string `pulumi:"repositoryPatterns"`
+	// Scope of the retention rule
+	Scope string `pulumi:"scope"`
+	// Tag patterns this rule applies to
+	TagPatterns []string `pulumi:"tagPatterns"`
+}
+
+// GetContainerregistryNamespaceConfigurationRetentionPolicyRuleInput is an input type that accepts GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs and GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput values.
+// You can construct a concrete instance of `GetContainerregistryNamespaceConfigurationRetentionPolicyRuleInput` via:
+//
+//	GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{...}
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleInput interface {
+	pulumi.Input
+
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs struct {
+	// Number of most recent versions/tags to keep
+	Count pulumi.IntInput `pulumi:"count"`
+	// Retain tags based on tag creation age in days
+	Days pulumi.IntInput `pulumi:"days"`
+	// Retain artifacts based on creation/push age in days
+	DaysSinceCreated pulumi.IntInput `pulumi:"daysSinceCreated"`
+	// Retain artifacts based on last pull age in days
+	DaysSincePulled pulumi.IntInput `pulumi:"daysSincePulled"`
+	// Repository name patterns this rule applies to
+	RepositoryPatterns pulumi.StringArrayInput `pulumi:"repositoryPatterns"`
+	// Scope of the retention rule
+	Scope pulumi.StringInput `pulumi:"scope"`
+	// Tag patterns this rule applies to
+	TagPatterns pulumi.StringArrayInput `pulumi:"tagPatterns"`
+}
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return i.ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(context.Background())
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput)
+}
+
+// GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput is an input type that accepts GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray and GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput values.
+// You can construct a concrete instance of `GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput` via:
+//
+//	GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray{ GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{...} }
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput interface {
+	pulumi.Input
+
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput
+	ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray []GetContainerregistryNamespaceConfigurationRetentionPolicyRuleInput
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return i.ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(context.Background())
+}
+
+func (i GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput struct{ *pulumi.OutputState }
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return o
+}
+
+// Number of most recent versions/tags to keep
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Count() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) int { return v.Count }).(pulumi.IntOutput)
+}
+
+// Retain tags based on tag creation age in days
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Days() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) int { return v.Days }).(pulumi.IntOutput)
+}
+
+// Retain artifacts based on creation/push age in days
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) DaysSinceCreated() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) int { return v.DaysSinceCreated }).(pulumi.IntOutput)
+}
+
+// Retain artifacts based on last pull age in days
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) DaysSincePulled() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) int { return v.DaysSincePulled }).(pulumi.IntOutput)
+}
+
+// Repository name patterns this rule applies to
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) RepositoryPatterns() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) []string {
+		return v.RepositoryPatterns
+	}).(pulumi.StringArrayOutput)
+}
+
+// Scope of the retention rule
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) Scope() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) string { return v.Scope }).(pulumi.StringOutput)
+}
+
+// Tag patterns this rule applies to
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput) TagPatterns() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetContainerregistryNamespaceConfigurationRetentionPolicyRule) []string { return v.TagPatterns }).(pulumi.StringArrayOutput)
+}
+
+type GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput struct{ *pulumi.OutputState }
+
+func (GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerregistryNamespaceConfigurationRetentionPolicyRule)(nil)).Elem()
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput() GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) ToGetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutputWithContext(ctx context.Context) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput {
+	return o
+}
+
+func (o GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput) Index(i pulumi.IntInput) GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetContainerregistryNamespaceConfigurationRetentionPolicyRule {
+		return vs[0].([]GetContainerregistryNamespaceConfigurationRetentionPolicyRule)[vs[1].(int)]
+	}).(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput)
 }
 
 type GetIamOrganisationMembersMember struct {
@@ -8443,6 +9032,10 @@ func (o GetVpcPeeringConnectionsPeeringConnectionRequesterVpcArrayOutput) Index(
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyInput)(nil)).Elem(), ContainerregistryNamespaceConfigurationRetentionPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyPtrInput)(nil)).Elem(), ContainerregistryNamespaceConfigurationRetentionPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyRuleInput)(nil)).Elem(), ContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput)(nil)).Elem(), ContainerregistryNamespaceConfigurationRetentionPolicyRuleArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DbaasDbClusterRestoreRecoveryTargetInput)(nil)).Elem(), DbaasDbClusterRestoreRecoveryTargetArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DbaasDbClusterRestoreRecoveryTargetPtrInput)(nil)).Elem(), DbaasDbClusterRestoreRecoveryTargetArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DnsZoneDnssecDsRecordInput)(nil)).Elem(), DnsZoneDnssecDsRecordArgs{})
@@ -8511,6 +9104,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*VpcPeeringConnectionRequesterOrganisationArrayInput)(nil)).Elem(), VpcPeeringConnectionRequesterOrganisationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VpcPeeringConnectionRequesterVpcInput)(nil)).Elem(), VpcPeeringConnectionRequesterVpcArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VpcPeeringConnectionRequesterVpcArrayInput)(nil)).Elem(), VpcPeeringConnectionRequesterVpcArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyInput)(nil)).Elem(), GetContainerregistryNamespaceConfigurationRetentionPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyArrayInput)(nil)).Elem(), GetContainerregistryNamespaceConfigurationRetentionPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyRuleInput)(nil)).Elem(), GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayInput)(nil)).Elem(), GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIamOrganisationMembersMemberInput)(nil)).Elem(), GetIamOrganisationMembersMemberArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIamOrganisationMembersMemberArrayInput)(nil)).Elem(), GetIamOrganisationMembersMemberArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIamOrganisationMembersMemberUserInput)(nil)).Elem(), GetIamOrganisationMembersMemberUserArgs{})
@@ -8563,6 +9160,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcPeeringConnectionsPeeringConnectionRequesterOrganisationArrayInput)(nil)).Elem(), GetVpcPeeringConnectionsPeeringConnectionRequesterOrganisationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcPeeringConnectionsPeeringConnectionRequesterVpcInput)(nil)).Elem(), GetVpcPeeringConnectionsPeeringConnectionRequesterVpcArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcPeeringConnectionsPeeringConnectionRequesterVpcArrayInput)(nil)).Elem(), GetVpcPeeringConnectionsPeeringConnectionRequesterVpcArray{})
+	pulumi.RegisterOutputType(ContainerregistryNamespaceConfigurationRetentionPolicyOutput{})
+	pulumi.RegisterOutputType(ContainerregistryNamespaceConfigurationRetentionPolicyPtrOutput{})
+	pulumi.RegisterOutputType(ContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput{})
+	pulumi.RegisterOutputType(ContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput{})
 	pulumi.RegisterOutputType(DbaasDbClusterRestoreRecoveryTargetOutput{})
 	pulumi.RegisterOutputType(DbaasDbClusterRestoreRecoveryTargetPtrOutput{})
 	pulumi.RegisterOutputType(DnsZoneDnssecDsRecordOutput{})
@@ -8631,6 +9232,10 @@ func init() {
 	pulumi.RegisterOutputType(VpcPeeringConnectionRequesterOrganisationArrayOutput{})
 	pulumi.RegisterOutputType(VpcPeeringConnectionRequesterVpcOutput{})
 	pulumi.RegisterOutputType(VpcPeeringConnectionRequesterVpcArrayOutput{})
+	pulumi.RegisterOutputType(GetContainerregistryNamespaceConfigurationRetentionPolicyOutput{})
+	pulumi.RegisterOutputType(GetContainerregistryNamespaceConfigurationRetentionPolicyArrayOutput{})
+	pulumi.RegisterOutputType(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleOutput{})
+	pulumi.RegisterOutputType(GetContainerregistryNamespaceConfigurationRetentionPolicyRuleArrayOutput{})
 	pulumi.RegisterOutputType(GetIamOrganisationMembersMemberOutput{})
 	pulumi.RegisterOutputType(GetIamOrganisationMembersMemberArrayOutput{})
 	pulumi.RegisterOutputType(GetIamOrganisationMembersMemberUserOutput{})

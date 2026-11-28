@@ -10,7 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Thalassa
 {
     /// <summary>
-    /// Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+    /// Manages a Kubernetes cluster on the Thalassa cloud platform. Supports managed clusters and hosted control plane clusters with configurable networking, security policies, auto-upgrade, CNI plugins, network CIDRs, pod security standards, audit logging, and API server access controls.
+    /// 
+    /// See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
     /// 
     /// ## Cluster Types
     /// 
@@ -155,7 +157,7 @@ namespace Pulumi.Thalassa
         public Output<string?> ClusterVersion { get; private set; } = null!;
 
         /// <summary>
-        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         /// </summary>
         [Output("defaultNetworkPolicy")]
         public Output<string?> DefaultNetworkPolicy { get; private set; } = null!;
@@ -173,7 +175,7 @@ namespace Pulumi.Thalassa
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         /// </summary>
         [Output("disablePublicEndpoint")]
         public Output<bool?> DisablePublicEndpoint { get; private set; } = null!;
@@ -227,7 +229,7 @@ namespace Pulumi.Thalassa
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        /// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         /// </summary>
         [Output("networkingCni")]
         public Output<string?> NetworkingCni { get; private set; } = null!;
@@ -403,7 +405,7 @@ namespace Pulumi.Thalassa
         public Input<string>? ClusterVersion { get; set; }
 
         /// <summary>
-        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         /// </summary>
         [Input("defaultNetworkPolicy")]
         public Input<string>? DefaultNetworkPolicy { get; set; }
@@ -421,7 +423,7 @@ namespace Pulumi.Thalassa
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         /// </summary>
         [Input("disablePublicEndpoint")]
         public Input<bool>? DisablePublicEndpoint { get; set; }
@@ -457,7 +459,7 @@ namespace Pulumi.Thalassa
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        /// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         /// </summary>
         [Input("networkingCni")]
         public Input<string>? NetworkingCni { get; set; }
@@ -591,7 +593,7 @@ namespace Pulumi.Thalassa
         public Input<string>? ClusterVersion { get; set; }
 
         /// <summary>
-        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        /// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         /// </summary>
         [Input("defaultNetworkPolicy")]
         public Input<string>? DefaultNetworkPolicy { get; set; }
@@ -609,7 +611,7 @@ namespace Pulumi.Thalassa
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        /// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         /// </summary>
         [Input("disablePublicEndpoint")]
         public Input<bool>? DisablePublicEndpoint { get; set; }
@@ -669,7 +671,7 @@ namespace Pulumi.Thalassa
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        /// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         /// </summary>
         [Input("networkingCni")]
         public Input<string>? NetworkingCni { get; set; }

@@ -81,12 +81,8 @@ type LookupNatgatewayResult struct {
 }
 
 func LookupNatgatewayOutput(ctx *pulumi.Context, args LookupNatgatewayOutputArgs, opts ...pulumi.InvokeOption) LookupNatgatewayResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupNatgatewayResultOutput, error) {
-			args := v.(LookupNatgatewayArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getNatgateway:getNatgateway", args, LookupNatgatewayResultOutput{}, options).(LookupNatgatewayResultOutput), nil
-		}).(LookupNatgatewayResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getNatgateway:getNatgateway", args, LookupNatgatewayResultOutput{}, options).(LookupNatgatewayResultOutput)
 }
 
 // A collection of arguments for invoking getNatgateway.

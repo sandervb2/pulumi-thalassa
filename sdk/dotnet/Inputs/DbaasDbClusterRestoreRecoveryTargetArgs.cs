@@ -19,7 +19,7 @@ namespace Pulumi.Thalassa.Inputs
         public Input<string>? TargetLsn { get; set; }
 
         /// <summary>
-        /// Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+        /// Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
         /// </summary>
         [Input("targetTime")]
         public Input<string>? TargetTime { get; set; }

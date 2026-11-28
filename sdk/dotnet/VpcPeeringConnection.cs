@@ -12,6 +12,10 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create and manage a VPC peering connection
     /// 
+    /// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+    /// 
+    /// The peer VPC owner must accept the request with `thalassa.VpcPeeringConnectionAcceptance`.
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

@@ -14,6 +14,8 @@ import (
 
 // Create an NAT Gateway within a VPC
 //
+// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+//
 // ## Example Usage
 //
 // ```go

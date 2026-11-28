@@ -12,7 +12,9 @@ import (
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
-// Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group. This is an optional alternative to managing rules through the SecurityGroup resource. Warning: Do not use both this resource and egressRule in SecurityGroup for the same security group, as this will cause conflicts.
+// Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group and is an optional alternative to managing rules through thalassa_security_group. Do not use both resources for the same security group.
+//
+// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 //
 // ## Example Usage
 //

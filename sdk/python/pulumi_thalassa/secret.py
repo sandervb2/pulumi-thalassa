@@ -40,8 +40,8 @@ class SecretArgs:
         :param pulumi.Input[_builtins.str] description: Human-readable description.
         :param pulumi.Input['SecretGenerateSecretArgs'] generate_secret: Generate a random secret value on create. Mutually exclusive with secret*string and secret*key*values.
         :param pulumi.Input[_builtins.str] organisation_id: Organisation ID. Defaults to the provider organisation.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload (create only; not returned on read).
-        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value (create only; not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload as plaintext. The provider base64-encodes each value.
+        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         pulumi.set(__self__, "kms_key_id", kms_key_id)
         pulumi.set(__self__, "path", path)
@@ -155,7 +155,7 @@ class SecretArgs:
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Initial key-value secret payload (create only; not returned on read).
+        Initial key-value secret payload as plaintext. The provider base64-encodes each value.
         """
         return pulumi.get(self, "secret_key_values")
 
@@ -167,7 +167,7 @@ class SecretArgs:
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Initial secret string value (create only; not returned on read).
+        Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 
@@ -203,8 +203,8 @@ class _SecretState:
         :param pulumi.Input[_builtins.str] organisation_id: Organisation ID. Defaults to the provider organisation.
         :param pulumi.Input[_builtins.str] path: Absolute secret path (must start with /).
         :param pulumi.Input[_builtins.str] region: Region slug where the secret is stored.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload (create only; not returned on read).
-        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value (create only; not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload as plaintext. The provider base64-encodes each value.
+        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
@@ -359,7 +359,7 @@ class _SecretState:
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Initial key-value secret payload (create only; not returned on read).
+        Initial key-value secret payload as plaintext. The provider base64-encodes each value.
         """
         return pulumi.get(self, "secret_key_values")
 
@@ -371,7 +371,7 @@ class _SecretState:
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Initial secret string value (create only; not returned on read).
+        Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 
@@ -397,7 +397,7 @@ class Secret(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
-                 generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict']]] = None,
+                 generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']]] = None,
                  kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -409,7 +409,7 @@ class Secret(pulumi.CustomResource):
         """
         Create and manage a secret in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -452,13 +452,13 @@ class Secret(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] description: Human-readable description.
-        :param pulumi.Input[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict']] generate_secret: Generate a random secret value on create. Mutually exclusive with secret*string and secret*key*values.
+        :param pulumi.Input[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']] generate_secret: Generate a random secret value on create. Mutually exclusive with secret*string and secret*key*values.
         :param pulumi.Input[_builtins.str] kms_key_id: KMS key identity used to encrypt the secret.
         :param pulumi.Input[_builtins.str] organisation_id: Organisation ID. Defaults to the provider organisation.
         :param pulumi.Input[_builtins.str] path: Absolute secret path (must start with /).
         :param pulumi.Input[_builtins.str] region: Region slug where the secret is stored.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload (create only; not returned on read).
-        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value (create only; not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload as plaintext. The provider base64-encodes each value.
+        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         ...
     @overload
@@ -469,7 +469,7 @@ class Secret(pulumi.CustomResource):
         """
         Create and manage a secret in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -526,7 +526,7 @@ class Secret(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
-                 generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict']]] = None,
+                 generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']]] = None,
                  kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -579,7 +579,7 @@ class Secret(pulumi.CustomResource):
             created_at: pulumi.Input[Optional[_builtins.str]] = None,
             current_version: pulumi.Input[Optional[_builtins.int]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
-            generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict']]] = None,
+            generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']]] = None,
             kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             last_accessed_at: pulumi.Input[Optional[_builtins.str]] = None,
@@ -598,13 +598,13 @@ class Secret(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.int] current_version: Current active secret version.
         :param pulumi.Input[_builtins.str] description: Human-readable description.
-        :param pulumi.Input[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict']] generate_secret: Generate a random secret value on create. Mutually exclusive with secret*string and secret*key*values.
+        :param pulumi.Input[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']] generate_secret: Generate a random secret value on create. Mutually exclusive with secret*string and secret*key*values.
         :param pulumi.Input[_builtins.str] kms_key_id: KMS key identity used to encrypt the secret.
         :param pulumi.Input[_builtins.str] organisation_id: Organisation ID. Defaults to the provider organisation.
         :param pulumi.Input[_builtins.str] path: Absolute secret path (must start with /).
         :param pulumi.Input[_builtins.str] region: Region slug where the secret is stored.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload (create only; not returned on read).
-        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value (create only; not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Initial key-value secret payload as plaintext. The provider base64-encodes each value.
+        :param pulumi.Input[_builtins.str] secret_string: Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -706,7 +706,7 @@ class Secret(pulumi.CustomResource):
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        Initial key-value secret payload (create only; not returned on read).
+        Initial key-value secret payload as plaintext. The provider base64-encodes each value.
         """
         return pulumi.get(self, "secret_key_values")
 
@@ -714,7 +714,7 @@ class Secret(pulumi.CustomResource):
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Initial secret string value (create only; not returned on read).
+        Initial secret string value as plaintext. The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 

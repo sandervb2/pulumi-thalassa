@@ -71,12 +71,8 @@ type LookupVpcFirewallRuleResult struct {
 }
 
 func LookupVpcFirewallRuleOutput(ctx *pulumi.Context, args LookupVpcFirewallRuleOutputArgs, opts ...pulumi.InvokeOption) LookupVpcFirewallRuleResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupVpcFirewallRuleResultOutput, error) {
-			args := v.(LookupVpcFirewallRuleArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getVpcFirewallRule:getVpcFirewallRule", args, LookupVpcFirewallRuleResultOutput{}, options).(LookupVpcFirewallRuleResultOutput), nil
-		}).(LookupVpcFirewallRuleResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getVpcFirewallRule:getVpcFirewallRule", args, LookupVpcFirewallRuleResultOutput{}, options).(LookupVpcFirewallRuleResultOutput)
 }
 
 // A collection of arguments for invoking getVpcFirewallRule.

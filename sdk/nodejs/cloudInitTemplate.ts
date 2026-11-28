@@ -5,6 +5,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
+ * See [Compute documentation](https://docs.thalassa.cloud/docs/iaas/compute/).
+ *
+ * Reference templates from `thalassa.VirtualMachineInstance` using `cloudInitTemplateId`.
+ *
  * ## Example Usage
  *
  * ```typescript

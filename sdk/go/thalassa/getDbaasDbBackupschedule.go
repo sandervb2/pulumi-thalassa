@@ -44,12 +44,8 @@ type LookupDbaasDbBackupscheduleResult struct {
 }
 
 func LookupDbaasDbBackupscheduleOutput(ctx *pulumi.Context, args LookupDbaasDbBackupscheduleOutputArgs, opts ...pulumi.InvokeOption) LookupDbaasDbBackupscheduleResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupDbaasDbBackupscheduleResultOutput, error) {
-			args := v.(LookupDbaasDbBackupscheduleArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getDbaasDbBackupschedule:getDbaasDbBackupschedule", args, LookupDbaasDbBackupscheduleResultOutput{}, options).(LookupDbaasDbBackupscheduleResultOutput), nil
-		}).(LookupDbaasDbBackupscheduleResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getDbaasDbBackupschedule:getDbaasDbBackupschedule", args, LookupDbaasDbBackupscheduleResultOutput{}, options).(LookupDbaasDbBackupscheduleResultOutput)
 }
 
 // A collection of arguments for invoking getDbaasDbBackupschedule.

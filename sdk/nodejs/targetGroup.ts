@@ -9,6 +9,8 @@ import * as utilities from "./utilities";
 /**
  * Create a target group for a load balancer
  *
+ * See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+ *
  * ## Example Usage
  *
  * ```typescript

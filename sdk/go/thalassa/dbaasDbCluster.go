@@ -14,6 +14,8 @@ import (
 
 // Create an DB Cluster
 //
+// See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+//
 // ## Example Usage
 //
 // ```go
@@ -102,6 +104,8 @@ type DbaasDbCluster struct {
 	CreateBackupBeforeDestroyTimeout pulumi.IntPtrOutput `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringOutput `pulumi:"databaseInstanceType"`
+	// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+	DbObjectStoreId pulumi.StringPtrOutput `pulumi:"dbObjectStoreId"`
 	// Flag indicating if the cluster should be protected from deletion
 	DeleteProtection pulumi.BoolPtrOutput `pulumi:"deleteProtection"`
 	// Description of the DB Cluster
@@ -130,11 +134,11 @@ type DbaasDbCluster struct {
 	Parameters pulumi.StringMapOutput `pulumi:"parameters"`
 	// Port of the cluster endpoint
 	Port pulumi.IntOutput `pulumi:"port"`
-	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 	ProvisionDbObjectStore pulumi.BoolPtrOutput `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrOutput `pulumi:"replicas"`
-	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	// ID of the backup to restore from when creating the cluster.
 	RestoreFromBackupId pulumi.StringPtrOutput `pulumi:"restoreFromBackupId"`
 	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
 	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrOutput `pulumi:"restoreRecoveryTarget"`
@@ -210,6 +214,8 @@ type dbaasDbClusterState struct {
 	CreateBackupBeforeDestroyTimeout *int `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType *string `pulumi:"databaseInstanceType"`
+	// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+	DbObjectStoreId *string `pulumi:"dbObjectStoreId"`
 	// Flag indicating if the cluster should be protected from deletion
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// Description of the DB Cluster
@@ -238,11 +244,11 @@ type dbaasDbClusterState struct {
 	Parameters map[string]string `pulumi:"parameters"`
 	// Port of the cluster endpoint
 	Port *int `pulumi:"port"`
-	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 	ProvisionDbObjectStore *bool `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas *int `pulumi:"replicas"`
-	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	// ID of the backup to restore from when creating the cluster.
 	RestoreFromBackupId *string `pulumi:"restoreFromBackupId"`
 	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
 	RestoreRecoveryTarget *DbaasDbClusterRestoreRecoveryTarget `pulumi:"restoreRecoveryTarget"`
@@ -271,6 +277,8 @@ type DbaasDbClusterState struct {
 	CreateBackupBeforeDestroyTimeout pulumi.IntPtrInput
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringPtrInput
+	// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+	DbObjectStoreId pulumi.StringPtrInput
 	// Flag indicating if the cluster should be protected from deletion
 	DeleteProtection pulumi.BoolPtrInput
 	// Description of the DB Cluster
@@ -299,11 +307,11 @@ type DbaasDbClusterState struct {
 	Parameters pulumi.StringMapInput
 	// Port of the cluster endpoint
 	Port pulumi.IntPtrInput
-	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 	ProvisionDbObjectStore pulumi.BoolPtrInput
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrInput
-	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	// ID of the backup to restore from when creating the cluster.
 	RestoreFromBackupId pulumi.StringPtrInput
 	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
 	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrInput
@@ -336,6 +344,8 @@ type dbaasDbClusterArgs struct {
 	CreateBackupBeforeDestroyTimeout *int `pulumi:"createBackupBeforeDestroyTimeout"`
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType string `pulumi:"databaseInstanceType"`
+	// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+	DbObjectStoreId *string `pulumi:"dbObjectStoreId"`
 	// Flag indicating if the cluster should be protected from deletion
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// Description of the DB Cluster
@@ -358,11 +368,11 @@ type dbaasDbClusterArgs struct {
 	OrganisationId *string `pulumi:"organisationId"`
 	// Map of parameter name to database engine specific parameter value
 	Parameters map[string]string `pulumi:"parameters"`
-	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 	ProvisionDbObjectStore *bool `pulumi:"provisionDbObjectStore"`
 	// Number of instances in the cluster
 	Replicas *int `pulumi:"replicas"`
-	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	// ID of the backup to restore from when creating the cluster.
 	RestoreFromBackupId *string `pulumi:"restoreFromBackupId"`
 	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
 	RestoreRecoveryTarget *DbaasDbClusterRestoreRecoveryTarget `pulumi:"restoreRecoveryTarget"`
@@ -390,6 +400,8 @@ type DbaasDbClusterArgs struct {
 	CreateBackupBeforeDestroyTimeout pulumi.IntPtrInput
 	// Database instance type of the DB Cluster
 	DatabaseInstanceType pulumi.StringInput
+	// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+	DbObjectStoreId pulumi.StringPtrInput
 	// Flag indicating if the cluster should be protected from deletion
 	DeleteProtection pulumi.BoolPtrInput
 	// Description of the DB Cluster
@@ -412,11 +424,11 @@ type DbaasDbClusterArgs struct {
 	OrganisationId pulumi.StringPtrInput
 	// Map of parameter name to database engine specific parameter value
 	Parameters pulumi.StringMapInput
-	// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+	// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 	ProvisionDbObjectStore pulumi.BoolPtrInput
 	// Number of instances in the cluster
 	Replicas pulumi.IntPtrInput
-	// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+	// ID of the backup to restore from when creating the cluster.
 	RestoreFromBackupId pulumi.StringPtrInput
 	// Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
 	RestoreRecoveryTarget DbaasDbClusterRestoreRecoveryTargetPtrInput
@@ -550,6 +562,11 @@ func (o DbaasDbClusterOutput) DatabaseInstanceType() pulumi.StringOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringOutput { return v.DatabaseInstanceType }).(pulumi.StringOutput)
 }
 
+// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+func (o DbaasDbClusterOutput) DbObjectStoreId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.DbObjectStoreId }).(pulumi.StringPtrOutput)
+}
+
 // Flag indicating if the cluster should be protected from deletion
 func (o DbaasDbClusterOutput) DeleteProtection() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.BoolPtrOutput { return v.DeleteProtection }).(pulumi.BoolPtrOutput)
@@ -620,7 +637,7 @@ func (o DbaasDbClusterOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntOutput { return v.Port }).(pulumi.IntOutput)
 }
 
-// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
 func (o DbaasDbClusterOutput) ProvisionDbObjectStore() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.BoolPtrOutput { return v.ProvisionDbObjectStore }).(pulumi.BoolPtrOutput)
 }
@@ -630,7 +647,7 @@ func (o DbaasDbClusterOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.IntPtrOutput { return v.Replicas }).(pulumi.IntPtrOutput)
 }
 
-// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+// ID of the backup to restore from when creating the cluster.
 func (o DbaasDbClusterOutput) RestoreFromBackupId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DbaasDbCluster) pulumi.StringPtrOutput { return v.RestoreFromBackupId }).(pulumi.StringPtrOutput)
 }

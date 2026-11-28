@@ -53,12 +53,8 @@ type GetVpcDefaultRouteTableResult struct {
 }
 
 func GetVpcDefaultRouteTableOutput(ctx *pulumi.Context, args GetVpcDefaultRouteTableOutputArgs, opts ...pulumi.InvokeOption) GetVpcDefaultRouteTableResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetVpcDefaultRouteTableResultOutput, error) {
-			args := v.(GetVpcDefaultRouteTableArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getVpcDefaultRouteTable:getVpcDefaultRouteTable", args, GetVpcDefaultRouteTableResultOutput{}, options).(GetVpcDefaultRouteTableResultOutput), nil
-		}).(GetVpcDefaultRouteTableResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getVpcDefaultRouteTable:getVpcDefaultRouteTable", args, GetVpcDefaultRouteTableResultOutput{}, options).(GetVpcDefaultRouteTableResultOutput)
 }
 
 // A collection of arguments for invoking getVpcDefaultRouteTable.

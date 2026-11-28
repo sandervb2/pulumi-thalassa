@@ -207,6 +207,8 @@ class VpcPeeringConnectionAcceptance(pulumi.CustomResource):
         """
         Accept a VPC peering connection
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -265,6 +267,8 @@ class VpcPeeringConnectionAcceptance(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Accept a VPC peering connection
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

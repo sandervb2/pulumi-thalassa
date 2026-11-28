@@ -7,11 +7,14 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
 // Provides a Thalassa Cloud Snapshot resource. This can be used to create, manage, and delete snapshots of block volumes.
+//
+// See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 //
 // ## Example Usage
 //
@@ -28,7 +31,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			// Create a block volume to snapshot
-//			_, err := thalassa.NewBlockVolume(ctx, "example", &thalassa.BlockVolumeArgs{
+//			example, err := thalassa.NewBlockVolume(ctx, "example", &thalassa.BlockVolumeArgs{
 //				Name:        pulumi.String("example-block-volume"),
 //				Description: pulumi.String("Example block volume for snapshot"),
 //				Region:      pulumi.String("nl-01"),
@@ -42,6 +45,7 @@ import (
 //			exampleSnapshot, err := thalassa.NewSnapshot(ctx, "example", &thalassa.SnapshotArgs{
 //				Name:               pulumi.String("example-snapshot"),
 //				Description:        pulumi.String("Example snapshot created from block volume"),
+//				VolumeIdentity:     example.ID(),
 //				DeleteProtection:   pulumi.Bool(false),
 //				WaitUntilAvailable: pulumi.Bool(true),
 //				Labels: pulumi.StringMap{
@@ -93,6 +97,8 @@ type Snapshot struct {
 	SourceVolumeId pulumi.StringOutput `pulumi:"sourceVolumeId"`
 	// Status of the snapshot
 	Status pulumi.StringOutput `pulumi:"status"`
+	// Identity of the volume to create a snapshot from
+	VolumeIdentity pulumi.StringOutput `pulumi:"volumeIdentity"`
 	// Wait until the snapshot is available
 	WaitUntilAvailable pulumi.BoolPtrOutput `pulumi:"waitUntilAvailable"`
 }
@@ -101,9 +107,12 @@ type Snapshot struct {
 func NewSnapshot(ctx *pulumi.Context,
 	name string, args *SnapshotArgs, opts ...pulumi.ResourceOption) (*Snapshot, error) {
 	if args == nil {
-		args = &SnapshotArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.VolumeIdentity == nil {
+		return nil, errors.New("invalid value for required argument 'VolumeIdentity'")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Snapshot
 	err := ctx.RegisterResource("thalassa:index/snapshot:Snapshot", name, args, &resource, opts...)
@@ -150,6 +159,8 @@ type snapshotState struct {
 	SourceVolumeId *string `pulumi:"sourceVolumeId"`
 	// Status of the snapshot
 	Status *string `pulumi:"status"`
+	// Identity of the volume to create a snapshot from
+	VolumeIdentity *string `pulumi:"volumeIdentity"`
 	// Wait until the snapshot is available
 	WaitUntilAvailable *bool `pulumi:"waitUntilAvailable"`
 }
@@ -178,6 +189,8 @@ type SnapshotState struct {
 	SourceVolumeId pulumi.StringPtrInput
 	// Status of the snapshot
 	Status pulumi.StringPtrInput
+	// Identity of the volume to create a snapshot from
+	VolumeIdentity pulumi.StringPtrInput
 	// Wait until the snapshot is available
 	WaitUntilAvailable pulumi.BoolPtrInput
 }
@@ -199,6 +212,8 @@ type snapshotArgs struct {
 	Name *string `pulumi:"name"`
 	// Reference to the Organisation of the Snapshot. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
+	// Identity of the volume to create a snapshot from
+	VolumeIdentity string `pulumi:"volumeIdentity"`
 	// Wait until the snapshot is available
 	WaitUntilAvailable *bool `pulumi:"waitUntilAvailable"`
 }
@@ -217,6 +232,8 @@ type SnapshotArgs struct {
 	Name pulumi.StringPtrInput
 	// Reference to the Organisation of the Snapshot. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId pulumi.StringPtrInput
+	// Identity of the volume to create a snapshot from
+	VolumeIdentity pulumi.StringInput
 	// Wait until the snapshot is available
 	WaitUntilAvailable pulumi.BoolPtrInput
 }
@@ -365,6 +382,11 @@ func (o SnapshotOutput) SourceVolumeId() pulumi.StringOutput {
 // Status of the snapshot
 func (o SnapshotOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *Snapshot) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
+}
+
+// Identity of the volume to create a snapshot from
+func (o SnapshotOutput) VolumeIdentity() pulumi.StringOutput {
+	return o.ApplyT(func(v *Snapshot) pulumi.StringOutput { return v.VolumeIdentity }).(pulumi.StringOutput)
 }
 
 // Wait until the snapshot is available

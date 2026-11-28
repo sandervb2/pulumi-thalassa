@@ -55,12 +55,8 @@ type LookupObjectstorageBucketResult struct {
 }
 
 func LookupObjectstorageBucketOutput(ctx *pulumi.Context, args LookupObjectstorageBucketOutputArgs, opts ...pulumi.InvokeOption) LookupObjectstorageBucketResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupObjectstorageBucketResultOutput, error) {
-			args := v.(LookupObjectstorageBucketArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getObjectstorageBucket:getObjectstorageBucket", args, LookupObjectstorageBucketResultOutput{}, options).(LookupObjectstorageBucketResultOutput), nil
-		}).(LookupObjectstorageBucketResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getObjectstorageBucket:getObjectstorageBucket", args, LookupObjectstorageBucketResultOutput{}, options).(LookupObjectstorageBucketResultOutput)
 }
 
 // A collection of arguments for invoking getObjectstorageBucket.

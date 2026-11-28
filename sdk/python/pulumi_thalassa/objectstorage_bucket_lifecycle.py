@@ -122,10 +122,12 @@ class ObjectstorageBucketLifecycle(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  bucket_name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict', 'outputs.ObjectstorageBucketLifecycleRule']]]]] = None,
                  __props__=None):
         """
         Manage object storage bucket lifecycle rules. Each apply replaces the full rule set.
+
+        See [Object Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/object-storage/).
 
         Each apply **replaces the entire rule set** (`SetBucketLifecycle` PUT semantics). Ongoing lifecycle management should use this resource, not `ObjectstorageBucket`.
 
@@ -177,6 +179,8 @@ class ObjectstorageBucketLifecycle(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manage object storage bucket lifecycle rules. Each apply replaces the full rule set.
+
+        See [Object Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/object-storage/).
 
         Each apply **replaces the entire rule set** (`SetBucketLifecycle` PUT semantics). Ongoing lifecycle management should use this resource, not `ObjectstorageBucket`.
 
@@ -233,7 +237,7 @@ class ObjectstorageBucketLifecycle(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  bucket_name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict', 'outputs.ObjectstorageBucketLifecycleRule']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -262,7 +266,7 @@ class ObjectstorageBucketLifecycle(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             bucket_name: pulumi.Input[Optional[_builtins.str]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict']]]]] = None) -> 'ObjectstorageBucketLifecycle':
+            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['ObjectstorageBucketLifecycleRuleArgs', 'ObjectstorageBucketLifecycleRuleArgsDict', 'outputs.ObjectstorageBucketLifecycleRule']]]]] = None) -> 'ObjectstorageBucketLifecycle':
         """
         Get an existing ObjectstorageBucketLifecycle resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.

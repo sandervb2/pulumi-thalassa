@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create a PostgreSQL database
     /// 
+    /// See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp
