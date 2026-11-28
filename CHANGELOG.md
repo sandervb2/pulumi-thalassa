@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.0](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.3...v0.6.0) (2026-11-28)
+
+
+### Bug Fixes
+
+* **ci:** fail on stale generated files and regenerate renovate prs ([#333](https://github.com/sandervb2/pulumi-thalassa/issues/333)) ([141ca01](https://github.com/sandervb2/pulumi-thalassa/commit/141ca014fc40f7a270f8055ac265f655c66f58be))
+* **deps:** regenerate schema and sdks for upstream v0.27.1 ([#332](https://github.com/sandervb2/pulumi-thalassa/issues/332)) ([6b0e3b3](https://github.com/sandervb2/pulumi-thalassa/commit/6b0e3b3d86f0489852b79e4b6baa939a2f46c36c))
+
+
+### Miscellaneous Chores
+
+* **deps:** update pulumi core libs ([#303](https://github.com/sandervb2/pulumi-thalassa/issues/303)) ([f4bbcf0](https://github.com/sandervb2/pulumi-thalassa/commit/f4bbcf004012ebfd6a0fa0e2fda6555662d743c7))
+* **deps:** update siderolabs/conform action to v0.1.0-alpha.33 ([#310](https://github.com/sandervb2/pulumi-thalassa/issues/310)) ([786fb6d](https://github.com/sandervb2/pulumi-thalassa/commit/786fb6d1a602478c727b49e069ffca1c0b70f559))
+
 ## [0.5.3](https://github.com/sandervb2/pulumi-thalassa/compare/v0.5.2...v0.5.3) (2026-11-26)
 
 
