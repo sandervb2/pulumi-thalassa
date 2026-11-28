@@ -93,9 +93,17 @@ Renovate bumps `provider/go.mod` (upstream provider, bridge) but cannot run
 - **`Regenerate` workflow** (`.github/workflows/regenerate.yml`) runs on
   Renovate PRs that touch `provider/go.mod`/`go.sum`, runs `make tfgen` +
   `make generate_sdks`, and pushes a `chore(deps): regenerate schema and sdks`
-  commit. It needs the `REGEN_TOKEN` secret (PAT/App token with contents
-  write). Renovate ignores that commit's author (`gitIgnoredAuthors`), so it
-  keeps rebasing the PR.
+  commit as the `pulumi-thalassa-regen[bot]` GitHub App. Renovate ignores that
+  author (`gitIgnoredAuthors`), so it keeps rebasing the PR.
+
+  It pushes with a GitHub App token because pushes made with `GITHUB_TOKEN`
+  don't trigger new workflow runs, so `Verify` would never report on the
+  regenerated commit. Setup:
+  - GitHub App named **`pulumi-thalassa-regen`** (the name must match
+    `renovate.json`), Repository permissions → **Contents: Read and write**,
+    no webhook, installed on this repository only.
+  - Repository **variable** `REGEN_APP_CLIENT_ID` = the App's Client ID.
+  - Repository **secret** `REGEN_APP_PRIVATE_KEY` = the App's private key.
 
 ### After any sync — always
 

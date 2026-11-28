@@ -21,7 +21,7 @@
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": true,
-  "gitIgnoredAuthors": ["41898282+github-actions[bot]@users.noreply.github.com"],
+  "gitIgnoredAuthors": ["/^\\d+\\+pulumi-thalassa-regen\\[bot\\]@users\\.noreply\\.github\\.com$/"],
 
   "packageRules": [
     {
