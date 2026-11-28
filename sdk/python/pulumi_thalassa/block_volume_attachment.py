@@ -489,6 +489,28 @@ class BlockVolumeAttachment(pulumi.CustomResource):
         __props__.__dict__["wait_for_detached_timeout"] = wait_for_detached_timeout
         return BlockVolumeAttachment(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            serial: pulumi.Input[Optional[_builtins.str]] = None,
+            vmi_id: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_for_attached: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_attached_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_detached: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_detached_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["organisationId"] = organisation_id
+        __props__["serial"] = serial
+        __props__["vmiId"] = vmi_id
+        __props__["volumeId"] = volume_id
+        __props__["waitForAttached"] = wait_for_attached
+        __props__["waitForAttachedTimeout"] = wait_for_attached_timeout
+        __props__["waitForDetached"] = wait_for_detached
+        __props__["waitForDetachedTimeout"] = wait_for_detached_timeout
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/blockVolumeAttachment:BlockVolumeAttachment', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:

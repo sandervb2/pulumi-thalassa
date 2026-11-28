@@ -496,6 +496,28 @@ class RouteTableRoute(pulumi.CustomResource):
         __props__.__dict__["target_vpc_peering_connection"] = target_vpc_peering_connection
         return RouteTableRoute(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            destination_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            gateway_address: pulumi.Input[Optional[_builtins.str]] = None,
+            notes: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+            target_gateway: pulumi.Input[Optional[_builtins.str]] = None,
+            target_natgateway: pulumi.Input[Optional[_builtins.str]] = None,
+            target_vpc_peering_connection: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["destinationCidr"] = destination_cidr
+        __props__["gatewayAddress"] = gateway_address
+        __props__["notes"] = notes
+        __props__["organisationId"] = organisation_id
+        __props__["routeTableId"] = route_table_id
+        __props__["targetGateway"] = target_gateway
+        __props__["targetNatgateway"] = target_natgateway
+        __props__["targetVpcPeeringConnection"] = target_vpc_peering_connection
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/routeTableRoute:RouteTableRoute', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="destinationCidr")
     def destination_cidr(self) -> pulumi.Output[_builtins.str]:

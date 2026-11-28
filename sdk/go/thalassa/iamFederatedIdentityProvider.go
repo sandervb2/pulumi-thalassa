@@ -172,6 +172,12 @@ func (IamFederatedIdentityProviderState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamFederatedIdentityProviderState)(nil)).Elem()
 }
 
+// IamFederatedIdentityProviderExists checks whether an existing IamFederatedIdentityProvider resource with the given ID exists.
+func IamFederatedIdentityProviderExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamFederatedIdentityProviderState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamFederatedIdentityProvider:IamFederatedIdentityProvider", id, state, "", opts...)
+}
+
 type iamFederatedIdentityProviderArgs struct {
 	// Annotations for the provider
 	Annotations map[string]string `pulumi:"annotations"`

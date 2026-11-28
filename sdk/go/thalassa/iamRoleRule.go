@@ -96,6 +96,12 @@ func (IamRoleRuleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamRoleRuleState)(nil)).Elem()
 }
 
+// IamRoleRuleExists checks whether an existing IamRoleRule resource with the given ID exists.
+func IamRoleRuleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamRoleRuleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamRoleRule:IamRoleRule", id, state, "", opts...)
+}
+
 type iamRoleRuleArgs struct {
 	// Human-readable note for the permission rule
 	Note *string `pulumi:"note"`

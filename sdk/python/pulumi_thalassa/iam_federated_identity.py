@@ -796,6 +796,48 @@ class IamFederatedIdentity(pulumi.CustomResource):
         __props__.__dict__["updated_at"] = updated_at
         return IamFederatedIdentity(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            allowed_scopes: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            audience_match_mode: pulumi.Input[Optional[_builtins.str]] = None,
+            conditions: pulumi.Input[Optional[_builtins.str]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            expires_at: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            last_used_at: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_version: pulumi.Input[Optional[_builtins.int]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            provider_id: pulumi.Input[Optional[_builtins.str]] = None,
+            provider_subject: pulumi.Input[Optional[_builtins.str]] = None,
+            service_account_id: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            trusted_audiences: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["allowedScopes"] = allowed_scopes
+        __props__["annotations"] = annotations
+        __props__["audienceMatchMode"] = audience_match_mode
+        __props__["conditions"] = conditions
+        __props__["createdAt"] = created_at
+        __props__["description"] = description
+        __props__["expiresAt"] = expires_at
+        __props__["labels"] = labels
+        __props__["lastUsedAt"] = last_used_at
+        __props__["name"] = name
+        __props__["objectVersion"] = object_version
+        __props__["organisationId"] = organisation_id
+        __props__["providerId"] = provider_id
+        __props__["providerSubject"] = provider_subject
+        __props__["serviceAccountId"] = service_account_id
+        __props__["status"] = status
+        __props__["trustedAudiences"] = trusted_audiences
+        __props__["updatedAt"] = updated_at
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/iamFederatedIdentity:IamFederatedIdentity', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="allowedScopes")
     def allowed_scopes(self) -> pulumi.Output[Sequence[_builtins.str]]:

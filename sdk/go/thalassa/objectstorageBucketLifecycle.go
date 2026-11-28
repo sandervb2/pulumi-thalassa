@@ -136,6 +136,12 @@ func (ObjectstorageBucketLifecycleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*objectstorageBucketLifecycleState)(nil)).Elem()
 }
 
+// ObjectstorageBucketLifecycleExists checks whether an existing ObjectstorageBucketLifecycle resource with the given ID exists.
+func ObjectstorageBucketLifecycleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *ObjectstorageBucketLifecycleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle", id, state, "", opts...)
+}
+
 type objectstorageBucketLifecycleArgs struct {
 	// Name of the bucket.
 	BucketName     string                             `pulumi:"bucketName"`

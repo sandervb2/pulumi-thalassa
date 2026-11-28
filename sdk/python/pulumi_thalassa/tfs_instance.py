@@ -643,6 +643,42 @@ class TfsInstance(pulumi.CustomResource):
         __props__.__dict__["wait_until_available"] = wait_until_available
         return TfsInstance(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TfsInstanceEndpointArgs', 'TfsInstanceEndpointArgsDict', 'outputs.TfsInstanceEndpoint']]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_ids: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_until_available: pulumi.Input[Optional[_builtins.bool]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["deleteProtection"] = delete_protection
+        __props__["description"] = description
+        __props__["endpoints"] = endpoints
+        __props__["labels"] = labels
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["region"] = region
+        __props__["securityGroupIds"] = security_group_ids
+        __props__["sizeGb"] = size_gb
+        __props__["slug"] = slug
+        __props__["status"] = status
+        __props__["subnetId"] = subnet_id
+        __props__["vpcId"] = vpc_id
+        __props__["waitUntilAvailable"] = wait_until_available
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/tfsInstance:TfsInstance', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

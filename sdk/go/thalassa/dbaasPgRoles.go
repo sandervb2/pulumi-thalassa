@@ -187,6 +187,12 @@ func (DbaasPgRolesState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dbaasPgRolesState)(nil)).Elem()
 }
 
+// DbaasPgRolesExists checks whether an existing DbaasPgRoles resource with the given ID exists.
+func DbaasPgRolesExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DbaasPgRolesState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dbaasPgRoles:DbaasPgRoles", id, state, "", opts...)
+}
+
 type dbaasPgRolesArgs struct {
 	// The connection limit of the role
 	ConnectionLimit *int `pulumi:"connectionLimit"`

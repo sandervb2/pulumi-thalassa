@@ -750,6 +750,38 @@ class ObjectstorageBucket(pulumi.CustomResource):
         __props__.__dict__["wait_for_ready_timeout"] = wait_for_ready_timeout
         return ObjectstorageBucket(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_lock_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            policy: pulumi.Input[Optional[_builtins.str]] = None,
+            public: pulumi.Input[Optional[_builtins.bool]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            versioning: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_deleted: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_ready: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_ready_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["endpoint"] = endpoint
+        __props__["name"] = name
+        __props__["objectLockEnabled"] = object_lock_enabled
+        __props__["organisationId"] = organisation_id
+        __props__["policy"] = policy
+        __props__["public"] = public
+        __props__["region"] = region
+        __props__["status"] = status
+        __props__["versioning"] = versioning
+        __props__["waitForDeleted"] = wait_for_deleted
+        __props__["waitForDeletedTimeout"] = wait_for_deleted_timeout
+        __props__["waitForReady"] = wait_for_ready
+        __props__["waitForReadyTimeout"] = wait_for_ready_timeout
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/objectstorageBucket:ObjectstorageBucket', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def endpoint(self) -> pulumi.Output[_builtins.str]:

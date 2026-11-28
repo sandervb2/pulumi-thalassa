@@ -153,6 +153,12 @@ func (ContainerregistryNamespaceConfigurationState) ElementType() reflect.Type {
 	return reflect.TypeOf((*containerregistryNamespaceConfigurationState)(nil)).Elem()
 }
 
+// ContainerregistryNamespaceConfigurationExists checks whether an existing ContainerregistryNamespaceConfiguration resource with the given ID exists.
+func ContainerregistryNamespaceConfigurationExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *ContainerregistryNamespaceConfigurationState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration", id, state, "", opts...)
+}
+
 type containerregistryNamespaceConfigurationArgs struct {
 	// Identity of the container registry namespace
 	NamespaceId string `pulumi:"namespaceId"`

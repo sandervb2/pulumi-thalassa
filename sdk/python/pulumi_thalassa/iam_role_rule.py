@@ -304,6 +304,22 @@ class IamRoleRule(pulumi.CustomResource):
         __props__.__dict__["role_id"] = role_id
         return IamRoleRule(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            note: pulumi.Input[Optional[_builtins.str]] = None,
+            permissions: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            resource_identities: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            resources: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            role_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["note"] = note
+        __props__["permissions"] = permissions
+        __props__["resourceIdentities"] = resource_identities
+        __props__["resources"] = resources
+        __props__["roleId"] = role_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/iamRoleRule:IamRoleRule', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def note(self) -> pulumi.Output[Optional[_builtins.str]]:

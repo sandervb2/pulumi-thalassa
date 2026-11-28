@@ -248,6 +248,12 @@ func (ObservabilityWorkspaceState) ElementType() reflect.Type {
 	return reflect.TypeOf((*observabilityWorkspaceState)(nil)).Elem()
 }
 
+// ObservabilityWorkspaceExists checks whether an existing ObservabilityWorkspace resource with the given ID exists.
+func ObservabilityWorkspaceExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *ObservabilityWorkspaceState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/observabilityWorkspace:ObservabilityWorkspace", id, state, "", opts...)
+}
+
 type observabilityWorkspaceArgs struct {
 	// Annotations for the workspace
 	Annotations map[string]string `pulumi:"annotations"`

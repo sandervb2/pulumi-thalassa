@@ -100,7 +100,7 @@ namespace Pulumi.Thalassa
         /// 
         ///     // Only create binding if role is not a system role
         ///     var conditionalBinding = new List&lt;Thalassa.KubernetesClusterRoleBinding&gt;();
-        ///     for (var rangeIndex = 0; rangeIndex &lt; role.System ? 0 : 1; rangeIndex++)
+        ///     for (var rangeIndex = 0; rangeIndex &lt; (role.System ? 0 : 1); rangeIndex++)
         ///     {
         ///         var range = new { Value = rangeIndex };
         ///         conditionalBinding.Add(new Thalassa.KubernetesClusterRoleBinding($"conditional_binding-{range.Value}", new()
@@ -238,7 +238,7 @@ namespace Pulumi.Thalassa
         /// 
         ///     // Only create binding if role is not a system role
         ///     var conditionalBinding = new List&lt;Thalassa.KubernetesClusterRoleBinding&gt;();
-        ///     for (var rangeIndex = 0; rangeIndex &lt; role.System ? 0 : 1; rangeIndex++)
+        ///     for (var rangeIndex = 0; rangeIndex &lt; (role.System ? 0 : 1); rangeIndex++)
         ///     {
         ///         var range = new { Value = rangeIndex };
         ///         conditionalBinding.Add(new Thalassa.KubernetesClusterRoleBinding($"conditional_binding-{range.Value}", new()
@@ -376,7 +376,7 @@ namespace Pulumi.Thalassa
         /// 
         ///     // Only create binding if role is not a system role
         ///     var conditionalBinding = new List&lt;Thalassa.KubernetesClusterRoleBinding&gt;();
-        ///     for (var rangeIndex = 0; rangeIndex &lt; role.System ? 0 : 1; rangeIndex++)
+        ///     for (var rangeIndex = 0; rangeIndex &lt; (role.System ? 0 : 1); rangeIndex++)
         ///     {
         ///         var range = new { Value = rangeIndex };
         ///         conditionalBinding.Add(new Thalassa.KubernetesClusterRoleBinding($"conditional_binding-{range.Value}", new()

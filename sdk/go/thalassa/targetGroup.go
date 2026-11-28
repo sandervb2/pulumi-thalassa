@@ -241,6 +241,12 @@ func (TargetGroupState) ElementType() reflect.Type {
 	return reflect.TypeOf((*targetGroupState)(nil)).Elem()
 }
 
+// TargetGroupExists checks whether an existing TargetGroup resource with the given ID exists.
+func TargetGroupExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *TargetGroupState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/targetGroup:TargetGroup", id, state, "", opts...)
+}
+
 type targetGroupArgs struct {
 	// Annotations for the Target Group
 	Annotations map[string]string `pulumi:"annotations"`

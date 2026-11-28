@@ -156,6 +156,12 @@ func (IamTeamState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamTeamState)(nil)).Elem()
 }
 
+// IamTeamExists checks whether an existing IamTeam resource with the given ID exists.
+func IamTeamExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamTeamState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamTeam:IamTeam", id, state, "", opts...)
+}
+
 type iamTeamArgs struct {
 	// Annotations for the Team
 	Annotations map[string]string `pulumi:"annotations"`

@@ -391,6 +391,24 @@ class VpcPeeringConnectionAcceptance(pulumi.CustomResource):
         __props__.__dict__["wait_for_deleted_timeout"] = wait_for_deleted_timeout
         return VpcPeeringConnectionAcceptance(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            peering_connection_id: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            status_message: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_for_active: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_active_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["peeringConnectionId"] = peering_connection_id
+        __props__["status"] = status
+        __props__["statusMessage"] = status_message
+        __props__["waitForActive"] = wait_for_active
+        __props__["waitForActiveTimeout"] = wait_for_active_timeout
+        __props__["waitForDeletedTimeout"] = wait_for_deleted_timeout
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/vpcPeeringConnectionAcceptance:VpcPeeringConnectionAcceptance', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="peeringConnectionId")
     def peering_connection_id(self) -> pulumi.Output[_builtins.str]:

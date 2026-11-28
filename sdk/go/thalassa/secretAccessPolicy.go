@@ -136,6 +136,12 @@ func (SecretAccessPolicyState) ElementType() reflect.Type {
 	return reflect.TypeOf((*secretAccessPolicyState)(nil)).Elem()
 }
 
+// SecretAccessPolicyExists checks whether an existing SecretAccessPolicy resource with the given ID exists.
+func SecretAccessPolicyExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *SecretAccessPolicyState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/secretAccessPolicy:SecretAccessPolicy", id, state, "", opts...)
+}
+
 type secretAccessPolicyArgs struct {
 	OrganisationId *string `pulumi:"organisationId"`
 	Path           string  `pulumi:"path"`

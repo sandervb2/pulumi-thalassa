@@ -416,6 +416,32 @@ class DnsZoneDnssec(pulumi.CustomResource):
         __props__.__dict__["zone_id"] = zone_id
         return DnsZoneDnssec(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            ds_delegated: pulumi.Input[Optional[_builtins.bool]] = None,
+            ds_records: pulumi.Input[Optional[Sequence[pulumi.Input[Union['DnsZoneDnssecDsRecordArgs', 'DnsZoneDnssecDsRecordArgsDict', 'outputs.DnsZoneDnssecDsRecord']]]]] = None,
+            enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
+            last_sign_error: pulumi.Input[Optional[_builtins.str]] = None,
+            last_signed_at: pulumi.Input[Optional[_builtins.str]] = None,
+            next_ds_probe_at: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            zone_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["dsDelegated"] = ds_delegated
+        __props__["dsRecords"] = ds_records
+        __props__["enabled"] = enabled
+        __props__["kmsKeyId"] = kms_key_id
+        __props__["lastSignError"] = last_sign_error
+        __props__["lastSignedAt"] = last_signed_at
+        __props__["nextDsProbeAt"] = next_ds_probe_at
+        __props__["organisationId"] = organisation_id
+        __props__["region"] = region
+        __props__["zoneId"] = zone_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/dnsZoneDnssec:DnsZoneDnssec', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="dsDelegated")
     def ds_delegated(self) -> pulumi.Output[_builtins.bool]:

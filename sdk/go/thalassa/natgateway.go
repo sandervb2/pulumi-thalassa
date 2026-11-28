@@ -206,6 +206,12 @@ func (NatgatewayState) ElementType() reflect.Type {
 	return reflect.TypeOf((*natgatewayState)(nil)).Elem()
 }
 
+// NatgatewayExists checks whether an existing Natgateway resource with the given ID exists.
+func NatgatewayExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *NatgatewayState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/natgateway:Natgateway", id, state, "", opts...)
+}
+
 type natgatewayArgs struct {
 	// Annotations for the NatGateway
 	Annotations map[string]string `pulumi:"annotations"`

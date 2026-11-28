@@ -247,6 +247,12 @@ func (KmsKeyState) ElementType() reflect.Type {
 	return reflect.TypeOf((*kmsKeyState)(nil)).Elem()
 }
 
+// KmsKeyExists checks whether an existing KmsKey resource with the given ID exists.
+func KmsKeyExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *KmsKeyState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/kmsKey:KmsKey", id, state, "", opts...)
+}
+
 type kmsKeyArgs struct {
 	// Whether imported keys may be rotated.
 	AllowRotation *bool `pulumi:"allowRotation"`

@@ -638,6 +638,42 @@ class Subnet(pulumi.CustomResource):
         __props__.__dict__["vpc_id"] = vpc_id
         return Subnet(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            ipv4_addresses_available: pulumi.Input[Optional[_builtins.int]] = None,
+            ipv4_addresses_used: pulumi.Input[Optional[_builtins.int]] = None,
+            ipv6_addresses_available: pulumi.Input[Optional[_builtins.int]] = None,
+            ipv6_addresses_used: pulumi.Input[Optional[_builtins.int]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            route_table_id: pulumi.Input[Optional[_builtins.str]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            type: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["cidr"] = cidr
+        __props__["description"] = description
+        __props__["ipv4AddressesAvailable"] = ipv4_addresses_available
+        __props__["ipv4AddressesUsed"] = ipv4_addresses_used
+        __props__["ipv6AddressesAvailable"] = ipv6_addresses_available
+        __props__["ipv6AddressesUsed"] = ipv6_addresses_used
+        __props__["labels"] = labels
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["routeTableId"] = route_table_id
+        __props__["slug"] = slug
+        __props__["status"] = status
+        __props__["type"] = type
+        __props__["vpcId"] = vpc_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/subnet:Subnet', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

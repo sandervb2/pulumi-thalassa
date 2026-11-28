@@ -190,6 +190,12 @@ func (DbaasDbBackupscheduleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dbaasDbBackupscheduleState)(nil)).Elem()
 }
 
+// DbaasDbBackupscheduleExists checks whether an existing DbaasDbBackupschedule resource with the given ID exists.
+func DbaasDbBackupscheduleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DbaasDbBackupscheduleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule", id, state, "", opts...)
+}
+
 type dbaasDbBackupscheduleArgs struct {
 	// The annotations of the database backup schedule
 	Annotations map[string]string `pulumi:"annotations"`

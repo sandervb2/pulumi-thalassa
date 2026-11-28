@@ -153,6 +153,12 @@ func (RouteTableState) ElementType() reflect.Type {
 	return reflect.TypeOf((*routeTableState)(nil)).Elem()
 }
 
+// RouteTableExists checks whether an existing RouteTable resource with the given ID exists.
+func RouteTableExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *RouteTableState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/routeTable:RouteTable", id, state, "", opts...)
+}
+
 type routeTableArgs struct {
 	// Annotations for the RouteTable
 	Annotations map[string]string `pulumi:"annotations"`

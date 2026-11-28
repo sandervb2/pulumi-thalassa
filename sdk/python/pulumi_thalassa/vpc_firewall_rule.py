@@ -771,6 +771,42 @@ class VpcFirewallRule(pulumi.CustomResource):
         __props__.__dict__["vpc_id"] = vpc_id
         return VpcFirewallRule(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            action: pulumi.Input[Optional[_builtins.str]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            destination: pulumi.Input[Optional[_builtins.str]] = None,
+            destination_ports: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.int]]]] = None,
+            destination_subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            direction: pulumi.Input[Optional[_builtins.str]] = None,
+            interface_id: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            priority: pulumi.Input[Optional[_builtins.int]] = None,
+            protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']]] = None,
+            source: pulumi.Input[Optional[_builtins.str]] = None,
+            source_ports: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.int]]]] = None,
+            source_subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            state: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["action"] = action
+        __props__["createdAt"] = created_at
+        __props__["destination"] = destination
+        __props__["destinationPorts"] = destination_ports
+        __props__["destinationSubnetId"] = destination_subnet_id
+        __props__["direction"] = direction
+        __props__["interfaceId"] = interface_id
+        __props__["name"] = name
+        __props__["priority"] = priority
+        __props__["protocols"] = protocols
+        __props__["source"] = source
+        __props__["sourcePorts"] = source_ports
+        __props__["sourceSubnetId"] = source_subnet_id
+        __props__["state"] = state
+        __props__["vpcId"] = vpc_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/vpcFirewallRule:VpcFirewallRule', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def action(self) -> pulumi.Output[_builtins.str]:

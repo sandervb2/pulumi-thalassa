@@ -114,6 +114,12 @@ func (DbaasPgGrantState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dbaasPgGrantState)(nil)).Elem()
 }
 
+// DbaasPgGrantExists checks whether an existing DbaasPgGrant resource with the given ID exists.
+func DbaasPgGrantExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DbaasPgGrantState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dbaasPgGrant:DbaasPgGrant", id, state, "", opts...)
+}
+
 type dbaasPgGrantArgs struct {
 	// The name of the database to grant permissions on
 	DatabaseName string `pulumi:"databaseName"`

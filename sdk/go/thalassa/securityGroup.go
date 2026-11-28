@@ -303,6 +303,12 @@ func (SecurityGroupState) ElementType() reflect.Type {
 	return reflect.TypeOf((*securityGroupState)(nil)).Elem()
 }
 
+// SecurityGroupExists checks whether an existing SecurityGroup resource with the given ID exists.
+func SecurityGroupExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *SecurityGroupState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/securityGroup:SecurityGroup", id, state, "", opts...)
+}
+
 type securityGroupArgs struct {
 	// Flag that indicates if the security group allows traffic between instances in the same security group
 	AllowSameGroupTraffic *bool `pulumi:"allowSameGroupTraffic"`

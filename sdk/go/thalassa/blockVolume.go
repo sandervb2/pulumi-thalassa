@@ -167,6 +167,12 @@ func (BlockVolumeState) ElementType() reflect.Type {
 	return reflect.TypeOf((*blockVolumeState)(nil)).Elem()
 }
 
+// BlockVolumeExists checks whether an existing BlockVolume resource with the given ID exists.
+func BlockVolumeExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *BlockVolumeState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/blockVolume:BlockVolume", id, state, "", opts...)
+}
+
 type blockVolumeArgs struct {
 	// Annotations for the Block Volume
 	Annotations map[string]string `pulumi:"annotations"`

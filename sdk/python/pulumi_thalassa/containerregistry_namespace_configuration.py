@@ -374,6 +374,26 @@ class ContainerregistryNamespaceConfiguration(pulumi.CustomResource):
         __props__.__dict__["visibility"] = visibility
         return ContainerregistryNamespaceConfiguration(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            namespace_id: pulumi.Input[Optional[_builtins.str]] = None,
+            object_version: pulumi.Input[Optional[_builtins.int]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            retention_policy: pulumi.Input[Optional[Union['ContainerregistryNamespaceConfigurationRetentionPolicyArgs', 'ContainerregistryNamespaceConfigurationRetentionPolicyArgsDict', 'outputs.ContainerregistryNamespaceConfigurationRetentionPolicy']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            visibility: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["createdAt"] = created_at
+        __props__["namespaceId"] = namespace_id
+        __props__["objectVersion"] = object_version
+        __props__["organisationId"] = organisation_id
+        __props__["retentionPolicy"] = retention_policy
+        __props__["updatedAt"] = updated_at
+        __props__["visibility"] = visibility
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="createdAt")
     def created_at(self) -> pulumi.Output[_builtins.str]:

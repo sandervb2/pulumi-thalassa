@@ -183,6 +183,12 @@ func (RouteTableRouteState) ElementType() reflect.Type {
 	return reflect.TypeOf((*routeTableRouteState)(nil)).Elem()
 }
 
+// RouteTableRouteExists checks whether an existing RouteTableRoute resource with the given ID exists.
+func RouteTableRouteExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *RouteTableRouteState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/routeTableRoute:RouteTableRoute", id, state, "", opts...)
+}
+
 type routeTableRouteArgs struct {
 	// Destination CIDR of the Route
 	DestinationCidr string `pulumi:"destinationCidr"`

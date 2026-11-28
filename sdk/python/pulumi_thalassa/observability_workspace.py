@@ -779,6 +779,56 @@ class ObservabilityWorkspace(pulumi.CustomResource):
         __props__.__dict__["wait_for_deleted_timeout"] = wait_for_deleted_timeout
         return ObservabilityWorkspace(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            alerting_url: pulumi.Input[Optional[_builtins.str]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            loki_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            loki_query_url: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_version: pulumi.Input[Optional[_builtins.int]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            prometheus_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            prometheus_query_url: pulumi.Input[Optional[_builtins.str]] = None,
+            push_otlp_url: pulumi.Input[Optional[_builtins.str]] = None,
+            push_url: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            remote_write_otlp_url: pulumi.Input[Optional[_builtins.str]] = None,
+            remote_write_url: pulumi.Input[Optional[_builtins.str]] = None,
+            retention_days: pulumi.Input[Optional[_builtins.int]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            status_message: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["alertingUrl"] = alerting_url
+        __props__["annotations"] = annotations
+        __props__["createdAt"] = created_at
+        __props__["description"] = description
+        __props__["labels"] = labels
+        __props__["lokiEnabled"] = loki_enabled
+        __props__["lokiQueryUrl"] = loki_query_url
+        __props__["name"] = name
+        __props__["objectVersion"] = object_version
+        __props__["organisationId"] = organisation_id
+        __props__["prometheusEnabled"] = prometheus_enabled
+        __props__["prometheusQueryUrl"] = prometheus_query_url
+        __props__["pushOtlpUrl"] = push_otlp_url
+        __props__["pushUrl"] = push_url
+        __props__["region"] = region
+        __props__["remoteWriteOtlpUrl"] = remote_write_otlp_url
+        __props__["remoteWriteUrl"] = remote_write_url
+        __props__["retentionDays"] = retention_days
+        __props__["status"] = status
+        __props__["statusMessage"] = status_message
+        __props__["updatedAt"] = updated_at
+        __props__["waitForDeletedTimeout"] = wait_for_deleted_timeout
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/observabilityWorkspace:ObservabilityWorkspace', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="alertingUrl")
     def alerting_url(self) -> pulumi.Output[_builtins.str]:

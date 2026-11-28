@@ -289,6 +289,12 @@ func (VpcPeeringConnectionState) ElementType() reflect.Type {
 	return reflect.TypeOf((*vpcPeeringConnectionState)(nil)).Elem()
 }
 
+// VpcPeeringConnectionExists checks whether an existing VpcPeeringConnection resource with the given ID exists.
+func VpcPeeringConnectionExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *VpcPeeringConnectionState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/vpcPeeringConnection:VpcPeeringConnection", id, state, "", opts...)
+}
+
 type vpcPeeringConnectionArgs struct {
 	// ID of the organisation that owns the accepter VPC
 	AccepterOrganisationId *string `pulumi:"accepterOrganisationId"`

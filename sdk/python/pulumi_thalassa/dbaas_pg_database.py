@@ -430,6 +430,24 @@ class DbaasPgDatabase(pulumi.CustomResource):
         __props__.__dict__["owner_role_id"] = owner_role_id
         return DbaasPgDatabase(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            allow_connections: pulumi.Input[Optional[_builtins.bool]] = None,
+            connection_limit: pulumi.Input[Optional[_builtins.int]] = None,
+            db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            owner_role_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["allowConnections"] = allow_connections
+        __props__["connectionLimit"] = connection_limit
+        __props__["dbClusterId"] = db_cluster_id
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["ownerRoleId"] = owner_role_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/dbaasPgDatabase:DbaasPgDatabase', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="allowConnections")
     def allow_connections(self) -> pulumi.Output[Optional[_builtins.bool]]:

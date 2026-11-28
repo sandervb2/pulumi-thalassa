@@ -206,6 +206,12 @@ func (IamRoleBindingState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamRoleBindingState)(nil)).Elem()
 }
 
+// IamRoleBindingExists checks whether an existing IamRoleBinding resource with the given ID exists.
+func IamRoleBindingExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamRoleBindingState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamRoleBinding:IamRoleBinding", id, state, "", opts...)
+}
+
 type iamRoleBindingArgs struct {
 	// Annotations for the role binding
 	Annotations map[string]string `pulumi:"annotations"`

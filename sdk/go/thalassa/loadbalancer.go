@@ -215,6 +215,12 @@ func (LoadbalancerState) ElementType() reflect.Type {
 	return reflect.TypeOf((*loadbalancerState)(nil)).Elem()
 }
 
+// LoadbalancerExists checks whether an existing Loadbalancer resource with the given ID exists.
+func LoadbalancerExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *LoadbalancerState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/loadbalancer:Loadbalancer", id, state, "", opts...)
+}
+
 type loadbalancerArgs struct {
 	// Annotations for the Loadbalancer
 	Annotations map[string]string `pulumi:"annotations"`
