@@ -25,12 +25,13 @@ regenerate:
 | `sdk/**` (python, nodejs, go, dotnet)               | upstream schema + `provider/resources.go`| `make generate`        |
 | `provider/cmd/pulumi-resource-thalassa/schema.json` | upstream schema + `provider/resources.go`| `make tfgen` (`schema`)|
 | `provider/cmd/.../bridge-metadata.json`             | upstream schema + `provider/resources.go`| `make tfgen`           |
-| `Makefile`, `mise.toml`, `.github/**`, `.golangci.yml` | `.ci-mgmt.yaml`                        | `make ci-mgmt`         |
+| `Makefile`, `mise.toml`, `.golangci.yml`             | `.ci-mgmt.yaml`                          | `make ci-mgmt`         |
 
 **Human-editable surface is small** — in practice only:
 - `provider/resources.go` — bridge config, token/naming overrides, doc edits
 - `provider/go.mod` — the upstream version pin
-- `.ci-mgmt.yaml` — CI/build config (then `make ci-mgmt`)
+- `.ci-mgmt.yaml` — Makefile/tooling config (then `make ci-mgmt`)
+- `.github/workflows/**`, `renovate.json` — hand-written CI (not ci-mgmt)
 - `examples/`, `README.md`, `CHANGELOG.md`
 
 If you think you need to edit anything else, you're probably solving it in the
@@ -72,10 +73,37 @@ make tfgen        # regenerate schema.json + bridge-metadata.json
 make build        # regenerate + build all SDKs and the provider plugin
 ```
 
-Do **not** manually bump `github.com/pulumi/pulumi/pkg/v3` or `.../sdk/v3`. The
-bridge pulls the version it needs; let it. If you bump the bridge, keep the
+Do **not** manually bump `github.com/pulumi/pulumi/pkg/v3` or `.../sdk/v3` in
+`provider/go.mod`. The bridge pulls the version it needs; let it. Forcing a
+newer `pkg`/`sdk` than the bridge was built against breaks compilation of the
+bridge's transitive deps (e.g. `pulumi-hcl`). Renovate is configured not to
+bump them in `provider/` for this reason. If you bump the bridge, keep the
 `replace` directive for `terraform-plugin-sdk/v2` in sync with the bridge's own
 `go.mod` (the fork is intentionally unreleased and must match).
+
+### Renovate and automatic regeneration
+
+Renovate bumps `provider/go.mod` (upstream provider, bridge) but cannot run
+`make`. Two pieces keep those PRs correct:
+
+- **`Verify` fails on stale generated files.** After `make tfgen` and
+  `make generate_<lang>`, it fails if `provider/cmd/pulumi-resource-thalassa/`
+  or `sdk/<lang>/` differ from what's committed. Fix by regenerating and
+  committing — never by editing the generated files.
+- **`Regenerate` workflow** (`.github/workflows/regenerate.yml`) runs on
+  Renovate PRs that touch `provider/go.mod`/`go.sum`, runs `make tfgen` +
+  `make generate_sdks`, and pushes a `chore(deps): regenerate schema and sdks`
+  commit as the `pulumi-thalassa-regen[bot]` GitHub App. Renovate ignores that
+  author (`gitIgnoredAuthors`), so it keeps rebasing the PR.
+
+  It pushes with a GitHub App token because pushes made with `GITHUB_TOKEN`
+  don't trigger new workflow runs, so `Verify` would never report on the
+  regenerated commit. Setup:
+  - GitHub App named **`pulumi-thalassa-regen`** (the name must match
+    `renovate.json`), Repository permissions → **Contents: Read and write**,
+    no webhook, installed on this repository only.
+  - Repository **variable** `REGEN_APP_CLIENT_ID` = the App's Client ID.
+  - Repository **secret** `REGEN_APP_PRIVATE_KEY` = the App's private key.
 
 ### After any sync — always
 
@@ -112,11 +140,16 @@ future you has to maintain across regenerations. Prefer the automatic mapping.
 
 - Tool versions are pinned in `mise.toml` (Go, Node, Python, .NET, pulumi,
   pulumictl). Run `mise install` first. Do not edit `mise.toml` by hand — it's
-  generated from `.ci-mgmt.yaml`.
+  generated from `.ci-mgmt.yaml`. Note: its Go pin (1.21) is older than what
+  `provider/go.mod` requires; CI uses Go 1.27.x, so build with that.
+  If `GOROOT` is set by mise to the old Go, override it.
 - `make help` lists targets. Common ones: `build`, `generate`, `tfgen`/`schema`,
   `test_provider`, `test`, `lint_provider`, `clean`, `ci-mgmt`.
-- CI config: edit `.ci-mgmt.yaml`, then `make ci-mgmt` to regenerate the
-  Makefile and `.github/` workflows. Commit the regenerated output together.
+- Makefile/tooling config: edit `.ci-mgmt.yaml`, then `make ci-mgmt`. Commit
+  the regenerated output together. GitHub workflows under `.github/workflows/`
+  are hand-written and edited directly. `make ci-mgmt` runs ci-mgmt's
+  generator, which may (re)write files under `.github/` — review its diff and
+  discard anything that clobbers the hand-written workflows.
 
 ## Contribution conventions (enforced — match them)
 

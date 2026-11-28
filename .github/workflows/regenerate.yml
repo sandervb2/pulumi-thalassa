@@ -1,0 +1,107 @@
+name: Regenerate
+
+# Renovate can bump provider/go.mod (upstream provider, bridge) but cannot run
+# `make`. This workflow regenerates schema.json, bridge-metadata.json and the
+# SDKs on those PRs and pushes the result back to the PR branch, so the
+# "is up to date" checks in verify.yml pass and the PR can merge.
+#
+# The push uses a GitHub App installation token, not GITHUB_TOKEN: pushes made
+# with GITHUB_TOKEN do not trigger new workflow runs, so Verify would never run
+# on the regenerated commit and the required checks would never report.
+#
+# Setup (see CLAUDE.md):
+#   - GitHub App named "pulumi-thalassa-regen", Repository permissions:
+#     Contents: Read and write. Installed on this repository only.
+#   - Repository variable REGEN_APP_CLIENT_ID = the App's Client ID
+#   - Repository secret   REGEN_APP_PRIVATE_KEY = the App's private key (.pem)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - provider/go.mod
+      - provider/go.sum
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regenerate-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  PROVIDER: thalassa
+  GO111MODULE: "on"
+
+jobs:
+  regenerate:
+    name: Regenerate schema and SDKs
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.user.login == 'renovate[bot]' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
+          # No credentials in .git/config while PR code (make, go) runs.
+          persist-credentials: false
+
+      - name: Install Go
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version: 1.27.x
+          cache-dependency-path: "**/*.sum"
+
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@b82b2052fdf822192f2119b7e289a6f63e668bc8 # v4.0.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@0ce33695f880624d4f27bd6db25e680c7df4d551 # v7
+
+      - name: Regenerate schema and SDKs
+        run: |
+          make tfgen
+          make generate_sdks
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain -- provider/cmd/pulumi-resource-thalassa sdk)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Generated files are already up to date."
+          fi
+
+      # The token is minted only after all PR code has run, scoped to this
+      # repository with contents:write, and revoked at the end of the job.
+      - name: Create GitHub App token
+        if: steps.changes.outputs.changed == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ vars.REGEN_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGEN_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          user_id=$(gh api "/users/${APP_SLUG}[bot]" --jq .id)
+          # This identity must match renovate.json gitIgnoredAuthors, so
+          # Renovate keeps rebasing the PR despite this extra commit.
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${user_id}+${APP_SLUG}[bot]@users.noreply.github.com"
+          git add -A -- provider/cmd/pulumi-resource-thalassa sdk
+          git commit -m "chore(deps): regenerate schema and sdks"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${BRANCH}"
