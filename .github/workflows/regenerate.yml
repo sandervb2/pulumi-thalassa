@@ -1,0 +1,87 @@
+name: Regenerate
+
+# Renovate can bump provider/go.mod (upstream provider, bridge) but cannot run
+# `make`. This workflow regenerates schema.json, bridge-metadata.json and the
+# SDKs on those PRs and pushes the result back to the PR branch, so the
+# "is up to date" checks in verify.yml pass and the PR can merge.
+#
+# Requires a `REGEN_TOKEN` secret: a fine-grained PAT (or GitHub App token)
+# with Contents: read & write on this repository. GITHUB_TOKEN cannot be used,
+# because pushes made with it do not trigger the Verify workflow again.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - provider/go.mod
+      - provider/go.sum
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regenerate-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  PROVIDER: thalassa
+  GO111MODULE: "on"
+
+jobs:
+  regenerate:
+    name: Regenerate schema and SDKs
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.user.login == 'renovate[bot]' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    steps:
+      - name: Check for REGEN_TOKEN
+        env:
+          REGEN_TOKEN: ${{ secrets.REGEN_TOKEN }}
+        run: |
+          if [ -z "$REGEN_TOKEN" ]; then
+            echo "::error::REGEN_TOKEN secret is not set; cannot push regenerated files."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          token: ${{ secrets.REGEN_TOKEN }}
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version: 1.27.x
+          cache-dependency-path: "**/*.sum"
+
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@b82b2052fdf822192f2119b7e289a6f63e668bc8 # v4.0.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@0ce33695f880624d4f27bd6db25e680c7df4d551 # v7
+
+      - name: Regenerate schema and SDKs
+        run: |
+          make tfgen
+          make generate_sdks
+
+      - name: Commit and push changes
+        run: |
+          paths="provider/cmd/pulumi-resource-thalassa sdk"
+          if [ -z "$(git status --porcelain -- $paths)" ]; then
+            echo "Generated files are already up to date."
+            exit 0
+          fi
+          # This identity is listed in renovate.json gitIgnoredAuthors, so
+          # Renovate keeps rebasing the PR despite this extra commit.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- $paths
+          git commit -m "chore(deps): regenerate schema and sdks"
+          git push

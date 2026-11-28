@@ -21,6 +21,7 @@
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": true,
+  "gitIgnoredAuthors": ["41898282+github-actions[bot]@users.noreply.github.com"],
 
   "packageRules": [
     {
@@ -43,6 +44,16 @@
       "automerge": false,
       "semanticCommitType": "chore",
       "semanticCommitScope": "deps"
+    },
+    {
+      "description": "pulumi pkg/sdk in provider/ must follow the bridge's own requirement; bumping them independently breaks the build",
+      "matchManagers": ["gomod"],
+      "matchFileNames": ["provider/go.mod"],
+      "matchPackageNames": [
+        "github.com/pulumi/pulumi/pkg/v3",
+        "github.com/pulumi/pulumi/sdk/v3"
+      ],
+      "enabled": false
     },
     {
       "matchManagers": ["gomod"],

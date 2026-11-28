@@ -59,7 +59,15 @@ jobs:
 
       - name: Generate provider schema
         run: make tfgen
-        
+
+      - name: Check schema is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- provider/cmd/pulumi-resource-thalassa/)" ]; then
+            git status --short -- provider/cmd/pulumi-resource-thalassa/
+            echo "::error::schema.json / bridge-metadata.json are stale. Run 'make tfgen' and commit the result."
+            exit 1
+          fi
+
       - name: Build Provider (linux-amd64)
         run: |
           if make -n provider-linux-amd64 >/dev/null 2>&1; then
@@ -142,6 +150,17 @@ jobs:
 
       - name: Generate provider schema
         run: make tfgen
+
+      - name: Generate SDK
+        run: make generate_${{ matrix.language }}
+
+      - name: Check SDK is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- sdk/${{ matrix.language }}/)" ]; then
+            git status --short -- sdk/${{ matrix.language }}/
+            echo "::error::sdk/${{ matrix.language }} is stale. Run 'make generate_sdks' and commit the result."
+            exit 1
+          fi
 
       - name: Build SDK
         run: make build_${{ matrix.language }}
