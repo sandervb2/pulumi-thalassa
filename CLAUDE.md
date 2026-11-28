@@ -100,7 +100,8 @@ Renovate bumps `provider/go.mod` (upstream provider, bridge) but cannot run
   don't trigger new workflow runs, so `Verify` would never report on the
   regenerated commit. Setup:
   - GitHub App named **`pulumi-thalassa-regen`** (the name must match
-    `renovate.json`), Repository permissions → **Contents: Read and write**,
+    `renovate.json`), Repository permissions → **Contents: Read and write**
+    and **Pull requests: Read and write** (the latter for release-please),
     no webhook, installed on this repository only.
   - Repository **variable** `REGEN_APP_CLIENT_ID` = the App's Client ID.
   - Repository **secret** `REGEN_APP_PRIVATE_KEY` = the App's private key.
@@ -172,7 +173,11 @@ future you has to maintain across regenerations. Prefer the automatic mapping.
   `fix(ci): correct release workflow`, `docs: document new loadbalancer fields`.
 
 **Releases** are automated via release-please (`CHANGELOG.md` is generated from
-commit history — don't edit it manually). Versioning is currently pre-1.0; the
+commit history — don't edit it manually). `release-please.yml` opens the
+release PR with the `pulumi-thalassa-regen` App token so CI runs on it, and
+tags the release with `GITHUB_TOKEN` then dispatches `release.yml` once. To
+force a version, add a `Release-As: x.y.z` footer to a commit merged to `main`
+(e.g. in the squash-merge body). Versioning is currently pre-1.0; the
 module path has no `/vN` suffix, so avoid changes that would force a major
 version unless that's the explicit goal.
 
