@@ -14,11 +14,16 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: tag and create the GitHub Release (if a release PR was just
+      # merged) using GITHUB_TOKEN. Tags created with GITHUB_TOKEN don't
+      # trigger other workflows, so release.yml runs exactly once, via the
+      # dispatch below.
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         id: release
         with:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+          skip-github-pull-request: true
 
       # Tags pushed with GITHUB_TOKEN don't trigger other workflows, but
       # workflow_dispatch does. Dispatching on the tag ref keeps release.yml
@@ -29,3 +34,23 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.release.outputs.tag_name }}
         run: gh workflow run release.yml --repo "$GITHUB_REPOSITORY" --ref "$TAG"
+
+      # Step 2: open/update the release PR with a GitHub App token. Pushes made
+      # with GITHUB_TOKEN don't trigger workflows, so the required checks would
+      # never run on the release PR and it could not be merged.
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
+        with:
+          client-id: ${{ vars.REGEN_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGEN_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          skip-github-release: true
