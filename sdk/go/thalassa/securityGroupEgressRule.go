@@ -146,6 +146,12 @@ func (SecurityGroupEgressRuleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*securityGroupEgressRuleState)(nil)).Elem()
 }
 
+// SecurityGroupEgressRuleExists checks whether an existing SecurityGroupEgressRule resource with the given ID exists.
+func SecurityGroupEgressRuleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *SecurityGroupEgressRuleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/securityGroupEgressRule:SecurityGroupEgressRule", id, state, "", opts...)
+}
+
 type securityGroupEgressRuleArgs struct {
 	// List of egress rules for the security group
 	Rules []SecurityGroupEgressRuleRule `pulumi:"rules"`

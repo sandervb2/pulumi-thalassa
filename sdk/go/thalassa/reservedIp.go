@@ -199,6 +199,12 @@ func (ReservedIpState) ElementType() reflect.Type {
 	return reflect.TypeOf((*reservedIpState)(nil)).Elem()
 }
 
+// ReservedIpExists checks whether an existing ReservedIp resource with the given ID exists.
+func ReservedIpExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *ReservedIpState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/reservedIp:ReservedIp", id, state, "", opts...)
+}
+
 type reservedIpArgs struct {
 	// Annotations for the reserved IP.
 	Annotations map[string]string `pulumi:"annotations"`

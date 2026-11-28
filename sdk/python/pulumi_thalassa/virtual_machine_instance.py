@@ -1007,6 +1007,54 @@ class VirtualMachineInstance(pulumi.CustomResource):
         __props__.__dict__["subnet_id"] = subnet_id
         return VirtualMachineInstance(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            attached_volume_ids: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+            cloud_init: pulumi.Input[Optional[_builtins.str]] = None,
+            cloud_init_template_id: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            ip_addresses: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            machine_image: pulumi.Input[Optional[_builtins.str]] = None,
+            machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            root_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
+            root_volume_size_gb: pulumi.Input[Optional[_builtins.int]] = None,
+            root_volume_type: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            state: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["attachedVolumeIds"] = attached_volume_ids
+        __props__["availabilityZone"] = availability_zone
+        __props__["cloudInit"] = cloud_init
+        __props__["cloudInitTemplateId"] = cloud_init_template_id
+        __props__["deleteProtection"] = delete_protection
+        __props__["description"] = description
+        __props__["ipAddresses"] = ip_addresses
+        __props__["labels"] = labels
+        __props__["machineImage"] = machine_image
+        __props__["machineType"] = machine_type
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["rootVolumeId"] = root_volume_id
+        __props__["rootVolumeSizeGb"] = root_volume_size_gb
+        __props__["rootVolumeType"] = root_volume_type
+        __props__["securityGroupAttachments"] = security_group_attachments
+        __props__["slug"] = slug
+        __props__["state"] = state
+        __props__["status"] = status
+        __props__["subnetId"] = subnet_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/virtualMachineInstance:VirtualMachineInstance', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

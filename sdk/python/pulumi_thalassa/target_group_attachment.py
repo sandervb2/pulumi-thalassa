@@ -311,6 +311,18 @@ class TargetGroupAttachment(pulumi.CustomResource):
         __props__.__dict__["vmi_id"] = vmi_id
         return TargetGroupAttachment(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            target_group_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vmi_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["organisationId"] = organisation_id
+        __props__["targetGroupId"] = target_group_id
+        __props__["vmiId"] = vmi_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/targetGroupAttachment:TargetGroupAttachment', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="organisationId")
     def organisation_id(self) -> pulumi.Output[Optional[_builtins.str]]:

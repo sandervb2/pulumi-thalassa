@@ -384,6 +384,26 @@ class SecretVersion(pulumi.CustomResource):
         __props__.__dict__["version"] = version
         return SecretVersion(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict', 'outputs.SecretVersionGenerateSecret']]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            path: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            secret_key_values: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            secret_string: pulumi.Input[Optional[_builtins.str]] = None,
+            version: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["generateSecret"] = generate_secret
+        __props__["organisationId"] = organisation_id
+        __props__["path"] = path
+        __props__["region"] = region
+        __props__["secretKeyValues"] = secret_key_values
+        __props__["secretString"] = secret_string
+        __props__["version"] = version
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/secretVersion:SecretVersion', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="generateSecret")
     def generate_secret(self) -> pulumi.Output[Optional['outputs.SecretVersionGenerateSecret']]:

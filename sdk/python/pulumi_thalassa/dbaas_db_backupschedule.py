@@ -577,6 +577,32 @@ class DbaasDbBackupschedule(pulumi.CustomResource):
         __props__.__dict__["suspended"] = suspended
         return DbaasDbBackupschedule(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            db_cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            method: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            retention_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            schedule: pulumi.Input[Optional[_builtins.str]] = None,
+            suspended: pulumi.Input[Optional[_builtins.bool]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["dbClusterId"] = db_cluster_id
+        __props__["description"] = description
+        __props__["labels"] = labels
+        __props__["method"] = method
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["retentionPolicy"] = retention_policy
+        __props__["schedule"] = schedule
+        __props__["suspended"] = suspended
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

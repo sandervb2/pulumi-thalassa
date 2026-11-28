@@ -189,6 +189,12 @@ func (BlockVolumeAttachmentState) ElementType() reflect.Type {
 	return reflect.TypeOf((*blockVolumeAttachmentState)(nil)).Elem()
 }
 
+// BlockVolumeAttachmentExists checks whether an existing BlockVolumeAttachment resource with the given ID exists.
+func BlockVolumeAttachmentExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *BlockVolumeAttachmentState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/blockVolumeAttachment:BlockVolumeAttachment", id, state, "", opts...)
+}
+
 type blockVolumeAttachmentArgs struct {
 	// Reference to the Organisation of the Volume Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`

@@ -169,6 +169,12 @@ func (IamServiceAccountAccessCredentialState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamServiceAccountAccessCredentialState)(nil)).Elem()
 }
 
+// IamServiceAccountAccessCredentialExists checks whether an existing IamServiceAccountAccessCredential resource with the given ID exists.
+func IamServiceAccountAccessCredentialExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamServiceAccountAccessCredentialState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential", id, state, "", opts...)
+}
+
 type iamServiceAccountAccessCredentialArgs struct {
 	// Expiration timestamp of the access credential (RFC3339 format)
 	ExpiresAt *string `pulumi:"expiresAt"`

@@ -681,6 +681,38 @@ class LoadbalancerListener(pulumi.CustomResource):
         __props__.__dict__["target_group_id"] = target_group_id
         return LoadbalancerListener(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            allowed_sources: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            connection_idle_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            loadbalancer_id: pulumi.Input[Optional[_builtins.str]] = None,
+            max_connections: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            port: pulumi.Input[Optional[_builtins.int]] = None,
+            protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            target_group_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["allowedSources"] = allowed_sources
+        __props__["annotations"] = annotations
+        __props__["connectionIdleTimeout"] = connection_idle_timeout
+        __props__["description"] = description
+        __props__["labels"] = labels
+        __props__["loadbalancerId"] = loadbalancer_id
+        __props__["maxConnections"] = max_connections
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["port"] = port
+        __props__["protocol"] = protocol
+        __props__["slug"] = slug
+        __props__["targetGroupId"] = target_group_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/loadbalancerListener:LoadbalancerListener', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="allowedSources")
     def allowed_sources(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:

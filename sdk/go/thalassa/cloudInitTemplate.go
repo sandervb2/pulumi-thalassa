@@ -134,6 +134,12 @@ func (CloudInitTemplateState) ElementType() reflect.Type {
 	return reflect.TypeOf((*cloudInitTemplateState)(nil)).Elem()
 }
 
+// CloudInitTemplateExists checks whether an existing CloudInitTemplate resource with the given ID exists.
+func CloudInitTemplateExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *CloudInitTemplateState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/cloudInitTemplate:CloudInitTemplate", id, state, "", opts...)
+}
+
 type cloudInitTemplateArgs struct {
 	// Annotations to add to the cloud init template
 	Annotations map[string]string `pulumi:"annotations"`

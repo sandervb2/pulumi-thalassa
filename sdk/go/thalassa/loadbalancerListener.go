@@ -222,6 +222,12 @@ func (LoadbalancerListenerState) ElementType() reflect.Type {
 	return reflect.TypeOf((*loadbalancerListenerState)(nil)).Elem()
 }
 
+// LoadbalancerListenerExists checks whether an existing LoadbalancerListener resource with the given ID exists.
+func LoadbalancerListenerExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *LoadbalancerListenerState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/loadbalancerListener:LoadbalancerListener", id, state, "", opts...)
+}
+
 type loadbalancerListenerArgs struct {
 	// A list of CIDR blocks or IP addresses that are allowed to connect to the listener
 	AllowedSources []string `pulumi:"allowedSources"`

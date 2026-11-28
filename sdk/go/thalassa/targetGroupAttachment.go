@@ -158,6 +158,12 @@ func (TargetGroupAttachmentState) ElementType() reflect.Type {
 	return reflect.TypeOf((*targetGroupAttachmentState)(nil)).Elem()
 }
 
+// TargetGroupAttachmentExists checks whether an existing TargetGroupAttachment resource with the given ID exists.
+func TargetGroupAttachmentExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *TargetGroupAttachmentState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/targetGroupAttachment:TargetGroupAttachment", id, state, "", opts...)
+}
+
 type targetGroupAttachmentArgs struct {
 	// Reference to the Organisation of the Target Group Attachment. If not provided, the organisation of the (Terraform) provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`

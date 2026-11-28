@@ -154,6 +154,12 @@ func (IamServiceAccountState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamServiceAccountState)(nil)).Elem()
 }
 
+// IamServiceAccountExists checks whether an existing IamServiceAccount resource with the given ID exists.
+func IamServiceAccountExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamServiceAccountState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamServiceAccount:IamServiceAccount", id, state, "", opts...)
+}
+
 type iamServiceAccountArgs struct {
 	// Annotations for the service account
 	Annotations map[string]string `pulumi:"annotations"`

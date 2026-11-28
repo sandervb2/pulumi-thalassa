@@ -754,6 +754,42 @@ class SnapshotPolicy(pulumi.CustomResource):
         __props__.__dict__["ttl"] = ttl
         return SnapshotPolicy(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            keep_count: pulumi.Input[Optional[_builtins.int]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            last_snapshot_at: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            next_snapshot_at: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            schedule: pulumi.Input[Optional[_builtins.str]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']]] = None,
+            timezone: pulumi.Input[Optional[_builtins.str]] = None,
+            ttl: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["description"] = description
+        __props__["enabled"] = enabled
+        __props__["keepCount"] = keep_count
+        __props__["labels"] = labels
+        __props__["lastSnapshotAt"] = last_snapshot_at
+        __props__["name"] = name
+        __props__["nextSnapshotAt"] = next_snapshot_at
+        __props__["organisationId"] = organisation_id
+        __props__["region"] = region
+        __props__["schedule"] = schedule
+        __props__["slug"] = slug
+        __props__["target"] = target
+        __props__["timezone"] = timezone
+        __props__["ttl"] = ttl
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/snapshotPolicy:SnapshotPolicy', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

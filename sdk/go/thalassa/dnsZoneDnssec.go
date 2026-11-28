@@ -154,6 +154,12 @@ func (DnsZoneDnssecState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dnsZoneDnssecState)(nil)).Elem()
 }
 
+// DnsZoneDnssecExists checks whether an existing DnsZoneDnssec resource with the given ID exists.
+func DnsZoneDnssecExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DnsZoneDnssecState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dnsZoneDnssec:DnsZoneDnssec", id, state, "", opts...)
+}
+
 type dnsZoneDnssecArgs struct {
 	// KMS key ID for signing. Leave blank to auto-provision.
 	KmsKeyId       *string `pulumi:"kmsKeyId"`

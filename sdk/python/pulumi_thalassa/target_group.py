@@ -939,6 +939,52 @@ class TargetGroup(pulumi.CustomResource):
         __props__.__dict__["vpc_id"] = vpc_id
         return TargetGroup(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
+            health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
+            health_check_path: pulumi.Input[Optional[_builtins.str]] = None,
+            health_check_port: pulumi.Input[Optional[_builtins.int]] = None,
+            health_check_protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            health_check_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            healthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            loadbalancing_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            port: pulumi.Input[Optional[_builtins.int]] = None,
+            protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            target_selector: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            unhealthy_threshold: pulumi.Input[Optional[_builtins.int]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["attachments"] = attachments
+        __props__["description"] = description
+        __props__["enableProxyProtocol"] = enable_proxy_protocol
+        __props__["healthCheckInterval"] = health_check_interval
+        __props__["healthCheckPath"] = health_check_path
+        __props__["healthCheckPort"] = health_check_port
+        __props__["healthCheckProtocol"] = health_check_protocol
+        __props__["healthCheckTimeout"] = health_check_timeout
+        __props__["healthyThreshold"] = healthy_threshold
+        __props__["labels"] = labels
+        __props__["loadbalancingPolicy"] = loadbalancing_policy
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["port"] = port
+        __props__["protocol"] = protocol
+        __props__["slug"] = slug
+        __props__["targetSelector"] = target_selector
+        __props__["unhealthyThreshold"] = unhealthy_threshold
+        __props__["vpcId"] = vpc_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/targetGroup:TargetGroup', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

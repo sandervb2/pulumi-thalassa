@@ -161,6 +161,12 @@ func (TfsInstanceState) ElementType() reflect.Type {
 	return reflect.TypeOf((*tfsInstanceState)(nil)).Elem()
 }
 
+// TfsInstanceExists checks whether an existing TfsInstance resource with the given ID exists.
+func TfsInstanceExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *TfsInstanceState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/tfsInstance:TfsInstance", id, state, "", opts...)
+}
+
 type tfsInstanceArgs struct {
 	// Annotations for the TFS instance
 	Annotations map[string]string `pulumi:"annotations"`

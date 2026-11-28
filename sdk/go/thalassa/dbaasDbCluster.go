@@ -329,6 +329,12 @@ func (DbaasDbClusterState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dbaasDbClusterState)(nil)).Elem()
 }
 
+// DbaasDbClusterExists checks whether an existing DbaasDbCluster resource with the given ID exists.
+func DbaasDbClusterExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DbaasDbClusterState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dbaasDbCluster:DbaasDbCluster", id, state, "", opts...)
+}
+
 type dbaasDbClusterArgs struct {
 	// Amount of storage allocated to the cluster in GB
 	AllocatedStorage int `pulumi:"allocatedStorage"`

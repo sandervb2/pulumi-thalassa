@@ -1296,6 +1296,72 @@ class DbaasDbCluster(pulumi.CustomResource):
         __props__.__dict__["volume_type_class"] = volume_type_class
         return DbaasDbCluster(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            allocated_storage: pulumi.Input[Optional[_builtins.int]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            auto_minor_version_upgrade: pulumi.Input[Optional[_builtins.bool]] = None,
+            auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
+            create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+            db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoint_ipv4: pulumi.Input[Optional[_builtins.str]] = None,
+            endpoint_ipv6: pulumi.Input[Optional[_builtins.str]] = None,
+            engine: pulumi.Input[Optional[_builtins.str]] = None,
+            engine_version: pulumi.Input[Optional[_builtins.str]] = None,
+            init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+            maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            parameters: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            port: pulumi.Input[Optional[_builtins.int]] = None,
+            provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
+            replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
+            restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']]] = None,
+            security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_type_class: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["allocatedStorage"] = allocated_storage
+        __props__["annotations"] = annotations
+        __props__["autoMinorVersionUpgrade"] = auto_minor_version_upgrade
+        __props__["autoUpgradePolicy"] = auto_upgrade_policy
+        __props__["createBackupBeforeDestroy"] = create_backup_before_destroy
+        __props__["createBackupBeforeDestroyTimeout"] = create_backup_before_destroy_timeout
+        __props__["databaseInstanceType"] = database_instance_type
+        __props__["dbObjectStoreId"] = db_object_store_id
+        __props__["deleteProtection"] = delete_protection
+        __props__["description"] = description
+        __props__["endpointIpv4"] = endpoint_ipv4
+        __props__["endpointIpv6"] = endpoint_ipv6
+        __props__["engine"] = engine
+        __props__["engineVersion"] = engine_version
+        __props__["initDb"] = init_db
+        __props__["labels"] = labels
+        __props__["maintenanceDay"] = maintenance_day
+        __props__["maintenanceStartAt"] = maintenance_start_at
+        __props__["name"] = name
+        __props__["organisationId"] = organisation_id
+        __props__["parameters"] = parameters
+        __props__["port"] = port
+        __props__["provisionDbObjectStore"] = provision_db_object_store
+        __props__["replicas"] = replicas
+        __props__["restoreFromBackupId"] = restore_from_backup_id
+        __props__["restoreRecoveryTarget"] = restore_recovery_target
+        __props__["securityGroups"] = security_groups
+        __props__["status"] = status
+        __props__["subnetId"] = subnet_id
+        __props__["volumeTypeClass"] = volume_type_class
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/dbaasDbCluster:DbaasDbCluster', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="allocatedStorage")
     def allocated_storage(self) -> pulumi.Output[_builtins.int]:

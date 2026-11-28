@@ -851,6 +851,56 @@ class VpcPeeringConnection(pulumi.CustomResource):
         __props__.__dict__["wait_for_deleted_timeout"] = wait_for_deleted_timeout
         return VpcPeeringConnection(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            accepter_next_hop_ip: pulumi.Input[Optional[_builtins.str]] = None,
+            accepter_organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            accepter_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterOrganisationArgs', 'VpcPeeringConnectionAccepterOrganisationArgsDict', 'outputs.VpcPeeringConnectionAccepterOrganisation']]]]] = None,
+            accepter_vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
+            accepter_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionAccepterVpcArgs', 'VpcPeeringConnectionAccepterVpcArgsDict', 'outputs.VpcPeeringConnectionAccepterVpc']]]]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            auto_accept: pulumi.Input[Optional[_builtins.bool]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            expires_at: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            requester_next_hop_ip: pulumi.Input[Optional[_builtins.str]] = None,
+            requester_organisations: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterOrganisationArgs', 'VpcPeeringConnectionRequesterOrganisationArgsDict', 'outputs.VpcPeeringConnectionRequesterOrganisation']]]]] = None,
+            requester_vpc_id: pulumi.Input[Optional[_builtins.str]] = None,
+            requester_vpcs: pulumi.Input[Optional[Sequence[pulumi.Input[Union['VpcPeeringConnectionRequesterVpcArgs', 'VpcPeeringConnectionRequesterVpcArgsDict', 'outputs.VpcPeeringConnectionRequesterVpc']]]]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            status_message: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            wait_for_active: pulumi.Input[Optional[_builtins.bool]] = None,
+            wait_for_active_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+            wait_for_deleted_timeout: pulumi.Input[Optional[_builtins.int]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["accepterNextHopIp"] = accepter_next_hop_ip
+        __props__["accepterOrganisationId"] = accepter_organisation_id
+        __props__["accepterOrganisations"] = accepter_organisations
+        __props__["accepterVpcId"] = accepter_vpc_id
+        __props__["accepterVpcs"] = accepter_vpcs
+        __props__["annotations"] = annotations
+        __props__["autoAccept"] = auto_accept
+        __props__["createdAt"] = created_at
+        __props__["description"] = description
+        __props__["expiresAt"] = expires_at
+        __props__["labels"] = labels
+        __props__["name"] = name
+        __props__["requesterNextHopIp"] = requester_next_hop_ip
+        __props__["requesterOrganisations"] = requester_organisations
+        __props__["requesterVpcId"] = requester_vpc_id
+        __props__["requesterVpcs"] = requester_vpcs
+        __props__["status"] = status
+        __props__["statusMessage"] = status_message
+        __props__["updatedAt"] = updated_at
+        __props__["waitForActive"] = wait_for_active
+        __props__["waitForActiveTimeout"] = wait_for_active_timeout
+        __props__["waitForDeletedTimeout"] = wait_for_deleted_timeout
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/vpcPeeringConnection:VpcPeeringConnection', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="accepterNextHopIp")
     def accepter_next_hop_ip(self) -> pulumi.Output[_builtins.str]:

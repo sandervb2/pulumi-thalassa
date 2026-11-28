@@ -304,6 +304,12 @@ func (KubernetesNodePoolState) ElementType() reflect.Type {
 	return reflect.TypeOf((*kubernetesNodePoolState)(nil)).Elem()
 }
 
+// KubernetesNodePoolExists checks whether an existing KubernetesNodePool resource with the given ID exists.
+func KubernetesNodePoolExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *KubernetesNodePoolState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/kubernetesNodePool:KubernetesNodePool", id, state, "", opts...)
+}
+
 type kubernetesNodePoolArgs struct {
 	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations map[string]string `pulumi:"annotations"`

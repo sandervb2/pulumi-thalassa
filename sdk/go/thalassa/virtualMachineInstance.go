@@ -346,6 +346,12 @@ func (VirtualMachineInstanceState) ElementType() reflect.Type {
 	return reflect.TypeOf((*virtualMachineInstanceState)(nil)).Elem()
 }
 
+// VirtualMachineInstanceExists checks whether an existing VirtualMachineInstance resource with the given ID exists.
+func VirtualMachineInstanceExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *VirtualMachineInstanceState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/virtualMachineInstance:VirtualMachineInstance", id, state, "", opts...)
+}
+
 type virtualMachineInstanceArgs struct {
 	// Annotations for the virtual machine instance
 	Annotations map[string]string `pulumi:"annotations"`

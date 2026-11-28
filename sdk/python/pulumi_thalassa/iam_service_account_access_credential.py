@@ -378,6 +378,26 @@ class IamServiceAccountAccessCredential(pulumi.CustomResource):
         __props__.__dict__["service_account_id"] = service_account_id
         return IamServiceAccountAccessCredential(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            access_key: pulumi.Input[Optional[_builtins.str]] = None,
+            access_secret: pulumi.Input[Optional[_builtins.str]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            expires_at: pulumi.Input[Optional[_builtins.str]] = None,
+            last_used_at: pulumi.Input[Optional[_builtins.str]] = None,
+            scopes: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            service_account_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["accessKey"] = access_key
+        __props__["accessSecret"] = access_secret
+        __props__["createdAt"] = created_at
+        __props__["expiresAt"] = expires_at
+        __props__["lastUsedAt"] = last_used_at
+        __props__["scopes"] = scopes
+        __props__["serviceAccountId"] = service_account_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/iamServiceAccountAccessCredential:IamServiceAccountAccessCredential', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="accessKey")
     def access_key(self) -> pulumi.Output[_builtins.str]:

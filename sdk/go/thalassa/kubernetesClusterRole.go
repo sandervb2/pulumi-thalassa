@@ -302,6 +302,12 @@ func (KubernetesClusterRoleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*kubernetesClusterRoleState)(nil)).Elem()
 }
 
+// KubernetesClusterRoleExists checks whether an existing KubernetesClusterRole resource with the given ID exists.
+func KubernetesClusterRoleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *KubernetesClusterRoleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/kubernetesClusterRole:KubernetesClusterRole", id, state, "", opts...)
+}
+
 type kubernetesClusterRoleArgs struct {
 	// Annotations for the Kubernetes cluster role
 	Annotations map[string]string `pulumi:"annotations"`

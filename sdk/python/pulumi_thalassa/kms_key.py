@@ -885,6 +885,54 @@ class KmsKey(pulumi.CustomResource):
         __props__.__dict__["updated_at"] = updated_at
         return KmsKey(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            allow_rotation: pulumi.Input[Optional[_builtins.bool]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            cancel_scheduled_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            export_allowed: pulumi.Input[Optional[_builtins.bool]] = None,
+            hash_function: pulumi.Input[Optional[_builtins.str]] = None,
+            import_key_material: pulumi.Input[Optional[_builtins.str]] = None,
+            imported: pulumi.Input[Optional[_builtins.bool]] = None,
+            key_rotation_enabled: pulumi.Input[Optional[_builtins.bool]] = None,
+            key_type: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            latest_version: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_version: pulumi.Input[Optional[_builtins.int]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            rotation_period_in_days: pulumi.Input[Optional[_builtins.int]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["allowRotation"] = allow_rotation
+        __props__["annotations"] = annotations
+        __props__["cancelScheduledDeletion"] = cancel_scheduled_deletion
+        __props__["createdAt"] = created_at
+        __props__["description"] = description
+        __props__["exportAllowed"] = export_allowed
+        __props__["hashFunction"] = hash_function
+        __props__["importKeyMaterial"] = import_key_material
+        __props__["imported"] = imported
+        __props__["keyRotationEnabled"] = key_rotation_enabled
+        __props__["keyType"] = key_type
+        __props__["labels"] = labels
+        __props__["latestVersion"] = latest_version
+        __props__["name"] = name
+        __props__["objectVersion"] = object_version
+        __props__["organisationId"] = organisation_id
+        __props__["region"] = region
+        __props__["rotationPeriodInDays"] = rotation_period_in_days
+        __props__["slug"] = slug
+        __props__["status"] = status
+        __props__["updatedAt"] = updated_at
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/kmsKey:KmsKey', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="allowRotation")
     def allow_rotation(self) -> pulumi.Output[Optional[_builtins.bool]]:

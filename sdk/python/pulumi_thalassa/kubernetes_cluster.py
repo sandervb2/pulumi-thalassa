@@ -1382,6 +1382,78 @@ class KubernetesCluster(pulumi.CustomResource):
         __props__.__dict__["vpc_id"] = vpc_id
         return KubernetesCluster(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            advertise_port: pulumi.Input[Optional[_builtins.int]] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]]] = None,
+            audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
+            auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']]] = None,
+            cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
+            cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
+            default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
+            delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            disable_public_endpoint: pulumi.Input[Optional[_builtins.bool]] = None,
+            internal_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            konnectivity_port: pulumi.Input[Optional[_builtins.int]] = None,
+            kubernetes_api_server_ca_certificate: pulumi.Input[Optional[_builtins.str]] = None,
+            kubernetes_api_server_endpoint: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            maintenance_day: pulumi.Input[Optional[_builtins.int]] = None,
+            maintenance_start_at: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_cni: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_kube_proxy_deployment: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_kube_proxy_mode: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_pod_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            networking_service_cidr: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            pod_security_standards_profile: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            vpc_id: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["advertisePort"] = advertise_port
+        __props__["annotations"] = annotations
+        __props__["apiServerAcls"] = api_server_acls
+        __props__["auditLogProfile"] = audit_log_profile
+        __props__["autoUpgradePolicy"] = auto_upgrade_policy
+        __props__["autoscalerConfig"] = autoscaler_config
+        __props__["clusterType"] = cluster_type
+        __props__["clusterVersion"] = cluster_version
+        __props__["defaultNetworkPolicy"] = default_network_policy
+        __props__["deleteProtection"] = delete_protection
+        __props__["description"] = description
+        __props__["disablePublicEndpoint"] = disable_public_endpoint
+        __props__["internalEndpoint"] = internal_endpoint
+        __props__["konnectivityPort"] = konnectivity_port
+        __props__["kubernetesApiServerCaCertificate"] = kubernetes_api_server_ca_certificate
+        __props__["kubernetesApiServerEndpoint"] = kubernetes_api_server_endpoint
+        __props__["labels"] = labels
+        __props__["maintenanceDay"] = maintenance_day
+        __props__["maintenanceStartAt"] = maintenance_start_at
+        __props__["name"] = name
+        __props__["networkingCni"] = networking_cni
+        __props__["networkingKubeProxyDeployment"] = networking_kube_proxy_deployment
+        __props__["networkingKubeProxyMode"] = networking_kube_proxy_mode
+        __props__["networkingPodCidr"] = networking_pod_cidr
+        __props__["networkingServiceCidr"] = networking_service_cidr
+        __props__["organisationId"] = organisation_id
+        __props__["podSecurityStandardsProfile"] = pod_security_standards_profile
+        __props__["region"] = region
+        __props__["securityGroupAttachments"] = security_group_attachments
+        __props__["slug"] = slug
+        __props__["status"] = status
+        __props__["subnetId"] = subnet_id
+        __props__["vpcId"] = vpc_id
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/kubernetesCluster:KubernetesCluster', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter(name="advertisePort")
     def advertise_port(self) -> pulumi.Output[_builtins.int]:

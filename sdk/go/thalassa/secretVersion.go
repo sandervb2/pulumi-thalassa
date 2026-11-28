@@ -149,6 +149,12 @@ func (SecretVersionState) ElementType() reflect.Type {
 	return reflect.TypeOf((*secretVersionState)(nil)).Elem()
 }
 
+// SecretVersionExists checks whether an existing SecretVersion resource with the given ID exists.
+func SecretVersionExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *SecretVersionState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/secretVersion:SecretVersion", id, state, "", opts...)
+}
+
 type secretVersionArgs struct {
 	GenerateSecret *SecretVersionGenerateSecret `pulumi:"generateSecret"`
 	OrganisationId *string                      `pulumi:"organisationId"`

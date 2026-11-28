@@ -64,6 +64,17 @@ export class DbaasPgRoles extends pulumi.CustomResource {
         return new DbaasPgRoles(name, <any>state, { ...opts, id: id });
     }
 
+    /**
+     * Check whether an existing DbaasPgRoles resource with the given ID exists.
+     *
+     * @param id The _unique_ provider ID of the resource to check.
+     * @param state Any extra arguments used during the lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static exists(id: pulumi.Input<string>, state?: DbaasPgRolesState, opts?: pulumi.CustomResourceOptions): pulumi.Output<boolean> {
+        return pulumi.runtime.existsResource("thalassa:index/dbaasPgRoles:DbaasPgRoles", id, <any>state || {}, { ...opts }, undefined);
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'thalassa:index/dbaasPgRoles:DbaasPgRoles';
 

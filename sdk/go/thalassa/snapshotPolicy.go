@@ -244,6 +244,12 @@ func (SnapshotPolicyState) ElementType() reflect.Type {
 	return reflect.TypeOf((*snapshotPolicyState)(nil)).Elem()
 }
 
+// SnapshotPolicyExists checks whether an existing SnapshotPolicy resource with the given ID exists.
+func SnapshotPolicyExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *SnapshotPolicyState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/snapshotPolicy:SnapshotPolicy", id, state, "", opts...)
+}
+
 type snapshotPolicyArgs struct {
 	// Annotations for the snapshot policy
 	Annotations map[string]string `pulumi:"annotations"`

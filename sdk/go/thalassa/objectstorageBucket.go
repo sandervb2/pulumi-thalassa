@@ -274,6 +274,12 @@ func (ObjectstorageBucketState) ElementType() reflect.Type {
 	return reflect.TypeOf((*objectstorageBucketState)(nil)).Elem()
 }
 
+// ObjectstorageBucketExists checks whether an existing ObjectstorageBucket resource with the given ID exists.
+func ObjectstorageBucketExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *ObjectstorageBucketState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/objectstorageBucket:ObjectstorageBucket", id, state, "", opts...)
+}
+
 type objectstorageBucketArgs struct {
 	// Name of the bucket
 	Name *string `pulumi:"name"`

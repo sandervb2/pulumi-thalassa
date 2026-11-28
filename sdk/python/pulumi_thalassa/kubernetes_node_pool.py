@@ -1101,6 +1101,58 @@ class KubernetesNodePool(pulumi.CustomResource):
         __props__.__dict__["upgrade_strategy"] = upgrade_strategy
         return KubernetesNodePool(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            availability_zone: pulumi.Input[Optional[_builtins.str]] = None,
+            cluster_id: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            enable_autohealing: pulumi.Input[Optional[_builtins.bool]] = None,
+            enable_autoscaling: pulumi.Input[Optional[_builtins.bool]] = None,
+            kubernetes_version: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            machine_type: pulumi.Input[Optional[_builtins.str]] = None,
+            manage_node_allocatable: pulumi.Input[Optional[_builtins.bool]] = None,
+            max_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            min_replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            replicas: pulumi.Input[Optional[_builtins.int]] = None,
+            security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            slug: pulumi.Input[Optional[_builtins.str]] = None,
+            status: pulumi.Input[Optional[_builtins.str]] = None,
+            subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
+            upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["availabilityZone"] = availability_zone
+        __props__["clusterId"] = cluster_id
+        __props__["description"] = description
+        __props__["enableAutohealing"] = enable_autohealing
+        __props__["enableAutoscaling"] = enable_autoscaling
+        __props__["kubernetesVersion"] = kubernetes_version
+        __props__["labels"] = labels
+        __props__["machineType"] = machine_type
+        __props__["manageNodeAllocatable"] = manage_node_allocatable
+        __props__["maxReplicas"] = max_replicas
+        __props__["minReplicas"] = min_replicas
+        __props__["name"] = name
+        __props__["nodeAnnotations"] = node_annotations
+        __props__["nodeLabels"] = node_labels
+        __props__["nodeTaints"] = node_taints
+        __props__["organisationId"] = organisation_id
+        __props__["replicas"] = replicas
+        __props__["securityGroupAttachments"] = security_group_attachments
+        __props__["slug"] = slug
+        __props__["status"] = status
+        __props__["subnetId"] = subnet_id
+        __props__["upgradeStrategy"] = upgrade_strategy
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/kubernetesNodePool:KubernetesNodePool', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

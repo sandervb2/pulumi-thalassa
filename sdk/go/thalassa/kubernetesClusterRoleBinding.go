@@ -276,6 +276,12 @@ func (KubernetesClusterRoleBindingState) ElementType() reflect.Type {
 	return reflect.TypeOf((*kubernetesClusterRoleBindingState)(nil)).Elem()
 }
 
+// KubernetesClusterRoleBindingExists checks whether an existing KubernetesClusterRoleBinding resource with the given ID exists.
+func KubernetesClusterRoleBindingExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *KubernetesClusterRoleBindingState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/kubernetesClusterRoleBinding:KubernetesClusterRoleBinding", id, state, "", opts...)
+}
+
 type kubernetesClusterRoleBindingArgs struct {
 	// Annotations for the Kubernetes cluster role binding
 	Annotations map[string]string `pulumi:"annotations"`

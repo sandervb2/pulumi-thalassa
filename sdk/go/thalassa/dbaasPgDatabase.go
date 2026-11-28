@@ -177,6 +177,12 @@ func (DbaasPgDatabaseState) ElementType() reflect.Type {
 	return reflect.TypeOf((*dbaasPgDatabaseState)(nil)).Elem()
 }
 
+// DbaasPgDatabaseExists checks whether an existing DbaasPgDatabase resource with the given ID exists.
+func DbaasPgDatabaseExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *DbaasPgDatabaseState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/dbaasPgDatabase:DbaasPgDatabase", id, state, "", opts...)
+}
+
 type dbaasPgDatabaseArgs struct {
 	// If false then no one can connect to this database. Defaults to true.
 	AllowConnections *bool `pulumi:"allowConnections"`

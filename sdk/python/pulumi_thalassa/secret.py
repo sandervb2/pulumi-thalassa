@@ -626,6 +626,40 @@ class Secret(pulumi.CustomResource):
         __props__.__dict__["updated_at"] = updated_at
         return Secret(resource_name, opts=opts, __props__=__props__)
 
+    @staticmethod
+    def exists(id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None,
+            annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            current_version: pulumi.Input[Optional[_builtins.int]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            generate_secret: pulumi.Input[Optional[Union['SecretGenerateSecretArgs', 'SecretGenerateSecretArgsDict', 'outputs.SecretGenerateSecret']]] = None,
+            kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            last_accessed_at: pulumi.Input[Optional[_builtins.str]] = None,
+            organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+            path: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            secret_key_values: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            secret_string: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> pulumi.Output[bool]:
+        __props__: dict = {}
+        __props__["annotations"] = annotations
+        __props__["createdAt"] = created_at
+        __props__["currentVersion"] = current_version
+        __props__["description"] = description
+        __props__["generateSecret"] = generate_secret
+        __props__["kmsKeyId"] = kms_key_id
+        __props__["labels"] = labels
+        __props__["lastAccessedAt"] = last_accessed_at
+        __props__["organisationId"] = organisation_id
+        __props__["path"] = path
+        __props__["region"] = region
+        __props__["secretKeyValues"] = secret_key_values
+        __props__["secretString"] = secret_string
+        __props__["updatedAt"] = updated_at
+        return pulumi.runtime.exists_resource(None, 'thalassa:index/secret:Secret', id, __props__, opts or pulumi.ResourceOptions())
+
     @_builtins.property
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:

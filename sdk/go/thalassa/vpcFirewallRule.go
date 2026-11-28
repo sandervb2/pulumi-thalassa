@@ -236,6 +236,12 @@ func (VpcFirewallRuleState) ElementType() reflect.Type {
 	return reflect.TypeOf((*vpcFirewallRuleState)(nil)).Elem()
 }
 
+// VpcFirewallRuleExists checks whether an existing VpcFirewallRule resource with the given ID exists.
+func VpcFirewallRuleExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *VpcFirewallRuleState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/vpcFirewallRule:VpcFirewallRule", id, state, "", opts...)
+}
+
 type vpcFirewallRuleArgs struct {
 	// Action of the firewall rule. One of allow, drop
 	Action string `pulumi:"action"`

@@ -238,6 +238,12 @@ func (IamFederatedIdentityState) ElementType() reflect.Type {
 	return reflect.TypeOf((*iamFederatedIdentityState)(nil)).Elem()
 }
 
+// IamFederatedIdentityExists checks whether an existing IamFederatedIdentity resource with the given ID exists.
+func IamFederatedIdentityExists(ctx *pulumi.Context,
+	id pulumi.StringInput, state *IamFederatedIdentityState, opts ...pulumi.ResourceOption) pulumi.BoolOutput {
+	return ctx.ExistsResource("thalassa:index/iamFederatedIdentity:IamFederatedIdentity", id, state, "", opts...)
+}
+
 type iamFederatedIdentityArgs struct {
 	// Scopes the federated identity is allowed to access
 	AllowedScopes []string `pulumi:"allowedScopes"`
