@@ -9,6 +9,8 @@ import * as utilities from "./utilities";
 /**
  * Create an DB Cluster
  *
+ * See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+ *
  * ## Example Usage
  *
  * ```typescript
@@ -112,6 +114,10 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public readonly databaseInstanceType: pulumi.Output<string>;
     /**
+     * ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+     */
+    declare public readonly dbObjectStoreId: pulumi.Output<string | undefined>;
+    /**
      * Flag indicating if the cluster should be protected from deletion
      */
     declare public readonly deleteProtection: pulumi.Output<boolean | undefined>;
@@ -168,7 +174,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly port: pulumi.Output<number>;
     /**
-     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     * Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
      */
     declare public readonly provisionDbObjectStore: pulumi.Output<boolean | undefined>;
     /**
@@ -176,7 +182,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
      */
     declare public readonly replicas: pulumi.Output<number | undefined>;
     /**
-     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+     * ID of the backup to restore from when creating the cluster.
      */
     declare public readonly restoreFromBackupId: pulumi.Output<string | undefined>;
     /**
@@ -220,6 +226,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["createBackupBeforeDestroy"] = state?.createBackupBeforeDestroy;
             resourceInputs["createBackupBeforeDestroyTimeout"] = state?.createBackupBeforeDestroyTimeout;
             resourceInputs["databaseInstanceType"] = state?.databaseInstanceType;
+            resourceInputs["dbObjectStoreId"] = state?.dbObjectStoreId;
             resourceInputs["deleteProtection"] = state?.deleteProtection;
             resourceInputs["description"] = state?.description;
             resourceInputs["endpointIpv4"] = state?.endpointIpv4;
@@ -269,6 +276,7 @@ export class DbaasDbCluster extends pulumi.CustomResource {
             resourceInputs["createBackupBeforeDestroy"] = args?.createBackupBeforeDestroy;
             resourceInputs["createBackupBeforeDestroyTimeout"] = args?.createBackupBeforeDestroyTimeout;
             resourceInputs["databaseInstanceType"] = args?.databaseInstanceType;
+            resourceInputs["dbObjectStoreId"] = args?.dbObjectStoreId;
             resourceInputs["deleteProtection"] = args?.deleteProtection;
             resourceInputs["description"] = args?.description;
             resourceInputs["engine"] = args?.engine;
@@ -330,6 +338,10 @@ export interface DbaasDbClusterState {
      */
     databaseInstanceType?: pulumi.Input<string | undefined>;
     /**
+     * ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+     */
+    dbObjectStoreId?: pulumi.Input<string | undefined>;
+    /**
      * Flag indicating if the cluster should be protected from deletion
      */
     deleteProtection?: pulumi.Input<boolean | undefined>;
@@ -386,7 +398,7 @@ export interface DbaasDbClusterState {
      */
     port?: pulumi.Input<number | undefined>;
     /**
-     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     * Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
      */
     provisionDbObjectStore?: pulumi.Input<boolean | undefined>;
     /**
@@ -394,7 +406,7 @@ export interface DbaasDbClusterState {
      */
     replicas?: pulumi.Input<number | undefined>;
     /**
-     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+     * ID of the backup to restore from when creating the cluster.
      */
     restoreFromBackupId?: pulumi.Input<string | undefined>;
     /**
@@ -452,6 +464,10 @@ export interface DbaasDbClusterArgs {
      */
     databaseInstanceType: pulumi.Input<string>;
     /**
+     * ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+     */
+    dbObjectStoreId?: pulumi.Input<string | undefined>;
+    /**
      * Flag indicating if the cluster should be protected from deletion
      */
     deleteProtection?: pulumi.Input<boolean | undefined>;
@@ -496,7 +512,7 @@ export interface DbaasDbClusterArgs {
      */
     parameters?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+     * Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
      */
     provisionDbObjectStore?: pulumi.Input<boolean | undefined>;
     /**
@@ -504,7 +520,7 @@ export interface DbaasDbClusterArgs {
      */
     replicas?: pulumi.Input<number | undefined>;
     /**
-     * Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+     * ID of the backup to restore from when creating the cluster.
      */
     restoreFromBackupId?: pulumi.Input<string | undefined>;
     /**

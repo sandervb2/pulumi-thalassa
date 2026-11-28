@@ -14,7 +14,7 @@ namespace Pulumi.Thalassa
         /// <summary>
         /// Look up a KMS key by region and identity or name filter
         /// 
-        /// &gt; **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+        /// &gt; **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
         /// 
         /// See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
         /// </summary>
@@ -24,7 +24,7 @@ namespace Pulumi.Thalassa
         /// <summary>
         /// Look up a KMS key by region and identity or name filter
         /// 
-        /// &gt; **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+        /// &gt; **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
         /// 
         /// See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
         /// </summary>
@@ -34,7 +34,7 @@ namespace Pulumi.Thalassa
         /// <summary>
         /// Look up a KMS key by region and identity or name filter
         /// 
-        /// &gt; **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+        /// &gt; **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
         /// 
         /// See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
         /// </summary>

@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create an routeTable
     /// 
+    /// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

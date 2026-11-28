@@ -306,6 +306,8 @@ class DbaasPgRoles(pulumi.CustomResource):
         """
         Create a PostgreSQL role
 
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+
         ## Example Usage
 
         ```python
@@ -363,6 +365,8 @@ class DbaasPgRoles(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a PostgreSQL role
+
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
 
         ## Example Usage
 

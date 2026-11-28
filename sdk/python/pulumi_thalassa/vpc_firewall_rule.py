@@ -509,7 +509,7 @@ class VpcFirewallRule(pulumi.CustomResource):
                  interface_id: pulumi.Input[Optional[_builtins.str]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  priority: pulumi.Input[Optional[_builtins.int]] = None,
-                 protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict']]] = None,
+                 protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']]] = None,
                  source: pulumi.Input[Optional[_builtins.str]] = None,
                  source_ports: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.int]]]] = None,
                  source_subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -518,6 +518,8 @@ class VpcFirewallRule(pulumi.CustomResource):
                  __props__=None):
         """
         Create a VPC firewall rule
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -574,7 +576,7 @@ class VpcFirewallRule(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] interface_id: Identity of the interface. Leaving empty will apply to all interfaces
         :param pulumi.Input[_builtins.str] name: Name of the VPC firewall rule. Must be between 1 and 16 characters and contain only ASCII characters.
         :param pulumi.Input[_builtins.int] priority: Priority of the firewall rule. Must be between 1 and 1000
-        :param pulumi.Input[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict']] protocols: Protocols that the firewall rule applies to
+        :param pulumi.Input[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']] protocols: Protocols that the firewall rule applies to
         :param pulumi.Input[_builtins.str] source: Source CIDR of the firewall rule
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.int]]] source_ports: Source ports of the firewall rule. Must be between 0 and 65535
         :param pulumi.Input[_builtins.str] source_subnet_id: Identity of the source subnet
@@ -589,6 +591,8 @@ class VpcFirewallRule(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a VPC firewall rule
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -658,7 +662,7 @@ class VpcFirewallRule(pulumi.CustomResource):
                  interface_id: pulumi.Input[Optional[_builtins.str]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  priority: pulumi.Input[Optional[_builtins.int]] = None,
-                 protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict']]] = None,
+                 protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']]] = None,
                  source: pulumi.Input[Optional[_builtins.str]] = None,
                  source_ports: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.int]]]] = None,
                  source_subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -717,7 +721,7 @@ class VpcFirewallRule(pulumi.CustomResource):
             interface_id: pulumi.Input[Optional[_builtins.str]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             priority: pulumi.Input[Optional[_builtins.int]] = None,
-            protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict']]] = None,
+            protocols: pulumi.Input[Optional[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']]] = None,
             source: pulumi.Input[Optional[_builtins.str]] = None,
             source_ports: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.int]]]] = None,
             source_subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -739,7 +743,7 @@ class VpcFirewallRule(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] interface_id: Identity of the interface. Leaving empty will apply to all interfaces
         :param pulumi.Input[_builtins.str] name: Name of the VPC firewall rule. Must be between 1 and 16 characters and contain only ASCII characters.
         :param pulumi.Input[_builtins.int] priority: Priority of the firewall rule. Must be between 1 and 1000
-        :param pulumi.Input[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict']] protocols: Protocols that the firewall rule applies to
+        :param pulumi.Input[Union['VpcFirewallRuleProtocolsArgs', 'VpcFirewallRuleProtocolsArgsDict', 'outputs.VpcFirewallRuleProtocols']] protocols: Protocols that the firewall rule applies to
         :param pulumi.Input[_builtins.str] source: Source CIDR of the firewall rule
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.int]]] source_ports: Source ports of the firewall rule. Must be between 0 and 65535
         :param pulumi.Input[_builtins.str] source_subnet_id: Identity of the source subnet

@@ -12,7 +12,9 @@ import (
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
-// Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+// Create a Kubernetes node pool for a managed cluster. A node pool is a group of identically configured nodes joined to the cluster and can be scaled up or down as needed.
+//
+// See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 //
 // ## Autoscaling Configuration
 //
@@ -111,7 +113,7 @@ import (
 type KubernetesNodePool struct {
 	pulumi.CustomResourceState
 
-	// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations pulumi.StringMapOutput `pulumi:"annotations"`
 	// Availability zone for the Kubernetes Node Pool
 	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
@@ -125,7 +127,7 @@ type KubernetesNodePool struct {
 	EnableAutoscaling pulumi.BoolPtrOutput `pulumi:"enableAutoscaling"`
 	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrOutput `pulumi:"kubernetesVersion"`
-	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+	// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringOutput `pulumi:"machineType"`
@@ -137,7 +139,7 @@ type KubernetesNodePool struct {
 	MinReplicas pulumi.IntPtrOutput `pulumi:"minReplicas"`
 	// Name of the Kubernetes Node Pool
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+	// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 	NodeAnnotations pulumi.StringMapOutput `pulumi:"nodeAnnotations"`
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapOutput `pulumi:"nodeLabels"`
@@ -201,7 +203,7 @@ func GetKubernetesNodePool(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering KubernetesNodePool resources.
 type kubernetesNodePoolState struct {
-	// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations map[string]string `pulumi:"annotations"`
 	// Availability zone for the Kubernetes Node Pool
 	AvailabilityZone *string `pulumi:"availabilityZone"`
@@ -215,7 +217,7 @@ type kubernetesNodePoolState struct {
 	EnableAutoscaling *bool `pulumi:"enableAutoscaling"`
 	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion *string `pulumi:"kubernetesVersion"`
-	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+	// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 	Labels map[string]string `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType *string `pulumi:"machineType"`
@@ -227,7 +229,7 @@ type kubernetesNodePoolState struct {
 	MinReplicas *int `pulumi:"minReplicas"`
 	// Name of the Kubernetes Node Pool
 	Name *string `pulumi:"name"`
-	// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+	// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 	NodeAnnotations map[string]string `pulumi:"nodeAnnotations"`
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels map[string]string `pulumi:"nodeLabels"`
@@ -250,7 +252,7 @@ type kubernetesNodePoolState struct {
 }
 
 type KubernetesNodePoolState struct {
-	// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations pulumi.StringMapInput
 	// Availability zone for the Kubernetes Node Pool
 	AvailabilityZone pulumi.StringPtrInput
@@ -264,7 +266,7 @@ type KubernetesNodePoolState struct {
 	EnableAutoscaling pulumi.BoolPtrInput
 	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrInput
-	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+	// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 	Labels pulumi.StringMapInput
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringPtrInput
@@ -276,7 +278,7 @@ type KubernetesNodePoolState struct {
 	MinReplicas pulumi.IntPtrInput
 	// Name of the Kubernetes Node Pool
 	Name pulumi.StringPtrInput
-	// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+	// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 	NodeAnnotations pulumi.StringMapInput
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapInput
@@ -303,7 +305,7 @@ func (KubernetesNodePoolState) ElementType() reflect.Type {
 }
 
 type kubernetesNodePoolArgs struct {
-	// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations map[string]string `pulumi:"annotations"`
 	// Availability zone for the Kubernetes Node Pool
 	AvailabilityZone string `pulumi:"availabilityZone"`
@@ -317,7 +319,7 @@ type kubernetesNodePoolArgs struct {
 	EnableAutoscaling *bool `pulumi:"enableAutoscaling"`
 	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion *string `pulumi:"kubernetesVersion"`
-	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+	// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 	Labels map[string]string `pulumi:"labels"`
 	// Machine type for the Kubernetes Node Pool
 	MachineType string `pulumi:"machineType"`
@@ -329,7 +331,7 @@ type kubernetesNodePoolArgs struct {
 	MinReplicas *int `pulumi:"minReplicas"`
 	// Name of the Kubernetes Node Pool
 	Name *string `pulumi:"name"`
-	// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+	// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 	NodeAnnotations map[string]string `pulumi:"nodeAnnotations"`
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels map[string]string `pulumi:"nodeLabels"`
@@ -349,7 +351,7 @@ type kubernetesNodePoolArgs struct {
 
 // The set of arguments for constructing a KubernetesNodePool resource.
 type KubernetesNodePoolArgs struct {
-	// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+	// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 	Annotations pulumi.StringMapInput
 	// Availability zone for the Kubernetes Node Pool
 	AvailabilityZone pulumi.StringInput
@@ -363,7 +365,7 @@ type KubernetesNodePoolArgs struct {
 	EnableAutoscaling pulumi.BoolPtrInput
 	// Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
 	KubernetesVersion pulumi.StringPtrInput
-	// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+	// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 	Labels pulumi.StringMapInput
 	// Machine type for the Kubernetes Node Pool
 	MachineType pulumi.StringInput
@@ -375,7 +377,7 @@ type KubernetesNodePoolArgs struct {
 	MinReplicas pulumi.IntPtrInput
 	// Name of the Kubernetes Node Pool
 	Name pulumi.StringPtrInput
-	// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+	// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 	NodeAnnotations pulumi.StringMapInput
 	// Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
 	NodeLabels pulumi.StringMapInput
@@ -480,7 +482,7 @@ func (o KubernetesNodePoolOutput) ToKubernetesNodePoolOutputWithContext(ctx cont
 	return o
 }
 
-// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
 func (o KubernetesNodePoolOutput) Annotations() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringMapOutput { return v.Annotations }).(pulumi.StringMapOutput)
 }
@@ -515,7 +517,7 @@ func (o KubernetesNodePoolOutput) KubernetesVersion() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringPtrOutput { return v.KubernetesVersion }).(pulumi.StringPtrOutput)
 }
 
-// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
 func (o KubernetesNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
@@ -545,7 +547,7 @@ func (o KubernetesNodePoolOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
 func (o KubernetesNodePoolOutput) NodeAnnotations() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *KubernetesNodePool) pulumi.StringMapOutput { return v.NodeAnnotations }).(pulumi.StringMapOutput)
 }

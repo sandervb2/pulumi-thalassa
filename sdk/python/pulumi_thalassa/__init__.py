@@ -9,6 +9,8 @@ import typing
 from .block_volume import *
 from .block_volume_attachment import *
 from .cloud_init_template import *
+from .containerregistry_namespace import *
+from .containerregistry_namespace_configuration import *
 from .dbaas_db_backupschedule import *
 from .dbaas_db_cluster import *
 from .dbaas_pg_database import *
@@ -17,11 +19,16 @@ from .dbaas_pg_roles import *
 from .dns_record import *
 from .dns_zone import *
 from .dns_zone_dnssec import *
+from .get_cloud_init_template import *
+from .get_containerregistry_namespace import *
+from .get_containerregistry_namespace_configuration import *
 from .get_dbaas_db_backup import *
 from .get_dbaas_db_backupschedule import *
 from .get_dbaas_db_cluster import *
 from .get_dbaas_pg_database import *
 from .get_dbaas_pg_roles import *
+from .get_iam_federated_identity import *
+from .get_iam_federated_identity_provider import *
 from .get_iam_organisation_members import *
 from .get_iam_role import *
 from .get_iam_service_account import *
@@ -36,7 +43,9 @@ from .get_machine_image import *
 from .get_machine_type import *
 from .get_natgateway import *
 from .get_objectstorage_bucket import *
+from .get_observability_workspace import *
 from .get_organisation import *
+from .get_project import *
 from .get_region import *
 from .get_regions import *
 from .get_route_table import *
@@ -52,6 +61,8 @@ from .get_vpc_firewall_rule import *
 from .get_vpc_firewall_rules import *
 from .get_vpc_peering_connection import *
 from .get_vpc_peering_connections import *
+from .iam_federated_identity import *
+from .iam_federated_identity_provider import *
 from .iam_role import *
 from .iam_role_binding import *
 from .iam_role_rule import *
@@ -68,6 +79,8 @@ from .loadbalancer_listener import *
 from .natgateway import *
 from .objectstorage_bucket import *
 from .objectstorage_bucket_lifecycle import *
+from .observability_workspace import *
+from .project import *
 from .provider import *
 from .reserved_ip import *
 from .route_table import *
@@ -124,6 +137,22 @@ _utilities.register(
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/cloudInitTemplate:CloudInitTemplate": "CloudInitTemplate"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/containerregistryNamespace",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/containerregistryNamespace:ContainerregistryNamespace": "ContainerregistryNamespace"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/containerregistryNamespaceConfiguration",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration": "ContainerregistryNamespaceConfiguration"
   }
  },
  {
@@ -188,6 +217,22 @@ _utilities.register(
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/dnsZoneDnssec:DnsZoneDnssec": "DnsZoneDnssec"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/iamFederatedIdentity",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamFederatedIdentity:IamFederatedIdentity": "IamFederatedIdentity"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/iamFederatedIdentityProvider",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/iamFederatedIdentityProvider:IamFederatedIdentityProvider": "IamFederatedIdentityProvider"
   }
  },
  {
@@ -316,6 +361,22 @@ _utilities.register(
   "fqn": "pulumi_thalassa",
   "classes": {
    "thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle": "ObjectstorageBucketLifecycle"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/observabilityWorkspace",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/observabilityWorkspace:ObservabilityWorkspace": "ObservabilityWorkspace"
+  }
+ },
+ {
+  "pkg": "thalassa",
+  "mod": "index/project",
+  "fqn": "pulumi_thalassa",
+  "classes": {
+   "thalassa:index/project:Project": "Project"
   }
  },
  {

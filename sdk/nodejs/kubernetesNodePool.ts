@@ -7,7 +7,9 @@ import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
- * Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+ * Create a Kubernetes node pool for a managed cluster. A node pool is a group of identically configured nodes joined to the cluster and can be scaled up or down as needed.
+ *
+ * See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
  *
  * ## Autoscaling Configuration
  *
@@ -105,7 +107,7 @@ export class KubernetesNodePool extends pulumi.CustomResource {
     }
 
     /**
-     * Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+     * Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
      */
     declare public readonly annotations: pulumi.Output<{[key: string]: string} | undefined>;
     /**
@@ -133,7 +135,7 @@ export class KubernetesNodePool extends pulumi.CustomResource {
      */
     declare public readonly kubernetesVersion: pulumi.Output<string | undefined>;
     /**
-     * Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+     * Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
      */
     declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
@@ -157,7 +159,7 @@ export class KubernetesNodePool extends pulumi.CustomResource {
      */
     declare public readonly name: pulumi.Output<string>;
     /**
-     * Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+     * Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
      */
     declare public readonly nodeAnnotations: pulumi.Output<{[key: string]: string} | undefined>;
     /**
@@ -281,7 +283,7 @@ export class KubernetesNodePool extends pulumi.CustomResource {
  */
 export interface KubernetesNodePoolState {
     /**
-     * Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+     * Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
      */
     annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
@@ -309,7 +311,7 @@ export interface KubernetesNodePoolState {
      */
     kubernetesVersion?: pulumi.Input<string | undefined>;
     /**
-     * Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+     * Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
@@ -333,7 +335,7 @@ export interface KubernetesNodePoolState {
      */
     name?: pulumi.Input<string | undefined>;
     /**
-     * Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+     * Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
      */
     nodeAnnotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
@@ -379,7 +381,7 @@ export interface KubernetesNodePoolState {
  */
 export interface KubernetesNodePoolArgs {
     /**
-     * Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use nodeAnnotations instead.
+     * Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use nodeAnnotations instead.
      */
     annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
@@ -407,7 +409,7 @@ export interface KubernetesNodePoolArgs {
      */
     kubernetesVersion?: pulumi.Input<string | undefined>;
     /**
-     * Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use nodeLabels instead.
+     * Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use nodeLabels instead.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
@@ -431,7 +433,7 @@ export interface KubernetesNodePoolArgs {
      */
     name?: pulumi.Input<string | undefined>;
     /**
-     * Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+     * Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
      */
     nodeAnnotations?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**

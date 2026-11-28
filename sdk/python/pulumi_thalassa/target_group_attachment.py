@@ -141,6 +141,8 @@ class TargetGroupAttachment(pulumi.CustomResource):
         """
         Attach a Virtual Machine Instance to a target group
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -197,6 +199,8 @@ class TargetGroupAttachment(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Attach a Virtual Machine Instance to a target group
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

@@ -101,7 +101,7 @@ type ReservedIp struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId pulumi.StringPtrOutput `pulumi:"organisationId"`
-	// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+	// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 	Region pulumi.StringOutput `pulumi:"region"`
 	// Slug of the reserved IP.
 	Slug pulumi.StringOutput `pulumi:"slug"`
@@ -160,7 +160,7 @@ type reservedIpState struct {
 	Name *string `pulumi:"name"`
 	// Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+	// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 	Region *string `pulumi:"region"`
 	// Slug of the reserved IP.
 	Slug *string `pulumi:"slug"`
@@ -187,7 +187,7 @@ type ReservedIpState struct {
 	Name pulumi.StringPtrInput
 	// Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId pulumi.StringPtrInput
-	// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+	// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 	Region pulumi.StringPtrInput
 	// Slug of the reserved IP.
 	Slug pulumi.StringPtrInput
@@ -210,7 +210,7 @@ type reservedIpArgs struct {
 	Name *string `pulumi:"name"`
 	// Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId *string `pulumi:"organisationId"`
-	// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+	// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 	Region string `pulumi:"region"`
 }
 
@@ -226,7 +226,7 @@ type ReservedIpArgs struct {
 	Name pulumi.StringPtrInput
 	// Reference to the Organisation of the reserved IP. If not provided, the organisation configured in the Terraform provider will be used.
 	OrganisationId pulumi.StringPtrInput
-	// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+	// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 	Region pulumi.StringInput
 }
 
@@ -362,7 +362,7 @@ func (o ReservedIpOutput) OrganisationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ReservedIp) pulumi.StringPtrOutput { return v.OrganisationId }).(pulumi.StringPtrOutput)
 }
 
-// Region of the reserved IP. Provide the identity of the region. Can only be set on creation.
+// Region of the reserved IP. Provide the identity or slug of the region. Can only be set on creation. Import as region/identity.
 func (o ReservedIpOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *ReservedIp) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }

@@ -303,10 +303,12 @@ class KubernetesClusterRole(pulumi.CustomResource):
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict', 'outputs.KubernetesClusterRoleRule']]]]] = None,
                  __props__=None):
         """
         Manages a Kubernetes cluster role for IAM access control. This resource allows you to create, update, and delete Kubernetes cluster roles with associated permission rules.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Important Notes
 
@@ -460,7 +462,7 @@ class KubernetesClusterRole(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes cluster role
         :param pulumi.Input[_builtins.str] name: The name of the Kubernetes cluster role
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster Role. If not provided, the organisation of the (Terraform) provider will be used.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict']]]] rules: List of permission rules for this Kubernetes cluster role
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict', 'outputs.KubernetesClusterRoleRule']]]] rules: List of permission rules for this Kubernetes cluster role
         """
         ...
     @overload
@@ -470,6 +472,8 @@ class KubernetesClusterRole(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manages a Kubernetes cluster role for IAM access control. This resource allows you to create, update, and delete Kubernetes cluster roles with associated permission rules.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Important Notes
 
@@ -636,7 +640,7 @@ class KubernetesClusterRole(pulumi.CustomResource):
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict', 'outputs.KubernetesClusterRoleRule']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -672,7 +676,7 @@ class KubernetesClusterRole(pulumi.CustomResource):
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
-            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict']]]]] = None,
+            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict', 'outputs.KubernetesClusterRoleRule']]]]] = None,
             slug: pulumi.Input[Optional[_builtins.str]] = None,
             system: pulumi.Input[Optional[_builtins.bool]] = None,
             updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'KubernetesClusterRole':
@@ -689,7 +693,7 @@ class KubernetesClusterRole(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes cluster role
         :param pulumi.Input[_builtins.str] name: The name of the Kubernetes cluster role
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Cluster Role. If not provided, the organisation of the (Terraform) provider will be used.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict']]]] rules: List of permission rules for this Kubernetes cluster role
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterRoleRuleArgs', 'KubernetesClusterRoleRuleArgsDict', 'outputs.KubernetesClusterRoleRule']]]] rules: List of permission rules for this Kubernetes cluster role
         :param pulumi.Input[_builtins.str] slug: The slug of the Kubernetes cluster role
         :param pulumi.Input[_builtins.bool] system: Whether this is a system role
         :param pulumi.Input[_builtins.str] updated_at: The timestamp when the Kubernetes cluster role was last updated

@@ -13,6 +13,8 @@ import (
 
 // Create a team in the Thalassa Cloud platform
 //
+// See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+//
 // ## Example Usage
 //
 // ```go
@@ -48,7 +50,9 @@ import (
 //			ctx.Export("teamSlug", example.Slug)
 //			ctx.Export("teamDescription", example.Description)
 //			ctx.Export("teamMembers", example.Members)
-//			ctx.Export("teamMemberCount", len(example.Members))
+//			ctx.Export("teamMemberCount", example.Members.ApplyT(func(members []thalassa.IamTeamMember) (pulumi.Int, error) {
+//				return pulumi.Int(len(members)), nil
+//			}).(pulumi.IntOutput))
 //			return nil
 //		})
 //	}

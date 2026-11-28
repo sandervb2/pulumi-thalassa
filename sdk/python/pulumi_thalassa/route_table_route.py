@@ -306,6 +306,8 @@ class RouteTableRoute(pulumi.CustomResource):
         """
         Create an route table route with a destination cidr block, target gateway, target nat gateway and gateway address within a route table.
 
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+
         ## Example Usage
 
         ```python
@@ -362,6 +364,8 @@ class RouteTableRoute(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an route table route with a destination cidr block, target gateway, target nat gateway and gateway address within a route table.
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 

@@ -258,6 +258,8 @@ class IamServiceAccount(pulumi.CustomResource):
         """
         Manage a service account in Thalassa Cloud
 
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+
         ## Example Usage
 
         ```python
@@ -300,6 +302,8 @@ class IamServiceAccount(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manage a service account in Thalassa Cloud
+
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
 
         ## Example Usage
 
@@ -381,7 +385,7 @@ class IamServiceAccount(pulumi.CustomResource):
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             object_version: pulumi.Input[Optional[_builtins.int]] = None,
-            role_bindings: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamServiceAccountRoleBindingArgs', 'IamServiceAccountRoleBindingArgsDict']]]]] = None,
+            role_bindings: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamServiceAccountRoleBindingArgs', 'IamServiceAccountRoleBindingArgsDict', 'outputs.IamServiceAccountRoleBinding']]]]] = None,
             slug: pulumi.Input[Optional[_builtins.str]] = None,
             updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'IamServiceAccount':
         """
@@ -397,7 +401,7 @@ class IamServiceAccount(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the service account
         :param pulumi.Input[_builtins.str] name: Name of the service account
         :param pulumi.Input[_builtins.int] object_version: Object version of the service account
-        :param pulumi.Input[Sequence[pulumi.Input[Union['IamServiceAccountRoleBindingArgs', 'IamServiceAccountRoleBindingArgsDict']]]] role_bindings: Role bindings for the service account
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamServiceAccountRoleBindingArgs', 'IamServiceAccountRoleBindingArgsDict', 'outputs.IamServiceAccountRoleBinding']]]] role_bindings: Role bindings for the service account
         :param pulumi.Input[_builtins.str] slug: Slug of the service account
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the service account
         """

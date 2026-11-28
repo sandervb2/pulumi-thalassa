@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 /**
  * Create and manage a secret in Thalassa Secrets Manager
  *
- * > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+ * > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
  *
  * See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
  *
@@ -112,11 +112,11 @@ export class Secret extends pulumi.CustomResource {
      */
     declare public readonly region: pulumi.Output<string>;
     /**
-     * Initial key-value secret payload (create only; not returned on read).
+     * Initial key-value secret payload as plaintext. The provider base64-encodes each value.
      */
     declare public readonly secretKeyValues: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * Initial secret string value (create only; not returned on read).
+     * Initial secret string value as plaintext. The provider base64-encodes the value.
      */
     declare public readonly secretString: pulumi.Output<string | undefined>;
     declare public /*out*/ readonly updatedAt: pulumi.Output<string>;
@@ -218,11 +218,11 @@ export interface SecretState {
      */
     region?: pulumi.Input<string | undefined>;
     /**
-     * Initial key-value secret payload (create only; not returned on read).
+     * Initial key-value secret payload as plaintext. The provider base64-encodes each value.
      */
     secretKeyValues?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Initial secret string value (create only; not returned on read).
+     * Initial secret string value as plaintext. The provider base64-encodes the value.
      */
     secretString?: pulumi.Input<string | undefined>;
     updatedAt?: pulumi.Input<string | undefined>;
@@ -259,11 +259,11 @@ export interface SecretArgs {
      */
     region: pulumi.Input<string>;
     /**
-     * Initial key-value secret payload (create only; not returned on read).
+     * Initial key-value secret payload as plaintext. The provider base64-encodes each value.
      */
     secretKeyValues?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Initial secret string value (create only; not returned on read).
+     * Initial secret string value as plaintext. The provider base64-encodes the value.
      */
     secretString?: pulumi.Input<string | undefined>;
 }

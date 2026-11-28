@@ -14,6 +14,10 @@ import (
 
 // Create and manage an object storage bucket
 //
+// See [Object Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/object-storage/).
+//
+// Use service account access credentials for programmatic S3 access.
+//
 // ## Example Usage
 //
 // ```go
@@ -69,7 +73,7 @@ import (
 //			_, err = thalassa.NewObjectstorageBucket(ctx, "cluster_bucket", &thalassa.ObjectstorageBucketArgs{
 //				Name:   pulumi.Sprintf("cluster-bucket-%v", bucketName.Result),
 //				Region: pulumi.String("nl-01"),
-//				Policy: example.ID().ApplyT(func(id string) (pulumi.String, error) {
+//				Policy: example.ID().ApplyT(func(id pulumi.ID) (pulumi.String, error) {
 //					var _zero pulumi.String
 //					tmpJSON0, err := json.Marshal(map[string]interface{}{
 //						"Version": "2012-10-17",
@@ -122,7 +126,7 @@ import (
 //									fmt.Sprintf("arn:thalassa:s3:::cluster-bucket-%v", bucketName.Result),
 //									fmt.Sprintf("arn:thalassa:s3:::cluster-bucket-%v/*", bucketName.Result),
 //								},
-//								"Principal": map[string]interface{}{
+//								"Principal": map[string][]string{
 //									"Thalassa": []string{
 //										fmt.Sprintf("arn:thalassa:iam:::serviceaccount/%v:%v", org.Id, id),
 //									},

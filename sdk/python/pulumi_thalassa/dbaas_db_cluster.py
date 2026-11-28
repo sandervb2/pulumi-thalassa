@@ -32,6 +32,7 @@ class DbaasDbClusterArgs:
                  auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
                  create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
                  create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
+                 db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
                  delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  init_db: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
@@ -60,6 +61,7 @@ class DbaasDbClusterArgs:
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy for the cluster. Options: 'none', 'latest-version', 'latest-stable', 'latest-patch', 'latest-minor', 'latest-major'
         :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
         :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
+        :param pulumi.Input[_builtins.str] db_object_store_id: ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] init_db: Map of init db parameters
@@ -69,9 +71,9 @@ class DbaasDbClusterArgs:
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
-        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: ID of the backup to restore from when creating the cluster.
         :param pulumi.Input['DbaasDbClusterRestoreRecoveryTargetArgs'] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         """
@@ -91,6 +93,8 @@ class DbaasDbClusterArgs:
             pulumi.set(__self__, "create_backup_before_destroy", create_backup_before_destroy)
         if create_backup_before_destroy_timeout is not None:
             pulumi.set(__self__, "create_backup_before_destroy_timeout", create_backup_before_destroy_timeout)
+        if db_object_store_id is not None:
+            pulumi.set(__self__, "db_object_store_id", db_object_store_id)
         if delete_protection is not None:
             pulumi.set(__self__, "delete_protection", delete_protection)
         if description is not None:
@@ -253,6 +257,18 @@ class DbaasDbClusterArgs:
         pulumi.set(self, "create_backup_before_destroy_timeout", value)
 
     @_builtins.property
+    @pulumi.getter(name="dbObjectStoreId")
+    def db_object_store_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        """
+        return pulumi.get(self, "db_object_store_id")
+
+    @db_object_store_id.setter
+    def db_object_store_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "db_object_store_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="deleteProtection")
     def delete_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
@@ -364,7 +380,7 @@ class DbaasDbClusterArgs:
     @pulumi.getter(name="provisionDbObjectStore")
     def provision_db_object_store(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         """
         return pulumi.get(self, "provision_db_object_store")
 
@@ -388,7 +404,7 @@ class DbaasDbClusterArgs:
     @pulumi.getter(name="restoreFromBackupId")
     def restore_from_backup_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        ID of the backup to restore from when creating the cluster.
         """
         return pulumi.get(self, "restore_from_backup_id")
 
@@ -431,6 +447,7 @@ class _DbaasDbClusterState:
                  create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
                  create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
                  delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  endpoint_ipv4: pulumi.Input[Optional[_builtins.str]] = None,
@@ -463,6 +480,7 @@ class _DbaasDbClusterState:
         :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
         :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
+        :param pulumi.Input[_builtins.str] db_object_store_id: ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
         :param pulumi.Input[_builtins.str] endpoint_ipv4: IPv4 address of the cluster endpoint
@@ -477,9 +495,9 @@ class _DbaasDbClusterState:
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
         :param pulumi.Input[_builtins.int] port: Port of the cluster endpoint
-        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: ID of the backup to restore from when creating the cluster.
         :param pulumi.Input['DbaasDbClusterRestoreRecoveryTargetArgs'] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] status: Status of the cluster
@@ -500,6 +518,8 @@ class _DbaasDbClusterState:
             pulumi.set(__self__, "create_backup_before_destroy_timeout", create_backup_before_destroy_timeout)
         if database_instance_type is not None:
             pulumi.set(__self__, "database_instance_type", database_instance_type)
+        if db_object_store_id is not None:
+            pulumi.set(__self__, "db_object_store_id", db_object_store_id)
         if delete_protection is not None:
             pulumi.set(__self__, "delete_protection", delete_protection)
         if description is not None:
@@ -628,6 +648,18 @@ class _DbaasDbClusterState:
     @database_instance_type.setter
     def database_instance_type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "database_instance_type", value)
+
+    @_builtins.property
+    @pulumi.getter(name="dbObjectStoreId")
+    def db_object_store_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        """
+        return pulumi.get(self, "db_object_store_id")
+
+    @db_object_store_id.setter
+    def db_object_store_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "db_object_store_id", value)
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
@@ -801,7 +833,7 @@ class _DbaasDbClusterState:
     @pulumi.getter(name="provisionDbObjectStore")
     def provision_db_object_store(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         """
         return pulumi.get(self, "provision_db_object_store")
 
@@ -825,7 +857,7 @@ class _DbaasDbClusterState:
     @pulumi.getter(name="restoreFromBackupId")
     def restore_from_backup_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        ID of the backup to restore from when creating the cluster.
         """
         return pulumi.get(self, "restore_from_backup_id")
 
@@ -907,6 +939,7 @@ class DbaasDbCluster(pulumi.CustomResource):
                  create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
                  create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
                  delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  engine: pulumi.Input[Optional[_builtins.str]] = None,
@@ -921,13 +954,15 @@ class DbaasDbCluster(pulumi.CustomResource):
                  provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
                  replicas: pulumi.Input[Optional[_builtins.int]] = None,
                  restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']]] = None,
                  security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  volume_type_class: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create an DB Cluster
+
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
 
         ## Example Usage
 
@@ -981,6 +1016,7 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
         :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
+        :param pulumi.Input[_builtins.str] db_object_store_id: ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
         :param pulumi.Input[_builtins.str] engine: Database engine of the cluster
@@ -992,10 +1028,10 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: Name of the DB Cluster
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
-        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
-        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: ID of the backup to restore from when creating the cluster.
+        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the DB Cluster
         :param pulumi.Input[_builtins.str] volume_type_class: Storage type used to determine the size of the cluster storage
@@ -1008,6 +1044,8 @@ class DbaasDbCluster(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create an DB Cluster
+
+        See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
 
         ## Example Usage
 
@@ -1074,6 +1112,7 @@ class DbaasDbCluster(pulumi.CustomResource):
                  create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
                  create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
                  database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+                 db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
                  delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  engine: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1088,7 +1127,7 @@ class DbaasDbCluster(pulumi.CustomResource):
                  provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
                  replicas: pulumi.Input[Optional[_builtins.int]] = None,
                  restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
-                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+                 restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']]] = None,
                  security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  volume_type_class: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1112,6 +1151,7 @@ class DbaasDbCluster(pulumi.CustomResource):
             if database_instance_type is None and not opts.urn:
                 raise TypeError("Missing required property 'database_instance_type'")
             __props__.__dict__["database_instance_type"] = database_instance_type
+            __props__.__dict__["db_object_store_id"] = db_object_store_id
             __props__.__dict__["delete_protection"] = delete_protection
             __props__.__dict__["description"] = description
             if engine is None and not opts.urn:
@@ -1159,6 +1199,7 @@ class DbaasDbCluster(pulumi.CustomResource):
             create_backup_before_destroy: pulumi.Input[Optional[_builtins.bool]] = None,
             create_backup_before_destroy_timeout: pulumi.Input[Optional[_builtins.int]] = None,
             database_instance_type: pulumi.Input[Optional[_builtins.str]] = None,
+            db_object_store_id: pulumi.Input[Optional[_builtins.str]] = None,
             delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
             endpoint_ipv4: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1176,7 +1217,7 @@ class DbaasDbCluster(pulumi.CustomResource):
             provision_db_object_store: pulumi.Input[Optional[_builtins.bool]] = None,
             replicas: pulumi.Input[Optional[_builtins.int]] = None,
             restore_from_backup_id: pulumi.Input[Optional[_builtins.str]] = None,
-            restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']]] = None,
+            restore_recovery_target: pulumi.Input[Optional[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']]] = None,
             security_groups: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
             status: pulumi.Input[Optional[_builtins.str]] = None,
             subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1195,6 +1236,7 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] create_backup_before_destroy: Whether to create a backup before destroying the cluster. Only applies when the cluster is in ready status.
         :param pulumi.Input[_builtins.int] create_backup_before_destroy_timeout: The timeout in minutes to wait for the pre-destroy backup to complete. Only used when create*backup*before_destroy is true.
         :param pulumi.Input[_builtins.str] database_instance_type: Database instance type of the DB Cluster
+        :param pulumi.Input[_builtins.str] db_object_store_id: ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
         :param pulumi.Input[_builtins.bool] delete_protection: Flag indicating if the cluster should be protected from deletion
         :param pulumi.Input[_builtins.str] description: Description of the DB Cluster
         :param pulumi.Input[_builtins.str] endpoint_ipv4: IPv4 address of the cluster endpoint
@@ -1209,10 +1251,10 @@ class DbaasDbCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Db Cluster. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Map of parameter name to database engine specific parameter value
         :param pulumi.Input[_builtins.int] port: Port of the cluster endpoint
-        :param pulumi.Input[_builtins.bool] provision_db_object_store: Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        :param pulumi.Input[_builtins.bool] provision_db_object_store: Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         :param pulumi.Input[_builtins.int] replicas: Number of instances in the cluster
-        :param pulumi.Input[_builtins.str] restore_from_backup_id: Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
-        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
+        :param pulumi.Input[_builtins.str] restore_from_backup_id: ID of the backup to restore from when creating the cluster.
+        :param pulumi.Input[Union['DbaasDbClusterRestoreRecoveryTargetArgs', 'DbaasDbClusterRestoreRecoveryTargetArgsDict', 'outputs.DbaasDbClusterRestoreRecoveryTarget']] restore_recovery_target: Recovery target for Point-In-Time Recovery (PITR). Only used when restore*from*backup*id is specified.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_groups: List of security groups associated with the cluster
         :param pulumi.Input[_builtins.str] status: Status of the cluster
         :param pulumi.Input[_builtins.str] subnet_id: Subnet of the DB Cluster
@@ -1229,6 +1271,7 @@ class DbaasDbCluster(pulumi.CustomResource):
         __props__.__dict__["create_backup_before_destroy"] = create_backup_before_destroy
         __props__.__dict__["create_backup_before_destroy_timeout"] = create_backup_before_destroy_timeout
         __props__.__dict__["database_instance_type"] = database_instance_type
+        __props__.__dict__["db_object_store_id"] = db_object_store_id
         __props__.__dict__["delete_protection"] = delete_protection
         __props__.__dict__["description"] = description
         __props__.__dict__["endpoint_ipv4"] = endpoint_ipv4
@@ -1308,6 +1351,14 @@ class DbaasDbCluster(pulumi.CustomResource):
         Database instance type of the DB Cluster
         """
         return pulumi.get(self, "database_instance_type")
+
+    @_builtins.property
+    @pulumi.getter(name="dbObjectStoreId")
+    def db_object_store_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        """
+        return pulumi.get(self, "db_object_store_id")
 
     @_builtins.property
     @pulumi.getter(name="deleteProtection")
@@ -1425,7 +1476,7 @@ class DbaasDbCluster(pulumi.CustomResource):
     @pulumi.getter(name="provisionDbObjectStore")
     def provision_db_object_store(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         """
         return pulumi.get(self, "provision_db_object_store")
 
@@ -1441,7 +1492,7 @@ class DbaasDbCluster(pulumi.CustomResource):
     @pulumi.getter(name="restoreFromBackupId")
     def restore_from_backup_id(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        ID of the backup to restore from when creating the cluster.
         """
         return pulumi.get(self, "restore_from_backup_id")
 

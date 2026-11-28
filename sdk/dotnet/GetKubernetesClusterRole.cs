@@ -129,18 +129,18 @@ namespace Pulumi.Thalassa
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["rolePermissions"] = 
+        ///         ["rolePermissions"] = new Dictionary&lt;string, object?&gt;
         ///         {
-        ///             { "roleName", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name) },
-        ///             { "rulesCount", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length() },
-        ///             { "resources", .Select(rule =&gt; 
+        ///             ["roleName"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name),
+        ///             ["rulesCount"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length,
+        ///             ["resources"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Resources;
-        ///             }).ToList() },
-        ///             { "verbs", .Select(rule =&gt; 
+        ///             }).ToList(),
+        ///             ["verbs"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Verbs;
-        ///             }).ToList() },
+        ///             }).ToList(),
         ///         },
         ///     };
         /// });
@@ -267,18 +267,18 @@ namespace Pulumi.Thalassa
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["rolePermissions"] = 
+        ///         ["rolePermissions"] = new Dictionary&lt;string, object?&gt;
         ///         {
-        ///             { "roleName", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name) },
-        ///             { "rulesCount", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length() },
-        ///             { "resources", .Select(rule =&gt; 
+        ///             ["roleName"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name),
+        ///             ["rulesCount"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length,
+        ///             ["resources"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Resources;
-        ///             }).ToList() },
-        ///             { "verbs", .Select(rule =&gt; 
+        ///             }).ToList(),
+        ///             ["verbs"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Verbs;
-        ///             }).ToList() },
+        ///             }).ToList(),
         ///         },
         ///     };
         /// });
@@ -405,18 +405,18 @@ namespace Pulumi.Thalassa
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["rolePermissions"] = 
+        ///         ["rolePermissions"] = new Dictionary&lt;string, object?&gt;
         ///         {
-        ///             { "roleName", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name) },
-        ///             { "rulesCount", role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length() },
-        ///             { "resources", .Select(rule =&gt; 
+        ///             ["roleName"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Name),
+        ///             ["rulesCount"] = role.Apply(getKubernetesClusterRoleResult =&gt; getKubernetesClusterRoleResult.Rules).Length,
+        ///             ["resources"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Resources;
-        ///             }).ToList() },
-        ///             { "verbs", .Select(rule =&gt; 
+        ///             }).ToList(),
+        ///             ["verbs"] = .Select(rule =&gt; 
         ///             {
         ///                 return rule.Verbs;
-        ///             }).ToList() },
+        ///             }).ToList(),
         ///         },
         ///     };
         /// });

@@ -49,17 +49,17 @@ class KubernetesNodePoolArgs:
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] subnet_id: Subnet ID where the Kubernetes node pool nodes will be deployed. This subnet must be in the same VPC as the Kubernetes cluster.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]] node_taints: Taints for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
@@ -158,7 +158,7 @@ class KubernetesNodePoolArgs:
     @pulumi.getter
     def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         """
         return pulumi.get(self, "annotations")
 
@@ -218,7 +218,7 @@ class KubernetesNodePoolArgs:
     @pulumi.getter
     def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         """
         return pulumi.get(self, "labels")
 
@@ -278,7 +278,7 @@ class KubernetesNodePoolArgs:
     @pulumi.getter(name="nodeAnnotations")
     def node_annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         """
         return pulumi.get(self, "node_annotations")
 
@@ -388,20 +388,20 @@ class _KubernetesNodePoolState:
         """
         Input properties used for looking up and filtering KubernetesNodePool resources.
 
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolNodeTaintArgs']]] node_taints: Taints for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
@@ -463,7 +463,7 @@ class _KubernetesNodePoolState:
     @pulumi.getter
     def annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         """
         return pulumi.get(self, "annotations")
 
@@ -547,7 +547,7 @@ class _KubernetesNodePoolState:
     @pulumi.getter
     def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         """
         return pulumi.get(self, "labels")
 
@@ -619,7 +619,7 @@ class _KubernetesNodePoolState:
     @pulumi.getter(name="nodeAnnotations")
     def node_annotations(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         """
         return pulumi.get(self, "node_annotations")
 
@@ -757,7 +757,7 @@ class KubernetesNodePool(pulumi.CustomResource):
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  replicas: pulumi.Input[Optional[_builtins.int]] = None,
                  security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
@@ -765,7 +765,9 @@ class KubernetesNodePool(pulumi.CustomResource):
                  upgrade_strategy: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
-        Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+        Create a Kubernetes node pool for a managed cluster. A node pool is a group of identically configured nodes joined to the cluster and can be scaled up or down as needed.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Autoscaling Configuration
 
@@ -833,22 +835,22 @@ class KubernetesNodePool(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]] node_taints: Taints for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
@@ -862,7 +864,9 @@ class KubernetesNodePool(pulumi.CustomResource):
                  args: KubernetesNodePoolArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+        Create a Kubernetes node pool for a managed cluster. A node pool is a group of identically configured nodes joined to the cluster and can be scaled up or down as needed.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Autoscaling Configuration
 
@@ -958,7 +962,7 @@ class KubernetesNodePool(pulumi.CustomResource):
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+                 node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  replicas: pulumi.Input[Optional[_builtins.int]] = None,
                  security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
@@ -1029,7 +1033,7 @@ class KubernetesNodePool(pulumi.CustomResource):
             name: pulumi.Input[Optional[_builtins.str]] = None,
             node_annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             node_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]]] = None,
+            node_taints: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
             replicas: pulumi.Input[Optional[_builtins.int]] = None,
             security_group_attachments: pulumi.Input[Optional[Sequence[pulumi.Input[_builtins.str]]]] = None,
@@ -1044,22 +1048,22 @@ class KubernetesNodePool(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         :param pulumi.Input[_builtins.str] availability_zone: Availability zone for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] cluster_id: Kubernetes Cluster of the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autohealing: Enable autohealing for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] enable_autoscaling: Enable autoscaling for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] kubernetes_version: Kubernetes version for the node pool nodes. Optional - if not specified, the cluster's version will be used. Can be specified as version name, slug, or identity. Must be an enabled version.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         :param pulumi.Input[_builtins.str] machine_type: Machine type for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.bool] manage_node_allocatable: Configure node allocatable resources for the Kubernetes Node Pool. If set to false, nodes of this node pool will not have system reserved resources configured. Recommended true for stability.
         :param pulumi.Input[_builtins.int] max_replicas: Maximum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.int] min_replicas: Minimum number of replicas for the Kubernetes Node Pool. May only be set when enable_autoscaling is true.
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Node Pool
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_annotations: Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] node_labels: Labels for the Kubernetes Nodes within this Node Pool. Optional. These labels are applied to the Kubernetes nodes created for this Node Pool. Labels must match the same constraints as Kubernetes labels.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict']]]] node_taints: Taints for the Kubernetes Node Pool
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolNodeTaintArgs', 'KubernetesNodePoolNodeTaintArgsDict', 'outputs.KubernetesNodePoolNodeTaint']]]] node_taints: Taints for the Kubernetes Node Pool
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Kubernetes Node Pool. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.int] replicas: Number of replicas for the Kubernetes Node Pool. Do not set this when enable_autoscaling is true.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_attachments: List identities of security group that will be attached to the machines in the Node Pool
@@ -1101,7 +1105,7 @@ class KubernetesNodePool(pulumi.CustomResource):
     @pulumi.getter
     def annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use node_annotations instead.
+        Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use node_annotations instead.
         """
         return pulumi.get(self, "annotations")
 
@@ -1157,7 +1161,7 @@ class KubernetesNodePool(pulumi.CustomResource):
     @pulumi.getter
     def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use node_labels instead.
+        Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use node_labels instead.
         """
         return pulumi.get(self, "labels")
 
@@ -1205,7 +1209,7 @@ class KubernetesNodePool(pulumi.CustomResource):
     @pulumi.getter(name="nodeAnnotations")
     def node_annotations(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         """
         return pulumi.get(self, "node_annotations")
 

@@ -51,12 +51,8 @@ type GetMachineImageResult struct {
 }
 
 func GetMachineImageOutput(ctx *pulumi.Context, args GetMachineImageOutputArgs, opts ...pulumi.InvokeOption) GetMachineImageResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetMachineImageResultOutput, error) {
-			args := v.(GetMachineImageArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getMachineImage:getMachineImage", args, GetMachineImageResultOutput{}, options).(GetMachineImageResultOutput), nil
-		}).(GetMachineImageResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getMachineImage:getMachineImage", args, GetMachineImageResultOutput{}, options).(GetMachineImageResultOutput)
 }
 
 // A collection of arguments for invoking getMachineImage.

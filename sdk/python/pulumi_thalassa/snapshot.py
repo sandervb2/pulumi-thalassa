@@ -19,6 +19,7 @@ __all__ = ['SnapshotArgs', 'Snapshot']
 @pulumi.input_type
 class SnapshotArgs:
     def __init__(__self__, *,
+                 volume_identity: pulumi.Input[_builtins.str],
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  delete_protection: pulumi.Input[Optional[_builtins.bool]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
@@ -29,6 +30,7 @@ class SnapshotArgs:
         """
         The set of arguments for constructing a Snapshot resource.
 
+        :param pulumi.Input[_builtins.str] volume_identity: Identity of the volume to create a snapshot from
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the snapshot
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the snapshot
         :param pulumi.Input[_builtins.str] description: A human readable description about the snapshot
@@ -37,6 +39,7 @@ class SnapshotArgs:
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Snapshot. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.bool] wait_until_available: Wait until the snapshot is available
         """
+        pulumi.set(__self__, "volume_identity", volume_identity)
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
         if delete_protection is not None:
@@ -51,6 +54,18 @@ class SnapshotArgs:
             pulumi.set(__self__, "organisation_id", organisation_id)
         if wait_until_available is not None:
             pulumi.set(__self__, "wait_until_available", wait_until_available)
+
+    @_builtins.property
+    @pulumi.getter(name="volumeIdentity")
+    def volume_identity(self) -> pulumi.Input[_builtins.str]:
+        """
+        Identity of the volume to create a snapshot from
+        """
+        return pulumi.get(self, "volume_identity")
+
+    @volume_identity.setter
+    def volume_identity(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "volume_identity", value)
 
     @_builtins.property
     @pulumi.getter
@@ -152,6 +167,7 @@ class _SnapshotState:
                  snapshot_policy_id: pulumi.Input[Optional[_builtins.str]] = None,
                  source_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
                  status: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_identity: pulumi.Input[Optional[_builtins.str]] = None,
                  wait_until_available: pulumi.Input[Optional[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering Snapshot resources.
@@ -167,6 +183,7 @@ class _SnapshotState:
         :param pulumi.Input[_builtins.str] snapshot_policy_id: Identity of the snapshot policy that created this snapshot
         :param pulumi.Input[_builtins.str] source_volume_id: Identity of the source volume
         :param pulumi.Input[_builtins.str] status: Status of the snapshot
+        :param pulumi.Input[_builtins.str] volume_identity: Identity of the volume to create a snapshot from
         :param pulumi.Input[_builtins.bool] wait_until_available: Wait until the snapshot is available
         """
         if annotations is not None:
@@ -193,6 +210,8 @@ class _SnapshotState:
             pulumi.set(__self__, "source_volume_id", source_volume_id)
         if status is not None:
             pulumi.set(__self__, "status", status)
+        if volume_identity is not None:
+            pulumi.set(__self__, "volume_identity", volume_identity)
         if wait_until_available is not None:
             pulumi.set(__self__, "wait_until_available", wait_until_available)
 
@@ -338,6 +357,18 @@ class _SnapshotState:
         pulumi.set(self, "status", value)
 
     @_builtins.property
+    @pulumi.getter(name="volumeIdentity")
+    def volume_identity(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identity of the volume to create a snapshot from
+        """
+        return pulumi.get(self, "volume_identity")
+
+    @volume_identity.setter
+    def volume_identity(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "volume_identity", value)
+
+    @_builtins.property
     @pulumi.getter(name="waitUntilAvailable")
     def wait_until_available(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
@@ -362,10 +393,13 @@ class Snapshot(pulumi.CustomResource):
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_identity: pulumi.Input[Optional[_builtins.str]] = None,
                  wait_until_available: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         """
         Provides a Thalassa Cloud Snapshot resource. This can be used to create, manage, and delete snapshots of block volumes.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 
@@ -384,6 +418,7 @@ class Snapshot(pulumi.CustomResource):
         example_snapshot = thalassa.Snapshot("example",
             name="example-snapshot",
             description="Example snapshot created from block volume",
+            volume_identity=example.id,
             delete_protection=False,
             wait_until_available=True,
             labels={
@@ -411,16 +446,19 @@ class Snapshot(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the snapshot
         :param pulumi.Input[_builtins.str] name: Name of the snapshot
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Snapshot. If not provided, the organisation of the (Terraform) provider will be used.
+        :param pulumi.Input[_builtins.str] volume_identity: Identity of the volume to create a snapshot from
         :param pulumi.Input[_builtins.bool] wait_until_available: Wait until the snapshot is available
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[SnapshotArgs] = None,
+                 args: SnapshotArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Provides a Thalassa Cloud Snapshot resource. This can be used to create, manage, and delete snapshots of block volumes.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 
@@ -439,6 +477,7 @@ class Snapshot(pulumi.CustomResource):
         example_snapshot = thalassa.Snapshot("example",
             name="example-snapshot",
             description="Example snapshot created from block volume",
+            volume_identity=example.id,
             delete_protection=False,
             wait_until_available=True,
             labels={
@@ -479,6 +518,7 @@ class Snapshot(pulumi.CustomResource):
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 volume_identity: pulumi.Input[Optional[_builtins.str]] = None,
                  wait_until_available: pulumi.Input[Optional[_builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -495,6 +535,9 @@ class Snapshot(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
             __props__.__dict__["organisation_id"] = organisation_id
+            if volume_identity is None and not opts.urn:
+                raise TypeError("Missing required property 'volume_identity'")
+            __props__.__dict__["volume_identity"] = volume_identity
             __props__.__dict__["wait_until_available"] = wait_until_available
             __props__.__dict__["region"] = None
             __props__.__dict__["size_gb"] = None
@@ -524,6 +567,7 @@ class Snapshot(pulumi.CustomResource):
             snapshot_policy_id: pulumi.Input[Optional[_builtins.str]] = None,
             source_volume_id: pulumi.Input[Optional[_builtins.str]] = None,
             status: pulumi.Input[Optional[_builtins.str]] = None,
+            volume_identity: pulumi.Input[Optional[_builtins.str]] = None,
             wait_until_available: pulumi.Input[Optional[_builtins.bool]] = None) -> 'Snapshot':
         """
         Get an existing Snapshot resource's state with the given name, id, and optional extra
@@ -543,6 +587,7 @@ class Snapshot(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] snapshot_policy_id: Identity of the snapshot policy that created this snapshot
         :param pulumi.Input[_builtins.str] source_volume_id: Identity of the source volume
         :param pulumi.Input[_builtins.str] status: Status of the snapshot
+        :param pulumi.Input[_builtins.str] volume_identity: Identity of the volume to create a snapshot from
         :param pulumi.Input[_builtins.bool] wait_until_available: Wait until the snapshot is available
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -561,6 +606,7 @@ class Snapshot(pulumi.CustomResource):
         __props__.__dict__["snapshot_policy_id"] = snapshot_policy_id
         __props__.__dict__["source_volume_id"] = source_volume_id
         __props__.__dict__["status"] = status
+        __props__.__dict__["volume_identity"] = volume_identity
         __props__.__dict__["wait_until_available"] = wait_until_available
         return Snapshot(resource_name, opts=opts, __props__=__props__)
 
@@ -656,6 +702,14 @@ class Snapshot(pulumi.CustomResource):
         Status of the snapshot
         """
         return pulumi.get(self, "status")
+
+    @_builtins.property
+    @pulumi.getter(name="volumeIdentity")
+    def volume_identity(self) -> pulumi.Output[_builtins.str]:
+        """
+        Identity of the volume to create a snapshot from
+        """
+        return pulumi.get(self, "volume_identity")
 
     @_builtins.property
     @pulumi.getter(name="waitUntilAvailable")

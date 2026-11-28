@@ -105,11 +105,13 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict', 'outputs.SecurityGroupEgressRuleRule']]]]] = None,
                  security_group_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
-        Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group. This is an optional alternative to managing rules through the SecurityGroup resource. Warning: Do not use both this resource and egress_rule in SecurityGroup for the same security group, as this will cause conflicts.
+        Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group and is an optional alternative to managing rules through thalassa_security_group. Do not use both resources for the same security group.
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -160,7 +162,7 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict']]]] rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict', 'outputs.SecurityGroupEgressRuleRule']]]] rules: List of egress rules for the security group
         :param pulumi.Input[_builtins.str] security_group_id: ID of the Security Group to manage egress rules for
         """
         ...
@@ -170,7 +172,9 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
                  args: SecurityGroupEgressRuleInitArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group. This is an optional alternative to managing rules through the SecurityGroup resource. Warning: Do not use both this resource and egress_rule in SecurityGroup for the same security group, as this will cause conflicts.
+        Manages egress rules for a security group using the batch API. This resource replaces all egress rules for the security group and is an optional alternative to managing rules through thalassa_security_group. Do not use both resources for the same security group.
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -234,7 +238,7 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict', 'outputs.SecurityGroupEgressRuleRule']]]]] = None,
                  security_group_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -259,7 +263,7 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict']]]]] = None,
+            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict', 'outputs.SecurityGroupEgressRuleRule']]]]] = None,
             security_group_id: pulumi.Input[Optional[_builtins.str]] = None) -> 'SecurityGroupEgressRule':
         """
         Get an existing SecurityGroupEgressRule resource's state with the given name, id, and optional extra
@@ -268,7 +272,7 @@ class SecurityGroupEgressRule(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict']]]] rules: List of egress rules for the security group
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecurityGroupEgressRuleRuleArgs', 'SecurityGroupEgressRuleRuleArgsDict', 'outputs.SecurityGroupEgressRuleRule']]]] rules: List of egress rules for the security group
         :param pulumi.Input[_builtins.str] security_group_id: ID of the Security Group to manage egress rules for
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))

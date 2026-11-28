@@ -11,7 +11,9 @@ import (
 	"github.com/sandervb2/pulumi-thalassa/sdk/go/thalassa/internal"
 )
 
-// Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+// Manages a Kubernetes cluster on the Thalassa cloud platform. Supports managed clusters and hosted control plane clusters with configurable networking, security policies, auto-upgrade, CNI plugins, network CIDRs, pod security standards, audit logging, and API server access controls.
+//
+// See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 //
 // ## Cluster Types
 //
@@ -133,13 +135,13 @@ type KubernetesCluster struct {
 	ClusterType pulumi.StringPtrOutput `pulumi:"clusterType"`
 	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion pulumi.StringPtrOutput `pulumi:"clusterVersion"`
-	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 	DefaultNetworkPolicy pulumi.StringPtrOutput `pulumi:"defaultNetworkPolicy"`
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection pulumi.BoolPtrOutput `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 	DisablePublicEndpoint pulumi.BoolPtrOutput `pulumi:"disablePublicEndpoint"`
 	// VPC-internal endpoint for the Kubernetes Cluster
 	InternalEndpoint pulumi.StringOutput `pulumi:"internalEndpoint"`
@@ -157,7 +159,7 @@ type KubernetesCluster struct {
 	MaintenanceStartAt pulumi.IntPtrOutput `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringOutput `pulumi:"name"`
-	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 	NetworkingCni pulumi.StringPtrOutput `pulumi:"networkingCni"`
 	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
 	NetworkingKubeProxyDeployment pulumi.StringPtrOutput `pulumi:"networkingKubeProxyDeployment"`
@@ -230,13 +232,13 @@ type kubernetesClusterState struct {
 	ClusterType *string `pulumi:"clusterType"`
 	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion *string `pulumi:"clusterVersion"`
-	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 	DefaultNetworkPolicy *string `pulumi:"defaultNetworkPolicy"`
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description *string `pulumi:"description"`
-	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 	DisablePublicEndpoint *bool `pulumi:"disablePublicEndpoint"`
 	// VPC-internal endpoint for the Kubernetes Cluster
 	InternalEndpoint *string `pulumi:"internalEndpoint"`
@@ -254,7 +256,7 @@ type kubernetesClusterState struct {
 	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name *string `pulumi:"name"`
-	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 	NetworkingCni *string `pulumi:"networkingCni"`
 	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
 	NetworkingKubeProxyDeployment *string `pulumi:"networkingKubeProxyDeployment"`
@@ -298,13 +300,13 @@ type KubernetesClusterState struct {
 	ClusterType pulumi.StringPtrInput
 	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion pulumi.StringPtrInput
-	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 	DefaultNetworkPolicy pulumi.StringPtrInput
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection pulumi.BoolPtrInput
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrInput
-	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 	DisablePublicEndpoint pulumi.BoolPtrInput
 	// VPC-internal endpoint for the Kubernetes Cluster
 	InternalEndpoint pulumi.StringPtrInput
@@ -322,7 +324,7 @@ type KubernetesClusterState struct {
 	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringPtrInput
-	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 	NetworkingCni pulumi.StringPtrInput
 	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
 	NetworkingKubeProxyDeployment pulumi.StringPtrInput
@@ -368,13 +370,13 @@ type kubernetesClusterArgs struct {
 	ClusterType *string `pulumi:"clusterType"`
 	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion *string `pulumi:"clusterVersion"`
-	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 	DefaultNetworkPolicy *string `pulumi:"defaultNetworkPolicy"`
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection *bool `pulumi:"deleteProtection"`
 	// A human readable description about the Kubernetes Cluster
 	Description *string `pulumi:"description"`
-	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 	DisablePublicEndpoint *bool `pulumi:"disablePublicEndpoint"`
 	// Labels for the Kubernetes Cluster
 	Labels map[string]string `pulumi:"labels"`
@@ -384,7 +386,7 @@ type kubernetesClusterArgs struct {
 	MaintenanceStartAt *int `pulumi:"maintenanceStartAt"`
 	// Name of the Kubernetes Cluster
 	Name *string `pulumi:"name"`
-	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 	NetworkingCni *string `pulumi:"networkingCni"`
 	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
 	NetworkingKubeProxyDeployment *string `pulumi:"networkingKubeProxyDeployment"`
@@ -422,13 +424,13 @@ type KubernetesClusterArgs struct {
 	ClusterType pulumi.StringPtrInput
 	// Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
 	ClusterVersion pulumi.StringPtrInput
-	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+	// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 	DefaultNetworkPolicy pulumi.StringPtrInput
 	// Delete protection of the Kubernetes Cluster
 	DeleteProtection pulumi.BoolPtrInput
 	// A human readable description about the Kubernetes Cluster
 	Description pulumi.StringPtrInput
-	// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+	// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 	DisablePublicEndpoint pulumi.BoolPtrInput
 	// Labels for the Kubernetes Cluster
 	Labels pulumi.StringMapInput
@@ -438,7 +440,7 @@ type KubernetesClusterArgs struct {
 	MaintenanceStartAt pulumi.IntPtrInput
 	// Name of the Kubernetes Cluster
 	Name pulumi.StringPtrInput
-	// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+	// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 	NetworkingCni pulumi.StringPtrInput
 	// Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
 	NetworkingKubeProxyDeployment pulumi.StringPtrInput
@@ -587,7 +589,7 @@ func (o KubernetesClusterOutput) ClusterVersion() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.ClusterVersion }).(pulumi.StringPtrOutput)
 }
 
-// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+// Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
 func (o KubernetesClusterOutput) DefaultNetworkPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.DefaultNetworkPolicy }).(pulumi.StringPtrOutput)
 }
@@ -602,7 +604,7 @@ func (o KubernetesClusterOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+// Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
 func (o KubernetesClusterOutput) DisablePublicEndpoint() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.BoolPtrOutput { return v.DisablePublicEndpoint }).(pulumi.BoolPtrOutput)
 }
@@ -647,7 +649,7 @@ func (o KubernetesClusterOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+// CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
 func (o KubernetesClusterOutput) NetworkingCni() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesCluster) pulumi.StringPtrOutput { return v.NetworkingCni }).(pulumi.StringPtrOutput)
 }

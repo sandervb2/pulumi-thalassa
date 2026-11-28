@@ -5,13 +5,59 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface ContainerregistryNamespaceConfigurationRetentionPolicy {
+    /**
+     * Whether to delete untagged images
+     */
+    deleteUntaggedImages?: boolean;
+    /**
+     * Whether the retention policy is active
+     */
+    enabled?: boolean;
+    /**
+     * List of retention rules
+     */
+    rules?: outputs.ContainerregistryNamespaceConfigurationRetentionPolicyRule[];
+}
+
+export interface ContainerregistryNamespaceConfigurationRetentionPolicyRule {
+    /**
+     * Number of most recent versions/tags to keep
+     */
+    count?: number;
+    /**
+     * Retain tags based on tag creation age in days
+     */
+    days?: number;
+    /**
+     * Retain artifacts based on creation/push age in days
+     */
+    daysSinceCreated?: number;
+    /**
+     * Retain artifacts based on last pull age in days
+     */
+    daysSincePulled?: number;
+    /**
+     * Repository name patterns this rule applies to
+     */
+    repositoryPatterns?: string[];
+    /**
+     * Scope of the retention rule (currently only tags)
+     */
+    scope?: string;
+    /**
+     * Tag patterns this rule applies to
+     */
+    tagPatterns?: string[];
+}
+
 export interface DbaasDbClusterRestoreRecoveryTarget {
     /**
      * Log Sequence Number to restore to. Example: '0/1234567'
      */
     targetLsn?: string;
     /**
-     * Timestamp to restore to (RFC3339 format). Example: '2023-12-25T10:00:00Z'
+     * Timestamp to restore to in barman format (YYYY-MM-DD HH:MM:SS.00000±TZ). Example: '2023-08-11 11:14:21.00000+02'
      */
     targetTime?: string;
 }
@@ -23,6 +69,52 @@ export interface DnsZoneDnssecDsRecord {
     keyTag: number;
     publicKey: string;
     record: string;
+}
+
+export interface GetContainerregistryNamespaceConfigurationRetentionPolicy {
+    /**
+     * Whether to delete untagged images
+     */
+    deleteUntaggedImages: boolean;
+    /**
+     * Whether the retention policy is active
+     */
+    enabled: boolean;
+    /**
+     * List of retention rules
+     */
+    rules: outputs.GetContainerregistryNamespaceConfigurationRetentionPolicyRule[];
+}
+
+export interface GetContainerregistryNamespaceConfigurationRetentionPolicyRule {
+    /**
+     * Number of most recent versions/tags to keep
+     */
+    count: number;
+    /**
+     * Retain tags based on tag creation age in days
+     */
+    days: number;
+    /**
+     * Retain artifacts based on creation/push age in days
+     */
+    daysSinceCreated: number;
+    /**
+     * Retain artifacts based on last pull age in days
+     */
+    daysSincePulled: number;
+    /**
+     * Repository name patterns this rule applies to
+     */
+    repositoryPatterns: string[];
+    /**
+     * Scope of the retention rule
+     */
+    scope: string;
+    /**
+     * Tag patterns this rule applies to
+     */
+    tagPatterns: string[];
 }
 
 export interface GetIamOrganisationMembersMember {
@@ -896,8 +988,10 @@ export interface SecretGenerateSecret {
 }
 
 export interface SecretVersionGenerateSecret {
-    characterSet?: string;
-    length?: number;
+    /**
+     * Byte length of the generated secret.
+     */
+    byteLength?: number;
 }
 
 export interface SecurityGroupEgressRule {

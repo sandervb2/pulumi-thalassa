@@ -51,12 +51,8 @@ type GetKubernetesClusterSessionTokenResult struct {
 }
 
 func GetKubernetesClusterSessionTokenOutput(ctx *pulumi.Context, args GetKubernetesClusterSessionTokenOutputArgs, opts ...pulumi.InvokeOption) GetKubernetesClusterSessionTokenResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetKubernetesClusterSessionTokenResultOutput, error) {
-			args := v.(GetKubernetesClusterSessionTokenArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getKubernetesClusterSessionToken:getKubernetesClusterSessionToken", args, GetKubernetesClusterSessionTokenResultOutput{}, options).(GetKubernetesClusterSessionTokenResultOutput), nil
-		}).(GetKubernetesClusterSessionTokenResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getKubernetesClusterSessionToken:getKubernetesClusterSessionToken", args, GetKubernetesClusterSessionTokenResultOutput{}, options).(GetKubernetesClusterSessionTokenResultOutput)
 }
 
 // A collection of arguments for invoking getKubernetesClusterSessionToken.

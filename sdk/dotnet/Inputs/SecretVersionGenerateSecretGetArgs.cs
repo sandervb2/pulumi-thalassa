@@ -12,11 +12,11 @@ namespace Pulumi.Thalassa.Inputs
 
     public sealed class SecretVersionGenerateSecretGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("characterSet")]
-        public Input<string>? CharacterSet { get; set; }
-
-        [Input("length")]
-        public Input<int>? Length { get; set; }
+        /// <summary>
+        /// Byte length of the generated secret.
+        /// </summary>
+        [Input("byteLength")]
+        public Input<int>? ByteLength { get; set; }
 
         public SecretVersionGenerateSecretGetArgs()
         {

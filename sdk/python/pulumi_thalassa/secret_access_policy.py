@@ -146,12 +146,12 @@ class SecretAccessPolicy(pulumi.CustomResource):
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  path: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
-                 statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict']]]]] = None,
+                 statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict', 'outputs.SecretAccessPolicyStatement']]]]] = None,
                  __props__=None):
         """
         Manage access policy for a secret in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -187,7 +187,7 @@ class SecretAccessPolicy(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict']]]] statements: Access policy statements.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict', 'outputs.SecretAccessPolicyStatement']]]] statements: Access policy statements.
         """
         ...
     @overload
@@ -198,7 +198,7 @@ class SecretAccessPolicy(pulumi.CustomResource):
         """
         Manage access policy for a secret in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -250,7 +250,7 @@ class SecretAccessPolicy(pulumi.CustomResource):
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  path: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
-                 statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict']]]]] = None,
+                 statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict', 'outputs.SecretAccessPolicyStatement']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -283,7 +283,7 @@ class SecretAccessPolicy(pulumi.CustomResource):
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
             path: pulumi.Input[Optional[_builtins.str]] = None,
             region: pulumi.Input[Optional[_builtins.str]] = None,
-            statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict']]]]] = None) -> 'SecretAccessPolicy':
+            statements: pulumi.Input[Optional[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict', 'outputs.SecretAccessPolicyStatement']]]]] = None) -> 'SecretAccessPolicy':
         """
         Get an existing SecretAccessPolicy resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -291,7 +291,7 @@ class SecretAccessPolicy(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict']]]] statements: Access policy statements.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SecretAccessPolicyStatementArgs', 'SecretAccessPolicyStatementArgsDict', 'outputs.SecretAccessPolicyStatement']]]] statements: Access policy statements.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 

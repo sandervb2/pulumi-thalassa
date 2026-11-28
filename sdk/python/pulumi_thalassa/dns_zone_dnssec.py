@@ -248,7 +248,7 @@ class DnsZoneDnssec(pulumi.CustomResource):
         """
         Enable DNSSEC signing for a DNS zone
 
-        > **Early access:** DNS is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** DNS is in early access. The DNS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [DNS documentation](https://docs.thalassa.cloud/docs/dns/).
 
@@ -294,7 +294,7 @@ class DnsZoneDnssec(pulumi.CustomResource):
         """
         Enable DNSSEC signing for a DNS zone
 
-        > **Early access:** DNS is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** DNS is in early access. The DNS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [DNS documentation](https://docs.thalassa.cloud/docs/dns/).
 
@@ -378,7 +378,7 @@ class DnsZoneDnssec(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             ds_delegated: pulumi.Input[Optional[_builtins.bool]] = None,
-            ds_records: pulumi.Input[Optional[Sequence[pulumi.Input[Union['DnsZoneDnssecDsRecordArgs', 'DnsZoneDnssecDsRecordArgsDict']]]]] = None,
+            ds_records: pulumi.Input[Optional[Sequence[pulumi.Input[Union['DnsZoneDnssecDsRecordArgs', 'DnsZoneDnssecDsRecordArgsDict', 'outputs.DnsZoneDnssecDsRecord']]]]] = None,
             enabled: pulumi.Input[Optional[_builtins.bool]] = None,
             kms_key_id: pulumi.Input[Optional[_builtins.str]] = None,
             last_sign_error: pulumi.Input[Optional[_builtins.str]] = None,

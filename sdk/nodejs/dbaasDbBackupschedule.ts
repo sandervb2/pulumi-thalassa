@@ -7,6 +7,8 @@ import * as utilities from "./utilities";
 /**
  * Create a database backup schedule
  *
+ * See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+ *
  * ## Example Usage
  *
  * ```typescript

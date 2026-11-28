@@ -12,6 +12,10 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Manage access credentials for a service account in Thalassa Cloud
     /// 
+    /// See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+    /// 
+    /// The access secret is only returned at create time.
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

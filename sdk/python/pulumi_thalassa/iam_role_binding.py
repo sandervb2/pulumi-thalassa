@@ -339,6 +339,8 @@ class IamRoleBinding(pulumi.CustomResource):
         """
         Manage a role binding in Thalassa Cloud
 
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+
         ## Example Usage
 
         ```python
@@ -417,6 +419,8 @@ class IamRoleBinding(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manage a role binding in Thalassa Cloud
+
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
 
         ## Example Usage
 

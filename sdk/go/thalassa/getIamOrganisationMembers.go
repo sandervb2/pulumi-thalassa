@@ -43,12 +43,8 @@ type GetIamOrganisationMembersResult struct {
 }
 
 func GetIamOrganisationMembersOutput(ctx *pulumi.Context, args GetIamOrganisationMembersOutputArgs, opts ...pulumi.InvokeOption) GetIamOrganisationMembersResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetIamOrganisationMembersResultOutput, error) {
-			args := v.(GetIamOrganisationMembersArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getIamOrganisationMembers:getIamOrganisationMembers", args, GetIamOrganisationMembersResultOutput{}, options).(GetIamOrganisationMembersResultOutput), nil
-		}).(GetIamOrganisationMembersResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getIamOrganisationMembers:getIamOrganisationMembers", args, GetIamOrganisationMembersResultOutput{}, options).(GetIamOrganisationMembersResultOutput)
 }
 
 // A collection of arguments for invoking getIamOrganisationMembers.

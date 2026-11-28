@@ -52,12 +52,8 @@ type LookupDbaasPgRolesResult struct {
 }
 
 func LookupDbaasPgRolesOutput(ctx *pulumi.Context, args LookupDbaasPgRolesOutputArgs, opts ...pulumi.InvokeOption) LookupDbaasPgRolesResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupDbaasPgRolesResultOutput, error) {
-			args := v.(LookupDbaasPgRolesArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getDbaasPgRoles:getDbaasPgRoles", args, LookupDbaasPgRolesResultOutput{}, options).(LookupDbaasPgRolesResultOutput), nil
-		}).(LookupDbaasPgRolesResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getDbaasPgRoles:getDbaasPgRoles", args, LookupDbaasPgRolesResultOutput{}, options).(LookupDbaasPgRolesResultOutput)
 }
 
 // A collection of arguments for invoking getDbaasPgRoles.

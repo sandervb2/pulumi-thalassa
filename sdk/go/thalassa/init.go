@@ -27,6 +27,10 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &BlockVolumeAttachment{}
 	case "thalassa:index/cloudInitTemplate:CloudInitTemplate":
 		r = &CloudInitTemplate{}
+	case "thalassa:index/containerregistryNamespace:ContainerregistryNamespace":
+		r = &ContainerregistryNamespace{}
+	case "thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration":
+		r = &ContainerregistryNamespaceConfiguration{}
 	case "thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule":
 		r = &DbaasDbBackupschedule{}
 	case "thalassa:index/dbaasDbCluster:DbaasDbCluster":
@@ -43,6 +47,10 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &DnsZone{}
 	case "thalassa:index/dnsZoneDnssec:DnsZoneDnssec":
 		r = &DnsZoneDnssec{}
+	case "thalassa:index/iamFederatedIdentity:IamFederatedIdentity":
+		r = &IamFederatedIdentity{}
+	case "thalassa:index/iamFederatedIdentityProvider:IamFederatedIdentityProvider":
+		r = &IamFederatedIdentityProvider{}
 	case "thalassa:index/iamRole:IamRole":
 		r = &IamRole{}
 	case "thalassa:index/iamRoleBinding:IamRoleBinding":
@@ -75,6 +83,10 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &ObjectstorageBucket{}
 	case "thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle":
 		r = &ObjectstorageBucketLifecycle{}
+	case "thalassa:index/observabilityWorkspace:ObservabilityWorkspace":
+		r = &ObservabilityWorkspace{}
+	case "thalassa:index/project:Project":
+		r = &Project{}
 	case "thalassa:index/reservedIp:ReservedIp":
 		r = &ReservedIp{}
 	case "thalassa:index/routeTable:RouteTable":
@@ -163,6 +175,16 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"thalassa",
+		"index/containerregistryNamespace",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/containerregistryNamespaceConfiguration",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
 		"index/dbaasDbBackupschedule",
 		&module{version},
 	)
@@ -199,6 +221,16 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"thalassa",
 		"index/dnsZoneDnssec",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/iamFederatedIdentity",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/iamFederatedIdentityProvider",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -279,6 +311,16 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"thalassa",
 		"index/objectstorageBucketLifecycle",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/observabilityWorkspace",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"thalassa",
+		"index/project",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

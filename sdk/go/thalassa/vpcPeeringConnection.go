@@ -14,6 +14,10 @@ import (
 
 // Create and manage a VPC peering connection
 //
+// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+//
+// The peer VPC owner must accept the request with `VpcPeeringConnectionAcceptance`.
+//
 // ## Example Usage
 //
 // ```go
@@ -79,9 +83,7 @@ import (
 //			// Configure route table routes
 //			// Important; routes can only be created after the peering connection has been accepted and has become active
 //			_, err = thalassa.NewRouteTableRoute(ctx, "requester_vpc", &thalassa.RouteTableRouteArgs{
-//				RouteTableId: pulumi.String(requesterVpc.ApplyT(func(requesterVpc thalassa.GetVpcDefaultRouteTableResult) (*string, error) {
-//					return requesterVpc.Id, nil
-//				}).(pulumi.StringPtrOutput)),
+//				RouteTableId: requesterVpc.Id(),
 //				DestinationCidr: accepterVpcVpc.Cidrs.ApplyT(func(cidrs []string) (string, error) {
 //					return cidrs[0], nil
 //				}).(pulumi.StringOutput),
@@ -91,9 +93,7 @@ import (
 //				return err
 //			}
 //			_, err = thalassa.NewRouteTableRoute(ctx, "accepter_vpc", &thalassa.RouteTableRouteArgs{
-//				RouteTableId: pulumi.String(accepterVpc.ApplyT(func(accepterVpc thalassa.GetVpcDefaultRouteTableResult) (*string, error) {
-//					return accepterVpc.Id, nil
-//				}).(pulumi.StringPtrOutput)),
+//				RouteTableId: accepterVpc.Id(),
 //				DestinationCidr: requesterVpcVpc.Cidrs.ApplyT(func(cidrs []string) (string, error) {
 //					return cidrs[0], nil
 //				}).(pulumi.StringOutput),

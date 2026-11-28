@@ -7,6 +7,8 @@ import * as utilities from "./utilities";
 /**
  * Accept a VPC peering connection
  *
+ * See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+ *
  * ## Example Usage
  *
  * ```typescript
@@ -48,12 +50,12 @@ import * as utilities from "./utilities";
  * // Configure route table routes
  * // Important; routes can only be created after the peering connection has been accepted and has become active
  * const requesterVpcRouteTableRoute = new thalassa.RouteTableRoute("requester_vpc", {
- *     routeTableId: requesterVpc.apply(requesterVpc => requesterVpc.id),
+ *     routeTableId: requesterVpc.id,
  *     destinationCidr: accepterVpcVpc.cidrs[0],
  *     targetVpcPeeringConnection: acceptById.peeringConnectionId,
  * });
  * const accepterVpcRouteTableRoute = new thalassa.RouteTableRoute("accepter_vpc", {
- *     routeTableId: accepterVpc.apply(accepterVpc => accepterVpc.id),
+ *     routeTableId: accepterVpc.id,
  *     destinationCidr: requesterVpcVpc.cidrs[0],
  *     targetVpcPeeringConnection: acceptById.peeringConnectionId,
  * });

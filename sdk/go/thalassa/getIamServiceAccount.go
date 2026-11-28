@@ -57,12 +57,8 @@ type LookupIamServiceAccountResult struct {
 }
 
 func LookupIamServiceAccountOutput(ctx *pulumi.Context, args LookupIamServiceAccountOutputArgs, opts ...pulumi.InvokeOption) LookupIamServiceAccountResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupIamServiceAccountResultOutput, error) {
-			args := v.(LookupIamServiceAccountArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getIamServiceAccount:getIamServiceAccount", args, LookupIamServiceAccountResultOutput{}, options).(LookupIamServiceAccountResultOutput), nil
-		}).(LookupIamServiceAccountResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getIamServiceAccount:getIamServiceAccount", args, LookupIamServiceAccountResultOutput{}, options).(LookupIamServiceAccountResultOutput)
 }
 
 // A collection of arguments for invoking getIamServiceAccount.

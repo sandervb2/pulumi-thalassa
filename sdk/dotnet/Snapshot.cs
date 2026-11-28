@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Provides a Thalassa Cloud Snapshot resource. This can be used to create, manage, and delete snapshots of block volumes.
     /// 
+    /// See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp
@@ -37,6 +39,7 @@ namespace Pulumi.Thalassa
     ///     {
     ///         Name = "example-snapshot",
     ///         Description = "Example snapshot created from block volume",
+    ///         VolumeIdentity = example.Id,
     ///         DeleteProtection = false,
     ///         WaitUntilAvailable = true,
     ///         Labels = 
@@ -136,6 +139,12 @@ namespace Pulumi.Thalassa
         public Output<string> Status { get; private set; } = null!;
 
         /// <summary>
+        /// Identity of the volume to create a snapshot from
+        /// </summary>
+        [Output("volumeIdentity")]
+        public Output<string> VolumeIdentity { get; private set; } = null!;
+
+        /// <summary>
         /// Wait until the snapshot is available
         /// </summary>
         [Output("waitUntilAvailable")]
@@ -149,7 +158,7 @@ namespace Pulumi.Thalassa
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Snapshot(string name, SnapshotArgs? args = null, CustomResourceOptions? options = null)
+        public Snapshot(string name, SnapshotArgs args, CustomResourceOptions? options = null)
             : base("thalassa:index/snapshot:Snapshot", name, args ?? new SnapshotArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -235,6 +244,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("organisationId")]
         public Input<string>? OrganisationId { get; set; }
+
+        /// <summary>
+        /// Identity of the volume to create a snapshot from
+        /// </summary>
+        [Input("volumeIdentity", required: true)]
+        public Input<string> VolumeIdentity { get; set; } = null!;
 
         /// <summary>
         /// Wait until the snapshot is available
@@ -330,6 +345,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
+
+        /// <summary>
+        /// Identity of the volume to create a snapshot from
+        /// </summary>
+        [Input("volumeIdentity")]
+        public Input<string>? VolumeIdentity { get; set; }
 
         /// <summary>
         /// Wait until the snapshot is available

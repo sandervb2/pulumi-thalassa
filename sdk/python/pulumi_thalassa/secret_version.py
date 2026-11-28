@@ -30,7 +30,8 @@ class SecretVersionArgs:
         """
         The set of arguments for constructing a SecretVersion resource.
 
-        :param pulumi.Input[_builtins.str] secret_string: Secret string value (not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        :param pulumi.Input[_builtins.str] secret_string: Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         """
         pulumi.set(__self__, "path", path)
         pulumi.set(__self__, "region", region)
@@ -82,6 +83,9 @@ class SecretVersionArgs:
     @_builtins.property
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        """
         return pulumi.get(self, "secret_key_values")
 
     @secret_key_values.setter
@@ -92,7 +96,7 @@ class SecretVersionArgs:
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Secret string value (not returned on read).
+        Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 
@@ -114,7 +118,8 @@ class _SecretVersionState:
         """
         Input properties used for looking up and filtering SecretVersion resources.
 
-        :param pulumi.Input[_builtins.str] secret_string: Secret string value (not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        :param pulumi.Input[_builtins.str] secret_string: Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         :param pulumi.Input[_builtins.int] version: Version number assigned by the platform.
         """
         if generate_secret is not None:
@@ -171,6 +176,9 @@ class _SecretVersionState:
     @_builtins.property
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        """
         return pulumi.get(self, "secret_key_values")
 
     @secret_key_values.setter
@@ -181,7 +189,7 @@ class _SecretVersionState:
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Secret string value (not returned on read).
+        Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 
@@ -208,7 +216,7 @@ class SecretVersion(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict']]] = None,
+                 generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict', 'outputs.SecretVersionGenerateSecret']]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  path: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
@@ -218,7 +226,7 @@ class SecretVersion(pulumi.CustomResource):
         """
         Manage a secret version in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -250,7 +258,8 @@ class SecretVersion(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] secret_string: Secret string value (not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        :param pulumi.Input[_builtins.str] secret_string: Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         """
         ...
     @overload
@@ -261,7 +270,7 @@ class SecretVersion(pulumi.CustomResource):
         """
         Manage a secret version in Thalassa Secrets Manager
 
-        > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
 
@@ -306,7 +315,7 @@ class SecretVersion(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict']]] = None,
+                 generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict', 'outputs.SecretVersionGenerateSecret']]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  path: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
@@ -344,7 +353,7 @@ class SecretVersion(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict']]] = None,
+            generate_secret: pulumi.Input[Optional[Union['SecretVersionGenerateSecretArgs', 'SecretVersionGenerateSecretArgsDict', 'outputs.SecretVersionGenerateSecret']]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
             path: pulumi.Input[Optional[_builtins.str]] = None,
             region: pulumi.Input[Optional[_builtins.str]] = None,
@@ -358,7 +367,8 @@ class SecretVersion(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] secret_string: Secret string value (not returned on read).
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] secret_key_values: Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        :param pulumi.Input[_builtins.str] secret_string: Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         :param pulumi.Input[_builtins.int] version: Version number assigned by the platform.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -397,13 +407,16 @@ class SecretVersion(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="secretKeyValues")
     def secret_key_values(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
+        """
+        Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+        """
         return pulumi.get(self, "secret_key_values")
 
     @_builtins.property
     @pulumi.getter(name="secretString")
     def secret_string(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Secret string value (not returned on read).
+        Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
         """
         return pulumi.get(self, "secret_string")
 

@@ -9,6 +9,8 @@ import * as utilities from "./utilities";
 /**
  * Manage object storage bucket lifecycle rules. Each apply replaces the full rule set.
  *
+ * See [Object Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/object-storage/).
+ *
  * Each apply **replaces the entire rule set** (`SetBucketLifecycle` PUT semantics). Ongoing lifecycle management should use this resource, not `thalassa.ObjectstorageBucket`.
  *
  * Noncurrent version rules require bucket versioning `Enabled`.

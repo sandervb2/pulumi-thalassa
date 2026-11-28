@@ -13,17 +13,15 @@ namespace Pulumi.Thalassa.Outputs
     [OutputType]
     public sealed class SecretVersionGenerateSecret
     {
-        public readonly string? CharacterSet;
-        public readonly int? Length;
+        /// <summary>
+        /// Byte length of the generated secret.
+        /// </summary>
+        public readonly int? ByteLength;
 
         [OutputConstructor]
-        private SecretVersionGenerateSecret(
-            string? characterSet,
-
-            int? length)
+        private SecretVersionGenerateSecret(int? byteLength)
         {
-            CharacterSet = characterSet;
-            Length = length;
+            ByteLength = byteLength;
         }
     }
 }

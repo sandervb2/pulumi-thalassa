@@ -9,6 +9,8 @@ import * as utilities from "./utilities";
 /**
  * Provides a Thalassa Cloud Snapshot Policy resource. This can be used to create, manage, and delete snapshot policies that automatically create snapshots of volumes based on a schedule.
  *
+ * See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
+ *
  * ## Example Usage
  *
  * ```typescript

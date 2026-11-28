@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// A security group is a collection of rules that control the traffic to and from a virtual machine instance or other cloud resource within a VPC.
     /// 
+    /// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

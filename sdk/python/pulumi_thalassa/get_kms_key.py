@@ -249,7 +249,7 @@ def get_kms_key(id: Optional[_builtins.str] = None,
     """
     Look up a KMS key by region and identity or name filter
 
-    > **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+    > **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
 
     See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
 
@@ -293,7 +293,7 @@ def get_kms_key_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = Non
     """
     Look up a KMS key by region and identity or name filter
 
-    > **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+    > **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
 
     See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
 

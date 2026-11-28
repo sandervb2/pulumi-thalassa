@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create a listener for a loadbalancer
     /// 
+    /// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

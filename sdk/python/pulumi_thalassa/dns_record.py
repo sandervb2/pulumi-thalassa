@@ -247,7 +247,7 @@ class DnsRecord(pulumi.CustomResource):
         """
         Create and manage a DNS record in a Thalassa DNS zone
 
-        > **Early access:** DNS is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** DNS is in early access. The DNS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [DNS documentation](https://docs.thalassa.cloud/docs/dns/).
 
@@ -311,7 +311,7 @@ class DnsRecord(pulumi.CustomResource):
         """
         Create and manage a DNS record in a Thalassa DNS zone
 
-        > **Early access:** DNS is in early access. The API and Terraform resource schema may change in future provider releases.
+        > **Early access:** DNS is in early access. The DNS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
 
         See [DNS documentation](https://docs.thalassa.cloud/docs/dns/).
 

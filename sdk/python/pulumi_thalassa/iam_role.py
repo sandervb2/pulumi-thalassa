@@ -286,10 +286,12 @@ class IamRole(pulumi.CustomResource):
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict', 'outputs.IamRoleRule']]]]] = None,
                  __props__=None):
         """
         Manage an organisation role in Thalassa Cloud
+
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
 
         ## Example Usage
 
@@ -347,7 +349,7 @@ class IamRole(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: Description of the organisation role
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
-        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]] rules: Permission rules for the organisation role
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict', 'outputs.IamRoleRule']]]] rules: Permission rules for the organisation role
         """
         ...
     @overload
@@ -357,6 +359,8 @@ class IamRole(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Manage an organisation role in Thalassa Cloud
+
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
 
         ## Example Usage
 
@@ -427,7 +431,7 @@ class IamRole(pulumi.CustomResource):
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
-                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
+                 rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict', 'outputs.IamRoleRule']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -463,7 +467,7 @@ class IamRole(pulumi.CustomResource):
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             role_is_read_only: pulumi.Input[Optional[_builtins.bool]] = None,
-            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]]] = None,
+            rules: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict', 'outputs.IamRoleRule']]]]] = None,
             slug: pulumi.Input[Optional[_builtins.str]] = None,
             system: pulumi.Input[Optional[_builtins.bool]] = None,
             updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'IamRole':
@@ -480,7 +484,7 @@ class IamRole(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the organisation role
         :param pulumi.Input[_builtins.str] name: Name of the organisation role
         :param pulumi.Input[_builtins.bool] role_is_read_only: Whether the role is read-only and cannot be modified.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict']]]] rules: Permission rules for the organisation role
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamRoleRuleArgs', 'IamRoleRuleArgsDict', 'outputs.IamRoleRule']]]] rules: Permission rules for the organisation role
         :param pulumi.Input[_builtins.str] slug: Slug of the organisation role
         :param pulumi.Input[_builtins.bool] system: Whether the role is a system role
         :param pulumi.Input[_builtins.str] updated_at: Last update timestamp of the organisation role

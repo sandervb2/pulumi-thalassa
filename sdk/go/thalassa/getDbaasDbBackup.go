@@ -81,12 +81,8 @@ type GetDbaasDbBackupResult struct {
 }
 
 func GetDbaasDbBackupOutput(ctx *pulumi.Context, args GetDbaasDbBackupOutputArgs, opts ...pulumi.InvokeOption) GetDbaasDbBackupResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetDbaasDbBackupResultOutput, error) {
-			args := v.(GetDbaasDbBackupArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getDbaasDbBackup:getDbaasDbBackup", args, GetDbaasDbBackupResultOutput{}, options).(GetDbaasDbBackupResultOutput), nil
-		}).(GetDbaasDbBackupResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getDbaasDbBackup:getDbaasDbBackup", args, GetDbaasDbBackupResultOutput{}, options).(GetDbaasDbBackupResultOutput)
 }
 
 // A collection of arguments for invoking getDbaasDbBackup.

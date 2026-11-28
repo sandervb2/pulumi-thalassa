@@ -31,10 +31,8 @@ type GetVpcPeeringConnectionsResult struct {
 }
 
 func GetVpcPeeringConnectionsOutput(ctx *pulumi.Context, opts ...pulumi.InvokeOption) GetVpcPeeringConnectionsResultOutput {
-	return pulumi.ToOutput(0).ApplyT(func(int) (GetVpcPeeringConnectionsResultOutput, error) {
-		options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-		return ctx.InvokeOutput("thalassa:index/getVpcPeeringConnections:getVpcPeeringConnections", nil, GetVpcPeeringConnectionsResultOutput{}, options).(GetVpcPeeringConnectionsResultOutput), nil
-	}).(GetVpcPeeringConnectionsResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getVpcPeeringConnections:getVpcPeeringConnections", nil, GetVpcPeeringConnectionsResultOutput{}, options).(GetVpcPeeringConnectionsResultOutput)
 }
 
 // A collection of values returned by getVpcPeeringConnections.

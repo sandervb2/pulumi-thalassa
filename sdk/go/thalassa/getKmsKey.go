@@ -13,7 +13,7 @@ import (
 
 // Look up a KMS key by region and identity or name filter
 //
-// > **Early access:** KMS is in early access. The API and Terraform schema may change in future provider releases.
+// > **Early access:** KMS is in early access. The KMS feature gate must be enabled for your organisation. The API and Terraform schema may change in future provider releases.
 //
 // See [KMS product documentation](https://docs.thalassa.cloud/docs/kms/).
 func LookupKmsKey(ctx *pulumi.Context, args *LookupKmsKeyArgs, opts ...pulumi.InvokeOption) (*LookupKmsKeyResult, error) {
@@ -77,12 +77,8 @@ type LookupKmsKeyResult struct {
 }
 
 func LookupKmsKeyOutput(ctx *pulumi.Context, args LookupKmsKeyOutputArgs, opts ...pulumi.InvokeOption) LookupKmsKeyResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupKmsKeyResultOutput, error) {
-			args := v.(LookupKmsKeyArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getKmsKey:getKmsKey", args, LookupKmsKeyResultOutput{}, options).(LookupKmsKeyResultOutput), nil
-		}).(LookupKmsKeyResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getKmsKey:getKmsKey", args, LookupKmsKeyResultOutput{}, options).(LookupKmsKeyResultOutput)
 }
 
 // A collection of arguments for invoking getKmsKey.

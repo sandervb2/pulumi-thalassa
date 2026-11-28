@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create an DB Cluster
     /// 
+    /// See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp
@@ -123,6 +125,12 @@ namespace Pulumi.Thalassa
         public Output<string> DatabaseInstanceType { get; private set; } = null!;
 
         /// <summary>
+        /// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        /// </summary>
+        [Output("dbObjectStoreId")]
+        public Output<string?> DbObjectStoreId { get; private set; } = null!;
+
+        /// <summary>
         /// Flag indicating if the cluster should be protected from deletion
         /// </summary>
         [Output("deleteProtection")]
@@ -207,7 +215,7 @@ namespace Pulumi.Thalassa
         public Output<int> Port { get; private set; } = null!;
 
         /// <summary>
-        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         /// </summary>
         [Output("provisionDbObjectStore")]
         public Output<bool?> ProvisionDbObjectStore { get; private set; } = null!;
@@ -219,7 +227,7 @@ namespace Pulumi.Thalassa
         public Output<int?> Replicas { get; private set; } = null!;
 
         /// <summary>
-        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        /// ID of the backup to restore from when creating the cluster.
         /// </summary>
         [Output("restoreFromBackupId")]
         public Output<string?> RestoreFromBackupId { get; private set; } = null!;
@@ -350,6 +358,12 @@ namespace Pulumi.Thalassa
         public Input<string> DatabaseInstanceType { get; set; } = null!;
 
         /// <summary>
+        /// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        /// </summary>
+        [Input("dbObjectStoreId")]
+        public Input<string>? DbObjectStoreId { get; set; }
+
+        /// <summary>
         /// Flag indicating if the cluster should be protected from deletion
         /// </summary>
         [Input("deleteProtection")]
@@ -434,7 +448,7 @@ namespace Pulumi.Thalassa
         }
 
         /// <summary>
-        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         /// </summary>
         [Input("provisionDbObjectStore")]
         public Input<bool>? ProvisionDbObjectStore { get; set; }
@@ -446,7 +460,7 @@ namespace Pulumi.Thalassa
         public Input<int>? Replicas { get; set; }
 
         /// <summary>
-        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        /// ID of the backup to restore from when creating the cluster.
         /// </summary>
         [Input("restoreFromBackupId")]
         public Input<string>? RestoreFromBackupId { get; set; }
@@ -536,6 +550,12 @@ namespace Pulumi.Thalassa
         /// </summary>
         [Input("databaseInstanceType")]
         public Input<string>? DatabaseInstanceType { get; set; }
+
+        /// <summary>
+        /// ID of an existing DB object store to use for backups. Ignored if provision*db*object_store is true.
+        /// </summary>
+        [Input("dbObjectStoreId")]
+        public Input<string>? DbObjectStoreId { get; set; }
 
         /// <summary>
         /// Flag indicating if the cluster should be protected from deletion
@@ -640,7 +660,7 @@ namespace Pulumi.Thalassa
         public Input<int>? Port { get; set; }
 
         /// <summary>
-        /// Flag to indicate if the DB object store should be provisioned for the cluster. If true, restore*from*backup_id will be ignored.
+        /// Whether to provision a DB object store for the cluster. If true, db*object*store_id will be ignored.
         /// </summary>
         [Input("provisionDbObjectStore")]
         public Input<bool>? ProvisionDbObjectStore { get; set; }
@@ -652,7 +672,7 @@ namespace Pulumi.Thalassa
         public Input<int>? Replicas { get; set; }
 
         /// <summary>
-        /// Identity of the DB object store used for barman backups (optional). Ignored if provision*db*object_store is true.
+        /// ID of the backup to restore from when creating the cluster.
         /// </summary>
         [Input("restoreFromBackupId")]
         public Input<string>? RestoreFromBackupId { get; set; }

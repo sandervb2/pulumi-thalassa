@@ -47,12 +47,8 @@ type GetVolumeTypeResult struct {
 }
 
 func GetVolumeTypeOutput(ctx *pulumi.Context, args GetVolumeTypeOutputArgs, opts ...pulumi.InvokeOption) GetVolumeTypeResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (GetVolumeTypeResultOutput, error) {
-			args := v.(GetVolumeTypeArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getVolumeType:getVolumeType", args, GetVolumeTypeResultOutput{}, options).(GetVolumeTypeResultOutput), nil
-		}).(GetVolumeTypeResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getVolumeType:getVolumeType", args, GetVolumeTypeResultOutput{}, options).(GetVolumeTypeResultOutput)
 }
 
 // A collection of arguments for invoking getVolumeType.

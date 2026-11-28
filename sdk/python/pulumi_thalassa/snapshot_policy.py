@@ -474,12 +474,14 @@ class SnapshotPolicy(pulumi.CustomResource):
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
                  schedule: pulumi.Input[Optional[_builtins.str]] = None,
-                 target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict']]] = None,
+                 target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']]] = None,
                  timezone: pulumi.Input[Optional[_builtins.str]] = None,
                  ttl: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Provides a Thalassa Cloud Snapshot Policy resource. This can be used to create, manage, and delete snapshot policies that automatically create snapshots of volumes based on a schedule.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 
@@ -550,7 +552,7 @@ class SnapshotPolicy(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Snapshot Policy. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the snapshot policy
         :param pulumi.Input[_builtins.str] schedule: Cron schedule for the snapshot policy (e.g., '0 2 * * *' for daily at 2 AM)
-        :param pulumi.Input[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict']] target: Target configuration for the snapshot policy
+        :param pulumi.Input[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']] target: Target configuration for the snapshot policy
         :param pulumi.Input[_builtins.str] timezone: Timezone for the snapshot policy schedule (e.g., 'UTC', 'America/New_York')
         :param pulumi.Input[_builtins.str] ttl: Time to live for snapshots created by this policy. Supports formats like '168h' (hours), '7d' (days), '1w' (weeks). Examples: '24h', '7d', '30d'
         """
@@ -562,6 +564,8 @@ class SnapshotPolicy(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Provides a Thalassa Cloud Snapshot Policy resource. This can be used to create, manage, and delete snapshot policies that automatically create snapshots of volumes based on a schedule.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 
@@ -645,7 +649,7 @@ class SnapshotPolicy(pulumi.CustomResource):
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  region: pulumi.Input[Optional[_builtins.str]] = None,
                  schedule: pulumi.Input[Optional[_builtins.str]] = None,
-                 target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict']]] = None,
+                 target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']]] = None,
                  timezone: pulumi.Input[Optional[_builtins.str]] = None,
                  ttl: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
@@ -704,7 +708,7 @@ class SnapshotPolicy(pulumi.CustomResource):
             region: pulumi.Input[Optional[_builtins.str]] = None,
             schedule: pulumi.Input[Optional[_builtins.str]] = None,
             slug: pulumi.Input[Optional[_builtins.str]] = None,
-            target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict']]] = None,
+            target: pulumi.Input[Optional[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']]] = None,
             timezone: pulumi.Input[Optional[_builtins.str]] = None,
             ttl: pulumi.Input[Optional[_builtins.str]] = None) -> 'SnapshotPolicy':
         """
@@ -725,7 +729,7 @@ class SnapshotPolicy(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Snapshot Policy. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] region: Region of the snapshot policy
         :param pulumi.Input[_builtins.str] schedule: Cron schedule for the snapshot policy (e.g., '0 2 * * *' for daily at 2 AM)
-        :param pulumi.Input[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict']] target: Target configuration for the snapshot policy
+        :param pulumi.Input[Union['SnapshotPolicyTargetArgs', 'SnapshotPolicyTargetArgsDict', 'outputs.SnapshotPolicyTarget']] target: Target configuration for the snapshot policy
         :param pulumi.Input[_builtins.str] timezone: Timezone for the snapshot policy schedule (e.g., 'UTC', 'America/New_York')
         :param pulumi.Input[_builtins.str] ttl: Time to live for snapshots created by this policy. Supports formats like '168h' (hours), '7d' (days), '1w' (weeks). Examples: '24h', '7d', '30d'
         """

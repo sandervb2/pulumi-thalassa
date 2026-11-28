@@ -7,7 +7,9 @@ import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
- * Manages ingress rules for a security group using the batch API. This resource replaces all ingress rules for the security group. This is an optional alternative to managing rules through the thalassa.SecurityGroup resource. Warning: Do not use both this resource and ingressRule in thalassa.SecurityGroup for the same security group, as this will cause conflicts.
+ * Manages ingress rules for a security group using the batch API. This resource replaces all ingress rules for the security group and is an optional alternative to managing rules through thalassa_security_group. Do not use both resources for the same security group.
+ *
+ * See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
  *
  * ## Example Usage
  *

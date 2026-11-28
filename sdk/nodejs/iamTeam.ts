@@ -9,6 +9,8 @@ import * as utilities from "./utilities";
 /**
  * Create a team in the Thalassa Cloud platform
  *
+ * See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+ *
  * ## Example Usage
  *
  * ```typescript
@@ -33,7 +35,7 @@ import * as utilities from "./utilities";
  * export const teamSlug = example.slug;
  * export const teamDescription = example.description;
  * export const teamMembers = example.members;
- * export const teamMemberCount = example.members.length;
+ * export const teamMemberCount = example.members.apply(members => members.length);
  * ```
  */
 export class IamTeam extends pulumi.CustomResource {

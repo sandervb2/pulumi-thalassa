@@ -69,12 +69,8 @@ type LookupTfsInstanceResult struct {
 }
 
 func LookupTfsInstanceOutput(ctx *pulumi.Context, args LookupTfsInstanceOutputArgs, opts ...pulumi.InvokeOption) LookupTfsInstanceResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupTfsInstanceResultOutput, error) {
-			args := v.(LookupTfsInstanceArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getTfsInstance:getTfsInstance", args, LookupTfsInstanceResultOutput{}, options).(LookupTfsInstanceResultOutput), nil
-		}).(LookupTfsInstanceResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getTfsInstance:getTfsInstance", args, LookupTfsInstanceResultOutput{}, options).(LookupTfsInstanceResultOutput)
 }
 
 // A collection of arguments for invoking getTfsInstance.

@@ -12,6 +12,8 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create a database backup schedule
     /// 
+    /// See [DBaaS documentation](https://docs.thalassa.cloud/docs/dbaas/).
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

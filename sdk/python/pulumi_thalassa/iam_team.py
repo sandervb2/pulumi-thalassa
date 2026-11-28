@@ -285,12 +285,14 @@ class IamTeam(pulumi.CustomResource):
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict']]]]] = None,
+                 members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict', 'outputs.IamTeamMember']]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a team in the Thalassa Cloud platform
+
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
 
         ## Example Usage
 
@@ -315,7 +317,7 @@ class IamTeam(pulumi.CustomResource):
         pulumi.export("teamSlug", example.slug)
         pulumi.export("teamDescription", example.description)
         pulumi.export("teamMembers", example.members)
-        pulumi.export("teamMemberCount", len(example.members))
+        pulumi.export("teamMemberCount", example.members.apply(lambda members: len(members)))
         ```
 
 
@@ -324,7 +326,7 @@ class IamTeam(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Team
         :param pulumi.Input[_builtins.str] description: A human readable description about the team
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Team
-        :param pulumi.Input[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict']]]] members: List of team members
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict', 'outputs.IamTeamMember']]]] members: List of team members
         :param pulumi.Input[_builtins.str] name: Name of the Team
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
         """
@@ -337,6 +339,8 @@ class IamTeam(pulumi.CustomResource):
         """
         Create a team in the Thalassa Cloud platform
 
+        See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+
         ## Example Usage
 
         ```python
@@ -360,7 +364,7 @@ class IamTeam(pulumi.CustomResource):
         pulumi.export("teamSlug", example.slug)
         pulumi.export("teamDescription", example.description)
         pulumi.export("teamMembers", example.members)
-        pulumi.export("teamMemberCount", len(example.members))
+        pulumi.export("teamMemberCount", example.members.apply(lambda members: len(members)))
         ```
 
 
@@ -382,7 +386,7 @@ class IamTeam(pulumi.CustomResource):
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict']]]]] = None,
+                 members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict', 'outputs.IamTeamMember']]]]] = None,
                  name: pulumi.Input[Optional[_builtins.str]] = None,
                  organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
@@ -417,7 +421,7 @@ class IamTeam(pulumi.CustomResource):
             created_at: pulumi.Input[Optional[_builtins.str]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
             labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict']]]]] = None,
+            members: pulumi.Input[Optional[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict', 'outputs.IamTeamMember']]]]] = None,
             name: pulumi.Input[Optional[_builtins.str]] = None,
             organisation_id: pulumi.Input[Optional[_builtins.str]] = None,
             slug: pulumi.Input[Optional[_builtins.str]] = None,
@@ -433,7 +437,7 @@ class IamTeam(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: Creation timestamp of the Team
         :param pulumi.Input[_builtins.str] description: A human readable description about the team
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Team
-        :param pulumi.Input[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict']]]] members: List of team members
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IamTeamMemberArgs', 'IamTeamMemberArgsDict', 'outputs.IamTeamMember']]]] members: List of team members
         :param pulumi.Input[_builtins.str] name: Name of the Team
         :param pulumi.Input[_builtins.str] organisation_id: Reference to the Organisation of the Team. If not provided, the organisation of the (Terraform) provider will be used.
         :param pulumi.Input[_builtins.str] slug: Slug of the Team

@@ -14,6 +14,8 @@ import (
 
 // Attach a Virtual Machine Instance to a target group
 //
+// See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
+//
 // ## Example Usage
 //
 // ```go

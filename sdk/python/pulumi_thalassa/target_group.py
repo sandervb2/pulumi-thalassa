@@ -660,7 +660,7 @@ class TargetGroup(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
                  health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
@@ -681,6 +681,8 @@ class TargetGroup(pulumi.CustomResource):
                  __props__=None):
         """
         Create a target group for a load balancer
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -720,7 +722,7 @@ class TargetGroup(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
         :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
         :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).
@@ -747,6 +749,8 @@ class TargetGroup(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a target group for a load balancer
+
+        See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
 
         ## Example Usage
 
@@ -799,7 +803,7 @@ class TargetGroup(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+                 attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]]] = None,
                  description: pulumi.Input[Optional[_builtins.str]] = None,
                  enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
                  health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
@@ -863,7 +867,7 @@ class TargetGroup(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]]] = None,
+            attachments: pulumi.Input[Optional[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]]] = None,
             description: pulumi.Input[Optional[_builtins.str]] = None,
             enable_proxy_protocol: pulumi.Input[Optional[_builtins.bool]] = None,
             health_check_interval: pulumi.Input[Optional[_builtins.int]] = None,
@@ -890,7 +894,7 @@ class TargetGroup(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Target Group
-        :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['TargetGroupAttachmentArgs', 'TargetGroupAttachmentArgsDict', 'outputs.TargetGroupAttachment']]]] attachments: The targets to attach to the target group. If provided, the targets will be attached to the target group when the resource is created. Overwrites the target group attachment resource.
         :param pulumi.Input[_builtins.str] description: A human readable description about the target group
         :param pulumi.Input[_builtins.bool] enable_proxy_protocol: When true, the load balancer uses PROXY protocol toward backends in this target group. All targets must support PROXY protocol.
         :param pulumi.Input[_builtins.int] health_check_interval: Seconds between health checks of each target (periodSeconds).

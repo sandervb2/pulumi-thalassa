@@ -7,6 +7,8 @@ import * as utilities from "./utilities";
 /**
  * Manage a role binding in Thalassa Cloud
  *
+ * See [IAM documentation](https://docs.thalassa.cloud/docs/iam/).
+ *
  * ## Example Usage
  *
  * ```typescript

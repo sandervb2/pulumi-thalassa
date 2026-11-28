@@ -10,6 +10,8 @@ import * as utilities from "./utilities";
  * Provides a Thalassa Cloud TFS (Thalassa Filesystem Service) instance resource.
  * 		TFS provides a high-availability, multi-availability zone Network File System (NFS) service
  * 		for shared storage across your infrastructure. TFS supports NFSv4 and NFSv4.1 protocols.
+ *
+ * See [TFS documentation](https://docs.thalassa.cloud/docs/iaas/storage/tfs/).
  */
 export class TfsInstance extends pulumi.CustomResource {
     /**

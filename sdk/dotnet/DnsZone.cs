@@ -12,7 +12,7 @@ namespace Pulumi.Thalassa
     /// <summary>
     /// Create and manage a DNS zone in Thalassa Cloud
     /// 
-    /// &gt; **Early access:** DNS is in early access. The API and Terraform resource schema may change in future provider releases.
+    /// &gt; **Early access:** DNS is in early access. The DNS feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
     /// 
     /// See [DNS documentation](https://docs.thalassa.cloud/docs/dns/).
     /// 

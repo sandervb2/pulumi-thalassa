@@ -10,6 +10,10 @@ using Pulumi.Serialization;
 namespace Pulumi.Thalassa
 {
     /// <summary>
+    /// See [Compute documentation](https://docs.thalassa.cloud/docs/iaas/compute/).
+    /// 
+    /// Reference templates from `thalassa.VirtualMachineInstance` using `CloudInitTemplateId`.
+    /// 
     /// ## Example Usage
     /// 
     /// ```csharp

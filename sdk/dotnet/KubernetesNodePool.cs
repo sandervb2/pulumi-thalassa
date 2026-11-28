@@ -10,7 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Thalassa
 {
     /// <summary>
-    /// Create an Kubernetes Node Pool for a Kubernetes Cluster. This resource is only available for managed Kubernetes Clusters. A Node Pool is a group of nodes that are identically configured and are automatically joined to the Kubernetes Cluster. Node Pools can be scaled up and down as needed.
+    /// Create a Kubernetes node pool for a managed cluster. A node pool is a group of identically configured nodes joined to the cluster and can be scaled up or down as needed.
+    /// 
+    /// See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
     /// 
     /// ## Autoscaling Configuration
     /// 
@@ -107,7 +109,7 @@ namespace Pulumi.Thalassa
     public partial class KubernetesNodePool : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use NodeAnnotations instead.
+        /// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use NodeAnnotations instead.
         /// </summary>
         [Output("annotations")]
         public Output<ImmutableDictionary<string, string>?> Annotations { get; private set; } = null!;
@@ -149,7 +151,7 @@ namespace Pulumi.Thalassa
         public Output<string?> KubernetesVersion { get; private set; } = null!;
 
         /// <summary>
-        /// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use NodeLabels instead.
+        /// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use NodeLabels instead.
         /// </summary>
         [Output("labels")]
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
@@ -185,7 +187,7 @@ namespace Pulumi.Thalassa
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        /// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         /// </summary>
         [Output("nodeAnnotations")]
         public Output<ImmutableDictionary<string, string>?> NodeAnnotations { get; private set; } = null!;
@@ -295,7 +297,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _annotations;
 
         /// <summary>
-        /// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use NodeAnnotations instead.
+        /// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use NodeAnnotations instead.
         /// </summary>
         public InputMap<string> Annotations
         {
@@ -343,7 +345,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _labels;
 
         /// <summary>
-        /// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use NodeLabels instead.
+        /// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use NodeLabels instead.
         /// </summary>
         public InputMap<string> Labels
         {
@@ -385,7 +387,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _nodeAnnotations;
 
         /// <summary>
-        /// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        /// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         /// </summary>
         public InputMap<string> NodeAnnotations
         {
@@ -465,7 +467,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _annotations;
 
         /// <summary>
-        /// Annotations for the Kubernetes Node Pool. Optional. These annotations are used for additional metadata and configuration. Annotations are not applied to the Kubernetes nodes created for this Node Pool, please use NodeAnnotations instead.
+        /// Annotations for the node pool metadata. These are not applied to Kubernetes nodes; use NodeAnnotations instead.
         /// </summary>
         public InputMap<string> Annotations
         {
@@ -513,7 +515,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _labels;
 
         /// <summary>
-        /// Labels for the Kubernetes Node Pool. Optional. These labels are used for filtering and grouping resources in the Thalassa Console. Labels are not applied to the Kubernetes nodes created for this Node Pool, please use NodeLabels instead.
+        /// Labels for the node pool in the Thalassa Console. These are not applied to Kubernetes nodes; use NodeLabels instead.
         /// </summary>
         public InputMap<string> Labels
         {
@@ -555,7 +557,7 @@ namespace Pulumi.Thalassa
         private InputMap<string>? _nodeAnnotations;
 
         /// <summary>
-        /// Annotations for the Kubernetes Nodes within this Node Pool. Optional. These annotations are applied to the Kubernetes nodes created for this Node Pool. Annotations must match the same constraints as Kubernetes annotations.
+        /// Annotations applied to Kubernetes nodes in this pool. Must match Kubernetes annotation constraints.
         /// </summary>
         public InputMap<string> NodeAnnotations
         {

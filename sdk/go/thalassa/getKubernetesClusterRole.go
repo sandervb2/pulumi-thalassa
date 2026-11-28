@@ -130,7 +130,7 @@ import (
 //			}
 //			// Only create binding if role is not a system role
 //			var tmp0 int
-//			if pulumi.Bool(role.System) {
+//			if role.System {
 //				tmp0 = 0
 //			} else {
 //				tmp0 = 1
@@ -138,7 +138,6 @@ import (
 //			var conditionalBinding []*thalassa.KubernetesClusterRoleBinding
 //			for index := 0; index < tmp0; index++ {
 //				key0 := index
-//				_ := index
 //				__res, err := thalassa.NewKubernetesClusterRoleBinding(ctx, fmt.Sprintf("conditional_binding-%v", key0), &thalassa.KubernetesClusterRoleBindingArgs{
 //					Name:          pulumi.String("conditional-binding"),
 //					ClusterRoleId: pulumi.String(role.Id),
@@ -203,12 +202,8 @@ type LookupKubernetesClusterRoleResult struct {
 }
 
 func LookupKubernetesClusterRoleOutput(ctx *pulumi.Context, args LookupKubernetesClusterRoleOutputArgs, opts ...pulumi.InvokeOption) LookupKubernetesClusterRoleResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupKubernetesClusterRoleResultOutput, error) {
-			args := v.(LookupKubernetesClusterRoleArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getKubernetesClusterRole:getKubernetesClusterRole", args, LookupKubernetesClusterRoleResultOutput{}, options).(LookupKubernetesClusterRoleResultOutput), nil
-		}).(LookupKubernetesClusterRoleResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getKubernetesClusterRole:getKubernetesClusterRole", args, LookupKubernetesClusterRoleResultOutput{}, options).(LookupKubernetesClusterRoleResultOutput)
 }
 
 // A collection of arguments for invoking getKubernetesClusterRole.

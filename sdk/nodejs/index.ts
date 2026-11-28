@@ -20,6 +20,16 @@ export type CloudInitTemplate = import("./cloudInitTemplate").CloudInitTemplate;
 export const CloudInitTemplate: typeof import("./cloudInitTemplate").CloudInitTemplate = null as any;
 utilities.lazyLoad(exports, ["CloudInitTemplate"], () => require("./cloudInitTemplate"));
 
+export { ContainerregistryNamespaceArgs, ContainerregistryNamespaceState } from "./containerregistryNamespace";
+export type ContainerregistryNamespace = import("./containerregistryNamespace").ContainerregistryNamespace;
+export const ContainerregistryNamespace: typeof import("./containerregistryNamespace").ContainerregistryNamespace = null as any;
+utilities.lazyLoad(exports, ["ContainerregistryNamespace"], () => require("./containerregistryNamespace"));
+
+export { ContainerregistryNamespaceConfigurationArgs, ContainerregistryNamespaceConfigurationState } from "./containerregistryNamespaceConfiguration";
+export type ContainerregistryNamespaceConfiguration = import("./containerregistryNamespaceConfiguration").ContainerregistryNamespaceConfiguration;
+export const ContainerregistryNamespaceConfiguration: typeof import("./containerregistryNamespaceConfiguration").ContainerregistryNamespaceConfiguration = null as any;
+utilities.lazyLoad(exports, ["ContainerregistryNamespaceConfiguration"], () => require("./containerregistryNamespaceConfiguration"));
+
 export { DbaasDbBackupscheduleArgs, DbaasDbBackupscheduleState } from "./dbaasDbBackupschedule";
 export type DbaasDbBackupschedule = import("./dbaasDbBackupschedule").DbaasDbBackupschedule;
 export const DbaasDbBackupschedule: typeof import("./dbaasDbBackupschedule").DbaasDbBackupschedule = null as any;
@@ -60,6 +70,21 @@ export type DnsZoneDnssec = import("./dnsZoneDnssec").DnsZoneDnssec;
 export const DnsZoneDnssec: typeof import("./dnsZoneDnssec").DnsZoneDnssec = null as any;
 utilities.lazyLoad(exports, ["DnsZoneDnssec"], () => require("./dnsZoneDnssec"));
 
+export { GetCloudInitTemplateArgs, GetCloudInitTemplateResult, GetCloudInitTemplateOutputArgs } from "./getCloudInitTemplate";
+export const getCloudInitTemplate: typeof import("./getCloudInitTemplate").getCloudInitTemplate = null as any;
+export const getCloudInitTemplateOutput: typeof import("./getCloudInitTemplate").getCloudInitTemplateOutput = null as any;
+utilities.lazyLoad(exports, ["getCloudInitTemplate","getCloudInitTemplateOutput"], () => require("./getCloudInitTemplate"));
+
+export { GetContainerregistryNamespaceArgs, GetContainerregistryNamespaceResult, GetContainerregistryNamespaceOutputArgs } from "./getContainerregistryNamespace";
+export const getContainerregistryNamespace: typeof import("./getContainerregistryNamespace").getContainerregistryNamespace = null as any;
+export const getContainerregistryNamespaceOutput: typeof import("./getContainerregistryNamespace").getContainerregistryNamespaceOutput = null as any;
+utilities.lazyLoad(exports, ["getContainerregistryNamespace","getContainerregistryNamespaceOutput"], () => require("./getContainerregistryNamespace"));
+
+export { GetContainerregistryNamespaceConfigurationArgs, GetContainerregistryNamespaceConfigurationResult, GetContainerregistryNamespaceConfigurationOutputArgs } from "./getContainerregistryNamespaceConfiguration";
+export const getContainerregistryNamespaceConfiguration: typeof import("./getContainerregistryNamespaceConfiguration").getContainerregistryNamespaceConfiguration = null as any;
+export const getContainerregistryNamespaceConfigurationOutput: typeof import("./getContainerregistryNamespaceConfiguration").getContainerregistryNamespaceConfigurationOutput = null as any;
+utilities.lazyLoad(exports, ["getContainerregistryNamespaceConfiguration","getContainerregistryNamespaceConfigurationOutput"], () => require("./getContainerregistryNamespaceConfiguration"));
+
 export { GetDbaasDbBackupArgs, GetDbaasDbBackupResult, GetDbaasDbBackupOutputArgs } from "./getDbaasDbBackup";
 export const getDbaasDbBackup: typeof import("./getDbaasDbBackup").getDbaasDbBackup = null as any;
 export const getDbaasDbBackupOutput: typeof import("./getDbaasDbBackup").getDbaasDbBackupOutput = null as any;
@@ -84,6 +109,16 @@ export { GetDbaasPgRolesArgs, GetDbaasPgRolesResult, GetDbaasPgRolesOutputArgs }
 export const getDbaasPgRoles: typeof import("./getDbaasPgRoles").getDbaasPgRoles = null as any;
 export const getDbaasPgRolesOutput: typeof import("./getDbaasPgRoles").getDbaasPgRolesOutput = null as any;
 utilities.lazyLoad(exports, ["getDbaasPgRoles","getDbaasPgRolesOutput"], () => require("./getDbaasPgRoles"));
+
+export { GetIamFederatedIdentityArgs, GetIamFederatedIdentityResult, GetIamFederatedIdentityOutputArgs } from "./getIamFederatedIdentity";
+export const getIamFederatedIdentity: typeof import("./getIamFederatedIdentity").getIamFederatedIdentity = null as any;
+export const getIamFederatedIdentityOutput: typeof import("./getIamFederatedIdentity").getIamFederatedIdentityOutput = null as any;
+utilities.lazyLoad(exports, ["getIamFederatedIdentity","getIamFederatedIdentityOutput"], () => require("./getIamFederatedIdentity"));
+
+export { GetIamFederatedIdentityProviderArgs, GetIamFederatedIdentityProviderResult, GetIamFederatedIdentityProviderOutputArgs } from "./getIamFederatedIdentityProvider";
+export const getIamFederatedIdentityProvider: typeof import("./getIamFederatedIdentityProvider").getIamFederatedIdentityProvider = null as any;
+export const getIamFederatedIdentityProviderOutput: typeof import("./getIamFederatedIdentityProvider").getIamFederatedIdentityProviderOutput = null as any;
+utilities.lazyLoad(exports, ["getIamFederatedIdentityProvider","getIamFederatedIdentityProviderOutput"], () => require("./getIamFederatedIdentityProvider"));
 
 export { GetIamOrganisationMembersArgs, GetIamOrganisationMembersResult, GetIamOrganisationMembersOutputArgs } from "./getIamOrganisationMembers";
 export const getIamOrganisationMembers: typeof import("./getIamOrganisationMembers").getIamOrganisationMembers = null as any;
@@ -155,10 +190,20 @@ export const getObjectstorageBucket: typeof import("./getObjectstorageBucket").g
 export const getObjectstorageBucketOutput: typeof import("./getObjectstorageBucket").getObjectstorageBucketOutput = null as any;
 utilities.lazyLoad(exports, ["getObjectstorageBucket","getObjectstorageBucketOutput"], () => require("./getObjectstorageBucket"));
 
+export { GetObservabilityWorkspaceArgs, GetObservabilityWorkspaceResult, GetObservabilityWorkspaceOutputArgs } from "./getObservabilityWorkspace";
+export const getObservabilityWorkspace: typeof import("./getObservabilityWorkspace").getObservabilityWorkspace = null as any;
+export const getObservabilityWorkspaceOutput: typeof import("./getObservabilityWorkspace").getObservabilityWorkspaceOutput = null as any;
+utilities.lazyLoad(exports, ["getObservabilityWorkspace","getObservabilityWorkspaceOutput"], () => require("./getObservabilityWorkspace"));
+
 export { GetOrganisationArgs, GetOrganisationResult, GetOrganisationOutputArgs } from "./getOrganisation";
 export const getOrganisation: typeof import("./getOrganisation").getOrganisation = null as any;
 export const getOrganisationOutput: typeof import("./getOrganisation").getOrganisationOutput = null as any;
 utilities.lazyLoad(exports, ["getOrganisation","getOrganisationOutput"], () => require("./getOrganisation"));
+
+export { GetProjectArgs, GetProjectResult, GetProjectOutputArgs } from "./getProject";
+export const getProject: typeof import("./getProject").getProject = null as any;
+export const getProjectOutput: typeof import("./getProject").getProjectOutput = null as any;
+utilities.lazyLoad(exports, ["getProject","getProjectOutput"], () => require("./getProject"));
 
 export { GetRegionArgs, GetRegionResult, GetRegionOutputArgs } from "./getRegion";
 export const getRegion: typeof import("./getRegion").getRegion = null as any;
@@ -234,6 +279,16 @@ export { GetVpcPeeringConnectionsResult } from "./getVpcPeeringConnections";
 export const getVpcPeeringConnections: typeof import("./getVpcPeeringConnections").getVpcPeeringConnections = null as any;
 export const getVpcPeeringConnectionsOutput: typeof import("./getVpcPeeringConnections").getVpcPeeringConnectionsOutput = null as any;
 utilities.lazyLoad(exports, ["getVpcPeeringConnections","getVpcPeeringConnectionsOutput"], () => require("./getVpcPeeringConnections"));
+
+export { IamFederatedIdentityArgs, IamFederatedIdentityState } from "./iamFederatedIdentity";
+export type IamFederatedIdentity = import("./iamFederatedIdentity").IamFederatedIdentity;
+export const IamFederatedIdentity: typeof import("./iamFederatedIdentity").IamFederatedIdentity = null as any;
+utilities.lazyLoad(exports, ["IamFederatedIdentity"], () => require("./iamFederatedIdentity"));
+
+export { IamFederatedIdentityProviderArgs, IamFederatedIdentityProviderState } from "./iamFederatedIdentityProvider";
+export type IamFederatedIdentityProvider = import("./iamFederatedIdentityProvider").IamFederatedIdentityProvider;
+export const IamFederatedIdentityProvider: typeof import("./iamFederatedIdentityProvider").IamFederatedIdentityProvider = null as any;
+utilities.lazyLoad(exports, ["IamFederatedIdentityProvider"], () => require("./iamFederatedIdentityProvider"));
 
 export { IamRoleArgs, IamRoleState } from "./iamRole";
 export type IamRole = import("./iamRole").IamRole;
@@ -314,6 +369,16 @@ export { ObjectstorageBucketLifecycleArgs, ObjectstorageBucketLifecycleState } f
 export type ObjectstorageBucketLifecycle = import("./objectstorageBucketLifecycle").ObjectstorageBucketLifecycle;
 export const ObjectstorageBucketLifecycle: typeof import("./objectstorageBucketLifecycle").ObjectstorageBucketLifecycle = null as any;
 utilities.lazyLoad(exports, ["ObjectstorageBucketLifecycle"], () => require("./objectstorageBucketLifecycle"));
+
+export { ObservabilityWorkspaceArgs, ObservabilityWorkspaceState } from "./observabilityWorkspace";
+export type ObservabilityWorkspace = import("./observabilityWorkspace").ObservabilityWorkspace;
+export const ObservabilityWorkspace: typeof import("./observabilityWorkspace").ObservabilityWorkspace = null as any;
+utilities.lazyLoad(exports, ["ObservabilityWorkspace"], () => require("./observabilityWorkspace"));
+
+export { ProjectArgs, ProjectState } from "./project";
+export type Project = import("./project").Project;
+export const Project: typeof import("./project").Project = null as any;
+utilities.lazyLoad(exports, ["Project"], () => require("./project"));
 
 export * from "./provider";
 import { Provider } from "./provider";
@@ -438,6 +503,10 @@ const _module = {
                 return new BlockVolumeAttachment(name, <any>undefined, { urn })
             case "thalassa:index/cloudInitTemplate:CloudInitTemplate":
                 return new CloudInitTemplate(name, <any>undefined, { urn })
+            case "thalassa:index/containerregistryNamespace:ContainerregistryNamespace":
+                return new ContainerregistryNamespace(name, <any>undefined, { urn })
+            case "thalassa:index/containerregistryNamespaceConfiguration:ContainerregistryNamespaceConfiguration":
+                return new ContainerregistryNamespaceConfiguration(name, <any>undefined, { urn })
             case "thalassa:index/dbaasDbBackupschedule:DbaasDbBackupschedule":
                 return new DbaasDbBackupschedule(name, <any>undefined, { urn })
             case "thalassa:index/dbaasDbCluster:DbaasDbCluster":
@@ -454,6 +523,10 @@ const _module = {
                 return new DnsZone(name, <any>undefined, { urn })
             case "thalassa:index/dnsZoneDnssec:DnsZoneDnssec":
                 return new DnsZoneDnssec(name, <any>undefined, { urn })
+            case "thalassa:index/iamFederatedIdentity:IamFederatedIdentity":
+                return new IamFederatedIdentity(name, <any>undefined, { urn })
+            case "thalassa:index/iamFederatedIdentityProvider:IamFederatedIdentityProvider":
+                return new IamFederatedIdentityProvider(name, <any>undefined, { urn })
             case "thalassa:index/iamRole:IamRole":
                 return new IamRole(name, <any>undefined, { urn })
             case "thalassa:index/iamRoleBinding:IamRoleBinding":
@@ -486,6 +559,10 @@ const _module = {
                 return new ObjectstorageBucket(name, <any>undefined, { urn })
             case "thalassa:index/objectstorageBucketLifecycle:ObjectstorageBucketLifecycle":
                 return new ObjectstorageBucketLifecycle(name, <any>undefined, { urn })
+            case "thalassa:index/observabilityWorkspace:ObservabilityWorkspace":
+                return new ObservabilityWorkspace(name, <any>undefined, { urn })
+            case "thalassa:index/project:Project":
+                return new Project(name, <any>undefined, { urn })
             case "thalassa:index/reservedIp:ReservedIp":
                 return new ReservedIp(name, <any>undefined, { urn })
             case "thalassa:index/routeTable:RouteTable":
@@ -534,6 +611,8 @@ const _module = {
 pulumi.runtime.registerResourceModule("thalassa", "index/blockVolume", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/blockVolumeAttachment", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/cloudInitTemplate", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/containerregistryNamespace", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/containerregistryNamespaceConfiguration", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasDbBackupschedule", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasDbCluster", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dbaasPgDatabase", _module)
@@ -542,6 +621,8 @@ pulumi.runtime.registerResourceModule("thalassa", "index/dbaasPgRoles", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dnsRecord", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dnsZone", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/dnsZoneDnssec", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamFederatedIdentity", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/iamFederatedIdentityProvider", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/iamRole", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/iamRoleBinding", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/iamRoleRule", _module)
@@ -558,6 +639,8 @@ pulumi.runtime.registerResourceModule("thalassa", "index/loadbalancerListener", 
 pulumi.runtime.registerResourceModule("thalassa", "index/natgateway", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/objectstorageBucket", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/objectstorageBucketLifecycle", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/observabilityWorkspace", _module)
+pulumi.runtime.registerResourceModule("thalassa", "index/project", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/reservedIp", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/routeTable", _module)
 pulumi.runtime.registerResourceModule("thalassa", "index/routeTableRoute", _module)

@@ -5,7 +5,9 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * Create an subnet in a VPC. Subnets are used to create a network for your resources. A VPC can have multiple subnets, and each subnet must have a different CIDR block. IPv4, IPv6 and Dual-stack subnets are supported. After creationg the CIDR cannot be changed.
+ * Create a subnet in a VPC. Subnets provide network segments for resources. A VPC can have multiple subnets with unique CIDR blocks. IPv4, IPv6, and dual-stack are supported. The CIDR cannot be changed after creation.
+ *
+ * See [Networking documentation](https://docs.thalassa.cloud/docs/iaas/networking/).
  *
  * ## Example Usage
  *

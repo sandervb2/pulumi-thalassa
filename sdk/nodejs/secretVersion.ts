@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 /**
  * Manage a secret version in Thalassa Secrets Manager
  *
- * > **Early access:** Secrets Manager is in early access. The API and Terraform resource schema may change in future provider releases.
+ * > **Early access:** Secrets Manager is in early access. The Secrets Manager feature gate must be enabled for your organisation. The API and Terraform resource schema may change in future provider releases.
  *
  * See [Secrets Manager documentation](https://docs.thalassa.cloud/docs/secrets-manager/).
  *
@@ -71,9 +71,12 @@ export class SecretVersion extends pulumi.CustomResource {
     declare public readonly organisationId: pulumi.Output<string | undefined>;
     declare public readonly path: pulumi.Output<string>;
     declare public readonly region: pulumi.Output<string>;
+    /**
+     * Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+     */
     declare public readonly secretKeyValues: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * Secret string value (not returned on read).
+     * Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
      */
     declare public readonly secretString: pulumi.Output<string | undefined>;
     /**
@@ -132,9 +135,12 @@ export interface SecretVersionState {
     organisationId?: pulumi.Input<string | undefined>;
     path?: pulumi.Input<string | undefined>;
     region?: pulumi.Input<string | undefined>;
+    /**
+     * Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+     */
     secretKeyValues?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Secret string value (not returned on read).
+     * Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
      */
     secretString?: pulumi.Input<string | undefined>;
     /**
@@ -151,9 +157,12 @@ export interface SecretVersionArgs {
     organisationId?: pulumi.Input<string | undefined>;
     path: pulumi.Input<string>;
     region: pulumi.Input<string>;
+    /**
+     * Key-value secret payload as plaintext (not returned on read). The provider base64-encodes each value. Do not pre-encode with base64encode().
+     */
     secretKeyValues?: pulumi.Input<{[key: string]: pulumi.Input<string>} | undefined>;
     /**
-     * Secret string value (not returned on read).
+     * Secret string value as plaintext (not returned on read). The provider base64-encodes the value.
      */
     secretString?: pulumi.Input<string | undefined>;
 }

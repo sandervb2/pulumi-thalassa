@@ -56,15 +56,15 @@ class KubernetesClusterArgs:
         :param pulumi.Input['KubernetesClusterAutoscalerConfigArgs'] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
-        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
-        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
         :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
@@ -214,7 +214,7 @@ class KubernetesClusterArgs:
     @pulumi.getter(name="defaultNetworkPolicy")
     def default_network_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         """
         return pulumi.get(self, "default_network_policy")
 
@@ -250,7 +250,7 @@ class KubernetesClusterArgs:
     @pulumi.getter(name="disablePublicEndpoint")
     def disable_public_endpoint(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         """
         return pulumi.get(self, "disable_public_endpoint")
 
@@ -310,7 +310,7 @@ class KubernetesClusterArgs:
     @pulumi.getter(name="networkingCni")
     def networking_cni(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         """
         return pulumi.get(self, "networking_cni")
 
@@ -474,10 +474,10 @@ class _KubernetesClusterState:
         :param pulumi.Input['KubernetesClusterAutoscalerConfigArgs'] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
-        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
-        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         :param pulumi.Input[_builtins.str] internal_endpoint: VPC-internal endpoint for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] konnectivity_port: Konnectivity port for the Kubernetes Cluster within the VPC
         :param pulumi.Input[_builtins.str] kubernetes_api_server_ca_certificate: Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -486,7 +486,7 @@ class _KubernetesClusterState:
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
         :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
@@ -666,7 +666,7 @@ class _KubernetesClusterState:
     @pulumi.getter(name="defaultNetworkPolicy")
     def default_network_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         """
         return pulumi.get(self, "default_network_policy")
 
@@ -702,7 +702,7 @@ class _KubernetesClusterState:
     @pulumi.getter(name="disablePublicEndpoint")
     def disable_public_endpoint(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
-        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         """
         return pulumi.get(self, "disable_public_endpoint")
 
@@ -810,7 +810,7 @@ class _KubernetesClusterState:
     @pulumi.getter(name="networkingCni")
     def networking_cni(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
-        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         """
         return pulumi.get(self, "networking_cni")
 
@@ -967,10 +967,10 @@ class KubernetesCluster(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]]] = None,
                  audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
                  auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
-                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']]] = None,
                  cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
                  cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
                  default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
@@ -993,7 +993,9 @@ class KubernetesCluster(pulumi.CustomResource):
                  subnet_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
-        Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+        Manages a Kubernetes cluster on the Thalassa cloud platform. Supports managed clusters and hosted control plane clusters with configurable networking, security policies, auto-upgrade, CNI plugins, network CIDRs, pod security standards, audit logging, and API server access controls.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Cluster Types
 
@@ -1069,21 +1071,21 @@ class KubernetesCluster(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
-        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
-        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
-        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
         :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
@@ -1101,7 +1103,9 @@ class KubernetesCluster(pulumi.CustomResource):
                  args: Optional[KubernetesClusterArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Manages a Kubernetes cluster in the Thalassa cloud platform. This resource supports both managed clusters and hosted control plane clusters, allowing you to deploy production-ready Kubernetes environments with configurable networking, security policies, and auto-upgrade capabilities. The cluster can be customized with specific CNI plugins (Cilium or custom), network CIDRs, pod security standards, audit logging, and API server access controls.
+        Manages a Kubernetes cluster on the Thalassa cloud platform. Supports managed clusters and hosted control plane clusters with configurable networking, security policies, auto-upgrade, CNI plugins, network CIDRs, pod security standards, audit logging, and API server access controls.
+
+        See [Kubernetes documentation](https://docs.thalassa.cloud/docs/kubernetes/).
 
         ## Cluster Types
 
@@ -1190,10 +1194,10 @@ class KubernetesCluster(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+                 api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]]] = None,
                  audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
                  auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
-                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+                 autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']]] = None,
                  cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
                  cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
                  default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1268,10 +1272,10 @@ class KubernetesCluster(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             advertise_port: pulumi.Input[Optional[_builtins.int]] = None,
             annotations: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]]] = None,
+            api_server_acls: pulumi.Input[Optional[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]]] = None,
             audit_log_profile: pulumi.Input[Optional[_builtins.str]] = None,
             auto_upgrade_policy: pulumi.Input[Optional[_builtins.str]] = None,
-            autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']]] = None,
+            autoscaler_config: pulumi.Input[Optional[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']]] = None,
             cluster_type: pulumi.Input[Optional[_builtins.str]] = None,
             cluster_version: pulumi.Input[Optional[_builtins.str]] = None,
             default_network_policy: pulumi.Input[Optional[_builtins.str]] = None,
@@ -1308,16 +1312,16 @@ class KubernetesCluster(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.int] advertise_port: Advertise port for the Kubernetes Cluster within the VPC
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: Annotations for the Kubernetes Cluster
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesClusterApiServerAclArgs', 'KubernetesClusterApiServerAclArgsDict', 'outputs.KubernetesClusterApiServerAcl']]]] api_server_acls: API server ACLs for the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] audit_log_profile: Audit log profile of the Kubernetes Cluster. Must be one of: none, basic, advanced. Default: none.
         :param pulumi.Input[_builtins.str] auto_upgrade_policy: Auto upgrade policy of the Kubernetes Cluster. Must be one of: none, latest-version, latest-stable. Default: none.
-        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
+        :param pulumi.Input[Union['KubernetesClusterAutoscalerConfigArgs', 'KubernetesClusterAutoscalerConfigArgsDict', 'outputs.KubernetesClusterAutoscalerConfig']] autoscaler_config: Configuration for the cluster autoscaler. These values can also be configured using annotations on a KubernetesNodePool object.
         :param pulumi.Input[_builtins.str] cluster_type: Cluster type of the Kubernetes Cluster. Must be one of: managed, hosted-control-plane. Default: managed.
         :param pulumi.Input[_builtins.str] cluster_version: Cluster version of the Kubernetes Cluster, can be a name, slug or identity of the Kubernetes version. If not provided, the latest stable version will be used for provisioning.
-        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        :param pulumi.Input[_builtins.str] default_network_policy: Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         :param pulumi.Input[_builtins.bool] delete_protection: Delete protection of the Kubernetes Cluster
         :param pulumi.Input[_builtins.str] description: A human readable description about the Kubernetes Cluster
-        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        :param pulumi.Input[_builtins.bool] disable_public_endpoint: Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         :param pulumi.Input[_builtins.str] internal_endpoint: VPC-internal endpoint for the Kubernetes Cluster
         :param pulumi.Input[_builtins.int] konnectivity_port: Konnectivity port for the Kubernetes Cluster within the VPC
         :param pulumi.Input[_builtins.str] kubernetes_api_server_ca_certificate: Kubernetes API server CA certificate of the Kubernetes Cluster
@@ -1326,7 +1330,7 @@ class KubernetesCluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.int] maintenance_day: Day of the week when the cluster will be upgraded (0-6, where 0 is Sunday)
         :param pulumi.Input[_builtins.int] maintenance_start_at: Time of day when the cluster will be upgraded in minutes from midnight (0-1439)
         :param pulumi.Input[_builtins.str] name: Name of the Kubernetes Cluster
-        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        :param pulumi.Input[_builtins.str] networking_cni: CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_deployment: Deployment mode of the kube proxy. Must be one of: custom, managed, disabled. Default: managed.
         :param pulumi.Input[_builtins.str] networking_kube_proxy_mode: Mode of the kube proxy. Must be one of: ipvs, iptables. Default: ipvs.
         :param pulumi.Input[_builtins.str] networking_pod_cidr: Pod CIDR of the Kubernetes Cluster. Must be a valid CIDR block. Ensure the CIDR matches with the CNI configuration when using custom CNI.
@@ -1446,7 +1450,7 @@ class KubernetesCluster(pulumi.CustomResource):
     @pulumi.getter(name="defaultNetworkPolicy")
     def default_network_policy(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny-all. Default: deny-all.
+        Default network policy of the Kubernetes Cluster. Must be one of: allow-all, deny. Default: allow-all.
         """
         return pulumi.get(self, "default_network_policy")
 
@@ -1470,7 +1474,7 @@ class KubernetesCluster(pulumi.CustomResource):
     @pulumi.getter(name="disablePublicEndpoint")
     def disable_public_endpoint(self) -> pulumi.Output[Optional[_builtins.bool]]:
         """
-        Disable public endpoint of the Kubernetes Cluster. When set to true, the Kubernetes Cluster will only be accessible via the private VPC endpoint and the user will need to provide a solution to access the Kubernetes API server.
+        Disable the public Kubernetes API endpoint. When true, access the API only via the private VPC endpoint and provide your own connectivity.
         """
         return pulumi.get(self, "disable_public_endpoint")
 
@@ -1542,7 +1546,7 @@ class KubernetesCluster(pulumi.CustomResource):
     @pulumi.getter(name="networkingCni")
     def networking_cni(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        CNI plugin installed in the Kubernetes Cluster. Must be one of: cilium, custom. Default: cilium. If custom, you must install your own CNI provider and configuration, otherwise Kubernetes Nodes will not function correctly.
+        CNI plugin for the cluster. Must be cilium or custom. Default: cilium. If custom, install your own CNI provider or nodes will not function correctly.
         """
         return pulumi.get(self, "networking_cni")
 

@@ -289,6 +289,8 @@ class BlockVolumeAttachment(pulumi.CustomResource):
         """
         Attach a block volume to a virtual machine. Volume must not be attached to another virtual machine.
 
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
+
         ## Example Usage
 
         ```python
@@ -350,6 +352,8 @@ class BlockVolumeAttachment(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Attach a block volume to a virtual machine. Volume must not be attached to another virtual machine.
+
+        See [Storage documentation](https://docs.thalassa.cloud/docs/iaas/storage/).
 
         ## Example Usage
 

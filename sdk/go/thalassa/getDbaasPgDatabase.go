@@ -48,12 +48,8 @@ type LookupDbaasPgDatabaseResult struct {
 }
 
 func LookupDbaasPgDatabaseOutput(ctx *pulumi.Context, args LookupDbaasPgDatabaseOutputArgs, opts ...pulumi.InvokeOption) LookupDbaasPgDatabaseResultOutput {
-	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupDbaasPgDatabaseResultOutput, error) {
-			args := v.(LookupDbaasPgDatabaseArgs)
-			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("thalassa:index/getDbaasPgDatabase:getDbaasPgDatabase", args, LookupDbaasPgDatabaseResultOutput{}, options).(LookupDbaasPgDatabaseResultOutput), nil
-		}).(LookupDbaasPgDatabaseResultOutput)
+	options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+	return ctx.InvokeOutput("thalassa:index/getDbaasPgDatabase:getDbaasPgDatabase", args, LookupDbaasPgDatabaseResultOutput{}, options).(LookupDbaasPgDatabaseResultOutput)
 }
 
 // A collection of arguments for invoking getDbaasPgDatabase.

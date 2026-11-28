@@ -224,9 +224,9 @@ def get_kubernetes_cluster_role(name: Optional[_builtins.str] = None,
 
     role = thalassa.get_kubernetes_cluster_role(name="some-role")
     # Only create binding if role is not a system role
-    conditional_binding: list[Any] = []
-    for range in [{"value": i} for i in range(0, 0 if role.system else 1)]:
-        conditional_binding.append(thalassa.KubernetesClusterRoleBinding(f"conditional_binding-{range['value']}",
+    conditional_binding: list[thalassa.KubernetesClusterRoleBinding] = []
+    for conditional_binding_range in [{"value": i} for i in range(0, 0 if role.system else 1)]:
+        conditional_binding.append(thalassa.KubernetesClusterRoleBinding(f"conditional_binding-{conditional_binding_range['value']}",
             name="conditional-binding",
             cluster_role_id=role.id,
             team_id="team-456"))
@@ -324,9 +324,9 @@ def get_kubernetes_cluster_role_output(name: pulumi.Input[Optional[Optional[_bui
 
     role = thalassa.get_kubernetes_cluster_role(name="some-role")
     # Only create binding if role is not a system role
-    conditional_binding: list[Any] = []
-    for range in [{"value": i} for i in range(0, 0 if role.system else 1)]:
-        conditional_binding.append(thalassa.KubernetesClusterRoleBinding(f"conditional_binding-{range['value']}",
+    conditional_binding: list[thalassa.KubernetesClusterRoleBinding] = []
+    for conditional_binding_range in [{"value": i} for i in range(0, 0 if role.system else 1)]:
+        conditional_binding.append(thalassa.KubernetesClusterRoleBinding(f"conditional_binding-{conditional_binding_range['value']}",
             name="conditional-binding",
             cluster_role_id=role.id,
             team_id="team-456"))
